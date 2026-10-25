@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>बीजीय संरचनाएँ</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:30%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>याद रखें</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ शुरू करें</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>गति <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">रिकॉर्डिंग मोड (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"hi-IN",
+"meta":{"nivel": 0, "titulo": "बीजीय संरचनाएँ", "enunciado": "सारांश: जालक, वितरणशील जालक और बूलियन बीजगणित", "datos": ["जालक", "वितरणशील जालक", "बूलियन बीजगणित", "बूलियन बीजगणित के प्रमेय", "द्वैत का सिद्धांत"]},
+"steps":[
+{"title": "बीजीय संरचनाएँ", "sub": "सारांश: जालक, वितरणशील जालक और बूलियन बीजगणित", "clear": 1, "say": "नमस्ते। इस वीडियो में हम सीधे सूत्रों के साथ तीन बीजीय संरचनाओं को दोहराएँगे, जो एक-दूसरे के भीतर समाहित होती जाती हैं: जालक, वितरणशील जालक, और बूलियन बीजगणित।", "L": [["txt", "जालक  ⊂  वितरणशील जालक  ⊂  बूलियन बीजगणित"]]},
+
+{"title": "जालक", "clear": 1, "say": "जालक से शुरू करते हैं। त्रिक B, गोले वाला प्लस, गोले वाला बिंदु, एक जालक है यदि दोनों संक्रियाएँ द्विआधारी और संवृत हों, और B के सभी a, b और c के लिए कुछ गुण लागू हों।", "L": [["hyp", "(B, ⊕, ⊙) जालक<span class='tag'>⊕, ⊙ द्विआधारी और संवृत</span>"], ["hyp", "सभी  a, b, c ∈ B  के लिए"]]},
+
+{"say": "पहला गुण, क्रमविनिमेयता। a प्लस b बराबर है b प्लस a के। और a गुणा b बराबर है b गुणा a के।", "L": [["sub", "a ⊕ b = b ⊕ a<span class='tag'>क्रमविनिमेयता</span>"], ["sub", "a ⊙ b = b ⊙ a<span class='tag'>क्रमविनिमेयता</span>"]]},
+
+{"say": "दूसरा गुण, साहचर्यता। a प्लस, b प्लस c, बराबर है, a प्लस b, प्लस c के। और गुणनफल के साथ भी यही: a गुणा, b गुणा c, बराबर है, a गुणा b, गुणा c के।", "L": [["sub", "a ⊕ (b ⊕ c) = (a ⊕ b) ⊕ c<span class='tag'>साहचर्यता</span>"], ["sub", "a ⊙ (b ⊙ c) = (a ⊙ b) ⊙ c<span class='tag'>साहचर्यता</span>"]]},
+
+{"say": "तीसरा गुण, अवशोषण। a प्लस, a गुणा b, बराबर है a के। और a गुणा, a प्लस b, बराबर है a के। हर संक्रिया दूसरी को अवशोषित कर लेती है।", "L": [["sub", "a ⊕ (a ⊙ b) = a<span class='tag'>अवशोषण</span>"], ["sub", "a ⊙ (a ⊕ b) = a<span class='tag'>अवशोषण</span>"]]},
+
+{"say": "इन अभिगृहीतों से एक प्रमेय निकलता है: वर्गसमता। a प्लस a, a है, और a गुणा a, a है। किसी अवयव पर स्वयं के साथ संक्रिया करने से कुछ नहीं बदलता।", "L": [["res", "a ⊕ a = a<span class='tag'>प्रमेय: वर्गसमता</span>"], ["res", "a ⊙ a = a<span class='tag'>प्रमेय: वर्गसमता</span>"]]},
+
+{"say": "बाईं ओर जालक की मुख्य बातें लिख लेते हैं: क्रमविनिमेयता, साहचर्यता और अवशोषण।", "pin": "जालक: क्रमविनिमेय, साहचर्य, अवशोषण"},
+
+{"title": "वितरणशील जालक", "clear": 1, "say": "अब वितरणशील जालक। यह ऐसा जालक है जो वितरणशीलता भी संतुष्ट करता है।", "L": [["goal", "वितरणशील जालक  =  जालक  +  वितरणशीलता"]]},
+
+{"say": "हर संक्रिया दूसरी पर वितरित होती है। a प्लस, b गुणा c, बराबर है, a प्लस b, गुणा, a प्लस c के। और a गुणा, b प्लस c, बराबर है, a गुणा b, प्लस, a गुणा c के।", "L": [["sub", "a ⊕ (b ⊙ c) = (a ⊕ b) ⊙ (a ⊕ c)<span class='tag'>वितरणशीलता</span>"], ["sub", "a ⊙ (b ⊕ c) = (a ⊙ b) ⊕ (a ⊙ c)<span class='tag'>वितरणशीलता</span>"]]},
+
+{"title": "बूलियन बीजगणित", "clear": 1, "say": "और हम बूलियन बीजगणित पर पहुँचते हैं। यह एक वितरणशील जालक है जिसमें न्यूनतम अवयव शून्य, अधिकतम अवयव एक, और हर अवयव का एक पूरक भी होता है।", "L": [["goal", "बूलियन बीजगणित  =  वितरणशील जालक  +  0, 1  +  पूरक"]]},
+
+{"say": "शून्य जोड़ का तटस्थ अवयव है, और एक गुणा का तटस्थ अवयव है। a प्लस शून्य, a है। और a गुणा एक, a है।", "L": [["sub", "a ⊕ 0 = a<span class='tag'>0, ⊕ का तटस्थ अवयव</span>"], ["sub", "a ⊙ 1 = a<span class='tag'>1, ⊙ का तटस्थ अवयव</span>"]]},
+
+{"say": "हर अवयव a का एक पूरक होता है, जिसे हम आगे टिल्डा लगाकर लिखते हैं। इसे दोनों शर्तें एक साथ पूरी करनी होती हैं: a प्लस उसका पूरक एक है, और a गुणा उसका पूरक शून्य है।", "L": [["sub", "a ⊕ ∼a = 1<span class='tag'>पूरक (दोनों लागू होनी चाहिए)</span>"], ["sub", "a ⊙ ∼a = 0<span class='tag'>पूरक (दोनों लागू होनी चाहिए)</span>"]]},
+
+{"say": "वितरणशील जालक होने के कारण, हर अवयव का पूरक अद्वितीय है। साथ ही, शून्य का पूरक एक है।", "L": [["res", "हर a के लिए ∼a अद्वितीय"], ["res", "∼0 = 1"]]},
+
+{"say": "बाईं ओर बूलियन बीजगणित की मुख्य बातें लिख लेते हैं।", "pin": "बूलियन: वितरणशील + 0, 1 + पूरक"},
+
+{"title": "बूलियन बीजगणित के प्रमेय", "clear": 1, "say": "बूलियन बीजगणित में कई प्रमेय लागू होते हैं। पहला है अंतर्वलन नियम: a के पूरक का पूरक a है।", "L": [["res", "∼(∼a) = a<span class='tag'>अंतर्वलन नियम</span>"]]},
+
+{"say": "दूसरा, प्रभुत्व। a प्लस एक, एक है। और a गुणा शून्य, शून्य है।", "L": [["res", "a ⊕ 1 = 1<span class='tag'>प्रभुत्व</span>"], ["res", "a ⊙ 0 = 0<span class='tag'>प्रभुत्व</span>"]]},
+
+{"say": "तीसरा, डी मॉर्गन के नियम। a प्लस b, a के पूरक गुणा b के पूरक, का पूरक है। और a गुणा b, a के पूरक प्लस b के पूरक, का पूरक है।", "L": [["res", "a ⊕ b = ∼(∼a ⊙ ∼b)<span class='tag'>डी मॉर्गन का नियम</span>"], ["res", "a ⊙ b = ∼(∼a ⊕ ∼b)<span class='tag'>डी मॉर्गन का नियम</span>"]]},
+
+{"title": "द्वैत का सिद्धांत", "clear": 1, "say": "अंत में, द्वैत का सिद्धांत। कोई भी सत्य सर्वसमिका सत्य ही रहती है यदि हम जोड़ को गुणा से, और शून्य को एक से बदल दें।", "L": [["goal", "⊕ ↔ ⊙,      0 ↔ 1"]]},
+
+{"say": "एक उदाहरण देखते हैं। a प्लस शून्य बराबर a, एक सत्य सर्वसमिका है। संक्रियाओं और तटस्थ अवयवों को बदलने पर हमें a गुणा एक बराबर a मिलता है, जो भी सत्य है।", "L": [["sub", "a ⊕ 0 = a<span class='tag'>सत्य सर्वसमिका</span>"], ["sub", "⊕ ↔ ⊙,  0 ↔ 1"], ["res", "a ⊙ 1 = a<span class='tag'>द्वैत सर्वसमिका, यह भी सत्य</span>"]]},
+
+{"title": "सारांश", "clear": 1, "say": "सारांश में। जालक के लिए क्रमविनिमेयता, साहचर्यता और अवशोषण चाहिए। वितरणशील जालक इसमें वितरणशीलता जोड़ता है। और बूलियन बीजगणित शून्य, एक और पूरक जोड़ता है, जिनसे अंतर्वलन, प्रभुत्व, डी मॉर्गन और द्वैत निकलते हैं। देखने के लिए धन्यवाद।", "L": [["res", "जालक: क्रमविनिमेय, साहचर्य, अवशोषण ⟹ वर्गसमता"], ["res", "+ वितरणशीलता ⟹ वितरणशील जालक"], ["res", "+ 0, 1, ∼a ⟹ बूलियन बीजगणित ⟹ अंतर्वलन, प्रभुत्व, डी मॉर्गन, द्वैत"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){const d=document.createElement('div');d.className='l hyp';d.innerHTML=s.pin;if(k<n)d.style.animation='none';pins.appendChild(d)}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' प्लस ').replace(/⊙/g,' गुणा ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ फिर से चलाएँ'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ जारी रखें'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ रोकें';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^hi/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/madhur|hemant|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="बीजीय संरचनाएँ";$('sub').textContent="सारांश: जालक, वितरणशील जालक और बूलियन बीजगणित";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

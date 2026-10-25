@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Estruturas algébricas</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:30%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Lembre-se</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Começar</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Velocidade <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Modo gravação (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"pt-BR",
+"meta":{"nivel": 0, "titulo": "Estruturas algébricas", "enunciado": "Resumo: reticulado, reticulado distributivo e álgebra de Boole", "datos": ["Reticulado", "Reticulado distributivo", "Álgebra de Boole", "Teoremas da álgebra de Boole", "Princípio de dualidade"]},
+"steps":[
+{"title": "Estruturas algébricas", "sub": "Resumo: reticulado, reticulado distributivo e álgebra de Boole", "clear": 1, "say": "Olá. Neste vídeo revisamos, diretamente com as fórmulas, três estruturas algébricas que vão se encaixando uma dentro da outra: o reticulado, o reticulado distributivo e a álgebra de Boole.", "L": [["txt", "Reticulado  ⊂  Reticulado distributivo  ⊂  Álgebra de Boole"]]},
+
+{"title": "Reticulado", "clear": 1, "say": "Começamos com o reticulado. A terna B, mais circulado, ponto circulado, é um reticulado se as duas operações são binárias e internas, e certas propriedades valem para todos a, b e c de B.", "L": [["hyp", "(B, ⊕, ⊙) reticulado<span class='tag'>⊕, ⊙ binárias e internas</span>"], ["hyp", "Vale  ∀ a, b, c ∈ B"]]},
+
+{"say": "Primeira propriedade, a comutatividade. a mais b é igual a b mais a. E a vezes b é igual a b vezes a.", "L": [["sub", "a ⊕ b = b ⊕ a<span class='tag'>Comutatividade</span>"], ["sub", "a ⊙ b = b ⊙ a<span class='tag'>Comutatividade</span>"]]},
+
+{"say": "Segunda propriedade, a associatividade. a mais, b mais c, é igual a, a mais b, mais c. E o mesmo com o produto: a vezes, b vezes c, é igual a, a vezes b, vezes c.", "L": [["sub", "a ⊕ (b ⊕ c) = (a ⊕ b) ⊕ c<span class='tag'>Associatividade</span>"], ["sub", "a ⊙ (b ⊙ c) = (a ⊙ b) ⊙ c<span class='tag'>Associatividade</span>"]]},
+
+{"say": "Terceira propriedade, a absorção. a mais, a vezes b, é igual a a. E a vezes, a mais b, é igual a a. Cada operação absorve a outra.", "L": [["sub", "a ⊕ (a ⊙ b) = a<span class='tag'>Absorção</span>"], ["sub", "a ⊙ (a ⊕ b) = a<span class='tag'>Absorção</span>"]]},
+
+{"say": "Desses axiomas se deduz um teorema: a idempotência. a mais a é a, e a vezes a é a. Operar um elemento consigo mesmo não muda nada.", "L": [["res", "a ⊕ a = a<span class='tag'>Teorema: idempotência</span>"], ["res", "a ⊙ a = a<span class='tag'>Teorema: idempotência</span>"]]},
+
+{"say": "Anotamos à esquerda o essencial do reticulado: comutatividade, associatividade e absorção.", "pin": "Reticulado: comutativo, associativo, absorção"},
+
+{"title": "Reticulado distributivo", "clear": 1, "say": "Passamos ao reticulado distributivo. É um reticulado que, além disso, cumpre a distributividade.", "L": [["goal", "Reticulado distributivo  =  Reticulado  +  distributividade"]]},
+
+{"say": "Cada operação é distributiva em relação à outra. a mais, b vezes c, é igual a, a mais b, vezes, a mais c. E a vezes, b mais c, é igual a, a vezes b, mais, a vezes c.", "L": [["sub", "a ⊕ (b ⊙ c) = (a ⊕ b) ⊙ (a ⊕ c)<span class='tag'>Distributividade</span>"], ["sub", "a ⊙ (b ⊕ c) = (a ⊙ b) ⊕ (a ⊙ c)<span class='tag'>Distributividade</span>"]]},
+
+{"title": "Álgebra de Boole", "clear": 1, "say": "E chegamos à álgebra de Boole. É um reticulado distributivo que, além disso, tem elemento mínimo, zero, elemento máximo, um, e um complementar para cada elemento.", "L": [["goal", "Álgebra de Boole  =  Reticulado distributivo  +  0, 1  +  complementares"]]},
+
+{"say": "O zero é o elemento neutro da soma, e o um é o elemento neutro do produto. a mais zero é a. E a vezes um é a.", "L": [["sub", "a ⊕ 0 = a<span class='tag'>0 neutro de ⊕</span>"], ["sub", "a ⊙ 1 = a<span class='tag'>1 neutro de ⊙</span>"]]},
+
+{"say": "Cada elemento a tem um complementar, que escrevemos com um til na frente. Ele tem que cumprir as duas condições ao mesmo tempo: a mais o seu complementar é um, e a vezes o seu complementar é zero.", "L": [["sub", "a ⊕ ∼a = 1<span class='tag'>Complementar (as duas devem valer)</span>"], ["sub", "a ⊙ ∼a = 0<span class='tag'>Complementar (as duas devem valer)</span>"]]},
+
+{"say": "Por ser um reticulado distributivo, o complementar de cada elemento é único. Além disso, o complementar de zero é um.", "L": [["res", "∼a único para cada a"], ["res", "∼0 = 1"]]},
+
+{"say": "Anotamos à esquerda o essencial da álgebra de Boole.", "pin": "Boole: distributivo + 0, 1 + complementares"},
+
+{"title": "Teoremas da álgebra de Boole", "clear": 1, "say": "Numa álgebra de Boole valem vários teoremas. O primeiro é a lei da involução: o complementar do complementar de a é a.", "L": [["res", "∼(∼a) = a<span class='tag'>Lei da involução</span>"]]},
+
+{"say": "Segundo, a dominação. a mais um é um. E a vezes zero é zero.", "L": [["res", "a ⊕ 1 = 1<span class='tag'>Dominação</span>"], ["res", "a ⊙ 0 = 0<span class='tag'>Dominação</span>"]]},
+
+{"say": "Terceiro, as leis de De Morgan. a mais b é o complementar de, o complementar de a vezes o complementar de b. E a vezes b é o complementar de, o complementar de a mais o complementar de b.", "L": [["res", "a ⊕ b = ∼(∼a ⊙ ∼b)<span class='tag'>Lei de De Morgan</span>"], ["res", "a ⊙ b = ∼(∼a ⊕ ∼b)<span class='tag'>Lei de De Morgan</span>"]]},
+
+{"title": "Princípio de dualidade", "clear": 1, "say": "Por último, o princípio de dualidade. Qualquer identidade válida continua válida se trocarmos a soma pelo produto, e o zero pelo um.", "L": [["goal", "⊕ ↔ ⊙,      0 ↔ 1"]]},
+
+{"say": "Vejamos um exemplo. a mais zero é a é uma identidade válida. Trocando as operações e os elementos neutros, obtemos a vezes um é a, que também é válida.", "L": [["sub", "a ⊕ 0 = a<span class='tag'>Identidade válida</span>"], ["sub", "⊕ ↔ ⊙,  0 ↔ 1"], ["res", "a ⊙ 1 = a<span class='tag'>Identidade dual, também válida</span>"]]},
+
+{"title": "Resumo", "clear": 1, "say": "Resumindo. O reticulado pede comutatividade, associatividade e absorção. O distributivo acrescenta a distributividade. E a álgebra de Boole acrescenta o zero, o um e os complementares, de onde saem a involução, a dominação, De Morgan e a dualidade. Obrigado por assistir.", "L": [["res", "Reticulado: comutativo, associativo, absorção ⟹ idempotência"], ["res", "+ distributividade ⟹ Reticulado distributivo"], ["res", "+ 0, 1, ∼a ⟹ Álgebra de Boole ⟹ involução, dominação, De Morgan, dualidade"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){const d=document.createElement('div');d.className='l hyp';d.innerHTML=s.pin;if(k<n)d.style.animation='none';pins.appendChild(d)}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' mais ').replace(/⊙/g,' vezes ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Repetir'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Continuar'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pausa';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^pt/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/antonio|antônio|donato|fabio|duarte|male|google português$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Estruturas algébricas";$('sub').textContent="Resumo: reticulado, reticulado distributivo e álgebra de Boole";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

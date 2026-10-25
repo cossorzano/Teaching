@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>البنى الجبرية</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:30%;border-inline-end:2px dashed #3d5a50;padding-inline-end:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-inline-start:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>تذكّر</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ ابدأ</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>السرعة <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">وضع التسجيل (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ar-SA",
+"meta":{"nivel": 0, "titulo": "البنى الجبرية", "enunciado": "ملخص: الشبكة، والشبكة التوزيعية، والجبر البولياني", "datos": ["الشبكة", "الشبكة التوزيعية", "الجبر البولياني", "مبرهنات الجبر البولياني", "مبدأ الثنائية"]},
+"steps":[
+{"title": "البنى الجبرية", "sub": "ملخص: الشبكة، والشبكة التوزيعية، والجبر البولياني", "clear": 1, "say": "مرحبًا. في هذا الفيديو نراجع، مباشرة بالصيغ، ثلاث بنى جبرية تتداخل الواحدة داخل الأخرى: الشبكة، والشبكة التوزيعية، والجبر البولياني.", "L": [["txt", "شبكة  <span dir='ltr'>⊃</span>  شبكة توزيعية  <span dir='ltr'>⊃</span>  جبر بولياني"]]},
+
+{"title": "الشبكة", "clear": 1, "say": "نبدأ بالشبكة. الثلاثي B، والزائد داخل دائرة، والنقطة داخل دائرة، يكون شبكة إذا كانت العمليتان ثنائيتين وداخليتين، وتحققت خواص معينة لكل a و b و c من B.", "L": [["hyp", "<span dir='ltr'>(B, ⊕, ⊙)</span> شبكة<span class='tag'><span dir='ltr'>⊕</span>، <span dir='ltr'>⊙</span> ثنائيتان وداخليتان</span>"], ["hyp", "لكل  <span dir='ltr'>a, b, c ∈ B</span>"]]},
+
+{"say": "الخاصية الأولى، الإبدال. a زائد b يساوي b زائد a. و a ضرب b يساوي b ضرب a.", "L": [["sub", "<span dir='ltr'>a ⊕ b = b ⊕ a</span><span class='tag'>الإبدال</span>"], ["sub", "<span dir='ltr'>a ⊙ b = b ⊙ a</span><span class='tag'>الإبدال</span>"]]},
+
+{"say": "الخاصية الثانية، التجميع. a زائد، b زائد c، يساوي، a زائد b، زائد c. والأمر نفسه مع الضرب: a ضرب، b ضرب c، يساوي، a ضرب b، ضرب c.", "L": [["sub", "<span dir='ltr'>a ⊕ (b ⊕ c) = (a ⊕ b) ⊕ c</span><span class='tag'>التجميع</span>"], ["sub", "<span dir='ltr'>a ⊙ (b ⊙ c) = (a ⊙ b) ⊙ c</span><span class='tag'>التجميع</span>"]]},
+
+{"say": "الخاصية الثالثة، الامتصاص. a زائد، a ضرب b، يساوي a. و a ضرب، a زائد b، يساوي a. كل عملية تمتص الأخرى.", "L": [["sub", "<span dir='ltr'>a ⊕ (a ⊙ b) = a</span><span class='tag'>الامتصاص</span>"], ["sub", "<span dir='ltr'>a ⊙ (a ⊕ b) = a</span><span class='tag'>الامتصاص</span>"]]},
+
+{"say": "ومن هذه المسلمات تُستنتج مبرهنة: تساوي القوى. a زائد a يساوي a، و a ضرب a يساوي a. إجراء العملية على عنصر مع نفسه لا يغير شيئًا.", "L": [["res", "<span dir='ltr'>a ⊕ a = a</span><span class='tag'>مبرهنة: تساوي القوى</span>"], ["res", "<span dir='ltr'>a ⊙ a = a</span><span class='tag'>مبرهنة: تساوي القوى</span>"]]},
+
+{"say": "نسجل على الجانب جوهر الشبكة: الإبدال والتجميع والامتصاص.", "pin": "الشبكة: إبدالية، تجميعية، امتصاص"},
+
+{"title": "الشبكة التوزيعية", "clear": 1, "say": "ننتقل إلى الشبكة التوزيعية. وهي شبكة تحقق إضافة إلى ذلك خاصية التوزيع.", "L": [["goal", "شبكة توزيعية  <span dir='ltr'>=</span>  شبكة  +  توزيع"]]},
+
+{"say": "كل عملية توزيعية على الأخرى. a زائد، b ضرب c، يساوي، a زائد b، ضرب، a زائد c. و a ضرب، b زائد c، يساوي، a ضرب b، زائد، a ضرب c.", "L": [["sub", "<span dir='ltr'>a ⊕ (b ⊙ c) = (a ⊕ b) ⊙ (a ⊕ c)</span><span class='tag'>التوزيع</span>"], ["sub", "<span dir='ltr'>a ⊙ (b ⊕ c) = (a ⊙ b) ⊕ (a ⊙ c)</span><span class='tag'>التوزيع</span>"]]},
+
+{"title": "الجبر البولياني", "clear": 1, "say": "ونصل إلى الجبر البولياني. وهو شبكة توزيعية لها إضافة إلى ذلك عنصر أصغر، الصفر، وعنصر أكبر، الواحد، ومتمم لكل عنصر.", "L": [["goal", "جبر بولياني  <span dir='ltr'>=</span>  شبكة توزيعية  +  <span dir='ltr'>0</span>، <span dir='ltr'>1</span>  +  متممات"]]},
+
+{"say": "الصفر هو العنصر المحايد للجمع، والواحد هو العنصر المحايد للضرب. a زائد صفر يساوي a. و a ضرب واحد يساوي a.", "L": [["sub", "<span dir='ltr'>a ⊕ 0 = a</span><span class='tag'><span dir='ltr'>0</span> محايد لـ <span dir='ltr'>⊕</span></span>"], ["sub", "<span dir='ltr'>a ⊙ 1 = a</span><span class='tag'><span dir='ltr'>1</span> محايد لـ <span dir='ltr'>⊙</span></span>"]]},
+
+{"say": "لكل عنصر a متمم، نكتبه بعلامة تيلدا قبله. ويجب أن يحقق الشرطين معًا: a زائد متممه يساوي واحدًا، و a ضرب متممه يساوي صفرًا.", "L": [["sub", "<span dir='ltr'>a ⊕ ∼a = 1</span><span class='tag'>المتمم (يجب أن يتحقق الشرطان)</span>"], ["sub", "<span dir='ltr'>a ⊙ ∼a = 0</span><span class='tag'>المتمم (يجب أن يتحقق الشرطان)</span>"]]},
+
+{"say": "لأنها شبكة توزيعية، فإن متمم كل عنصر وحيد. وفوق ذلك، متمم الصفر هو الواحد.", "L": [["res", "<span dir='ltr'>∼a</span> وحيد لكل <span dir='ltr'>a</span>"], ["res", "<span dir='ltr'>∼0 = 1</span>"]]},
+
+{"say": "نسجل على الجانب جوهر الجبر البولياني.", "pin": "بولياني: توزيعية + <span dir='ltr'>0</span>، <span dir='ltr'>1</span> + متممات"},
+
+{"title": "مبرهنات الجبر البولياني", "clear": 1, "say": "في الجبر البولياني تتحقق عدة مبرهنات. الأولى هي قانون الانعكاس: متمم متمم a هو a.", "L": [["res", "<span dir='ltr'>∼(∼a) = a</span><span class='tag'>قانون الانعكاس</span>"]]},
+
+{"say": "الثانية، الهيمنة. a زائد واحد يساوي واحدًا. و a ضرب صفر يساوي صفرًا.", "L": [["res", "<span dir='ltr'>a ⊕ 1 = 1</span><span class='tag'>الهيمنة</span>"], ["res", "<span dir='ltr'>a ⊙ 0 = 0</span><span class='tag'>الهيمنة</span>"]]},
+
+{"say": "الثالثة، قانونا دي مورغان. a زائد b هو متمم، متمم a ضرب متمم b. و a ضرب b هو متمم، متمم a زائد متمم b.", "L": [["res", "<span dir='ltr'>a ⊕ b = ∼(∼a ⊙ ∼b)</span><span class='tag'>قانون دي مورغان</span>"], ["res", "<span dir='ltr'>a ⊙ b = ∼(∼a ⊕ ∼b)</span><span class='tag'>قانون دي مورغان</span>"]]},
+
+{"title": "مبدأ الثنائية", "clear": 1, "say": "وأخيرًا، مبدأ الثنائية. أي متطابقة صحيحة تبقى صحيحة إذا بدلنا الجمع بالضرب، والصفر بالواحد.", "L": [["goal", "<span dir='ltr'>⊕ ↔ ⊙,      0 ↔ 1</span>"]]},
+
+{"say": "لنرَ مثالًا. a زائد صفر يساوي a متطابقة صحيحة. وبتبديل العمليتين والعنصرين المحايدين نحصل على a ضرب واحد يساوي a، وهي صحيحة أيضًا.", "L": [["sub", "<span dir='ltr'>a ⊕ 0 = a</span><span class='tag'>متطابقة صحيحة</span>"], ["sub", "<span dir='ltr'>⊕ ↔ ⊙,  0 ↔ 1</span>"], ["res", "<span dir='ltr'>a ⊙ 1 = a</span><span class='tag'>المتطابقة الثنائية، صحيحة أيضًا</span>"]]},
+
+{"title": "الخلاصة", "clear": 1, "say": "نلخص. الشبكة تتطلب الإبدال والتجميع والامتصاص. والشبكة التوزيعية تضيف التوزيع. والجبر البولياني يضيف الصفر والواحد والمتممات، ومنها ينتج الانعكاس والهيمنة وقانونا دي مورغان والثنائية. شكرًا على المشاهدة.", "L": [["res", "شبكة: إبدالية، تجميعية، امتصاص ⟸ تساوي القوى"], ["res", "+ توزيع ⟸ شبكة توزيعية"], ["res", "+ <span dir='ltr'>0</span>، <span dir='ltr'>1</span>، <span dir='ltr'>∼a</span> ⟸ جبر بولياني ⟸ انعكاس، هيمنة، دي مورغان، ثنائية"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){const d=document.createElement('div');d.className='l hyp';d.innerHTML=s.pin;if(k<n)d.style.animation='none';pins.appendChild(d)}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' زائد ').replace(/⊙/g,' ضرب ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ إعادة'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ متابعة'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ إيقاف مؤقت';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ إيقاف مؤقت';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ إيقاف مؤقت';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ar/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/hamed|shakir|naayf|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="البنى الجبرية";$('sub').textContent="ملخص: الشبكة، والشبكة التوزيعية، والجبر البولياني";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

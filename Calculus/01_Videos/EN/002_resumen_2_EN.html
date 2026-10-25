@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Algebraic structures</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:30%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Remember</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Start</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Speed <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Recording mode (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"en-US",
+"meta":{"nivel": 0, "titulo": "Algebraic structures", "enunciado": "Summary: lattice, distributive lattice and Boolean algebra", "datos": ["Lattice", "Distributive lattice", "Boolean algebra", "Theorems of Boolean algebra", "Duality principle"]},
+"steps":[
+{"title": "Algebraic structures", "sub": "Summary: lattice, distributive lattice and Boolean algebra", "clear": 1, "say": "Hello. In this video we review, directly with the formulas, three algebraic structures that fit one inside the other: the lattice, the distributive lattice and the Boolean algebra.", "L": [["txt", "Lattice  ⊂  Distributive lattice  ⊂  Boolean algebra"]]},
+
+{"title": "Lattice", "clear": 1, "say": "We start with the lattice. The triple B, circled plus, circled dot, is a lattice if both operations are binary and internal, and certain properties hold for all a, b and c in B.", "L": [["hyp", "(B, ⊕, ⊙) lattice<span class='tag'>⊕, ⊙ binary and internal</span>"], ["hyp", "For all  a, b, c ∈ B"]]},
+
+{"say": "First property, commutativity. a plus b equals b plus a. And a times b equals b times a.", "L": [["sub", "a ⊕ b = b ⊕ a<span class='tag'>Commutativity</span>"], ["sub", "a ⊙ b = b ⊙ a<span class='tag'>Commutativity</span>"]]},
+
+{"say": "Second property, associativity. a plus, b plus c, equals, a plus b, plus c. And the same with the product: a times, b times c, equals, a times b, times c.", "L": [["sub", "a ⊕ (b ⊕ c) = (a ⊕ b) ⊕ c<span class='tag'>Associativity</span>"], ["sub", "a ⊙ (b ⊙ c) = (a ⊙ b) ⊙ c<span class='tag'>Associativity</span>"]]},
+
+{"say": "Third property, absorption. a plus, a times b, equals a. And a times, a plus b, equals a. Each operation absorbs the other.", "L": [["sub", "a ⊕ (a ⊙ b) = a<span class='tag'>Absorption</span>"], ["sub", "a ⊙ (a ⊕ b) = a<span class='tag'>Absorption</span>"]]},
+
+{"say": "From these axioms a theorem follows: idempotence. a plus a is a, and a times a is a. Operating an element with itself changes nothing.", "L": [["res", "a ⊕ a = a<span class='tag'>Theorem: idempotence</span>"], ["res", "a ⊙ a = a<span class='tag'>Theorem: idempotence</span>"]]},
+
+{"say": "We note on the left the essentials of a lattice: commutativity, associativity and absorption.", "pin": "Lattice: commutative, associative, absorption"},
+
+{"title": "Distributive lattice", "clear": 1, "say": "Now the distributive lattice. It is a lattice that also satisfies distributivity.", "L": [["goal", "Distributive lattice  =  Lattice  +  distributivity"]]},
+
+{"say": "Each operation distributes over the other. a plus, b times c, equals, a plus b, times, a plus c. And a times, b plus c, equals, a times b, plus, a times c.", "L": [["sub", "a ⊕ (b ⊙ c) = (a ⊕ b) ⊙ (a ⊕ c)<span class='tag'>Distributivity</span>"], ["sub", "a ⊙ (b ⊕ c) = (a ⊙ b) ⊕ (a ⊙ c)<span class='tag'>Distributivity</span>"]]},
+
+{"title": "Boolean algebra", "clear": 1, "say": "And we reach the Boolean algebra. It is a distributive lattice that also has a minimum element, zero, a maximum element, one, and a complement for every element.", "L": [["goal", "Boolean algebra  =  Distributive lattice  +  0, 1  +  complements"]]},
+
+{"say": "Zero is the neutral element of the sum, and one is the neutral element of the product. a plus zero is a. And a times one is a.", "L": [["sub", "a ⊕ 0 = a<span class='tag'>0 neutral for ⊕</span>"], ["sub", "a ⊙ 1 = a<span class='tag'>1 neutral for ⊙</span>"]]},
+
+{"say": "Every element a has a complement, which we write with a tilde in front. It must satisfy both conditions at once: a plus its complement is one, and a times its complement is zero.", "L": [["sub", "a ⊕ ∼a = 1<span class='tag'>Complement (both must hold)</span>"], ["sub", "a ⊙ ∼a = 0<span class='tag'>Complement (both must hold)</span>"]]},
+
+{"say": "Since it is a distributive lattice, the complement of each element is unique. Moreover, the complement of zero is one.", "L": [["res", "∼a unique for each a"], ["res", "∼0 = 1"]]},
+
+{"say": "We note on the left the essentials of a Boolean algebra.", "pin": "Boolean: distributive + 0, 1 + complements"},
+
+{"title": "Theorems of Boolean algebra", "clear": 1, "say": "Several theorems hold in a Boolean algebra. The first is the involution law: the complement of the complement of a is a.", "L": [["res", "∼(∼a) = a<span class='tag'>Involution law</span>"]]},
+
+{"say": "Second, domination. a plus one is one. And a times zero is zero.", "L": [["res", "a ⊕ 1 = 1<span class='tag'>Domination</span>"], ["res", "a ⊙ 0 = 0<span class='tag'>Domination</span>"]]},
+
+{"say": "Third, De Morgan's laws. a plus b is the complement of, the complement of a times the complement of b. And a times b is the complement of, the complement of a plus the complement of b.", "L": [["res", "a ⊕ b = ∼(∼a ⊙ ∼b)<span class='tag'>De Morgan's law</span>"], ["res", "a ⊙ b = ∼(∼a ⊕ ∼b)<span class='tag'>De Morgan's law</span>"]]},
+
+{"title": "Duality principle", "clear": 1, "say": "Finally, the duality principle. Any valid identity remains valid if we swap the sum with the product, and zero with one.", "L": [["goal", "⊕ ↔ ⊙,      0 ↔ 1"]]},
+
+{"say": "Let's see an example. a plus zero equals a is a valid identity. Swapping the operations and the neutral elements, we get a times one equals a, which is also valid.", "L": [["sub", "a ⊕ 0 = a<span class='tag'>Valid identity</span>"], ["sub", "⊕ ↔ ⊙,  0 ↔ 1"], ["res", "a ⊙ 1 = a<span class='tag'>Dual identity, also valid</span>"]]},
+
+{"title": "Summary", "clear": 1, "say": "To sum up. A lattice requires commutativity, associativity and absorption. The distributive lattice adds distributivity. And the Boolean algebra adds zero, one and the complements, from which come involution, domination, De Morgan and duality. Thanks for watching.", "L": [["res", "Lattice: commutative, associative, absorption ⟹ idempotence"], ["res", "+ distributivity ⟹ Distributive lattice"], ["res", "+ 0, 1, ∼a ⟹ Boolean algebra ⟹ involution, domination, De Morgan, duality"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){const d=document.createElement('div');d.className='l hyp';d.innerHTML=s.pin;if(k<n)d.style.animation='none';pins.appendChild(d)}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' plus ').replace(/⊙/g,' times ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Replay'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Resume'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pause';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/andrew|guy|brian|christopher|eric|david|mark|male|google us english$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Algebraic structures";$('sub').textContent="Summary: lattice, distributive lattice and Boolean algebra";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>代数结构</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:30%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>备忘</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ 开始</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>语速 <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">录制模式 (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"zh-CN",
+"meta":{"nivel": 0, "titulo": "代数结构", "enunciado": "总结：格、分配格与布尔代数", "datos": ["格", "分配格", "布尔代数", "布尔代数的定理", "对偶原理"]},
+"steps":[
+{"title": "代数结构", "sub": "总结：格、分配格与布尔代数", "clear": 1, "say": "大家好。在这个视频里，我们直接用公式复习三种层层包含的代数结构：格、分配格和布尔代数。", "L": [["txt", "格  ⊂  分配格  ⊂  布尔代数"]]},
+
+{"title": "格", "clear": 1, "say": "先从格开始。如果两个运算都是封闭的二元运算，并且对 B 中所有的 a、b、c 满足某些性质，那么三元组 B、圆圈加号、圆圈点号就是一个格。", "L": [["hyp", "(B, ⊕, ⊙) 是格<span class='tag'>⊕, ⊙ 是封闭的二元运算</span>"], ["hyp", "对所有  a, b, c ∈ B  成立"]]},
+
+{"say": "第一个性质，交换律。a 加 b 等于 b 加 a。a 乘 b 等于 b 乘 a。", "L": [["sub", "a ⊕ b = b ⊕ a<span class='tag'>交换律</span>"], ["sub", "a ⊙ b = b ⊙ a<span class='tag'>交换律</span>"]]},
+
+{"say": "第二个性质，结合律。a 加上 b 加 c，等于 a 加 b 再加 c。乘法也一样：a 乘以 b 乘 c，等于 a 乘 b 再乘 c。", "L": [["sub", "a ⊕ (b ⊕ c) = (a ⊕ b) ⊕ c<span class='tag'>结合律</span>"], ["sub", "a ⊙ (b ⊙ c) = (a ⊙ b) ⊙ c<span class='tag'>结合律</span>"]]},
+
+{"say": "第三个性质，吸收律。a 加上 a 乘 b，等于 a。a 乘以 a 加 b，等于 a。每个运算都吸收另一个运算。", "L": [["sub", "a ⊕ (a ⊙ b) = a<span class='tag'>吸收律</span>"], ["sub", "a ⊙ (a ⊕ b) = a<span class='tag'>吸收律</span>"]]},
+
+{"say": "由这些公理可以推出一个定理：幂等律。a 加 a 等于 a，a 乘 a 等于 a。一个元素与自身运算，什么也不改变。", "L": [["res", "a ⊕ a = a<span class='tag'>定理：幂等律</span>"], ["res", "a ⊙ a = a<span class='tag'>定理：幂等律</span>"]]},
+
+{"say": "我们在左边记下格的要点：交换律、结合律和吸收律。", "pin": "格：交换律、结合律、吸收律"},
+
+{"title": "分配格", "clear": 1, "say": "接下来是分配格。它是在格的基础上，再满足分配律。", "L": [["goal", "分配格  =  格  +  分配律"]]},
+
+{"say": "每个运算对另一个运算都满足分配律。a 加上 b 乘 c，等于 a 加 b 的结果，乘以 a 加 c 的结果。a 乘以 b 加 c，等于 a 乘 b 的结果，加上 a 乘 c 的结果。", "L": [["sub", "a ⊕ (b ⊙ c) = (a ⊕ b) ⊙ (a ⊕ c)<span class='tag'>分配律</span>"], ["sub", "a ⊙ (b ⊕ c) = (a ⊙ b) ⊕ (a ⊙ c)<span class='tag'>分配律</span>"]]},
+
+{"title": "布尔代数", "clear": 1, "say": "现在来到布尔代数。它是一个分配格，并且还有最小元零、最大元一，以及每个元素的补元。", "L": [["goal", "布尔代数  =  分配格  +  0, 1  +  补元"]]},
+
+{"say": "零是加法的单位元，一是乘法的单位元。a 加零等于 a，a 乘一等于 a。", "L": [["sub", "a ⊕ 0 = a<span class='tag'>0 是 ⊕ 的单位元</span>"], ["sub", "a ⊙ 1 = a<span class='tag'>1 是 ⊙ 的单位元</span>"]]},
+
+{"say": "每个元素 a 都有一个补元，记作在 a 前面加一个波浪号。它必须同时满足两个条件：a 加它的补元等于一，a 乘它的补元等于零。", "L": [["sub", "a ⊕ ∼a = 1<span class='tag'>补元（两条必须同时成立）</span>"], ["sub", "a ⊙ ∼a = 0<span class='tag'>补元（两条必须同时成立）</span>"]]},
+
+{"say": "因为它是分配格，所以每个元素的补元是唯一的。此外，零的补元是一。", "L": [["res", "每个 a 的 ∼a 唯一"], ["res", "∼0 = 1"]]},
+
+{"say": "我们在左边记下布尔代数的要点。", "pin": "布尔代数：分配格 + 0、1 + 补元"},
+
+{"title": "布尔代数的定理", "clear": 1, "say": "布尔代数中有几个定理成立。第一个是对合律：a 的补元的补元就是 a。", "L": [["res", "∼(∼a) = a<span class='tag'>对合律</span>"]]},
+
+{"say": "第二个是支配律。a 加一等于一，a 乘零等于零。", "L": [["res", "a ⊕ 1 = 1<span class='tag'>支配律</span>"], ["res", "a ⊙ 0 = 0<span class='tag'>支配律</span>"]]},
+
+{"say": "第三个是德摩根律。a 加 b，等于 a 的补元乘 b 的补元，再取补元。a 乘 b，等于 a 的补元加 b 的补元，再取补元。", "L": [["res", "a ⊕ b = ∼(∼a ⊙ ∼b)<span class='tag'>德摩根律</span>"], ["res", "a ⊙ b = ∼(∼a ⊕ ∼b)<span class='tag'>德摩根律</span>"]]},
+
+{"title": "对偶原理", "clear": 1, "say": "最后是对偶原理。任何成立的恒等式，把加法和乘法互换，同时把零和一互换，仍然成立。", "L": [["goal", "⊕ ↔ ⊙,      0 ↔ 1"]]},
+
+{"say": "看一个例子。a 加零等于 a 是一个成立的恒等式。把运算和单位元互换，得到 a 乘一等于 a，它同样成立。", "L": [["sub", "a ⊕ 0 = a<span class='tag'>成立的恒等式</span>"], ["sub", "⊕ ↔ ⊙,  0 ↔ 1"], ["res", "a ⊙ 1 = a<span class='tag'>对偶恒等式，同样成立</span>"]]},
+
+{"title": "总结", "clear": 1, "say": "总结一下。格要求交换律、结合律和吸收律。分配格再加上分配律。布尔代数再加上零、一和补元，由此得到对合律、支配律、德摩根律和对偶原理。感谢观看。", "L": [["res", "格：交换律、结合律、吸收律 ⟹ 幂等律"], ["res", "+ 分配律 ⟹ 分配格"], ["res", "+ 0, 1, ∼a ⟹ 布尔代数 ⟹ 对合律、支配律、德摩根律、对偶原理"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){const d=document.createElement('div');d.className='l hyp';d.innerHTML=s.pin;if(k<n)d.style.animation='none';pins.appendChild(d)}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' 加 ').replace(/⊙/g,' 乘 ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ 重播'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ 继续'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ 暂停';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^zh/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/yunyang|yunxi|yunjian|kangkang|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="代数结构";$('sub').textContent="总结：格、分配格与布尔代数";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
