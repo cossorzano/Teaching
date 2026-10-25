@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ল্যাটিস ও বুলীয় বীজগণিত</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:30%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>মনে রাখুন</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ শুরু</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>গতি <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">রেকর্ডিং মোড (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"bn-BD",
+"meta":{"nivel": 0, "titulo": "ল্যাটিস ও বুলীয় বীজগণিত", "enunciado": "অধ্যায়ের তত্ত্ব: সেটের প্রক্রিয়া ও বীজগাণিতিক কাঠামো", "datos": ["১. ল্যাটিস", "২. বণ্টনশীল ল্যাটিস", "৩. বুলীয় বীজগণিত", "৪. সেটের বুলীয় বীজগণিত", "৫. অন্তর ও প্রতিসম অন্তর", "৬. কার্তেসীয় গুণফল"]},
+"steps":[
+{"title": "ল্যাটিস ও বুলীয় বীজগণিত", "sub": "তত্ত্ব · সেট ও প্রক্রিয়া", "clear": 1, "say": "নমস্কার। এই ভিডিওতে আমরা সেই তত্ত্ব দেখব যা পুরো অধ্যায় জুড়ে ব্যবহার করব: সেটের মধ্যে প্রক্রিয়াগুলোকে কীভাবে আনুষ্ঠানিক রূপ দেওয়া যায়, এবং সেগুলো মেলালে কোন বীজগাণিতিক কাঠামো তৈরি হয়। আমরা খুব ধীরে এগোব, একটি একটি করে সংজ্ঞা নিয়ে, প্রতিটি ধাপে উদাহরণসহ।", "L": [["txt", "সেটের প্রক্রিয়া ⟶ বীজগাণিতিক কাঠামো"]]},
+
+{"title": "১. ল্যাটিস", "clear": 1, "say": "একটি ধারণা দিয়ে শুরু করি। সেটের সংযোগ ও ছেদ অনেক ধর্ম মেনে চলে। সেগুলো একটি একটি করে প্রমাণ না করে, আমরা কেবল মৌলিক ধর্মগুলো রাখি এবং সেগুলোর একটি নাম দিই: এই বিমূর্ত কাঠামোকে বলে ল্যাটিস।", "L": [["txt", "সংযোগ ∪ ও ছেদ ∩ এর কিছু সাধারণ ধর্ম আছে"], ["goal", "বিমূর্তায়ন: ল্যাটিস"]]},
+
+{"say": "ধরা যাক B যেকোনো একটি সেট, যার উপর দুটি আবদ্ধ দ্বিমিক প্রক্রিয়া আছে, যেগুলো আমরা বৃত্তের ভেতরে প্লাস আর বৃত্তের ভেতরে বিন্দু চিহ্ন দিয়ে লিখি। দ্বিমিক মানে একবারে দুটি উপাদানের উপর কাজ করে। আবদ্ধ মানে ফলাফল B এর মধ্যেই থাকে। উদাহরণস্বরূপ, B হতে পারে কোনো সার্বিক সেট U এর ঘাত সেট, যা আমরা পরে দেখব, যেখানে বৃত্তের ভেতরে প্লাস হলো সংযোগ আর বৃত্তের ভেতরে বিন্দু হলো ছেদ।", "L": [["hyp", "B সেট,  ⊕, ⊙ : B × B ⟶ B<span class='tag'>প্রদত্ত: দুটি আবদ্ধ দ্বিমিক প্রক্রিয়া</span>"], ["txt", "উদাহরণ: B = U এর ঘাত সেট,  ⊕ = ∪,  ⊙ = ∩"]]},
+
+{"say": "আমরা বলি যে এই প্রক্রিয়াগুলোসহ B একটি ল্যাটিস, যদি B এর সব a, b ও c এর জন্য তিন ধরনের ধর্ম খাটে। প্রথমটি বিনিময় ধর্ম: দুটি উপাদানের ক্রম গুরুত্বপূর্ণ নয়। সেটের ক্ষেত্রে: A সংযোগ B সমান B সংযোগ A, এবং A ছেদ B সমান B ছেদ A।", "L": [["hyp", "a ⊕ b = b ⊕ a,     a ⊙ b = b ⊙ a<span class='tag'>বিনিময় ধর্ম</span>"], ["txt", "সেটের ক্ষেত্রে:  A ∪ B = B ∪ A,   A ∩ B = B ∩ A"]]},
+
+{"say": "দ্বিতীয়টি সংযোজন ধর্ম: তিনটি উপাদানের উপর প্রক্রিয়া করলে কোন দুটিকে আগে জোট বাঁধি তাতে কিছু যায় আসে না। এর ফলে আমরা a প্লাস b প্লাস c বন্ধনী ছাড়াই, কোনো অস্পষ্টতা ছাড়াই লিখতে পারি।", "L": [["hyp", "a ⊕ (b ⊕ c) = (a ⊕ b) ⊕ c<span class='tag'>⊕ এর সংযোজন ধর্ম</span>"], ["hyp", "a ⊙ (b ⊙ c) = (a ⊙ b) ⊙ c<span class='tag'>⊙ এর সংযোজন ধর্ম</span>"]]},
+
+{"say": "তৃতীয়টি শোষণ, যা দুটি প্রক্রিয়াকে পরস্পরের সঙ্গে যুক্ত করে। কোনো উপাদান a এর সঙ্গে যদি অন্য যেকোনো উপাদানের সঙ্গে তার গুণফল যোগ করি, আবার a পাই। আর প্রক্রিয়া দুটি অদলবদল করলেও একই কথা।", "L": [["hyp", "a ⊕ (a ⊙ b) = a<span class='tag'>শোষণ ১</span>"], ["hyp", "a ⊙ (a ⊕ b) = a<span class='tag'>শোষণ ২</span>"]]},
+
+{"say": "দেখি সেটের ক্ষেত্রে এটা কেন স্বাভাবিক। A সংযোগ, A ছেদ B, এর মান A হওয়াই যুক্তিসঙ্গত: ছেদ A এর মধ্যে আছে, তাই সেটিকে A এর সঙ্গে যুক্ত করলে নতুন কিছু যোগ হয় না। এই কারণেই A ছেদকে শোষণ করে।", "L": [["txt", "A ∩ B ⊆ A   ⟹   A ∪ (A ∩ B) = A"]]},
+
+{"say": "সংক্ষেপে বলি। ল্যাটিস হলো এমন একটি সেট যার উপর দুটি আবদ্ধ প্রক্রিয়া আছে, যেগুলো বিনিময়যোগ্য, সংযোজনযোগ্য, এবং দুটি শোষণ বিধি মেনে চলে। এটা আমরা বাঁ দিকে লিখে রাখি।", "pin": "ল্যাটিস: ⊕, ⊙ আবদ্ধ, বিনিময়যোগ্য, সংযোজনযোগ্য, শোষণসহ"},
+
+{"say": "এই স্বতঃসিদ্ধগুলো থেকে প্রমাণ করা যায় যে দুটি প্রক্রিয়াই স্বগুণী: কোনো উপাদানকে নিজের সঙ্গে প্রক্রিয়া করলে কোনো পরিবর্তন হয় না। সেটের ক্ষেত্রে: A সংযোগ A সমান A, এবং A ছেদ A সমান A।", "L": [["res", "a ⊕ a = a,     a ⊙ a = a<span class='tag'>স্বগুণিতা (শোষণ দিয়ে প্রমাণ হয়)</span>"], ["txt", "সেটের ক্ষেত্রে:  A ∪ A = A,  A ∩ A = A"]]},
+
+{"title": "২. বণ্টনশীল ল্যাটিস", "clear": 1, "say": "এবার একটি অতিরিক্ত, খুবই গুরুত্বপূর্ণ ধর্মে যাই: বণ্টন ধর্ম। একটি ল্যাটিস বণ্টনশীল হয় যদি প্রতিটি প্রক্রিয়া অন্যটির উপর বণ্টিত হয়।", "L": [["goal", "বণ্টনশীল ল্যাটিস"]]},
+
+{"say": "দুটি বিধি লিখি। প্রথমটি বলে, a প্লাস, b গুণ c, সমান, a প্লাস b, সবটা গুণ, a প্লাস c। দ্বিতীয়টি একই, ভূমিকা অদলবদল করে।", "L": [["hyp", "a ⊕ (b ⊙ c) = (a ⊕ b) ⊙ (a ⊕ c)"], ["hyp", "a ⊙ (b ⊕ c) = (a ⊙ b) ⊕ (a ⊙ c)"]]},
+
+{"say": "সাধারণ বীজগণিতের সঙ্গে একটি গুরুত্বপূর্ণ পার্থক্য খেয়াল করুন। সংখ্যার ক্ষেত্রে গুণ যোগের উপর বণ্টিত হয়, কিন্তু যোগ গুণের উপর বণ্টিত হয় না। এখানে, বরং, দুটি বিধিই একসঙ্গে খাটে।", "L": [["txt", "সংখ্যা:  a·(b + c) = a·b + a·c   ✔"], ["warn", "সংখ্যা:  a + (b·c) = (a + b)·(a + c)   ✘<span class='tag'>সংখ্যার ক্ষেত্রে মিথ্যা</span>"], ["res", "বণ্টনশীল ল্যাটিসে দুটিই খাটে"]]},
+
+{"say": "এই ধর্মটি খুব গুরুত্বপূর্ণ, কারণ এটি জটিল রাশিকে সরলতর সমন্বয়ে রূপান্তর করতে দেয়। এটা লিখে রাখি।", "pin": "বণ্টনশীল: ⊕ ও ⊙ একে অপরের উপর বণ্টিত হয়"},
+
+{"title": "৩. বুলীয় বীজগণিত", "clear": 1, "say": "এবার আরও কাঠামো যোগ করি। এমন একটি বণ্টনশীল ল্যাটিস কল্পনা করুন যেখানে একটি ক্ষুদ্রতম উপাদান আছে, যাকে আমরা শূন্য বলি, এবং একটি বৃহত্তম উপাদান আছে, যাকে আমরা এক বলি। সেটের ক্ষেত্রে এগুলো হবে ফাঁকা সেট ও সার্বিক সেট।", "L": [["goal", "বণ্টনশীল ল্যাটিস + 0 + 1 + পূরক"]]},
+
+{"say": "শূন্য ও এক নিরপেক্ষ উপাদানের মতো আচরণ করে। কোনো উপাদানের সঙ্গে শূন্য যোগ করলে তা বদলায় না, একে গুণ করলেও না। সেটের ক্ষেত্রে: A সংযোগ ফাঁকা সেট হলো A, এবং A ছেদ সার্বিক সেট U হলো A।", "L": [["hyp", "a ⊕ 0 = a,     a ⊙ 1 = a<span class='tag'>নিরপেক্ষ উপাদান</span>"], ["txt", "সেটের ক্ষেত্রে:  A ∪ ∅ = A,   A ∩ U = A"]]},
+
+{"say": "এছাড়া, আমরা চাই প্রতিটি উপাদান a এর একটি পূরক থাকুক, যা আমরা সামনে একটি টিল্ডা দিয়ে লিখি। পূরক একসঙ্গে দুটি শর্ত মানে। a এর সঙ্গে যোগ করলে এক হয়। a দিয়ে গুণ করলে শূন্য হয়। সেটের ক্ষেত্রে: A সংযোগ তার পূরক হলো সার্বিক সেট U, এবং A ছেদ তার পূরক হলো ফাঁকা সেট।", "L": [["hyp", "a ⊕ ∼a = 1<span class='tag'>পূরক</span>"], ["hyp", "a ⊙ ∼a = 0<span class='tag'>পূরক</span>"], ["txt", "সেটের ক্ষেত্রে:  A ∪ A<sup>c</sup> = U,   A ∩ A<sup>c</sup> = ∅"]]},
+
+{"say": "যখন এই সব শর্ত পূরণ হয়, তখন কাঠামোটিকে বলে বুলীয় বীজগণিত। এটা আমরা বাঁ দিকে, আগেরগুলোর পাশে লিখে রাখি।", "pin": "বুলীয়: বণ্টনশীল + 0, 1 + পূরক"},
+
+{"say": "বুলীয় বীজগণিতে প্রতিটি উপাদানের পূরক অনন্য। এবং আবর্তন বিধি খাটে: a এর পূরকের পূরক হলো a নিজেই। সেটের ক্ষেত্রে, A এর পূরকের পূরক হলো A।", "L": [["res", "∼(∼a) = a<span class='tag'>আবর্তন</span>"], ["txt", "সেটের ক্ষেত্রে:  (A<sup>c</sup>)<sup>c</sup> = A"]]},
+
+{"say": "আধিপত্য বিধিও খাটে। যেকোনো উপাদানের সঙ্গে এক যোগ করলে এক হয়। যেকোনো উপাদানকে শূন্য দিয়ে গুণ করলে শূন্য হয়। লক্ষ করুন, এক যোগের উপর আধিপত্য করে আর শূন্য গুণের উপর। সেটের ক্ষেত্রে: A সংযোগ U হলো U, এবং A ছেদ ফাঁকা সেট হলো ফাঁকা সেট।", "L": [["res", "a ⊕ 1 = 1,     a ⊙ 0 = 0<span class='tag'>আধিপত্য</span>"], ["txt", "সেটের ক্ষেত্রে:  A ∪ U = U,   A ∩ ∅ = ∅"]]},
+
+{"say": "আর ডি মরগানের বিধি। a ও b এর যোগফল হলো তাদের পূরকদের গুণফলের পূরক। আর অন্যটি, প্রক্রিয়া অদলবদল করে। এগুলো দিয়ে পূরকের মাধ্যমে এক প্রক্রিয়া থেকে অন্যটিতে যাওয়া যায়। সেটের ক্ষেত্রে: A সংযোগ B হলো, A এর পূরক ছেদ B এর পূরক, এর পূরক। আর A ছেদ B হলো, A এর পূরক সংযোগ B এর পূরক, এর পূরক।", "L": [["res", "a ⊕ b = ∼(∼a ⊙ ∼b)"], ["res", "a ⊙ b = ∼(∼a ⊕ ∼b)<span class='tag'>ডি মরগানের বিধি</span>"], ["txt", "সেটের ক্ষেত্রে:  A ∪ B = (A<sup>c</sup> ∩ B<sup>c</sup>)<sup>c</sup>"], ["txt", "সেটের ক্ষেত্রে:  A ∩ B = (A<sup>c</sup> ∪ B<sup>c</sup>)<sup>c</sup>"]]},
+
+{"say": "একটি মৌলিক বৈশিষ্ট্য হলো দ্বৈততার নীতি। যেকোনো সত্য অভেদ সত্যই থাকে যদি আমরা দুটি প্রক্রিয়া, এবং একই সঙ্গে শূন্য ও এক অদলবদল করি। একটি উদাহরণ দেখি: যদি a প্লাস শূন্য হয় a, তবে a গুণ এক হয় a।", "L": [["sub", "a ⊕ 0 = a<span class='tag'>সত্য অভেদ</span>"], ["sub", "⊕ ↔ ⊙,   0 ↔ 1<span class='tag'>দ্বৈত অদলবদল</span>"], ["res", "a ⊙ 1 = a<span class='tag'>দ্বৈত অভেদ, এটিও সত্য</span>"]]},
+
+{"title": "৪. সেটের বুলীয় বীজগণিত", "clear": 1, "say": "এবার এসব সেট দিয়ে বাস্তবে দেখি। একটি সার্বিক সেট U দেওয়া থাকলে, U এর সব উপসেট নিয়ে গঠিত সেটকে বলে U এর ঘাত সেট। এটি একটি অলংকৃত বড় হাতের P দিয়ে লেখা হয়। যেমন, যদি U হয় এক ও দুই নিয়ে গঠিত সেট, তবে U এর ঘাত সেটে চারটি উপাদান: ফাঁকা সেট, সেট এক, সেট দুই, এবং সেট এক, দুই।", "L": [["txt", "P(U) = { A | A ⊆ U }"], ["txt", "উদাহরণ: U = {1, 2}  ⟹  P(U) = { ∅, {1}, {2}, {1,2} }"]]},
+
+{"say": "সংযোগ ও ছেদকে প্রক্রিয়া হিসেবে নিলে, U এর ঘাত সেট একটি বুলীয় বীজগণিত। এই সারণিটি বিমূর্ত ভাষা আর সেটের ভাষার মধ্যে অভিধান।", "L": [["hyp", "⊕  ⟷  ∪   (সংযোগ)"], ["hyp", "⊙  ⟷  ∩   (ছেদ)"], ["hyp", "0  ⟷  ∅   (ফাঁকা সেট)"], ["hyp", "1  ⟷  U   (সার্বিক সেট)"], ["hyp", "∼A  ⟷  A<sup>c</sup>   (পূরক)"]]},
+
+{"say": "A এর পূরক হলো U এর সেই উপাদানগুলোর সেট যেগুলো A তে নেই। যেমন, যদি U হয় এক, দুই, তিন, এবং A হয় সেট এক, তবে A এর পূরক হলো দুই, তিন।", "L": [["sub", "A<sup>c</sup> = { x ∈ U | x ∉ A }<span class='tag'>সংজ্ঞা</span>"], ["txt", "উদাহরণ: U = {1,2,3},  A = {1}  ⟹  A<sup>c</sup> = {2,3}"]]},
+
+{"say": "আরেকটি কাজের তথ্য। দুটি সেট A ও B সমান হয় যদি এবং কেবল যদি প্রত্যেকটি অন্যটির মধ্যে থাকে। সমতা প্রমাণের এটাই সাধারণ কৌশল: দুটি অন্তর্ভুক্তি আলাদাভাবে প্রমাণ করা।", "L": [["sub", "A = B  ⟺  A ⊆ B  এবং  B ⊆ A"], ["txt", "A ⊆ B প্রমাণ করতে: x ∈ A নিয়ে x ∈ B নির্ণয় করুন"]]},
+
+{"title": "৫. অন্তর ও প্রতিসম অন্তর", "clear": 1, "say": "পূরক থেকে অন্যান্য প্রক্রিয়া সংজ্ঞায়িত হয়। A বিয়োগ B এর অন্তর হলো সেই উপাদানগুলোর সেট যেগুলো A তে আছে কিন্তু B তে নেই। যেমন, সেট এক, দুই, তিন বিয়োগ সেট দুই হলো সেট এক, তিন।", "L": [["sub", "A ∖ B = { x ∈ A | x ∉ B } = A ∩ B<sup>c</sup><span class='tag'>অন্তর</span>"], ["txt", "উদাহরণ: {1,2,3} ∖ {2} = {1,3}"]]},
+
+{"say": "A ছেদ B এর পূরক, এই সমতাটি খুব কাজের: এটি অন্তরকে ছেদে রূপান্তর করে এবং আমাদের জানা সব ধর্ম ব্যবহার করতে দেয়। মনে রাখবেন, অন্তর বিনিময়যোগ্য নয়।", "L": [["warn", "A ∖ B ≠ B ∖ A  (সাধারণভাবে)<span class='tag'>সাবধান</span>"]]},
+
+{"say": "প্রতিসম অন্তর সেই উপাদানগুলো নেয় যেগুলো দুটি সেটের কেবল একটিতে আছে। এটি পাওয়া যায় A বিয়োগ B এর সঙ্গে B বিয়োগ A এর সংযোগ নিয়ে। যেমন, A ধরি এক, দুই, আর B ধরি দুই, তিন। A বিয়োগ B হলো এক, B বিয়োগ A হলো তিন, আর সংযোগ হলো এক, তিন।", "L": [["sub", "A △ B = (A ∖ B) ∪ (B ∖ A)<span class='tag'>প্রতিসম অন্তর</span>"], ["txt", "উদাহরণ: {1,2} △ {2,3} = {1} ∪ {3} = {1,3}"]]},
+
+{"say": "এই প্রক্রিয়াগুলো এমন কিছু অভেদ মানে যা দিয়ে রাশি নতুন করে লেখা যায়। প্রতিসম অন্তর হলো ছেদ বাদ দিয়ে সংযোগ: যা দুটির যেকোনো একটিতে আছে, তা থেকে যা দুটিতেই আছে তা বাদ দিয়ে। দ্বিতীয়টি বলে, A বিয়োগ B হলো A এবং A ছেদ B এর প্রতিসম অন্তর। আগের উদাহরণ দিয়ে প্রথমটি যাচাই করি: সংযোগ হলো এক, দুই, তিন; ছেদ হলো দুই; আর এক, দুই, তিন বিয়োগ দুই হলো এক, তিন, যা ফলাফলের সঙ্গে মেলে।", "L": [["res", "A △ B = (A ∪ B) ∖ (A ∩ B)"], ["res", "A ∖ B = A △ (A ∩ B)"], ["txt", "আগের উদাহরণ দিয়ে যাচাই: (A ∪ B) ∖ (A ∩ B) = {1,2,3} ∖ {2} = {1,3} ✔"]]},
+
+{"title": "৬. কার্তেসীয় গুণফল", "clear": 1, "say": "শেষ গঠন: কার্তেসীয় গুণফল। সেট A এক, A দুই, থেকে A n পর্যন্ত দেওয়া থাকলে, তাদের গুণফল হলো সেই সব n-টাপলের সেট যাদের i-তম উপাংশ A i এর অন্তর্গত।", "L": [["sub", "A₁ × A₂ × ⋯ × Aₙ = { (x₁, x₂, …, xₙ) | xᵢ ∈ Aᵢ }<span class='tag'>সংজ্ঞা</span>"]]},
+
+{"say": "দুটি সেট নিয়ে একটি উদাহরণ দেখি। A হলো এক, দুই, আর B হলো a, b। তাদের গুণফলে সেই সব জোড় আছে যাদের প্রথম উপাংশ A থেকে আর দ্বিতীয়টি B থেকে। মোট চারটি জোড়। ক্রম গুরুত্বপূর্ণ: B গুণ A এর গুণফল আলাদা।", "L": [["txt", "A = {1,2},   B = {a,b}"], ["res", "A × B = { (1,a), (1,b), (2,a), (2,b) }"], ["warn", "A × B ≠ B × A  (সাধারণভাবে)"]]},
+
+{"say": "বহুচলক অপেক্ষক, লেখচিত্র, এবং সমতল ও ত্রিমাত্রিক স্থানের অঞ্চলের জন্য এই প্রক্রিয়া অপরিহার্য। যেমন, সমতল হলো বাস্তব রেখার সঙ্গে তার নিজের গুণফল।", "L": [["txt", "ℝ × ℝ = ℝ²  (সমতল),    ℝ × ℝ × ℝ = ℝ³  (ত্রিমাত্রিক স্থান)"]]},
+
+{"say": "কার্তেসীয় গুণফল সংযোগের সঙ্গে ভালোভাবে মিলে যায়। A ও B এর সংযোগ, গুণ C, সমান A গুণ C আর B গুণ C এর সংযোগ। কারণ: একটি জোড় x, y প্রথম সেটে থাকে যদি x থাকে A তে বা B তে, এবং y থাকে C তে। এটা বলার মতোই যে জোড়টি A গুণ C তে আছে, অথবা B গুণ C তে।", "L": [["res", "(A ∪ B) × C = (A × C) ∪ (B × C)"], ["txt", "(x,y) ∈ (A∪B)×C ⟺ (x ∈ A অথবা x ∈ B) এবং y ∈ C ⟺ (x,y) ∈ A×C অথবা (x,y) ∈ B×C"]]},
+
+{"say": "ছেদের ক্ষেত্রেও একই: একটি জোড় প্রথম সেটে থাকে যদি x থাকে A তে এবং B তে, এবং y থাকে C তে, আর এটা A গুণ C তে এবং একই সঙ্গে B গুণ C তে থাকার সমতুল্য। আর অন্তরের ক্ষেত্রেও একই।", "L": [["res", "(A ∩ B) × C = (A × C) ∩ (B × C)"], ["res", "(A ∖ B) × C = (A × C) ∖ (B × C)"]]},
+
+{"say": "সংযোগের ধর্মটি দুবার প্রয়োগ করলে বিস্তারের সূত্র পাওয়া যায়। A ও B এর সংযোগ, গুণ, C ও D এর সংযোগ, হলো চারটি গুণফলের সংযোগ: A গুণ C, B গুণ C, A গুণ D, এবং B গুণ D। চারটি আয়তক্ষেত্রের কথা ভাবুন।", "L": [["res", "(A ∪ B) × (C ∪ D) = (A × C) ∪ (B × C) ∪ (A × D) ∪ (B × D)"], ["warn", "≠ (A × C) ∪ (B × D)<span class='tag'>সাধারণ ভুল: আড়াআড়ি পদগুলো বাদ পড়েছে</span>"]]},
+
+{"title": "উপসংহার", "clear": 1, "say": "শেষ করার আগে: এই সব অভেদ বিচ্ছিন্ন নিয়ম নয়, বরং পেছনের বীজগাণিতিক কাঠামোর ফলাফল। এগুলো জানলে আত্মবিশ্বাসের সঙ্গে সেট নিয়ে কাজ করা যায়, জটিল অঞ্চলকে সরলতর অংশে ভাগ করা যায়, এবং ডোমেইন ও রেঞ্জ নিয়ে নির্ভুলভাবে যুক্তি করা যায়। অনুশীলনীগুলোতে আমরা এগুলো ব্যবহারিক ও তাত্ত্বিক, দুইভাবেই কাজে লাগাব। দেখার জন্য ধন্যবাদ।", "L": [["res", "ল্যাটিস ⟶ বণ্টনশীল ⟶ বুলীয় বীজগণিত"], ["res", "P(U), সঙ্গে ∪, ∩, ∅, U ও পূরক"], ["res", "অন্তর, প্রতিসম অন্তর ও কার্তেসীয় গুণফল"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){const d=document.createElement('div');d.className='l hyp';d.innerHTML=s.pin;if(k<n)d.style.animation='none';pins.appendChild(d)}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' প্লাস ').replace(/⊙/g,' গুণ ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ আবার চালান'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ চালিয়ে যান'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ বিরতি';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^bn/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/pradeep|bashkar|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="ল্যাটিস ও বুলীয় বীজগণিত";$('sub').textContent="তত্ত্ব · সেট ও প্রক্রিয়া";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

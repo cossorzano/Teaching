@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Retículos y álgebras de Boole</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:30%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Recuerda</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Empezar</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Velocidad <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Modo grabación (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"es-ES",
+"meta":{"nivel":0,"titulo":"Retículos y álgebras de Boole",
+ "enunciado":"Teoría del tema: operaciones con conjuntos y estructuras algebraicas",
+ "datos":["1. Retículos","2. Retículos distributivos","3. Álgebras de Boole","4. Álgebra de Boole de los conjuntos","5. Diferencia y diferencia simétrica","6. Producto cartesiano"]},
+"steps":[
+{"title":"Retículos y álgebras de Boole","sub":"Teoría · Conjuntos y operaciones","clear":1,
+"say":"Hola. En este vídeo vamos a ver la teoría que usaremos en todo el capítulo: cómo formalizar las operaciones entre conjuntos, y qué estructura algebraica aparece al combinarlas. Iremos muy despacio, definición a definición, con ejemplos en cada paso.",
+"L":[["txt","Operaciones con conjuntos ⟶ estructuras algebraicas"]]},
+
+{"title":"1. Retículos","clear":1,
+"say":"Empezamos con una idea. La unión y la intersección de conjuntos cumplen muchas propiedades. En lugar de demostrarlas una por una, nos quedamos con las propiedades esenciales y les damos un nombre: esa estructura abstracta se llama retículo.",
+"L":[["txt","Unión ∪ e intersección ∩ cumplen propiedades comunes"],["goal","Abstracción: retículo"]]},
+
+{"say":"Sea B un conjunto cualquiera, con dos operaciones binarias internas, que escribimos con los símbolos suma redonda y producto redondo. Binaria significa que operan dos elementos cada vez. Interna significa que el resultado sigue estando en B. Como ejemplo, B puede ser el conjunto de partes de un conjunto universal U, que veremos más adelante, con la unión como suma redonda y la intersección como producto redondo.",
+"L":[["hyp","B conjunto,  ⊕, ⊙ : B × B ⟶ B<span class='tag'>Datos: dos operaciones binarias internas</span>"],["txt","Ejemplo: B = partes de U,  ⊕ = ∪,  ⊙ = ∩"]]},
+
+{"say":"Decimos que B con estas operaciones es un retículo si, para todos a, b y c de B, se cumplen tres tipos de propiedades. La primera es la conmutatividad: el orden de los dos elementos no importa. Con conjuntos: A unión B es igual a B unión A, y A intersección B es igual a B intersección A.",
+"L":[["hyp","a ⊕ b = b ⊕ a,     a ⊙ b = b ⊙ a<span class='tag'>Conmutatividad</span>"],["txt","Con conjuntos:  A ∪ B = B ∪ A,   A ∩ B = B ∩ A"]]},
+
+{"say":"La segunda es la asociatividad: al operar tres elementos, no importa qué dos agrupamos primero. Gracias a ella podemos escribir a más b más c sin paréntesis, sin ambigüedad.",
+"L":[["hyp","a ⊕ (b ⊕ c) = (a ⊕ b) ⊕ c<span class='tag'>Asociatividad de ⊕</span>"],["hyp","a ⊙ (b ⊙ c) = (a ⊙ b) ⊙ c<span class='tag'>Asociatividad de ⊙</span>"]]},
+
+{"say":"La tercera es la absorción, que relaciona las dos operaciones entre sí. Si a un elemento a le sumamos su producto con otro cualquiera, volvemos a obtener a. Y lo mismo intercambiando las operaciones.",
+"L":[["hyp","a ⊕ (a ⊙ b) = a<span class='tag'>Absorción 1</span>"],["hyp","a ⊙ (a ⊕ b) = a<span class='tag'>Absorción 2</span>"]]},
+
+{"say":"Veamos por qué es natural con conjuntos. A unión, A intersección B, tiene sentido que sea A: la intersección está contenida en A, así que unirla con A no añade nada nuevo. Por eso A absorbe a la intersección.",
+"L":[["txt","A ∩ B ⊆ A   ⟹   A ∪ (A ∩ B) = A"]]},
+
+{"say":"Resumimos. Un retículo es un conjunto con dos operaciones internas que son conmutativas, asociativas y cumplen las dos leyes de absorción. Lo dejamos anotado a la izquierda.",
+"pin":"Retículo: ⊕, ⊙ internas, conmutativas, asociativas, con absorción"},
+
+{"say":"A partir de estos axiomas se demuestra que ambas operaciones son idempotentes: operar un elemento consigo mismo no produce ningún efecto. Con conjuntos: A unión A es igual a A, y A intersección A es igual a A.",
+"L":[["res","a ⊕ a = a,     a ⊙ a = a<span class='tag'>Idempotencia (se demuestra con la absorción)</span>"],["txt","Con conjuntos:  A ∪ A = A,  A ∩ A = A"]]},
+
+{"title":"2. Retículos distributivos","clear":1,
+"say":"Pasamos a una propiedad extra, muy importante: la distributividad. Un retículo es distributivo si cada operación distribuye respecto de la otra.",
+"L":[["goal","Retículo distributivo"]]},
+
+{"say":"Escribimos las dos leyes. La primera dice que a suma, b producto c, es igual a, a suma b, todo ello producto, a suma c. La segunda es la misma con los papeles intercambiados.",
+"L":[["hyp","a ⊕ (b ⊙ c) = (a ⊕ b) ⊙ (a ⊕ c)"],["hyp","a ⊙ (b ⊕ c) = (a ⊙ b) ⊕ (a ⊙ c)"]]},
+
+{"say":"Cuidado con una diferencia importante respecto al álgebra de siempre. Con números, el producto distribuye respecto de la suma, pero la suma no distribuye respecto del producto. Aquí, en cambio, valen las dos leyes a la vez.",
+"L":[["txt","Números:  a·(b + c) = a·b + a·c   ✔"],["warn","Números:  a + (b·c) = (a + b)·(a + c)   ✘<span class='tag'>Falso con números</span>"],["res","En un retículo distributivo valen las dos"]]},
+
+{"say":"Esta propiedad es clave porque permite transformar expresiones complejas en combinaciones más simples. Lo anotamos.",
+"pin":"Distributivo: ⊕ y ⊙ distribuyen una respecto de la otra"},
+
+{"title":"3. Álgebras de Boole","clear":1,
+"say":"Ahora añadimos más estructura. Imagina un retículo distributivo en el que existe un elemento mínimo, que llamamos cero, y un elemento máximo, que llamamos uno. Con conjuntos, serán el conjunto vacío y el conjunto universal.",
+"L":[["goal","Retículo distributivo + 0 + 1 + complementos"]]},
+
+{"say":"El cero y el uno se comportan como elementos neutros. Sumar cero a un elemento no lo cambia, y multiplicar por uno tampoco. Con conjuntos: A unión el conjunto vacío es A, y A intersección el conjunto universal U es A.",
+"L":[["hyp","a ⊕ 0 = a,     a ⊙ 1 = a<span class='tag'>Elementos neutros</span>"],["txt","Con conjuntos:  A ∪ ∅ = A,   A ∩ U = A"]]},
+
+{"say":"Además, pedimos que cada elemento a tenga un complementario, que escribimos con una tilde delante. El complementario cumple dos condiciones a la vez. Sumado a a da uno. Multiplicado por a da cero. Con conjuntos: A unión su complementario es el universal U, y A intersección su complementario es el conjunto vacío.",
+"L":[["hyp","a ⊕ ∼a = 1<span class='tag'>Complementario</span>"],["hyp","a ⊙ ∼a = 0<span class='tag'>Complementario</span>"],["txt","Con conjuntos:  A ∪ A<sup>c</sup> = U,   A ∩ A<sup>c</sup> = ∅"]]},
+
+{"say":"Cuando se cumplen todas estas condiciones, la estructura se llama álgebra de Boole. La anotamos a la izquierda, junto a lo anterior.",
+"pin":"Boole: distributivo + 0, 1 + complementarios"},
+
+{"say":"En un álgebra de Boole, el complementario de cada elemento es único. Y se cumple la ley de involución: el complementario del complementario de a es el propio a. Con conjuntos, el complementario del complementario de A es A.",
+"L":[["res","∼(∼a) = a<span class='tag'>Involución</span>"],["txt","Con conjuntos:  (A<sup>c</sup>)<sup>c</sup> = A"]]},
+
+{"say":"También se cumplen las leyes de dominación. Sumar uno a cualquier elemento da uno. Multiplicar cualquier elemento por cero da cero. Fíjate que el uno domina a la suma y el cero domina al producto. Con conjuntos: A unión U es U, y A intersección el vacío es el vacío.",
+"L":[["res","a ⊕ 1 = 1,     a ⊙ 0 = 0<span class='tag'>Dominación</span>"],["txt","Con conjuntos:  A ∪ U = U,   A ∩ ∅ = ∅"]]},
+
+{"say":"Y las leyes de De Morgan. La suma de a y b es el complementario del producto de los complementarios. Y la otra, intercambiando operaciones. Sirven para pasar de una operación a la otra a través del complemento. Con conjuntos: A unión B es el complementario de, el complementario de A intersección el complementario de B. Y A intersección B es el complementario de, el complementario de A unión el complementario de B.",
+"L":[["res","a ⊕ b = ∼(∼a ⊙ ∼b)"],["res","a ⊙ b = ∼(∼a ⊕ ∼b)<span class='tag'>Leyes de De Morgan</span>"],["txt","Con conjuntos:  A ∪ B = (A<sup>c</sup> ∩ B<sup>c</sup>)<sup>c</sup>"],["txt","Con conjuntos:  A ∩ B = (A<sup>c</sup> ∪ B<sup>c</sup>)<sup>c</sup>"]]},
+
+{"say":"Una característica esencial es el principio de dualidad. Cualquier identidad válida sigue siéndolo si intercambiamos las dos operaciones, y a la vez el cero y el uno. Lo vemos con un ejemplo: si a más cero es a, entonces a por uno es a.",
+"L":[["sub","a ⊕ 0 = a<span class='tag'>Identidad válida</span>"],["sub","⊕ ↔ ⊙,   0 ↔ 1<span class='tag'>Intercambio dual</span>"],["res","a ⊙ 1 = a<span class='tag'>Identidad dual, también válida</span>"]]},
+
+{"title":"4. Álgebra de Boole de los conjuntos","clear":1,
+"say":"Ahora materializamos todo esto con conjuntos. Dado un conjunto universal U, llamamos partes de U al conjunto formado por todos los subconjuntos de U. Se escribe con una P mayúscula caligráfica. Por ejemplo, si U es el conjunto formado por uno y dos, las partes de U son cuatro: el conjunto vacío, el conjunto uno, el conjunto dos, y el conjunto uno, dos.",
+"L":[["txt","P(U) = { A | A ⊆ U }"],["txt","Ejemplo: U = {1, 2}  ⟹  P(U) = { ∅, {1}, {2}, {1,2} }"]]},
+
+{"say":"Con la unión y la intersección como operaciones, P de U es un álgebra de Boole. Esta tabla es el diccionario entre el lenguaje abstracto y el de conjuntos.",
+"L":[["hyp","⊕  ⟷  ∪   (unión)"],["hyp","⊙  ⟷  ∩   (intersección)"],["hyp","0  ⟷  ∅   (conjunto vacío)"],["hyp","1  ⟷  U   (conjunto universal)"],["hyp","∼A  ⟷  A<sup>c</sup>   (complementario)"]]},
+
+{"say":"El complementario de A es el conjunto de los elementos de U que no pertenecen a A. Por ejemplo, si U es uno, dos, tres, y A es el conjunto uno, el complementario de A es dos, tres.",
+"L":[["sub","A<sup>c</sup> = { x ∈ U | x ∉ A }<span class='tag'>Definición</span>"],["txt","Ejemplo: U = {1,2,3},  A = {1}  ⟹  A<sup>c</sup> = {2,3}"]]},
+
+{"say":"Otro dato útil. Dos conjuntos A y B son iguales si y solo si cada uno está contenido en el otro. Es la técnica habitual para demostrar igualdades: probar las dos inclusiones por separado.",
+"L":[["sub","A = B  ⟺  A ⊆ B  y  B ⊆ A"],["txt","Para probar A ⊆ B: tomar x ∈ A y deducir x ∈ B"]]},
+
+{"title":"5. Diferencia y diferencia simétrica","clear":1,
+"say":"A partir del complementario se definen otras operaciones. La diferencia de A menos B es el conjunto de elementos que están en A pero no en B. Por ejemplo, el conjunto uno, dos, tres menos el conjunto dos es el conjunto uno, tres.",
+"L":[["sub","A ∖ B = { x ∈ A | x ∉ B } = A ∩ B<sup>c</sup><span class='tag'>Diferencia</span>"],["txt","Ejemplo: {1,2,3} ∖ {2} = {1,3}"]]},
+
+{"say":"La igualdad con A intersección el complementario de B es muy útil: nos deja convertir una diferencia en una intersección y usar todas las propiedades que ya conocemos. Ten en cuenta que la diferencia no es conmutativa.",
+"L":[["warn","A ∖ B ≠ B ∖ A  (en general)<span class='tag'>Cuidado</span>"]]},
+
+{"say":"La diferencia simétrica recoge los elementos que están en uno solo de los dos conjuntos. Se obtiene uniendo A menos B con B menos A. Por ejemplo, tomemos A igual a uno, dos, y B igual a dos, tres. A menos B es uno, B menos A es tres, y la unión es uno, tres.",
+"L":[["sub","A △ B = (A ∖ B) ∪ (B ∖ A)<span class='tag'>Diferencia simétrica</span>"],["txt","Ejemplo: {1,2} △ {2,3} = {1} ∪ {3} = {1,3}"]]},
+
+{"say":"Estas operaciones cumplen identidades que permiten reescribir expresiones. La diferencia simétrica es la unión sin la intersección: lo que está en alguno de los dos, quitando lo que está en ambos. La segunda dice que A menos B es la diferencia simétrica de A con A intersección B. Comprobemos la primera con el ejemplo anterior: la unión es uno, dos, tres; la intersección es dos; y uno, dos, tres menos dos es uno, tres, que coincide con el resultado.",
+"L":[["res","A △ B = (A ∪ B) ∖ (A ∩ B)"],["res","A ∖ B = A △ (A ∩ B)"],["txt","Comprobación con el ejemplo anterior: (A ∪ B) ∖ (A ∩ B) = {1,2,3} ∖ {2} = {1,3} ✔"]]},
+
+{"title":"6. Producto cartesiano","clear":1,
+"say":"Última construcción: el producto cartesiano. Dados conjuntos A uno, A dos, hasta A n, su producto es el conjunto de las n-tuplas cuya componente i-ésima pertenece a A i.",
+"L":[["sub","A₁ × A₂ × ⋯ × Aₙ = { (x₁, x₂, …, xₙ) | xᵢ ∈ Aᵢ }<span class='tag'>Definición</span>"]]},
+
+{"say":"Veamos un ejemplo con dos conjuntos. A es uno, dos, y B es a, b. Su producto tiene todas las parejas con primera componente de A y segunda de B. Son cuatro parejas. El orden importa: el producto B por A es distinto.",
+"L":[["txt","A = {1,2},   B = {a,b}"],["res","A × B = { (1,a), (1,b), (2,a), (2,b) }"],["warn","A × B ≠ B × A  (en general)"]]},
+
+{"say":"Esta operación es esencial para funciones de varias variables, gráficas y regiones del plano y del espacio. Por ejemplo, el plano es el producto de la recta real por sí misma.",
+"L":[["txt","ℝ × ℝ = ℝ²  (el plano),    ℝ × ℝ × ℝ = ℝ³  (el espacio)"]]},
+
+{"say":"El producto cartesiano se lleva bien con la unión. Unión de A y B, producto C, es igual a la unión de A por C y B por C. La razón: un par x, y está en el primer conjunto si x está en A o en B, e y está en C. Es lo mismo que decir que está en A por C, o en B por C.",
+"L":[["res","(A ∪ B) × C = (A × C) ∪ (B × C)"],["txt","(x,y) ∈ (A∪B)×C ⟺ (x ∈ A o x ∈ B) y y ∈ C ⟺ (x,y) ∈ A×C o (x,y) ∈ B×C"]]},
+
+{"say":"Con la intersección ocurre igual: un par está en el primer conjunto si x está en A y en B, e y está en C, y eso equivale a estar en A por C y a la vez en B por C. Y con la diferencia, igual.",
+"L":[["res","(A ∩ B) × C = (A × C) ∩ (B × C)"],["res","(A ∖ B) × C = (A × C) ∖ (B × C)"]]},
+
+{"say":"Combinando dos veces la propiedad de la unión se obtiene la fórmula de expansión. Unión de A y B, producto, unión de C y D, es la unión de cuatro productos: A por C, B por C, A por D y B por D. Piensa en cuatro rectángulos.",
+"L":[["res","(A ∪ B) × (C ∪ D) = (A × C) ∪ (B × C) ∪ (A × D) ∪ (B × D)"],["warn","≠ (A × C) ∪ (B × D)<span class='tag'>Error típico: faltan los términos cruzados</span>"]]},
+
+{"title":"Conclusión","clear":1,
+"say":"Para terminar: todas estas identidades no son reglas aisladas, sino consecuencias de la estructura algebraica de fondo. Conocerlas permite manipular conjuntos con seguridad, descomponer regiones complejas en partes más simples y razonar con precisión sobre dominios y recorridos. En los ejercicios las usaremos tanto de forma práctica como teórica. Gracias por ver el vídeo.",
+"L":[["res","Retículo ⟶ distributivo ⟶ álgebra de Boole"],["res","P(U) con ∪, ∩, ∅, U, complementario"],["res","Diferencia, diferencia simétrica y producto cartesiano"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){const d=document.createElement('div');d.className='l hyp';d.textContent=s.pin;if(k<n)d.style.animation='none';pins.appendChild(d)}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' más ').replace(/⊙/g,' por ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Repetir'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Continuar'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pausa';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^es/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/pablo|jorge|diego|enrique|miguel|alvaro|álvaro|male|google español$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent='Retículos y álgebras de Boole';$('sub').textContent='Teoría · Conjuntos y operaciones';
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

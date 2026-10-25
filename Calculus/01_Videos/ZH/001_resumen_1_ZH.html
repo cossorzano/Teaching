@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>格与布尔代数</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:30%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>备忘</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ 开始</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>语速 <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">录制模式 (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"zh-CN",
+"meta":{"nivel": 0, "titulo": "格与布尔代数", "enunciado": "本章理论：集合的运算与代数结构", "datos": ["1. 格", "2. 分配格", "3. 布尔代数", "4. 集合的布尔代数", "5. 差集与对称差", "6. 笛卡尔积"]},
+"steps":[
+{"title": "格与布尔代数", "sub": "理论 · 集合与运算", "clear": 1, "say": "大家好。在这个视频里，我们来学习整章都会用到的理论：如何把集合之间的运算形式化，以及把它们组合起来时会出现什么样的代数结构。我们会讲得很慢，一个定义一个定义地来，每一步都配有例子。", "L": [["txt", "集合的运算 ⟶ 代数结构"]]},
+
+{"title": "1. 格", "clear": 1, "say": "先从一个想法开始。集合的并和交满足许多性质。我们不去逐条证明，而是只保留最本质的性质，并给它们起一个名字：这种抽象结构叫做格。", "L": [["txt", "并 ∪ 与交 ∩ 具有共同的性质"], ["goal", "抽象：格"]]},
+
+{"say": "设 B 是任意一个集合，带有两个封闭的二元运算，我们用圆圈加号和圆圈点号来表示。二元的意思是每次对两个元素进行运算。封闭的意思是运算结果仍然在 B 中。举个例子，B 可以是全集 U 的幂集，后面我们会讲到，这时圆圈加号就是并，圆圈点号就是交。", "L": [["hyp", "B 是集合，  ⊕, ⊙ : B × B ⟶ B<span class='tag'>已知：两个封闭的二元运算</span>"], ["txt", "例：B = U 的幂集，  ⊕ = ∪，  ⊙ = ∩"]]},
+
+{"say": "如果对 B 中所有的 a、b 和 c，下面三类性质都成立，我们就说 B 连同这两个运算构成一个格。第一类是交换律：两个元素的顺序无关紧要。对集合来说：A 并 B 等于 B 并 A，A 交 B 等于 B 交 A。", "L": [["hyp", "a ⊕ b = b ⊕ a,     a ⊙ b = b ⊙ a<span class='tag'>交换律</span>"], ["txt", "对集合：  A ∪ B = B ∪ A，   A ∩ B = B ∩ A"]]},
+
+{"say": "第二类是结合律：对三个元素进行运算时，先把哪两个结合起来都没有关系。有了它，我们就可以不加括号地写 a 加 b 加 c，而不会产生歧义。", "L": [["hyp", "a ⊕ (b ⊕ c) = (a ⊕ b) ⊕ c<span class='tag'>⊕ 的结合律</span>"], ["hyp", "a ⊙ (b ⊙ c) = (a ⊙ b) ⊙ c<span class='tag'>⊙ 的结合律</span>"]]},
+
+{"say": "第三类是吸收律，它把两个运算联系在一起。把元素 a 加上它与任意另一个元素的乘积，结果又回到 a。把两个运算互换，结论同样成立。", "L": [["hyp", "a ⊕ (a ⊙ b) = a<span class='tag'>吸收律 1</span>"], ["hyp", "a ⊙ (a ⊕ b) = a<span class='tag'>吸收律 2</span>"]]},
+
+{"say": "我们看看为什么这对集合来说很自然。A 并上 A 交 B，结果应该是 A：因为交集包含在 A 里，所以把它和 A 并起来不会增加任何新东西。这就是为什么 A 吸收了交集。", "L": [["txt", "A ∩ B ⊆ A   ⟹   A ∪ (A ∩ B) = A"]]},
+
+{"say": "小结一下。格就是带有两个封闭运算的集合，这两个运算满足交换律、结合律以及两条吸收律。我们把它记在左边。", "pin": "格：⊕、⊙ 封闭，满足交换律、结合律与吸收律"},
+
+{"say": "由这些公理可以证明，两个运算都是幂等的：一个元素与自身运算不会产生任何效果。对集合来说：A 并 A 等于 A，A 交 A 等于 A。", "L": [["res", "a ⊕ a = a,     a ⊙ a = a<span class='tag'>幂等律（用吸收律证明）</span>"], ["txt", "对集合：  A ∪ A = A，  A ∩ A = A"]]},
+
+{"title": "2. 分配格", "clear": 1, "say": "接下来是一个额外的、非常重要的性质：分配律。如果每个运算对另一个运算都满足分配律，这个格就叫做分配格。", "L": [["goal", "分配格"]]},
+
+{"say": "我们写出这两条定律。第一条说：a 加上 b 乘 c，等于 a 加 b 的结果，乘以 a 加 c 的结果。第二条是把两个运算的角色互换。", "L": [["hyp", "a ⊕ (b ⊙ c) = (a ⊕ b) ⊙ (a ⊕ c)"], ["hyp", "a ⊙ (b ⊕ c) = (a ⊙ b) ⊕ (a ⊙ c)"]]},
+
+{"say": "注意它和我们熟悉的代数有一个重要区别。对数来说，乘法对加法满足分配律，但加法对乘法并不满足分配律。而在这里，两条定律同时成立。", "L": [["txt", "数：  a·(b + c) = a·b + a·c   ✔"], ["warn", "数：  a + (b·c) = (a + b)·(a + c)   ✘<span class='tag'>对数不成立</span>"], ["res", "在分配格中两条都成立"]]},
+
+{"say": "这个性质非常关键，因为它可以把复杂的表达式化成更简单的组合。我们把它记下来。", "pin": "分配格：⊕ 与 ⊙ 互相满足分配律"},
+
+{"title": "3. 布尔代数", "clear": 1, "say": "现在我们再增加一些结构。设想一个分配格，其中有一个最小元，我们叫它零，还有一个最大元，我们叫它一。对集合来说，它们分别是空集和全集。", "L": [["goal", "分配格 + 0 + 1 + 补元"]]},
+
+{"say": "零和一的作用就像单位元。一个元素加上零不会改变，乘以一也不会改变。对集合来说：A 并空集等于 A，A 交全集 U 等于 A。", "L": [["hyp", "a ⊕ 0 = a,     a ⊙ 1 = a<span class='tag'>单位元</span>"], ["txt", "对集合：  A ∪ ∅ = A，   A ∩ U = A"]]},
+
+{"say": "此外，我们要求每个元素 a 都有一个补元，记作在 a 前面加一个波浪号。补元同时满足两个条件。它与 a 相加得一，与 a 相乘得零。对集合来说：A 并它的补集等于全集 U，A 交它的补集等于空集。", "L": [["hyp", "a ⊕ ∼a = 1<span class='tag'>补元</span>"], ["hyp", "a ⊙ ∼a = 0<span class='tag'>补元</span>"], ["txt", "对集合：  A ∪ A<sup>c</sup> = U，   A ∩ A<sup>c</sup> = ∅"]]},
+
+{"say": "当所有这些条件都满足时，这个结构就叫做布尔代数。我们把它记在左边，和前面的放在一起。", "pin": "布尔代数：分配格 + 0、1 + 补元"},
+
+{"say": "在布尔代数中，每个元素的补元是唯一的。而且对合律成立：a 的补元的补元就是 a 本身。对集合来说，A 的补集的补集就是 A。", "L": [["res", "∼(∼a) = a<span class='tag'>对合律</span>"], ["txt", "对集合：  (A<sup>c</sup>)<sup>c</sup> = A"]]},
+
+{"say": "支配律也成立。任何元素加上一都得一。任何元素乘以零都得零。注意，一支配加法，零支配乘法。对集合来说：A 并 U 等于 U，A 交空集等于空集。", "L": [["res", "a ⊕ 1 = 1,     a ⊙ 0 = 0<span class='tag'>支配律</span>"], ["txt", "对集合：  A ∪ U = U，   A ∩ ∅ = ∅"]]},
+
+{"say": "还有德摩根律。a 与 b 的和，等于它们补元之积的补元。另一条则是把两个运算互换。它们让我们可以借助补元，从一个运算转到另一个运算。对集合来说：A 并 B，等于 A 的补集交 B 的补集，再取补集。A 交 B，等于 A 的补集并 B 的补集，再取补集。", "L": [["res", "a ⊕ b = ∼(∼a ⊙ ∼b)"], ["res", "a ⊙ b = ∼(∼a ⊕ ∼b)<span class='tag'>德摩根律</span>"], ["txt", "对集合：  A ∪ B = (A<sup>c</sup> ∩ B<sup>c</sup>)<sup>c</sup>"], ["txt", "对集合：  A ∩ B = (A<sup>c</sup> ∪ B<sup>c</sup>)<sup>c</sup>"]]},
+
+{"say": "一个本质的特征是对偶原理。任何成立的恒等式，如果把两个运算互换，同时把零和一互换，仍然成立。看一个例子：如果 a 加零等于 a，那么 a 乘一等于 a。", "L": [["sub", "a ⊕ 0 = a<span class='tag'>成立的恒等式</span>"], ["sub", "⊕ ↔ ⊙，   0 ↔ 1<span class='tag'>对偶互换</span>"], ["res", "a ⊙ 1 = a<span class='tag'>对偶恒等式，同样成立</span>"]]},
+
+{"title": "4. 集合的布尔代数", "clear": 1, "say": "现在我们用集合把这一切具体化。给定全集 U，由 U 的所有子集构成的集合叫做 U 的幂集。它用花体大写字母 P 表示。例如，如果 U 是由一和二组成的集合，那么 U 的幂集有四个元素：空集、集合一、集合二，以及集合一、二。", "L": [["txt", "P(U) = { A | A ⊆ U }"], ["txt", "例：U = {1, 2}  ⟹  P(U) = { ∅, {1}, {2}, {1,2} }"]]},
+
+{"say": "以并和交作为运算，U 的幂集是一个布尔代数。这张表就是抽象语言与集合语言之间的对照词典。", "L": [["hyp", "⊕  ⟷  ∪   （并）"], ["hyp", "⊙  ⟷  ∩   （交）"], ["hyp", "0  ⟷  ∅   （空集）"], ["hyp", "1  ⟷  U   （全集）"], ["hyp", "∼A  ⟷  A<sup>c</sup>   （补集）"]]},
+
+{"say": "A 的补集是 U 中所有不属于 A 的元素组成的集合。例如，如果 U 是一、二、三，A 是集合一，那么 A 的补集就是二、三。", "L": [["sub", "A<sup>c</sup> = { x ∈ U | x ∉ A }<span class='tag'>定义</span>"], ["txt", "例：U = {1,2,3}，  A = {1}  ⟹  A<sup>c</sup> = {2,3}"]]},
+
+{"say": "另一个有用的事实。两个集合 A 和 B 相等，当且仅当它们互相包含。这是证明等式的常用方法：分别证明两个包含关系。", "L": [["sub", "A = B  ⟺  A ⊆ B  且  B ⊆ A"], ["txt", "要证 A ⊆ B：任取 x ∈ A，推出 x ∈ B"]]},
+
+{"title": "5. 差集与对称差", "clear": 1, "say": "由补集可以定义其他运算。A 减 B 的差集，是属于 A 但不属于 B 的元素组成的集合。例如，集合一、二、三减去集合二，得到集合一、三。", "L": [["sub", "A ∖ B = { x ∈ A | x ∉ B } = A ∩ B<sup>c</sup><span class='tag'>差集</span>"], ["txt", "例：{1,2,3} ∖ {2} = {1,3}"]]},
+
+{"say": "差集等于 A 交 B 的补集，这一点非常有用：它让我们把差集化为交集，从而用上所有已知的性质。要注意，差集不满足交换律。", "L": [["warn", "A ∖ B ≠ B ∖ A  （一般情况下）<span class='tag'>注意</span>"]]},
+
+{"say": "对称差收集只属于两个集合之一的元素。它由 A 减 B 与 B 减 A 的并集得到。例如，设 A 等于一、二，B 等于二、三。A 减 B 是一，B 减 A 是三，并集就是一、三。", "L": [["sub", "A △ B = (A ∖ B) ∪ (B ∖ A)<span class='tag'>对称差</span>"], ["txt", "例：{1,2} △ {2,3} = {1} ∪ {3} = {1,3}"]]},
+
+{"say": "这些运算满足一些恒等式，可以用来改写表达式。对称差就是并集去掉交集：属于其中一个的元素，去掉同时属于两个的元素。第二个恒等式说，A 减 B 等于 A 与 A 交 B 的对称差。我们用前面的例子验证第一个：并集是一、二、三；交集是二；一、二、三减去二得到一、三，与结果一致。", "L": [["res", "A △ B = (A ∪ B) ∖ (A ∩ B)"], ["res", "A ∖ B = A △ (A ∩ B)"], ["txt", "用前面的例子验证：(A ∪ B) ∖ (A ∩ B) = {1,2,3} ∖ {2} = {1,3} ✔"]]},
+
+{"title": "6. 笛卡尔积", "clear": 1, "say": "最后一个构造：笛卡尔积。给定集合 A 一、A 二，一直到 A n，它们的积是所有 n 元组组成的集合，其中第 i 个分量属于 A i。", "L": [["sub", "A₁ × A₂ × ⋯ × Aₙ = { (x₁, x₂, …, xₙ) | xᵢ ∈ Aᵢ }<span class='tag'>定义</span>"]]},
+
+{"say": "看一个两个集合的例子。A 是一、二，B 是 a、b。它们的积包含所有第一个分量来自 A、第二个分量来自 B 的有序对，一共四个。顺序很重要：B 乘 A 的积是不同的。", "L": [["txt", "A = {1,2}，   B = {a,b}"], ["res", "A × B = { (1,a), (1,b), (2,a), (2,b) }"], ["warn", "A × B ≠ B × A  （一般情况下）"]]},
+
+{"say": "这个运算对多元函数、图像以及平面和空间中的区域都至关重要。例如，平面就是实数轴与自身的积。", "L": [["txt", "ℝ × ℝ = ℝ²  （平面），    ℝ × ℝ × ℝ = ℝ³  （空间）"]]},
+
+{"say": "笛卡尔积与并运算配合得很好。A 并 B 的结果乘以 C，等于 A 乘 C 与 B 乘 C 的并集。理由是：有序对 x、y 属于第一个集合，当且仅当 x 属于 A 或属于 B，并且 y 属于 C。这就等于说它属于 A 乘 C，或者属于 B 乘 C。", "L": [["res", "(A ∪ B) × C = (A × C) ∪ (B × C)"], ["txt", "(x,y) ∈ (A∪B)×C ⟺ (x ∈ A 或 x ∈ B) 且 y ∈ C ⟺ (x,y) ∈ A×C 或 (x,y) ∈ B×C"]]},
+
+{"say": "交运算也一样：有序对属于第一个集合，当且仅当 x 既属于 A 又属于 B，并且 y 属于 C，这等价于它同时属于 A 乘 C 和 B 乘 C。差集也是如此。", "L": [["res", "(A ∩ B) × C = (A × C) ∩ (B × C)"], ["res", "(A ∖ B) × C = (A × C) ∖ (B × C)"]]},
+
+{"say": "把并运算的性质用两次，就得到展开公式。A 并 B 的结果，乘以 C 并 D 的结果，等于四个积的并集：A 乘 C、B 乘 C、A 乘 D 和 B 乘 D。可以想象成四个矩形。", "L": [["res", "(A ∪ B) × (C ∪ D) = (A × C) ∪ (B × C) ∪ (A × D) ∪ (B × D)"], ["warn", "≠ (A × C) ∪ (B × D)<span class='tag'>常见错误：漏掉了交叉项</span>"]]},
+
+{"title": "总结", "clear": 1, "say": "最后总结一下：这些恒等式并不是孤立的规则，而是背后代数结构的推论。掌握了它们，就能放心地处理集合，把复杂的区域分解成更简单的部分，并准确地推理定义域和值域。在习题中，我们会在实践和理论两方面使用它们。感谢观看。", "L": [["res", "格 ⟶ 分配格 ⟶ 布尔代数"], ["res", "P(U)，配以 ∪、∩、∅、U 与补集"], ["res", "差集、对称差与笛卡尔积"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){const d=document.createElement('div');d.className='l hyp';d.innerHTML=s.pin;if(k<n)d.style.animation='none';pins.appendChild(d)}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' 加 ').replace(/⊙/g,' 乘 ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ 重播'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ 继续'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ 暂停';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^zh/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/yunyang|yunxi|yunjian|kangkang|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="格与布尔代数";$('sub').textContent="理论 · 集合与运算";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

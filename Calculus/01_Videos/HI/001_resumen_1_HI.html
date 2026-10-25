@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>जालक और बूलियन बीजगणित</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:30%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>याद रखें</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ शुरू करें</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>गति <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">रिकॉर्डिंग मोड (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"hi-IN",
+"meta":{"nivel": 0, "titulo": "जालक और बूलियन बीजगणित", "enunciado": "अध्याय का सिद्धांत: समुच्चयों पर संक्रियाएँ और बीजीय संरचनाएँ", "datos": ["1. जालक", "2. वितरणशील जालक", "3. बूलियन बीजगणित", "4. समुच्चयों का बूलियन बीजगणित", "5. अंतर और सममित अंतर", "6. कार्तीय गुणनफल"]},
+"steps":[
+{"title": "जालक और बूलियन बीजगणित", "sub": "सिद्धांत · समुच्चय और संक्रियाएँ", "clear": 1, "say": "नमस्ते। इस वीडियो में हम वह सिद्धांत देखेंगे जिसका उपयोग हम पूरे अध्याय में करेंगे: समुच्चयों के बीच संक्रियाओं को औपचारिक रूप कैसे दें, और उन्हें मिलाने पर कौन-सी बीजीय संरचना बनती है। हम बहुत धीरे-धीरे चलेंगे, एक-एक परिभाषा लेकर, और हर कदम पर उदाहरण देंगे।", "L": [["txt", "समुच्चयों पर संक्रियाएँ ⟶ बीजीय संरचनाएँ"]]},
+
+{"title": "1. जालक", "clear": 1, "say": "एक विचार से शुरू करते हैं। समुच्चयों का सम्मिलन और सर्वनिष्ठ बहुत-से गुणों को संतुष्ट करते हैं। उन्हें एक-एक करके सिद्ध करने के बजाय, हम केवल आवश्यक गुणों को रखते हैं और उन्हें एक नाम देते हैं: इस अमूर्त संरचना को जालक कहते हैं।", "L": [["txt", "सम्मिलन ∪ और सर्वनिष्ठ ∩ के गुण समान हैं"], ["goal", "अमूर्तन: जालक"]]},
+
+{"say": "मान लीजिए B कोई भी समुच्चय है, जिस पर दो संवृत द्विआधारी संक्रियाएँ हैं, जिन्हें हम गोले वाले प्लस और गोले वाले बिंदु के चिह्नों से लिखते हैं। द्विआधारी का अर्थ है कि वे एक बार में दो अवयवों पर काम करती हैं। संवृत का अर्थ है कि परिणाम B में ही रहता है। उदाहरण के लिए, B किसी सार्वत्रिक समुच्चय U का घात समुच्चय हो सकता है, जिसे हम आगे देखेंगे, जिसमें गोले वाला प्लस सम्मिलन है और गोले वाला बिंदु सर्वनिष्ठ।", "L": [["hyp", "B समुच्चय,  ⊕, ⊙ : B × B ⟶ B<span class='tag'>दिया है: दो संवृत द्विआधारी संक्रियाएँ</span>"], ["txt", "उदाहरण: B = U का घात समुच्चय,  ⊕ = ∪,  ⊙ = ∩"]]},
+
+{"say": "हम कहते हैं कि इन संक्रियाओं के साथ B एक जालक है, यदि B के सभी a, b और c के लिए तीन प्रकार के गुण लागू होते हैं। पहला है क्रमविनिमेयता: दोनों अवयवों का क्रम मायने नहीं रखता। समुच्चयों के साथ: A सम्मिलन B बराबर है B सम्मिलन A के, और A सर्वनिष्ठ B बराबर है B सर्वनिष्ठ A के।", "L": [["hyp", "a ⊕ b = b ⊕ a,     a ⊙ b = b ⊙ a<span class='tag'>क्रमविनिमेयता</span>"], ["txt", "समुच्चयों के साथ:  A ∪ B = B ∪ A,   A ∩ B = B ∩ A"]]},
+
+{"say": "दूसरा है साहचर्यता: तीन अवयवों पर संक्रिया करते समय इससे फ़र्क नहीं पड़ता कि पहले किन दो को समूहित करें। इसकी वजह से हम a प्लस b प्लस c को बिना कोष्ठक के, बिना किसी अस्पष्टता के लिख सकते हैं।", "L": [["hyp", "a ⊕ (b ⊕ c) = (a ⊕ b) ⊕ c<span class='tag'>⊕ की साहचर्यता</span>"], ["hyp", "a ⊙ (b ⊙ c) = (a ⊙ b) ⊙ c<span class='tag'>⊙ की साहचर्यता</span>"]]},
+
+{"say": "तीसरा है अवशोषण, जो दोनों संक्रियाओं को आपस में जोड़ता है। यदि किसी अवयव a में उसका किसी भी दूसरे अवयव के साथ गुणनफल जोड़ें, तो फिर से a मिलता है। और संक्रियाओं को आपस में बदलने पर भी यही होता है।", "L": [["hyp", "a ⊕ (a ⊙ b) = a<span class='tag'>अवशोषण 1</span>"], ["hyp", "a ⊙ (a ⊕ b) = a<span class='tag'>अवशोषण 2</span>"]]},
+
+{"say": "देखते हैं कि समुच्चयों के साथ यह स्वाभाविक क्यों है। A सम्मिलन, A सर्वनिष्ठ B, का A होना समझ में आता है: सर्वनिष्ठ A में समाहित है, इसलिए उसे A के साथ मिलाने से कुछ नया नहीं जुड़ता। इसीलिए A सर्वनिष्ठ को अवशोषित कर लेता है।", "L": [["txt", "A ∩ B ⊆ A   ⟹   A ∪ (A ∩ B) = A"]]},
+
+{"say": "सारांश में। जालक एक ऐसा समुच्चय है जिस पर दो संवृत संक्रियाएँ हों, जो क्रमविनिमेय और साहचर्य हों, और दोनों अवशोषण नियमों को संतुष्ट करें। इसे हम बाईं ओर लिख लेते हैं।", "pin": "जालक: ⊕, ⊙ संवृत, क्रमविनिमेय, साहचर्य, अवशोषण सहित"},
+
+{"say": "इन अभिगृहीतों से सिद्ध होता है कि दोनों संक्रियाएँ वर्गसम हैं: किसी अवयव पर स्वयं के साथ संक्रिया करने से कोई प्रभाव नहीं पड़ता। समुच्चयों के साथ: A सम्मिलन A बराबर है A के, और A सर्वनिष्ठ A बराबर है A के।", "L": [["res", "a ⊕ a = a,     a ⊙ a = a<span class='tag'>वर्गसमता (अवशोषण से सिद्ध होती है)</span>"], ["txt", "समुच्चयों के साथ:  A ∪ A = A,  A ∩ A = A"]]},
+
+{"title": "2. वितरणशील जालक", "clear": 1, "say": "अब एक अतिरिक्त, बहुत महत्वपूर्ण गुण की ओर चलते हैं: वितरणशीलता। कोई जालक वितरणशील है यदि प्रत्येक संक्रिया दूसरी पर वितरित होती है।", "L": [["goal", "वितरणशील जालक"]]},
+
+{"say": "दोनों नियम लिखते हैं। पहला कहता है कि a प्लस, b गुणा c, बराबर है, a प्लस b, यह सब गुणा, a प्लस c के। दूसरा वही है, भूमिकाएँ बदलकर।", "L": [["hyp", "a ⊕ (b ⊙ c) = (a ⊕ b) ⊙ (a ⊕ c)"], ["hyp", "a ⊙ (b ⊕ c) = (a ⊙ b) ⊕ (a ⊙ c)"]]},
+
+{"say": "सामान्य बीजगणित से एक महत्वपूर्ण अंतर पर ध्यान दीजिए। संख्याओं में गुणा, जोड़ पर वितरित होता है, लेकिन जोड़, गुणा पर वितरित नहीं होता। यहाँ, इसके विपरीत, दोनों नियम एक साथ लागू होते हैं।", "L": [["txt", "संख्याएँ:  a·(b + c) = a·b + a·c   ✔"], ["warn", "संख्याएँ:  a + (b·c) = (a + b)·(a + c)   ✘<span class='tag'>संख्याओं के लिए असत्य</span>"], ["res", "वितरणशील जालक में दोनों लागू होते हैं"]]},
+
+{"say": "यह गुण बहुत महत्वपूर्ण है, क्योंकि इससे जटिल व्यंजकों को सरल संयोजनों में बदला जा सकता है। इसे लिख लेते हैं।", "pin": "वितरणशील: ⊕ और ⊙ एक-दूसरे पर वितरित होती हैं"},
+
+{"title": "3. बूलियन बीजगणित", "clear": 1, "say": "अब और संरचना जोड़ते हैं। एक ऐसे वितरणशील जालक की कल्पना कीजिए जिसमें एक न्यूनतम अवयव हो, जिसे हम शून्य कहते हैं, और एक अधिकतम अवयव हो, जिसे हम एक कहते हैं। समुच्चयों में ये रिक्त समुच्चय और सार्वत्रिक समुच्चय होंगे।", "L": [["goal", "वितरणशील जालक + 0 + 1 + पूरक"]]},
+
+{"say": "शून्य और एक तटस्थ अवयवों की तरह व्यवहार करते हैं। किसी अवयव में शून्य जोड़ने से वह नहीं बदलता, और एक से गुणा करने से भी नहीं। समुच्चयों के साथ: A सम्मिलन रिक्त समुच्चय A है, और A सर्वनिष्ठ सार्वत्रिक समुच्चय U भी A है।", "L": [["hyp", "a ⊕ 0 = a,     a ⊙ 1 = a<span class='tag'>तटस्थ अवयव</span>"], ["txt", "समुच्चयों के साथ:  A ∪ ∅ = A,   A ∩ U = A"]]},
+
+{"say": "इसके अलावा, हम माँग करते हैं कि हर अवयव a का एक पूरक हो, जिसे हम आगे एक टिल्डा लगाकर लिखते हैं। पूरक एक साथ दो शर्तें पूरी करता है। a में जोड़ने पर एक देता है। a से गुणा करने पर शून्य देता है। समुच्चयों के साथ: A सम्मिलन उसका पूरक सार्वत्रिक समुच्चय U है, और A सर्वनिष्ठ उसका पूरक रिक्त समुच्चय है।", "L": [["hyp", "a ⊕ ∼a = 1<span class='tag'>पूरक</span>"], ["hyp", "a ⊙ ∼a = 0<span class='tag'>पूरक</span>"], ["txt", "समुच्चयों के साथ:  A ∪ A<sup>c</sup> = U,   A ∩ A<sup>c</sup> = ∅"]]},
+
+{"say": "जब ये सभी शर्तें पूरी होती हैं, तो इस संरचना को बूलियन बीजगणित कहते हैं। इसे हम बाईं ओर, पिछली बातों के साथ लिख लेते हैं।", "pin": "बूलियन: वितरणशील + 0, 1 + पूरक"},
+
+{"say": "बूलियन बीजगणित में हर अवयव का पूरक अद्वितीय होता है। और अंतर्वलन नियम लागू होता है: a के पूरक का पूरक स्वयं a है। समुच्चयों में, A के पूरक का पूरक A है।", "L": [["res", "∼(∼a) = a<span class='tag'>अंतर्वलन</span>"], ["txt", "समुच्चयों के साथ:  (A<sup>c</sup>)<sup>c</sup> = A"]]},
+
+{"say": "प्रभुत्व नियम भी लागू होते हैं। किसी भी अवयव में एक जोड़ने पर एक मिलता है। किसी भी अवयव को शून्य से गुणा करने पर शून्य मिलता है। ध्यान दीजिए कि एक जोड़ पर हावी है और शून्य गुणा पर। समुच्चयों के साथ: A सम्मिलन U, U है, और A सर्वनिष्ठ रिक्त समुच्चय, रिक्त समुच्चय है।", "L": [["res", "a ⊕ 1 = 1,     a ⊙ 0 = 0<span class='tag'>प्रभुत्व</span>"], ["txt", "समुच्चयों के साथ:  A ∪ U = U,   A ∩ ∅ = ∅"]]},
+
+{"say": "और डी मॉर्गन के नियम। a और b का योग, उनके पूरकों के गुणनफल का पूरक है। और दूसरा, संक्रियाओं को बदलकर। इनसे पूरक के माध्यम से एक संक्रिया से दूसरी पर जाया जा सकता है। समुच्चयों के साथ: A सम्मिलन B, A के पूरक सर्वनिष्ठ B के पूरक, का पूरक है। और A सर्वनिष्ठ B, A के पूरक सम्मिलन B के पूरक, का पूरक है।", "L": [["res", "a ⊕ b = ∼(∼a ⊙ ∼b)"], ["res", "a ⊙ b = ∼(∼a ⊕ ∼b)<span class='tag'>डी मॉर्गन के नियम</span>"], ["txt", "समुच्चयों के साथ:  A ∪ B = (A<sup>c</sup> ∩ B<sup>c</sup>)<sup>c</sup>"], ["txt", "समुच्चयों के साथ:  A ∩ B = (A<sup>c</sup> ∪ B<sup>c</sup>)<sup>c</sup>"]]},
+
+{"say": "एक आवश्यक विशेषता है द्वैत का सिद्धांत। कोई भी सत्य सर्वसमिका सत्य ही रहती है यदि हम दोनों संक्रियाओं को, और साथ ही शून्य और एक को आपस में बदल दें। एक उदाहरण देखते हैं: यदि a प्लस शून्य, a है, तो a गुणा एक भी a है।", "L": [["sub", "a ⊕ 0 = a<span class='tag'>सत्य सर्वसमिका</span>"], ["sub", "⊕ ↔ ⊙,   0 ↔ 1<span class='tag'>द्वैत अदला-बदली</span>"], ["res", "a ⊙ 1 = a<span class='tag'>द्वैत सर्वसमिका, यह भी सत्य</span>"]]},
+
+{"title": "4. समुच्चयों का बूलियन बीजगणित", "clear": 1, "say": "अब यह सब समुच्चयों के साथ ठोस रूप में देखते हैं। किसी सार्वत्रिक समुच्चय U के लिए, U के सभी उपसमुच्चयों से बने समुच्चय को U का घात समुच्चय कहते हैं। इसे सुलेख वाले बड़े P से लिखते हैं। उदाहरण के लिए, यदि U एक और दो से बना समुच्चय है, तो U के घात समुच्चय में चार अवयव हैं: रिक्त समुच्चय, समुच्चय एक, समुच्चय दो, और समुच्चय एक, दो।", "L": [["txt", "P(U) = { A | A ⊆ U }"], ["txt", "उदाहरण: U = {1, 2}  ⟹  P(U) = { ∅, {1}, {2}, {1,2} }"]]},
+
+{"say": "सम्मिलन और सर्वनिष्ठ को संक्रियाएँ मानकर, U का घात समुच्चय एक बूलियन बीजगणित है। यह तालिका अमूर्त भाषा और समुच्चयों की भाषा के बीच का शब्दकोश है।", "L": [["hyp", "⊕  ⟷  ∪   (सम्मिलन)"], ["hyp", "⊙  ⟷  ∩   (सर्वनिष्ठ)"], ["hyp", "0  ⟷  ∅   (रिक्त समुच्चय)"], ["hyp", "1  ⟷  U   (सार्वत्रिक समुच्चय)"], ["hyp", "∼A  ⟷  A<sup>c</sup>   (पूरक)"]]},
+
+{"say": "A का पूरक U के उन अवयवों का समुच्चय है जो A में नहीं हैं। उदाहरण के लिए, यदि U एक, दो, तीन है, और A समुच्चय एक है, तो A का पूरक दो, तीन है।", "L": [["sub", "A<sup>c</sup> = { x ∈ U | x ∉ A }<span class='tag'>परिभाषा</span>"], ["txt", "उदाहरण: U = {1,2,3},  A = {1}  ⟹  A<sup>c</sup> = {2,3}"]]},
+
+{"say": "एक और उपयोगी तथ्य। दो समुच्चय A और B बराबर हैं यदि और केवल यदि प्रत्येक दूसरे में समाहित है। समिकाएँ सिद्ध करने की यही सामान्य विधि है: दोनों समावेशों को अलग-अलग सिद्ध करना।", "L": [["sub", "A = B  ⟺  A ⊆ B  और  B ⊆ A"], ["txt", "A ⊆ B सिद्ध करने के लिए: x ∈ A लें और x ∈ B निकालें"]]},
+
+{"title": "5. अंतर और सममित अंतर", "clear": 1, "say": "पूरक से अन्य संक्रियाएँ परिभाषित होती हैं। A घटा B का अंतर उन अवयवों का समुच्चय है जो A में हैं पर B में नहीं। उदाहरण के लिए, समुच्चय एक, दो, तीन में से समुच्चय दो घटाने पर समुच्चय एक, तीन मिलता है।", "L": [["sub", "A ∖ B = { x ∈ A | x ∉ B } = A ∩ B<sup>c</sup><span class='tag'>अंतर</span>"], ["txt", "उदाहरण: {1,2,3} ∖ {2} = {1,3}"]]},
+
+{"say": "A सर्वनिष्ठ B के पूरक वाली समिका बहुत उपयोगी है: इससे हम अंतर को सर्वनिष्ठ में बदल सकते हैं और उन सभी गुणों का उपयोग कर सकते हैं जो हम पहले से जानते हैं। ध्यान रखें कि अंतर क्रमविनिमेय नहीं है।", "L": [["warn", "A ∖ B ≠ B ∖ A  (सामान्यतः)<span class='tag'>सावधान</span>"]]},
+
+{"say": "सममित अंतर उन अवयवों को इकट्ठा करता है जो दोनों में से केवल एक समुच्चय में हैं। यह A घटा B और B घटा A के सम्मिलन से मिलता है। उदाहरण के लिए, A को एक, दो और B को दो, तीन लेते हैं। A घटा B एक है, B घटा A तीन है, और सम्मिलन एक, तीन है।", "L": [["sub", "A △ B = (A ∖ B) ∪ (B ∖ A)<span class='tag'>सममित अंतर</span>"], ["txt", "उदाहरण: {1,2} △ {2,3} = {1} ∪ {3} = {1,3}"]]},
+
+{"say": "ये संक्रियाएँ ऐसी सर्वसमिकाओं को संतुष्ट करती हैं जिनसे व्यंजकों को दोबारा लिखा जा सकता है। सममित अंतर, सर्वनिष्ठ के बिना सम्मिलन है: जो दोनों में से किसी में है, उसमें से वह हटाकर जो दोनों में है। दूसरी कहती है कि A घटा B, A और A सर्वनिष्ठ B का सममित अंतर है। पिछले उदाहरण से पहली की जाँच करते हैं: सम्मिलन एक, दो, तीन है; सर्वनिष्ठ दो है; और एक, दो, तीन घटा दो, एक, तीन है, जो परिणाम से मेल खाता है।", "L": [["res", "A △ B = (A ∪ B) ∖ (A ∩ B)"], ["res", "A ∖ B = A △ (A ∩ B)"], ["txt", "पिछले उदाहरण से जाँच: (A ∪ B) ∖ (A ∩ B) = {1,2,3} ∖ {2} = {1,3} ✔"]]},
+
+{"title": "6. कार्तीय गुणनफल", "clear": 1, "say": "अंतिम रचना: कार्तीय गुणनफल। समुच्चय A एक, A दो, से लेकर A n तक दिए हों, तो उनका गुणनफल उन n-टपलों का समुच्चय है जिनका i-वाँ घटक A i में है।", "L": [["sub", "A₁ × A₂ × ⋯ × Aₙ = { (x₁, x₂, …, xₙ) | xᵢ ∈ Aᵢ }<span class='tag'>परिभाषा</span>"]]},
+
+{"say": "दो समुच्चयों के साथ एक उदाहरण देखते हैं। A एक, दो है, और B a, b है। उनके गुणनफल में वे सभी जोड़े हैं जिनका पहला घटक A से और दूसरा B से है। ये चार जोड़े हैं। क्रम मायने रखता है: B गुणा A का गुणनफल अलग है।", "L": [["txt", "A = {1,2},   B = {a,b}"], ["res", "A × B = { (1,a), (1,b), (2,a), (2,b) }"], ["warn", "A × B ≠ B × A  (सामान्यतः)"]]},
+
+{"say": "यह संक्रिया अनेक चरों वाले फलनों, आलेखों, और समतल तथा त्रिविम आकाश के क्षेत्रों के लिए आवश्यक है। उदाहरण के लिए, समतल वास्तविक रेखा का स्वयं के साथ गुणनफल है।", "L": [["txt", "ℝ × ℝ = ℝ²  (समतल),    ℝ × ℝ × ℝ = ℝ³  (त्रिविम आकाश)"]]},
+
+{"say": "कार्तीय गुणनफल सम्मिलन के साथ अच्छी तरह मेल खाता है। A और B का सम्मिलन, गुणा C, बराबर है A गुणा C और B गुणा C के सम्मिलन के। कारण: एक जोड़ा x, y पहले समुच्चय में है यदि x, A में या B में है, और y, C में है। यह कहने के समान है कि वह A गुणा C में है, या B गुणा C में।", "L": [["res", "(A ∪ B) × C = (A × C) ∪ (B × C)"], ["txt", "(x,y) ∈ (A∪B)×C ⟺ (x ∈ A या x ∈ B) और y ∈ C ⟺ (x,y) ∈ A×C या (x,y) ∈ B×C"]]},
+
+{"say": "सर्वनिष्ठ के साथ भी ऐसा ही है: एक जोड़ा पहले समुच्चय में है यदि x, A में और B में है, और y, C में है, और यह A गुणा C में और साथ ही B गुणा C में होने के तुल्य है। और अंतर के साथ भी यही।", "L": [["res", "(A ∩ B) × C = (A × C) ∩ (B × C)"], ["res", "(A ∖ B) × C = (A × C) ∖ (B × C)"]]},
+
+{"say": "सम्मिलन वाले गुण को दो बार लगाने से विस्तार सूत्र मिलता है। A और B का सम्मिलन, गुणा, C और D का सम्मिलन, चार गुणनफलों का सम्मिलन है: A गुणा C, B गुणा C, A गुणा D, और B गुणा D। चार आयतों के बारे में सोचिए।", "L": [["res", "(A ∪ B) × (C ∪ D) = (A × C) ∪ (B × C) ∪ (A × D) ∪ (B × D)"], ["warn", "≠ (A × C) ∪ (B × D)<span class='tag'>आम गलती: तिरछे पद छूट गए हैं</span>"]]},
+
+{"title": "निष्कर्ष", "clear": 1, "say": "अंत में: ये सभी सर्वसमिकाएँ अलग-थलग नियम नहीं हैं, बल्कि पीछे की बीजीय संरचना के परिणाम हैं। इन्हें जानकर हम समुच्चयों को आत्मविश्वास से संभाल सकते हैं, जटिल क्षेत्रों को सरल भागों में बाँट सकते हैं, और प्रांत तथा परिसर के बारे में सटीक तर्क कर सकते हैं। अभ्यासों में हम इनका उपयोग व्यावहारिक और सैद्धांतिक, दोनों रूपों में करेंगे। देखने के लिए धन्यवाद।", "L": [["res", "जालक ⟶ वितरणशील ⟶ बूलियन बीजगणित"], ["res", "P(U), ∪, ∩, ∅, U और पूरक के साथ"], ["res", "अंतर, सममित अंतर और कार्तीय गुणनफल"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){const d=document.createElement('div');d.className='l hyp';d.innerHTML=s.pin;if(k<n)d.style.animation='none';pins.appendChild(d)}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' प्लस ').replace(/⊙/g,' गुणा ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ फिर से चलाएँ'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ जारी रखें'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ रोकें';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^hi/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/madhur|hemant|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="जालक और बूलियन बीजगणित";$('sub').textContent="सिद्धांत · समुच्चय और संक्रियाएँ";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

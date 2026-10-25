@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Treillis et algèbres de Boole</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:30%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>À retenir</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Commencer</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Vitesse <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Mode enregistrement (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"fr-FR",
+"meta":{"nivel": 0, "titulo": "Treillis et algèbres de Boole", "enunciado": "Théorie du chapitre : opérations sur les ensembles et structures algébriques", "datos": ["1. Treillis", "2. Treillis distributifs", "3. Algèbres de Boole", "4. L’algèbre de Boole des ensembles", "5. Différence et différence symétrique", "6. Produit cartésien"]},
+"steps":[
+{"title": "Treillis et algèbres de Boole", "sub": "Théorie · Ensembles et opérations", "clear": 1, "say": "Bonjour. Dans cette vidéo, nous allons voir la théorie que nous utiliserons dans tout le chapitre : comment formaliser les opérations entre ensembles, et quelle structure algébrique apparaît quand on les combine. Nous irons très lentement, définition par définition, avec des exemples à chaque étape.", "L": [["txt", "Opérations sur les ensembles ⟶ structures algébriques"]]},
+
+{"title": "1. Treillis", "clear": 1, "say": "Commençons par une idée. La réunion et l’intersection d’ensembles vérifient de nombreuses propriétés. Au lieu de les démontrer une par une, on garde seulement les propriétés essentielles et on leur donne un nom : cette structure abstraite s’appelle un treillis.", "L": [["txt", "La réunion ∪ et l’intersection ∩ ont des propriétés communes"], ["goal", "Abstraction : treillis"]]},
+
+{"say": "Soit B un ensemble quelconque, muni de deux lois de composition internes, que l’on note avec les symboles plus entouré et point entouré. Une loi de composition agit sur deux éléments à la fois. Interne signifie que le résultat reste dans B. Par exemple, B peut être l’ensemble des parties d’un ensemble universel U, que nous verrons plus loin, avec la réunion comme plus entouré et l’intersection comme point entouré.", "L": [["hyp", "B ensemble,  ⊕, ⊙ : B × B ⟶ B<span class='tag'>Données : deux lois de composition internes</span>"], ["txt", "Exemple : B = parties de U,  ⊕ = ∪,  ⊙ = ∩"]]},
+
+{"say": "On dit que B, muni de ces lois, est un treillis si, pour tous a, b et c de B, trois types de propriétés sont vérifiés. La première est la commutativité : l’ordre des deux éléments n’a pas d’importance. Avec des ensembles : A union B est égal à B union A, et A inter B est égal à B inter A.", "L": [["hyp", "a ⊕ b = b ⊕ a,     a ⊙ b = b ⊙ a<span class='tag'>Commutativité</span>"], ["txt", "Avec des ensembles :  A ∪ B = B ∪ A,   A ∩ B = B ∩ A"]]},
+
+{"say": "La deuxième est l’associativité : quand on opère trois éléments, peu importe lesquels on regroupe d’abord. Grâce à elle, on peut écrire a plus b plus c sans parenthèses, sans ambiguïté.", "L": [["hyp", "a ⊕ (b ⊕ c) = (a ⊕ b) ⊕ c<span class='tag'>Associativité de ⊕</span>"], ["hyp", "a ⊙ (b ⊙ c) = (a ⊙ b) ⊙ c<span class='tag'>Associativité de ⊙</span>"]]},
+
+{"say": "La troisième est l’absorption, qui relie les deux lois entre elles. Si l’on ajoute à un élément a son produit avec un autre élément quelconque, on retrouve a. Et de même en échangeant les lois.", "L": [["hyp", "a ⊕ (a ⊙ b) = a<span class='tag'>Absorption 1</span>"], ["hyp", "a ⊙ (a ⊕ b) = a<span class='tag'>Absorption 2</span>"]]},
+
+{"say": "Voyons pourquoi c’est naturel avec des ensembles. A union, A inter B, doit valoir A : l’intersection est contenue dans A, donc la réunir avec A n’ajoute rien de nouveau. C’est pour cela que A absorbe l’intersection.", "L": [["txt", "A ∩ B ⊆ A   ⟹   A ∪ (A ∩ B) = A"]]},
+
+{"say": "Résumons. Un treillis est un ensemble muni de deux lois internes, commutatives, associatives, et qui vérifient les deux lois d’absorption. Nous le notons à gauche.", "pin": "Treillis : ⊕, ⊙ internes, commutatives, associatives, avec absorption"},
+
+{"say": "À partir de ces axiomes, on démontre que les deux lois sont idempotentes : opérer un élément avec lui-même ne produit aucun effet. Avec des ensembles : A union A est égal à A, et A inter A est égal à A.", "L": [["res", "a ⊕ a = a,     a ⊙ a = a<span class='tag'>Idempotence (se démontre avec l’absorption)</span>"], ["txt", "Avec des ensembles :  A ∪ A = A,  A ∩ A = A"]]},
+
+{"title": "2. Treillis distributifs", "clear": 1, "say": "Passons à une propriété supplémentaire, très importante : la distributivité. Un treillis est distributif si chaque loi est distributive par rapport à l’autre.", "L": [["goal", "Treillis distributif"]]},
+
+{"say": "Écrivons les deux lois. La première dit que a plus, b fois c, est égal à, a plus b, le tout fois, a plus c. La seconde est la même en échangeant les rôles.", "L": [["hyp", "a ⊕ (b ⊙ c) = (a ⊕ b) ⊙ (a ⊕ c)"], ["hyp", "a ⊙ (b ⊕ c) = (a ⊙ b) ⊕ (a ⊙ c)"]]},
+
+{"say": "Attention à une différence importante avec l’algèbre habituelle. Avec les nombres, la multiplication est distributive par rapport à l’addition, mais l’addition n’est pas distributive par rapport à la multiplication. Ici, au contraire, les deux lois sont vraies à la fois.", "L": [["txt", "Nombres :  a·(b + c) = a·b + a·c   ✔"], ["warn", "Nombres :  a + (b·c) = (a + b)·(a + c)   ✘<span class='tag'>Faux pour les nombres</span>"], ["res", "Dans un treillis distributif, les deux sont vraies"]]},
+
+{"say": "Cette propriété est essentielle, car elle permet de transformer des expressions complexes en combinaisons plus simples. Nous la notons.", "pin": "Distributif : ⊕ et ⊙ sont distributives l’une par rapport à l’autre"},
+
+{"title": "3. Algèbres de Boole", "clear": 1, "say": "Ajoutons maintenant de la structure. Imaginons un treillis distributif dans lequel il existe un plus petit élément, que nous appelons zéro, et un plus grand élément, que nous appelons un. Avec des ensembles, ce seront l’ensemble vide et l’ensemble universel.", "L": [["goal", "Treillis distributif + 0 + 1 + compléments"]]},
+
+{"say": "Le zéro et le un se comportent comme des éléments neutres. Ajouter zéro à un élément ne le change pas, et multiplier par un non plus. Avec des ensembles : A union l’ensemble vide vaut A, et A inter l’ensemble universel U vaut A.", "L": [["hyp", "a ⊕ 0 = a,     a ⊙ 1 = a<span class='tag'>Éléments neutres</span>"], ["txt", "Avec des ensembles :  A ∪ ∅ = A,   A ∩ U = A"]]},
+
+{"say": "De plus, on exige que chaque élément a possède un complémentaire, que l’on note avec un tilde devant. Le complémentaire vérifie deux conditions à la fois. Ajouté à a, il donne un. Multiplié par a, il donne zéro. Avec des ensembles : A union son complémentaire est l’ensemble universel U, et A inter son complémentaire est l’ensemble vide.", "L": [["hyp", "a ⊕ ∼a = 1<span class='tag'>Complémentaire</span>"], ["hyp", "a ⊙ ∼a = 0<span class='tag'>Complémentaire</span>"], ["txt", "Avec des ensembles :  A ∪ A<sup>c</sup> = U,   A ∩ A<sup>c</sup> = ∅"]]},
+
+{"say": "Quand toutes ces conditions sont réunies, la structure s’appelle une algèbre de Boole. Nous la notons à gauche, avec les précédentes.", "pin": "Boole : distributif + 0, 1 + complémentaires"},
+
+{"say": "Dans une algèbre de Boole, le complémentaire de chaque élément est unique. Et la loi d’involution est vraie : le complémentaire du complémentaire de a est a lui-même. Avec des ensembles, le complémentaire du complémentaire de A est A.", "L": [["res", "∼(∼a) = a<span class='tag'>Involution</span>"], ["txt", "Avec des ensembles :  (A<sup>c</sup>)<sup>c</sup> = A"]]},
+
+{"say": "Les lois de domination sont aussi vraies. Ajouter un à n’importe quel élément donne un. Multiplier n’importe quel élément par zéro donne zéro. Remarquez que le un domine la somme et que le zéro domine le produit. Avec des ensembles : A union U vaut U, et A inter l’ensemble vide vaut l’ensemble vide.", "L": [["res", "a ⊕ 1 = 1,     a ⊙ 0 = 0<span class='tag'>Domination</span>"], ["txt", "Avec des ensembles :  A ∪ U = U,   A ∩ ∅ = ∅"]]},
+
+{"say": "Et les lois de De Morgan. La somme de a et b est le complémentaire du produit des complémentaires. Et l’autre, en échangeant les lois. Elles permettent de passer d’une loi à l’autre grâce au complémentaire. Avec des ensembles : A union B est le complémentaire de, le complémentaire de A inter le complémentaire de B. Et A inter B est le complémentaire de, le complémentaire de A union le complémentaire de B.", "L": [["res", "a ⊕ b = ∼(∼a ⊙ ∼b)"], ["res", "a ⊙ b = ∼(∼a ⊕ ∼b)<span class='tag'>Lois de De Morgan</span>"], ["txt", "Avec des ensembles :  A ∪ B = (A<sup>c</sup> ∩ B<sup>c</sup>)<sup>c</sup>"], ["txt", "Avec des ensembles :  A ∩ B = (A<sup>c</sup> ∪ B<sup>c</sup>)<sup>c</sup>"]]},
+
+{"say": "Une caractéristique essentielle est le principe de dualité. Toute identité vraie le reste si l’on échange les deux lois, et en même temps le zéro et le un. Voyons un exemple : si a plus zéro vaut a, alors a fois un vaut a.", "L": [["sub", "a ⊕ 0 = a<span class='tag'>Identité vraie</span>"], ["sub", "⊕ ↔ ⊙,   0 ↔ 1<span class='tag'>Échange dual</span>"], ["res", "a ⊙ 1 = a<span class='tag'>Identité duale, vraie aussi</span>"]]},
+
+{"title": "4. L’algèbre de Boole des ensembles", "clear": 1, "say": "Concrétisons maintenant tout cela avec des ensembles. Étant donné un ensemble universel U, on appelle parties de U l’ensemble formé de tous les sous-ensembles de U. On le note avec un P majuscule calligraphique. Par exemple, si U est l’ensemble formé de un et deux, les parties de U sont au nombre de quatre : l’ensemble vide, l’ensemble un, l’ensemble deux, et l’ensemble un, deux.", "L": [["txt", "P(U) = { A | A ⊆ U }"], ["txt", "Exemple : U = {1, 2}  ⟹  P(U) = { ∅, {1}, {2}, {1,2} }"]]},
+
+{"say": "Avec la réunion et l’intersection comme lois, P de U est une algèbre de Boole. Ce tableau est le dictionnaire entre le langage abstrait et celui des ensembles.", "L": [["hyp", "⊕  ⟷  ∪   (réunion)"], ["hyp", "⊙  ⟷  ∩   (intersection)"], ["hyp", "0  ⟷  ∅   (ensemble vide)"], ["hyp", "1  ⟷  U   (ensemble universel)"], ["hyp", "∼A  ⟷  A<sup>c</sup>   (complémentaire)"]]},
+
+{"say": "Le complémentaire de A est l’ensemble des éléments de U qui n’appartiennent pas à A. Par exemple, si U est un, deux, trois, et A est l’ensemble un, le complémentaire de A est deux, trois.", "L": [["sub", "A<sup>c</sup> = { x ∈ U | x ∉ A }<span class='tag'>Définition</span>"], ["txt", "Exemple : U = {1,2,3},  A = {1}  ⟹  A<sup>c</sup> = {2,3}"]]},
+
+{"say": "Autre fait utile. Deux ensembles A et B sont égaux si et seulement si chacun est contenu dans l’autre. C’est la technique habituelle pour démontrer des égalités : prouver les deux inclusions séparément.", "L": [["sub", "A = B  ⟺  A ⊆ B  et  B ⊆ A"], ["txt", "Pour prouver A ⊆ B : prendre x ∈ A et en déduire x ∈ B"]]},
+
+{"title": "5. Différence et différence symétrique", "clear": 1, "say": "À partir du complémentaire, on définit d’autres opérations. La différence A moins B est l’ensemble des éléments qui sont dans A mais pas dans B. Par exemple, l’ensemble un, deux, trois moins l’ensemble deux est l’ensemble un, trois.", "L": [["sub", "A ∖ B = { x ∈ A | x ∉ B } = A ∩ B<sup>c</sup><span class='tag'>Différence</span>"], ["txt", "Exemple : {1,2,3} ∖ {2} = {1,3}"]]},
+
+{"say": "L’égalité avec A inter le complémentaire de B est très utile : elle permet de transformer une différence en intersection et d’utiliser toutes les propriétés que nous connaissons déjà. Attention, la différence n’est pas commutative.", "L": [["warn", "A ∖ B ≠ B ∖ A  (en général)<span class='tag'>Attention</span>"]]},
+
+{"say": "La différence symétrique regroupe les éléments qui sont dans un seul des deux ensembles. On l’obtient en réunissant A moins B et B moins A. Par exemple, prenons A égal à un, deux, et B égal à deux, trois. A moins B vaut un, B moins A vaut trois, et la réunion vaut un, trois.", "L": [["sub", "A △ B = (A ∖ B) ∪ (B ∖ A)<span class='tag'>Différence symétrique</span>"], ["txt", "Exemple : {1,2} △ {2,3} = {1} ∪ {3} = {1,3}"]]},
+
+{"say": "Ces opérations vérifient des identités qui permettent de réécrire des expressions. La différence symétrique est la réunion privée de l’intersection : ce qui est dans l’un des deux, moins ce qui est dans les deux. La seconde dit que A moins B est la différence symétrique de A et de A inter B. Vérifions la première avec l’exemple précédent : la réunion vaut un, deux, trois ; l’intersection vaut deux ; et un, deux, trois moins deux donne un, trois, ce qui coïncide avec le résultat.", "L": [["res", "A △ B = (A ∪ B) ∖ (A ∩ B)"], ["res", "A ∖ B = A △ (A ∩ B)"], ["txt", "Vérification avec l’exemple précédent : (A ∪ B) ∖ (A ∩ B) = {1,2,3} ∖ {2} = {1,3} ✔"]]},
+
+{"title": "6. Produit cartésien", "clear": 1, "say": "Dernière construction : le produit cartésien. Étant donnés des ensembles A un, A deux, jusqu’à A n, leur produit est l’ensemble des n-uplets dont la i-ème composante appartient à A i.", "L": [["sub", "A₁ × A₂ × ⋯ × Aₙ = { (x₁, x₂, …, xₙ) | xᵢ ∈ Aᵢ }<span class='tag'>Définition</span>"]]},
+
+{"say": "Voyons un exemple avec deux ensembles. A vaut un, deux, et B vaut a, b. Leur produit contient tous les couples dont la première composante est dans A et la seconde dans B. Il y a quatre couples. L’ordre compte : le produit B fois A est différent.", "L": [["txt", "A = {1,2},   B = {a,b}"], ["res", "A × B = { (1,a), (1,b), (2,a), (2,b) }"], ["warn", "A × B ≠ B × A  (en général)"]]},
+
+{"say": "Cette opération est essentielle pour les fonctions de plusieurs variables, les graphes, et les régions du plan et de l’espace. Par exemple, le plan est le produit de la droite réelle par elle-même.", "L": [["txt", "ℝ × ℝ = ℝ²  (le plan),    ℝ × ℝ × ℝ = ℝ³  (l’espace)"]]},
+
+{"say": "Le produit cartésien s’accorde bien avec la réunion. La réunion de A et B, fois C, est égale à la réunion de A fois C et de B fois C. La raison : un couple x, y est dans le premier ensemble si x est dans A ou dans B, et y est dans C. Cela revient à dire qu’il est dans A fois C, ou dans B fois C.", "L": [["res", "(A ∪ B) × C = (A × C) ∪ (B × C)"], ["txt", "(x,y) ∈ (A∪B)×C ⟺ (x ∈ A ou x ∈ B) et y ∈ C ⟺ (x,y) ∈ A×C ou (x,y) ∈ B×C"]]},
+
+{"say": "Avec l’intersection, c’est pareil : un couple est dans le premier ensemble si x est dans A et dans B, et y est dans C, ce qui équivaut à être dans A fois C et en même temps dans B fois C. Et avec la différence, pareil.", "L": [["res", "(A ∩ B) × C = (A × C) ∩ (B × C)"], ["res", "(A ∖ B) × C = (A × C) ∖ (B × C)"]]},
+
+{"say": "En combinant deux fois la propriété de la réunion, on obtient la formule de développement. La réunion de A et B, fois, la réunion de C et D, est la réunion de quatre produits : A fois C, B fois C, A fois D et B fois D. Pensez à quatre rectangles.", "L": [["res", "(A ∪ B) × (C ∪ D) = (A × C) ∪ (B × C) ∪ (A × D) ∪ (B × D)"], ["warn", "≠ (A × C) ∪ (B × D)<span class='tag'>Erreur classique : il manque les termes croisés</span>"]]},
+
+{"title": "Conclusion", "clear": 1, "say": "Pour terminer : toutes ces identités ne sont pas des règles isolées, mais des conséquences de la structure algébrique sous-jacente. Les connaître permet de manipuler les ensembles en toute sécurité, de décomposer des régions complexes en parties plus simples, et de raisonner avec précision sur les domaines de définition et les images. Dans les exercices, nous les utiliserons de manière aussi bien pratique que théorique. Merci d’avoir regardé cette vidéo.", "L": [["res", "Treillis ⟶ distributif ⟶ algèbre de Boole"], ["res", "P(U) avec ∪, ∩, ∅, U, complémentaire"], ["res", "Différence, différence symétrique et produit cartésien"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){const d=document.createElement('div');d.className='l hyp';d.innerHTML=s.pin;if(k<n)d.style.animation='none';pins.appendChild(d)}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' plus ').replace(/⊙/g,' fois ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Rejouer'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Reprendre'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pause';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^fr/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/henri|paul|claude|remy|rémy|male|google français$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Treillis et algèbres de Boole";$('sub').textContent="Théorie · Ensembles et opérations";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Latis dan aljabar Boole</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:30%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Ingat</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Mulai</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Kecepatan <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Mode rekam (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"id-ID",
+"meta":{"nivel": 0, "titulo": "Latis dan aljabar Boole", "enunciado": "Teori bab ini: operasi pada himpunan dan struktur aljabar", "datos": ["1. Latis", "2. Latis distributif", "3. Aljabar Boole", "4. Aljabar Boole himpunan", "5. Selisih dan selisih simetris", "6. Hasil kali Kartesius"]},
+"steps":[
+{"title": "Latis dan aljabar Boole", "sub": "Teori · Himpunan dan operasi", "clear": 1, "say": "Halo. Dalam video ini kita akan membahas teori yang akan kita gunakan di sepanjang bab: bagaimana memformalkan operasi antarhimpunan, dan struktur aljabar apa yang muncul ketika operasi-operasi itu digabungkan. Kita akan berjalan sangat perlahan, satu definisi demi satu definisi, dengan contoh di setiap langkah.", "L": [["txt", "Operasi pada himpunan ⟶ struktur aljabar"]]},
+
+{"title": "1. Latis", "clear": 1, "say": "Kita mulai dengan sebuah gagasan. Gabungan dan irisan himpunan memenuhi banyak sifat. Daripada membuktikannya satu per satu, kita hanya mengambil sifat-sifat yang paling mendasar dan memberinya nama: struktur abstrak ini disebut latis.", "L": [["txt", "Gabungan ∪ dan irisan ∩ memiliki sifat yang sama"], ["goal", "Abstraksi: latis"]]},
+
+{"say": "Misalkan B sebarang himpunan, dengan dua operasi biner yang tertutup, yang kita tulis dengan simbol tambah berlingkar dan titik berlingkar. Biner artinya bekerja pada dua anggota sekaligus. Tertutup artinya hasilnya tetap berada di B. Sebagai contoh, B bisa berupa himpunan kuasa dari suatu himpunan semesta U, yang akan kita lihat nanti, dengan gabungan sebagai tambah berlingkar dan irisan sebagai titik berlingkar.", "L": [["hyp", "B himpunan,  ⊕, ⊙ : B × B ⟶ B<span class='tag'>Diketahui: dua operasi biner yang tertutup</span>"], ["txt", "Contoh: B = himpunan kuasa U,  ⊕ = ∪,  ⊙ = ∩"]]},
+
+{"say": "Kita katakan bahwa B dengan operasi-operasi ini adalah latis jika, untuk semua a, b, dan c di B, berlaku tiga jenis sifat. Yang pertama adalah sifat komutatif: urutan kedua anggota tidak berpengaruh. Pada himpunan: A gabung B sama dengan B gabung A, dan A iris B sama dengan B iris A.", "L": [["hyp", "a ⊕ b = b ⊕ a,     a ⊙ b = b ⊙ a<span class='tag'>Komutatif</span>"], ["txt", "Pada himpunan:  A ∪ B = B ∪ A,   A ∩ B = B ∩ A"]]},
+
+{"say": "Yang kedua adalah sifat asosiatif: saat mengoperasikan tiga anggota, tidak masalah dua mana yang kita kelompokkan lebih dulu. Berkat sifat ini kita bisa menulis a tambah b tambah c tanpa tanda kurung, tanpa keraguan.", "L": [["hyp", "a ⊕ (b ⊕ c) = (a ⊕ b) ⊕ c<span class='tag'>Asosiatif ⊕</span>"], ["hyp", "a ⊙ (b ⊙ c) = (a ⊙ b) ⊙ c<span class='tag'>Asosiatif ⊙</span>"]]},
+
+{"say": "Yang ketiga adalah absorpsi, yang menghubungkan kedua operasi satu sama lain. Jika pada anggota a kita tambahkan hasil kalinya dengan anggota lain mana pun, kita kembali mendapatkan a. Begitu pula jika operasinya ditukar.", "L": [["hyp", "a ⊕ (a ⊙ b) = a<span class='tag'>Absorpsi 1</span>"], ["hyp", "a ⊙ (a ⊕ b) = a<span class='tag'>Absorpsi 2</span>"]]},
+
+{"say": "Mari kita lihat mengapa hal ini wajar pada himpunan. A gabung, A iris B, masuk akal sama dengan A: irisan itu termuat di dalam A, jadi menggabungkannya dengan A tidak menambahkan apa pun. Karena itulah A menyerap irisan tersebut.", "L": [["txt", "A ∩ B ⊆ A   ⟹   A ∪ (A ∩ B) = A"]]},
+
+{"say": "Ringkasnya. Latis adalah himpunan dengan dua operasi tertutup yang komutatif, asosiatif, dan memenuhi kedua hukum absorpsi. Kita catat di sebelah kiri.", "pin": "Latis: ⊕, ⊙ tertutup, komutatif, asosiatif, dengan absorpsi"},
+
+{"say": "Dari aksioma-aksioma ini dapat dibuktikan bahwa kedua operasi bersifat idempoten: mengoperasikan suatu anggota dengan dirinya sendiri tidak menimbulkan efek apa pun. Pada himpunan: A gabung A sama dengan A, dan A iris A sama dengan A.", "L": [["res", "a ⊕ a = a,     a ⊙ a = a<span class='tag'>Idempoten (dibuktikan dengan absorpsi)</span>"], ["txt", "Pada himpunan:  A ∪ A = A,  A ∩ A = A"]]},
+
+{"title": "2. Latis distributif", "clear": 1, "say": "Sekarang sebuah sifat tambahan yang sangat penting: sifat distributif. Sebuah latis disebut distributif jika setiap operasi bersifat distributif terhadap operasi yang lain.", "L": [["goal", "Latis distributif"]]},
+
+{"say": "Kita tuliskan kedua hukumnya. Yang pertama menyatakan bahwa a tambah, b kali c, sama dengan, a tambah b, semuanya dikali, a tambah c. Yang kedua sama, dengan peran yang ditukar.", "L": [["hyp", "a ⊕ (b ⊙ c) = (a ⊕ b) ⊙ (a ⊕ c)"], ["hyp", "a ⊙ (b ⊕ c) = (a ⊙ b) ⊕ (a ⊙ c)"]]},
+
+{"say": "Perhatikan satu perbedaan penting dengan aljabar biasa. Pada bilangan, perkalian bersifat distributif terhadap penjumlahan, tetapi penjumlahan tidak distributif terhadap perkalian. Di sini, sebaliknya, kedua hukum berlaku sekaligus.", "L": [["txt", "Bilangan:  a·(b + c) = a·b + a·c   ✔"], ["warn", "Bilangan:  a + (b·c) = (a + b)·(a + c)   ✘<span class='tag'>Salah untuk bilangan</span>"], ["res", "Dalam latis distributif keduanya berlaku"]]},
+
+{"say": "Sifat ini sangat penting karena memungkinkan kita mengubah ekspresi yang rumit menjadi kombinasi yang lebih sederhana. Kita catat.", "pin": "Distributif: ⊕ dan ⊙ saling distributif"},
+
+{"title": "3. Aljabar Boole", "clear": 1, "say": "Sekarang kita tambahkan struktur lagi. Bayangkan sebuah latis distributif yang memiliki anggota terkecil, yang kita sebut nol, dan anggota terbesar, yang kita sebut satu. Pada himpunan, keduanya adalah himpunan kosong dan himpunan semesta.", "L": [["goal", "Latis distributif + 0 + 1 + komplemen"]]},
+
+{"say": "Nol dan satu berperan sebagai anggota netral. Menambahkan nol pada suatu anggota tidak mengubahnya, begitu pula mengalikannya dengan satu. Pada himpunan: A gabung himpunan kosong adalah A, dan A iris himpunan semesta U adalah A.", "L": [["hyp", "a ⊕ 0 = a,     a ⊙ 1 = a<span class='tag'>Anggota netral</span>"], ["txt", "Pada himpunan:  A ∪ ∅ = A,   A ∩ U = A"]]},
+
+{"say": "Selain itu, kita mensyaratkan setiap anggota a memiliki komplemen, yang kita tulis dengan tanda tilde di depannya. Komplemen memenuhi dua syarat sekaligus. Jika ditambahkan pada a, hasilnya satu. Jika dikalikan dengan a, hasilnya nol. Pada himpunan: A gabung komplemennya adalah himpunan semesta U, dan A iris komplemennya adalah himpunan kosong.", "L": [["hyp", "a ⊕ ∼a = 1<span class='tag'>Komplemen</span>"], ["hyp", "a ⊙ ∼a = 0<span class='tag'>Komplemen</span>"], ["txt", "Pada himpunan:  A ∪ A<sup>c</sup> = U,   A ∩ A<sup>c</sup> = ∅"]]},
+
+{"say": "Jika semua syarat ini terpenuhi, struktur tersebut disebut aljabar Boole. Kita catat di sebelah kiri, bersama yang sebelumnya.", "pin": "Boole: distributif + 0, 1 + komplemen"},
+
+{"say": "Dalam aljabar Boole, komplemen setiap anggota bersifat tunggal. Dan berlaku hukum involusi: komplemen dari komplemen a adalah a itu sendiri. Pada himpunan, komplemen dari komplemen A adalah A.", "L": [["res", "∼(∼a) = a<span class='tag'>Involusi</span>"], ["txt", "Pada himpunan:  (A<sup>c</sup>)<sup>c</sup> = A"]]},
+
+{"say": "Hukum dominasi juga berlaku. Menambahkan satu pada anggota mana pun menghasilkan satu. Mengalikan anggota mana pun dengan nol menghasilkan nol. Perhatikan bahwa satu mendominasi penjumlahan dan nol mendominasi perkalian. Pada himpunan: A gabung U adalah U, dan A iris himpunan kosong adalah himpunan kosong.", "L": [["res", "a ⊕ 1 = 1,     a ⊙ 0 = 0<span class='tag'>Dominasi</span>"], ["txt", "Pada himpunan:  A ∪ U = U,   A ∩ ∅ = ∅"]]},
+
+{"say": "Dan hukum De Morgan. Jumlah a dan b adalah komplemen dari hasil kali komplemen-komplemennya. Dan yang satunya lagi, dengan operasi yang ditukar. Hukum ini memungkinkan kita berpindah dari satu operasi ke operasi lain melalui komplemen. Pada himpunan: A gabung B adalah komplemen dari, komplemen A iris komplemen B. Dan A iris B adalah komplemen dari, komplemen A gabung komplemen B.", "L": [["res", "a ⊕ b = ∼(∼a ⊙ ∼b)"], ["res", "a ⊙ b = ∼(∼a ⊕ ∼b)<span class='tag'>Hukum De Morgan</span>"], ["txt", "Pada himpunan:  A ∪ B = (A<sup>c</sup> ∩ B<sup>c</sup>)<sup>c</sup>"], ["txt", "Pada himpunan:  A ∩ B = (A<sup>c</sup> ∪ B<sup>c</sup>)<sup>c</sup>"]]},
+
+{"say": "Ciri yang sangat penting adalah prinsip dualitas. Setiap identitas yang benar tetap benar jika kita menukar kedua operasi, dan sekaligus menukar nol dan satu. Mari kita lihat contohnya: jika a tambah nol sama dengan a, maka a kali satu sama dengan a.", "L": [["sub", "a ⊕ 0 = a<span class='tag'>Identitas yang benar</span>"], ["sub", "⊕ ↔ ⊙,   0 ↔ 1<span class='tag'>Pertukaran dual</span>"], ["res", "a ⊙ 1 = a<span class='tag'>Identitas dual, juga benar</span>"]]},
+
+{"title": "4. Aljabar Boole himpunan", "clear": 1, "say": "Sekarang kita wujudkan semua ini dengan himpunan. Jika diberikan himpunan semesta U, himpunan kuasa dari U adalah himpunan yang terdiri atas semua himpunan bagian dari U. Ditulis dengan huruf P kapital bergaya kaligrafi. Misalnya, jika U adalah himpunan yang terdiri atas satu dan dua, maka himpunan kuasa U memiliki empat anggota: himpunan kosong, himpunan satu, himpunan dua, dan himpunan satu, dua.", "L": [["txt", "P(U) = { A | A ⊆ U }"], ["txt", "Contoh: U = {1, 2}  ⟹  P(U) = { ∅, {1}, {2}, {1,2} }"]]},
+
+{"say": "Dengan gabungan dan irisan sebagai operasinya, himpunan kuasa U adalah aljabar Boole. Tabel ini adalah kamus antara bahasa abstrak dan bahasa himpunan.", "L": [["hyp", "⊕  ⟷  ∪   (gabungan)"], ["hyp", "⊙  ⟷  ∩   (irisan)"], ["hyp", "0  ⟷  ∅   (himpunan kosong)"], ["hyp", "1  ⟷  U   (himpunan semesta)"], ["hyp", "∼A  ⟷  A<sup>c</sup>   (komplemen)"]]},
+
+{"say": "Komplemen A adalah himpunan anggota-anggota U yang bukan anggota A. Misalnya, jika U adalah satu, dua, tiga, dan A adalah himpunan satu, maka komplemen A adalah dua, tiga.", "L": [["sub", "A<sup>c</sup> = { x ∈ U | x ∉ A }<span class='tag'>Definisi</span>"], ["txt", "Contoh: U = {1,2,3},  A = {1}  ⟹  A<sup>c</sup> = {2,3}"]]},
+
+{"say": "Fakta berguna lainnya. Dua himpunan A dan B sama jika dan hanya jika masing-masing termuat di dalam yang lain. Inilah teknik yang biasa dipakai untuk membuktikan kesamaan: buktikan kedua inklusi secara terpisah.", "L": [["sub", "A = B  ⟺  A ⊆ B  dan  B ⊆ A"], ["txt", "Untuk membuktikan A ⊆ B: ambil x ∈ A lalu simpulkan x ∈ B"]]},
+
+{"title": "5. Selisih dan selisih simetris", "clear": 1, "say": "Dari komplemen kita definisikan operasi-operasi lain. Selisih A kurang B adalah himpunan anggota yang ada di A tetapi tidak ada di B. Misalnya, himpunan satu, dua, tiga dikurangi himpunan dua adalah himpunan satu, tiga.", "L": [["sub", "A ∖ B = { x ∈ A | x ∉ B } = A ∩ B<sup>c</sup><span class='tag'>Selisih</span>"], ["txt", "Contoh: {1,2,3} ∖ {2} = {1,3}"]]},
+
+{"say": "Kesamaan dengan A iris komplemen B sangat berguna: kesamaan ini memungkinkan kita mengubah selisih menjadi irisan dan memakai semua sifat yang sudah kita ketahui. Ingat bahwa selisih tidak bersifat komutatif.", "L": [["warn", "A ∖ B ≠ B ∖ A  (secara umum)<span class='tag'>Hati-hati</span>"]]},
+
+{"say": "Selisih simetris mengumpulkan anggota yang hanya berada di salah satu dari kedua himpunan. Selisih ini diperoleh dengan menggabungkan A kurang B dengan B kurang A. Misalnya, ambil A sama dengan satu, dua, dan B sama dengan dua, tiga. A kurang B adalah satu, B kurang A adalah tiga, dan gabungannya adalah satu, tiga.", "L": [["sub", "A △ B = (A ∖ B) ∪ (B ∖ A)<span class='tag'>Selisih simetris</span>"], ["txt", "Contoh: {1,2} △ {2,3} = {1} ∪ {3} = {1,3}"]]},
+
+{"say": "Operasi-operasi ini memenuhi identitas yang memungkinkan kita menulis ulang ekspresi. Selisih simetris adalah gabungan tanpa irisan: yang ada di salah satunya, dikurangi yang ada di keduanya. Identitas kedua menyatakan bahwa A kurang B adalah selisih simetris dari A dengan A iris B. Mari kita periksa yang pertama dengan contoh sebelumnya: gabungannya satu, dua, tiga; irisannya dua; dan satu, dua, tiga dikurangi dua adalah satu, tiga, yang sama dengan hasilnya.", "L": [["res", "A △ B = (A ∪ B) ∖ (A ∩ B)"], ["res", "A ∖ B = A △ (A ∩ B)"], ["txt", "Pemeriksaan dengan contoh sebelumnya: (A ∪ B) ∖ (A ∩ B) = {1,2,3} ∖ {2} = {1,3} ✔"]]},
+
+{"title": "6. Hasil kali Kartesius", "clear": 1, "say": "Konstruksi terakhir: hasil kali Kartesius. Jika diberikan himpunan A satu, A dua, sampai A n, hasil kalinya adalah himpunan n-tupel yang komponen ke-i-nya merupakan anggota A i.", "L": [["sub", "A₁ × A₂ × ⋯ × Aₙ = { (x₁, x₂, …, xₙ) | xᵢ ∈ Aᵢ }<span class='tag'>Definisi</span>"]]},
+
+{"say": "Mari kita lihat contoh dengan dua himpunan. A adalah satu, dua, dan B adalah a, b. Hasil kalinya memuat semua pasangan yang komponen pertamanya dari A dan komponen keduanya dari B. Ada empat pasangan. Urutan itu penting: hasil kali B kali A berbeda.", "L": [["txt", "A = {1,2},   B = {a,b}"], ["res", "A × B = { (1,a), (1,b), (2,a), (2,b) }"], ["warn", "A × B ≠ B × A  (secara umum)"]]},
+
+{"say": "Operasi ini sangat penting untuk fungsi beberapa variabel, grafik, serta daerah pada bidang dan ruang. Misalnya, bidang adalah hasil kali garis bilangan real dengan dirinya sendiri.", "L": [["txt", "ℝ × ℝ = ℝ²  (bidang),    ℝ × ℝ × ℝ = ℝ³  (ruang)"]]},
+
+{"say": "Hasil kali Kartesius cocok dengan gabungan. Gabungan A dan B, kali C, sama dengan gabungan dari A kali C dan B kali C. Alasannya: pasangan x, y berada di himpunan pertama jika x ada di A atau di B, dan y ada di C. Itu sama dengan mengatakan bahwa pasangan itu ada di A kali C, atau di B kali C.", "L": [["res", "(A ∪ B) × C = (A × C) ∪ (B × C)"], ["txt", "(x,y) ∈ (A∪B)×C ⟺ (x ∈ A atau x ∈ B) dan y ∈ C ⟺ (x,y) ∈ A×C atau (x,y) ∈ B×C"]]},
+
+{"say": "Dengan irisan juga sama: sebuah pasangan berada di himpunan pertama jika x ada di A dan di B, dan y ada di C, dan itu setara dengan berada di A kali C dan sekaligus di B kali C. Dengan selisih pun sama.", "L": [["res", "(A ∩ B) × C = (A × C) ∩ (B × C)"], ["res", "(A ∖ B) × C = (A × C) ∖ (B × C)"]]},
+
+{"say": "Dengan menerapkan sifat gabungan dua kali, kita peroleh rumus ekspansi. Gabungan A dan B, kali, gabungan C dan D, adalah gabungan dari empat hasil kali: A kali C, B kali C, A kali D, dan B kali D. Bayangkan empat persegi panjang.", "L": [["res", "(A ∪ B) × (C ∪ D) = (A × C) ∪ (B × C) ∪ (A × D) ∪ (B × D)"], ["warn", "≠ (A × C) ∪ (B × D)<span class='tag'>Kesalahan umum: suku silangnya hilang</span>"]]},
+
+{"title": "Kesimpulan", "clear": 1, "say": "Sebagai penutup: semua identitas ini bukan aturan yang berdiri sendiri, melainkan akibat dari struktur aljabar yang mendasarinya. Dengan memahaminya, kita dapat mengolah himpunan dengan yakin, memecah daerah yang rumit menjadi bagian-bagian yang lebih sederhana, dan bernalar dengan tepat tentang domain dan range. Dalam latihan-latihan, kita akan menggunakannya baik secara praktis maupun teoretis. Terima kasih sudah menonton.", "L": [["res", "Latis ⟶ distributif ⟶ aljabar Boole"], ["res", "P(U) dengan ∪, ∩, ∅, U, komplemen"], ["res", "Selisih, selisih simetris, dan hasil kali Kartesius"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){const d=document.createElement('div');d.className='l hyp';d.innerHTML=s.pin;if(k<n)d.style.animation='none';pins.appendChild(d)}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' tambah ').replace(/⊙/g,' kali ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Ulangi'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Lanjutkan'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Jeda';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Jeda';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Jeda';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^id/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/ardi|andika|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Latis dan aljabar Boole";$('sub').textContent="Teori · Himpunan dan operasi";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

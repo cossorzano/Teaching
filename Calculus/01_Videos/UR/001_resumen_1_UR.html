@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>لیٹس اور بولین الجبرا</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:30%;border-inline-end:2px dashed #3d5a50;padding-inline-end:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-inline-start:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>یاد رکھیں</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ شروع کریں</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>رفتار <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">ریکارڈنگ موڈ (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ur-PK",
+"meta":{"nivel": 0, "titulo": "لیٹس اور بولین الجبرا", "enunciado": "باب کا نظریہ: سیٹ پر عملیات اور الجبری ساختیں", "datos": ["1. لیٹس", "2. توزیعی لیٹس", "3. بولین الجبرا", "4. سیٹ کا بولین الجبرا", "5. فرق اور متشاکل فرق", "6. کارتیسی حاصل ضرب"]},
+"steps":[
+{"title": "لیٹس اور بولین الجبرا", "sub": "نظریہ · سیٹ اور عملیات", "clear": 1, "say": "السلام علیکم۔ اس ویڈیو میں ہم وہ نظریہ دیکھیں گے جو پورے باب میں استعمال ہوگا: سیٹ کے درمیان عملیات کو باضابطہ شکل کیسے دی جائے، اور انہیں ملانے سے کون سی الجبری ساخت بنتی ہے۔ ہم بہت آہستہ چلیں گے، ایک ایک تعریف لے کر، اور ہر قدم پر مثالیں دیں گے۔", "L": [["txt", "سیٹ پر عملیات ⟵ الجبری ساختیں"]]},
+
+{"title": "1. لیٹس", "clear": 1, "say": "ایک خیال سے شروع کرتے ہیں۔ سیٹ کا اتصال اور تقاطع بہت سی خصوصیات پوری کرتے ہیں۔ انہیں ایک ایک کر کے ثابت کرنے کے بجائے، ہم صرف بنیادی خصوصیات رکھتے ہیں اور انہیں ایک نام دیتے ہیں: اس مجرد ساخت کو لیٹس کہتے ہیں۔", "L": [["txt", "اتصال <span dir='ltr'>∪</span> اور تقاطع <span dir='ltr'>∩</span> کی خصوصیات مشترک ہیں"], ["goal", "تجرید: لیٹس"]]},
+
+{"say": "فرض کریں B کوئی بھی سیٹ ہے، جس پر دو بند ثنائی عملیات ہیں، جنہیں ہم دائرے والے جمع اور دائرے والے نقطے کی علامتوں سے لکھتے ہیں۔ ثنائی کا مطلب ہے کہ وہ ایک وقت میں دو ارکان پر عمل کرتی ہیں۔ بند کا مطلب ہے کہ نتیجہ B ہی میں رہتا ہے۔ مثال کے طور پر، B کسی عالمگیر سیٹ U کا پاور سیٹ ہو سکتا ہے، جسے ہم آگے دیکھیں گے، جس میں دائرے والا جمع اتصال ہے اور دائرے والا نقطہ تقاطع۔", "L": [["hyp", "<span dir='ltr'>B</span> سیٹ،  <span dir='ltr'>⊕, ⊙ : B × B ⟶ B</span><span class='tag'>دیا گیا: دو بند ثنائی عملیات</span>"], ["txt", "مثال: <span dir='ltr'>B = U</span> کا پاور سیٹ،  <span dir='ltr'>⊕ = ∪</span>،  <span dir='ltr'>⊙ = ∩</span>"]]},
+
+{"say": "ہم کہتے ہیں کہ ان عملیات کے ساتھ B ایک لیٹس ہے، اگر B کے تمام a، b اور c کے لیے تین قسم کی خصوصیات درست ہوں۔ پہلی مبادلیت ہے: دونوں ارکان کی ترتیب سے فرق نہیں پڑتا۔ سیٹ کے ساتھ: A اتصال B برابر ہے B اتصال A کے، اور A تقاطع B برابر ہے B تقاطع A کے۔", "L": [["hyp", "<span dir='ltr'>a ⊕ b = b ⊕ a,     a ⊙ b = b ⊙ a</span><span class='tag'>مبادلیت</span>"], ["txt", "سیٹ کے ساتھ:  <span dir='ltr'>A ∪ B = B ∪ A</span>،   <span dir='ltr'>A ∩ B = B ∩ A</span>"]]},
+
+{"say": "دوسری تلازمیت ہے: تین ارکان پر عمل کرتے وقت اس سے فرق نہیں پڑتا کہ پہلے کن دو کو اکٹھا کریں۔ اس کی بدولت ہم a جمع b جمع c کو بغیر قوسین کے، بغیر کسی ابہام کے لکھ سکتے ہیں۔", "L": [["hyp", "<span dir='ltr'>a ⊕ (b ⊕ c) = (a ⊕ b) ⊕ c</span><span class='tag'><span dir='ltr'>⊕</span> کی تلازمیت</span>"], ["hyp", "<span dir='ltr'>a ⊙ (b ⊙ c) = (a ⊙ b) ⊙ c</span><span class='tag'><span dir='ltr'>⊙</span> کی تلازمیت</span>"]]},
+
+{"say": "تیسری جذب ہے، جو دونوں عملیات کو آپس میں جوڑتی ہے۔ اگر کسی رکن a میں اس کا کسی بھی دوسرے رکن کے ساتھ حاصل ضرب جمع کریں، تو دوبارہ a ملتا ہے۔ اور عملیات کو آپس میں بدلنے پر بھی یہی ہوتا ہے۔", "L": [["hyp", "<span dir='ltr'>a ⊕ (a ⊙ b) = a</span><span class='tag'>جذب <span dir='ltr'>1</span></span>"], ["hyp", "<span dir='ltr'>a ⊙ (a ⊕ b) = a</span><span class='tag'>جذب <span dir='ltr'>2</span></span>"]]},
+
+{"say": "دیکھتے ہیں کہ سیٹ کے ساتھ یہ فطری کیوں ہے۔ A اتصال، A تقاطع B، کا A ہونا سمجھ میں آتا ہے: تقاطع A میں شامل ہے، اس لیے اسے A کے ساتھ ملانے سے کچھ نیا نہیں جڑتا۔ اسی لیے A تقاطع کو جذب کر لیتا ہے۔", "L": [["txt", "<span dir='ltr'>A ∩ B ⊆ A   ⟹   A ∪ (A ∩ B) = A</span>"]]},
+
+{"say": "خلاصہ یہ ہے۔ لیٹس ایک ایسا سیٹ ہے جس پر دو بند عملیات ہوں، جو مبادلی اور تلازمی ہوں، اور دونوں قوانینِ جذب پورے کریں۔ اسے ہم ایک طرف لکھ لیتے ہیں۔", "pin": "لیٹس: <span dir='ltr'>⊕</span>، <span dir='ltr'>⊙</span> بند، مبادلی، تلازمی، جذب کے ساتھ"},
+
+{"say": "ان مسلمات سے ثابت ہوتا ہے کہ دونوں عملیات ہم قوتی ہیں: کسی رکن پر خود اسی کے ساتھ عمل کرنے سے کوئی اثر نہیں پڑتا۔ سیٹ کے ساتھ: A اتصال A برابر ہے A کے، اور A تقاطع A برابر ہے A کے۔", "L": [["res", "<span dir='ltr'>a ⊕ a = a,     a ⊙ a = a</span><span class='tag'>ہم قوتی (جذب سے ثابت ہوتی ہے)</span>"], ["txt", "سیٹ کے ساتھ:  <span dir='ltr'>A ∪ A = A</span>،  <span dir='ltr'>A ∩ A = A</span>"]]},
+
+{"title": "2. توزیعی لیٹس", "clear": 1, "say": "اب ایک اضافی، بہت اہم خصوصیت کی طرف چلتے ہیں: توزیعیت۔ کوئی لیٹس توزیعی ہے اگر ہر عمل دوسرے پر توزیعی ہو۔", "L": [["goal", "توزیعی لیٹس"]]},
+
+{"say": "دونوں قوانین لکھتے ہیں۔ پہلا کہتا ہے کہ a جمع، b ضرب c، برابر ہے، a جمع b، یہ سب ضرب، a جمع c کے۔ دوسرا وہی ہے، کردار بدل کر۔", "L": [["hyp", "<span dir='ltr'>a ⊕ (b ⊙ c) = (a ⊕ b) ⊙ (a ⊕ c)</span>"], ["hyp", "<span dir='ltr'>a ⊙ (b ⊕ c) = (a ⊙ b) ⊕ (a ⊙ c)</span>"]]},
+
+{"say": "عام الجبرا سے ایک اہم فرق پر توجہ دیں۔ اعداد میں ضرب، جمع پر توزیعی ہے، لیکن جمع، ضرب پر توزیعی نہیں ہے۔ یہاں، اس کے برعکس، دونوں قوانین ایک ساتھ درست ہیں۔", "L": [["txt", "اعداد:  <span dir='ltr'>a·(b + c) = a·b + a·c   ✔</span>"], ["warn", "اعداد:  <span dir='ltr'>a + (b·c) = (a + b)·(a + c)   ✘</span><span class='tag'>اعداد کے لیے غلط</span>"], ["res", "توزیعی لیٹس میں دونوں درست ہیں"]]},
+
+{"say": "یہ خصوصیت بہت اہم ہے، کیونکہ اس سے پیچیدہ اظہاریوں کو سادہ مجموعوں میں بدلا جا سکتا ہے۔ اسے لکھ لیتے ہیں۔", "pin": "توزیعی: <span dir='ltr'>⊕</span> اور <span dir='ltr'>⊙</span> ایک دوسرے پر توزیعی ہیں"},
+
+{"title": "3. بولین الجبرا", "clear": 1, "say": "اب مزید ساخت شامل کرتے ہیں۔ ایک ایسی توزیعی لیٹس کا تصور کریں جس میں ایک کم ترین رکن ہو، جسے ہم صفر کہتے ہیں، اور ایک زیادہ ترین رکن ہو، جسے ہم ایک کہتے ہیں۔ سیٹ میں یہ خالی سیٹ اور عالمگیر سیٹ ہوں گے۔", "L": [["goal", "توزیعی لیٹس + <span dir='ltr'>0 + 1</span> + تکملے"]]},
+
+{"say": "صفر اور ایک غیر جانبدار ارکان کی طرح برتاؤ کرتے ہیں۔ کسی رکن میں صفر جمع کرنے سے وہ نہیں بدلتا، اور ایک سے ضرب دینے سے بھی نہیں۔ سیٹ کے ساتھ: A اتصال خالی سیٹ A ہے، اور A تقاطع عالمگیر سیٹ U بھی A ہے۔", "L": [["hyp", "<span dir='ltr'>a ⊕ 0 = a,     a ⊙ 1 = a</span><span class='tag'>غیر جانبدار ارکان</span>"], ["txt", "سیٹ کے ساتھ:  <span dir='ltr'>A ∪ ∅ = A</span>،   <span dir='ltr'>A ∩ U = A</span>"]]},
+
+{"say": "اس کے علاوہ، ہم یہ شرط رکھتے ہیں کہ ہر رکن a کا ایک تکملہ ہو، جسے ہم آگے ایک ٹلڈا لگا کر لکھتے ہیں۔ تکملہ ایک ساتھ دو شرطیں پوری کرتا ہے۔ a میں جمع کرنے پر ایک دیتا ہے۔ a سے ضرب دینے پر صفر دیتا ہے۔ سیٹ کے ساتھ: A اتصال اس کا تکملہ عالمگیر سیٹ U ہے، اور A تقاطع اس کا تکملہ خالی سیٹ ہے۔", "L": [["hyp", "<span dir='ltr'>a ⊕ ∼a = 1</span><span class='tag'>تکملہ</span>"], ["hyp", "<span dir='ltr'>a ⊙ ∼a = 0</span><span class='tag'>تکملہ</span>"], ["txt", "سیٹ کے ساتھ:  <span dir='ltr'>A ∪ A<sup>c</sup> = U</span>،   <span dir='ltr'>A ∩ A<sup>c</sup> = ∅</span>"]]},
+
+{"say": "جب یہ تمام شرطیں پوری ہوں، تو اس ساخت کو بولین الجبرا کہتے ہیں۔ اسے ہم ایک طرف، پچھلی باتوں کے ساتھ لکھ لیتے ہیں۔", "pin": "بولین: توزیعی + <span dir='ltr'>0</span>، <span dir='ltr'>1</span> + تکملے"},
+
+{"say": "بولین الجبرا میں ہر رکن کا تکملہ یکتا ہوتا ہے۔ اور انعکاس کا قانون درست ہے: a کے تکملے کا تکملہ خود a ہے۔ سیٹ میں، A کے تکملے کا تکملہ A ہے۔", "L": [["res", "<span dir='ltr'>∼(∼a) = a</span><span class='tag'>انعکاس</span>"], ["txt", "سیٹ کے ساتھ:  <span dir='ltr'>(A<sup>c</sup>)<sup>c</sup> = A</span>"]]},
+
+{"say": "غلبے کے قوانین بھی درست ہیں۔ کسی بھی رکن میں ایک جمع کرنے سے ایک ملتا ہے۔ کسی بھی رکن کو صفر سے ضرب دینے سے صفر ملتا ہے۔ غور کریں کہ ایک، جمع پر غالب ہے اور صفر، ضرب پر۔ سیٹ کے ساتھ: A اتصال U، U ہے، اور A تقاطع خالی سیٹ، خالی سیٹ ہے۔", "L": [["res", "<span dir='ltr'>a ⊕ 1 = 1,     a ⊙ 0 = 0</span><span class='tag'>غلبہ</span>"], ["txt", "سیٹ کے ساتھ:  <span dir='ltr'>A ∪ U = U</span>،   <span dir='ltr'>A ∩ ∅ = ∅</span>"]]},
+
+{"say": "اور ڈی مارگن کے قوانین۔ a اور b کا مجموعہ، ان کے تکملوں کے حاصل ضرب کا تکملہ ہے۔ اور دوسرا، عملیات کو بدل کر۔ ان سے تکملے کے ذریعے ایک عمل سے دوسرے پر جایا جا سکتا ہے۔ سیٹ کے ساتھ: A اتصال B، A کے تکملے تقاطع B کے تکملے، کا تکملہ ہے۔ اور A تقاطع B، A کے تکملے اتصال B کے تکملے، کا تکملہ ہے۔", "L": [["res", "<span dir='ltr'>a ⊕ b = ∼(∼a ⊙ ∼b)</span>"], ["res", "<span dir='ltr'>a ⊙ b = ∼(∼a ⊕ ∼b)</span><span class='tag'>ڈی مارگن کے قوانین</span>"], ["txt", "سیٹ کے ساتھ:  <span dir='ltr'>A ∪ B = (A<sup>c</sup> ∩ B<sup>c</sup>)<sup>c</sup></span>"], ["txt", "سیٹ کے ساتھ:  <span dir='ltr'>A ∩ B = (A<sup>c</sup> ∪ B<sup>c</sup>)<sup>c</sup></span>"]]},
+
+{"say": "ایک بنیادی خصوصیت ثنویت کا اصول ہے۔ کوئی بھی درست مماثلت درست ہی رہتی ہے اگر ہم دونوں عملیات کو، اور ساتھ ہی صفر اور ایک کو آپس میں بدل دیں۔ ایک مثال دیکھتے ہیں: اگر a جمع صفر، a ہے، تو a ضرب ایک بھی a ہے۔", "L": [["sub", "<span dir='ltr'>a ⊕ 0 = a</span><span class='tag'>درست مماثلت</span>"], ["sub", "<span dir='ltr'>⊕ ↔ ⊙</span>،   <span dir='ltr'>0 ↔ 1</span><span class='tag'>ثنوی تبادلہ</span>"], ["res", "<span dir='ltr'>a ⊙ 1 = a</span><span class='tag'>ثنوی مماثلت، یہ بھی درست</span>"]]},
+
+{"title": "4. سیٹ کا بولین الجبرا", "clear": 1, "say": "اب یہ سب سیٹ کے ساتھ ٹھوس شکل میں دیکھتے ہیں۔ کسی عالمگیر سیٹ U کے لیے، U کے تمام ذیلی سیٹ سے بننے والے سیٹ کو U کا پاور سیٹ کہتے ہیں۔ اسے خوش خط بڑے P سے لکھا جاتا ہے۔ مثال کے طور پر، اگر U ایک اور دو سے بنا سیٹ ہے، تو U کے پاور سیٹ میں چار ارکان ہیں: خالی سیٹ، سیٹ ایک، سیٹ دو، اور سیٹ ایک، دو۔", "L": [["txt", "<span dir='ltr'>P(U) = { A | A ⊆ U }</span>"], ["txt", "مثال: <span dir='ltr'>U = {1, 2}  ⟹  P(U) = { ∅, {1}, {2}, {1,2} }</span>"]]},
+
+{"say": "اتصال اور تقاطع کو عملیات مان کر، U کا پاور سیٹ ایک بولین الجبرا ہے۔ یہ جدول مجرد زبان اور سیٹ کی زبان کے درمیان لغت ہے۔", "L": [["hyp", "<span dir='ltr'>⊕  ⟷  ∪</span>   (اتصال)"], ["hyp", "<span dir='ltr'>⊙  ⟷  ∩</span>   (تقاطع)"], ["hyp", "<span dir='ltr'>0  ⟷  ∅</span>   (خالی سیٹ)"], ["hyp", "<span dir='ltr'>1  ⟷  U</span>   (عالمگیر سیٹ)"], ["hyp", "<span dir='ltr'>∼A  ⟷  A<sup>c</sup></span>   (تکملہ)"]]},
+
+{"say": "A کا تکملہ U کے ان ارکان کا سیٹ ہے جو A میں نہیں ہیں۔ مثال کے طور پر، اگر U ایک، دو، تین ہے، اور A سیٹ ایک ہے، تو A کا تکملہ دو، تین ہے۔", "L": [["sub", "<span dir='ltr'>A<sup>c</sup> = { x ∈ U | x ∉ A }</span><span class='tag'>تعریف</span>"], ["txt", "مثال: <span dir='ltr'>U = {1,2,3}</span>،  <span dir='ltr'>A = {1}  ⟹  A<sup>c</sup> = {2,3}</span>"]]},
+
+{"say": "ایک اور مفید بات۔ دو سیٹ A اور B برابر ہیں اگر اور صرف اگر ہر ایک دوسرے میں شامل ہو۔ مساوات ثابت کرنے کا یہی عام طریقہ ہے: دونوں شمولیتیں الگ الگ ثابت کرنا۔", "L": [["sub", "<span dir='ltr'>A = B  ⟺  A ⊆ B</span>  اور  <span dir='ltr'>B ⊆ A</span>"], ["txt", "<span dir='ltr'>A ⊆ B</span> ثابت کرنے کے لیے: <span dir='ltr'>x ∈ A</span> لیں اور <span dir='ltr'>x ∈ B</span> اخذ کریں"]]},
+
+{"title": "5. فرق اور متشاکل فرق", "clear": 1, "say": "تکملے سے دوسری عملیات کی تعریف کی جاتی ہے۔ A تفریق B کا فرق ان ارکان کا سیٹ ہے جو A میں ہیں لیکن B میں نہیں۔ مثال کے طور پر، سیٹ ایک، دو، تین میں سے سیٹ دو نکالنے پر سیٹ ایک، تین ملتا ہے۔", "L": [["sub", "<span dir='ltr'>A ∖ B = { x ∈ A | x ∉ B } = A ∩ B<sup>c</sup></span><span class='tag'>فرق</span>"], ["txt", "مثال: <span dir='ltr'>{1,2,3} ∖ {2} = {1,3}</span>"]]},
+
+{"say": "A تقاطع B کے تکملے والی مساوات بہت مفید ہے: اس سے ہم فرق کو تقاطع میں بدل سکتے ہیں اور وہ تمام خصوصیات استعمال کر سکتے ہیں جو ہم پہلے سے جانتے ہیں۔ یاد رکھیں کہ فرق مبادلی نہیں ہے۔", "L": [["warn", "<span dir='ltr'>A ∖ B ≠ B ∖ A</span>  (عام طور پر)<span class='tag'>احتیاط</span>"]]},
+
+{"say": "متشاکل فرق ان ارکان کو جمع کرتا ہے جو دونوں میں سے صرف ایک سیٹ میں ہوں۔ یہ A تفریق B اور B تفریق A کے اتصال سے ملتا ہے۔ مثال کے طور پر، A کو ایک، دو اور B کو دو، تین لیتے ہیں۔ A تفریق B ایک ہے، B تفریق A تین ہے، اور اتصال ایک، تین ہے۔", "L": [["sub", "<span dir='ltr'>A △ B = (A ∖ B) ∪ (B ∖ A)</span><span class='tag'>متشاکل فرق</span>"], ["txt", "مثال: <span dir='ltr'>{1,2} △ {2,3} = {1} ∪ {3} = {1,3}</span>"]]},
+
+{"say": "یہ عملیات ایسی مماثلتیں پوری کرتی ہیں جن سے اظہاریوں کو دوبارہ لکھا جا سکتا ہے۔ متشاکل فرق، تقاطع کے بغیر اتصال ہے: جو دونوں میں سے کسی ایک میں ہے، اس میں سے وہ نکال کر جو دونوں میں ہے۔ دوسری کہتی ہے کہ A تفریق B، A اور A تقاطع B کا متشاکل فرق ہے۔ پچھلی مثال سے پہلی کی جانچ کرتے ہیں: اتصال ایک، دو، تین ہے؛ تقاطع دو ہے؛ اور ایک، دو، تین میں سے دو نکالیں تو ایک، تین بچتا ہے، جو نتیجے سے مطابقت رکھتا ہے۔", "L": [["res", "<span dir='ltr'>A △ B = (A ∪ B) ∖ (A ∩ B)</span>"], ["res", "<span dir='ltr'>A ∖ B = A △ (A ∩ B)</span>"], ["txt", "پچھلی مثال سے جانچ: <span dir='ltr'>(A ∪ B) ∖ (A ∩ B) = {1,2,3} ∖ {2} = {1,3} ✔</span>"]]},
+
+{"title": "6. کارتیسی حاصل ضرب", "clear": 1, "say": "آخری بناوٹ: کارتیسی حاصل ضرب۔ سیٹ A ایک، A دو، سے لے کر A n تک دیے ہوں، تو ان کا حاصل ضرب ان n ٹپلز کا سیٹ ہے جن کا i واں جزو A i میں ہو۔", "L": [["sub", "<span dir='ltr'>A₁ × A₂ × ⋯ × Aₙ = { (x₁, x₂, …, xₙ) | xᵢ ∈ Aᵢ }</span><span class='tag'>تعریف</span>"]]},
+
+{"say": "دو سیٹ کے ساتھ ایک مثال دیکھتے ہیں۔ A ایک، دو ہے، اور B، a، b ہے۔ ان کے حاصل ضرب میں وہ تمام جوڑے ہیں جن کا پہلا جزو A سے اور دوسرا B سے ہو۔ یہ چار جوڑے ہیں۔ ترتیب اہم ہے: B ضرب A کا حاصل ضرب مختلف ہے۔", "L": [["txt", "<span dir='ltr'>A = {1,2}</span>،   <span dir='ltr'>B = {a,b}</span>"], ["res", "<span dir='ltr'>A × B = { (1,a), (1,b), (2,a), (2,b) }</span>"], ["warn", "<span dir='ltr'>A × B ≠ B × A</span>  (عام طور پر)"]]},
+
+{"say": "یہ عمل کئی متغیرات کے تفاعلات، گراف، اور مستوی اور فضا کے خطوں کے لیے لازمی ہے۔ مثال کے طور پر، مستوی حقیقی خط کا خود اسی کے ساتھ حاصل ضرب ہے۔", "L": [["txt", "<span dir='ltr'>ℝ × ℝ = ℝ²</span>  (مستوی)،    <span dir='ltr'>ℝ × ℝ × ℝ = ℝ³</span>  (فضا)"]]},
+
+{"say": "کارتیسی حاصل ضرب اتصال کے ساتھ اچھی طرح میل کھاتا ہے۔ A اور B کا اتصال، ضرب C، برابر ہے A ضرب C اور B ضرب C کے اتصال کے۔ وجہ یہ ہے: ایک جوڑا x، y پہلے سیٹ میں ہے اگر x، A میں یا B میں ہو، اور y، C میں ہو۔ یہ کہنے کے برابر ہے کہ وہ A ضرب C میں ہے، یا B ضرب C میں۔", "L": [["res", "<span dir='ltr'>(A ∪ B) × C = (A × C) ∪ (B × C)</span>"], ["txt", "<span dir='ltr'>(x,y) ∈ (A∪B)×C ⟺ (x ∈ A یا x ∈ B) اور y ∈ C ⟺ (x,y) ∈ A×C یا (x,y) ∈ B×C</span>"]]},
+
+{"say": "تقاطع کے ساتھ بھی ایسا ہی ہے: ایک جوڑا پہلے سیٹ میں ہے اگر x، A میں اور B میں ہو، اور y، C میں ہو، اور یہ A ضرب C میں اور ساتھ ہی B ضرب C میں ہونے کے مترادف ہے۔ اور فرق کے ساتھ بھی یہی۔", "L": [["res", "<span dir='ltr'>(A ∩ B) × C = (A × C) ∩ (B × C)</span>"], ["res", "<span dir='ltr'>(A ∖ B) × C = (A × C) ∖ (B × C)</span>"]]},
+
+{"say": "اتصال والی خصوصیت کو دو بار لگانے سے پھیلاؤ کا فارمولا ملتا ہے۔ A اور B کا اتصال، ضرب، C اور D کا اتصال، چار حاصل ضربوں کا اتصال ہے: A ضرب C، B ضرب C، A ضرب D، اور B ضرب D۔ چار مستطیلوں کے بارے میں سوچیں۔", "L": [["res", "<span dir='ltr'>(A ∪ B) × (C ∪ D) = (A × C) ∪ (B × C) ∪ (A × D) ∪ (B × D)</span>"], ["warn", "<span dir='ltr'>≠ (A × C) ∪ (B × D)</span><span class='tag'>عام غلطی: آڑے حدود غائب ہیں</span>"]]},
+
+{"title": "اختتام", "clear": 1, "say": "آخر میں: یہ تمام مماثلتیں الگ تھلگ قواعد نہیں، بلکہ پس منظر کی الجبری ساخت کے نتائج ہیں۔ انہیں جان کر ہم سیٹ کو اعتماد سے سنبھال سکتے ہیں، پیچیدہ خطوں کو سادہ حصوں میں بانٹ سکتے ہیں، اور ڈومین اور رینج کے بارے میں درست استدلال کر سکتے ہیں۔ مشقوں میں ہم انہیں عملی اور نظریاتی، دونوں طرح استعمال کریں گے۔ دیکھنے کا شکریہ۔", "L": [["res", "لیٹس ⟵ توزیعی ⟵ بولین الجبرا"], ["res", "<span dir='ltr'>P(U)</span>، <span dir='ltr'>∪</span>، <span dir='ltr'>∩</span>، <span dir='ltr'>∅</span>، <span dir='ltr'>U</span> اور تکملے کے ساتھ"], ["res", "فرق، متشاکل فرق اور کارتیسی حاصل ضرب"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){const d=document.createElement('div');d.className='l hyp';d.innerHTML=s.pin;if(k<n)d.style.animation='none';pins.appendChild(d)}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' جمع ').replace(/⊙/g,' ضرب ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ دوبارہ چلائیں'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ جاری رکھیں'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ وقفہ';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ وقفہ';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ وقفہ';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ur/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/asad|salman|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="لیٹس اور بولین الجبرا";$('sub').textContent="نظریہ · سیٹ اور عملیات";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
