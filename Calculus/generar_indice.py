@@ -42,7 +42,7 @@ def main():
             secciones.append(f'  <h2>Topic {num}</h2>\n  <div class="grid">\n' + "\n".join(bloques) + "\n  </div>")
 
     pagina = f"""<!DOCTYPE html>
-<html lang="es"><head><meta charset="utf-8">
+<html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Calculus · Interactive whiteboards</title>
 <style>
