@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>समुच्चय सिद्धांत</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:30%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>याद रखें</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ शुरू करें</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>गति <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">रिकॉर्डिंग मोड (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"hi-IN",
+"meta":{"nivel": 0, "titulo": "समुच्चय सिद्धांत", "enunciado": "परिभाषाओं का सारांश और समुच्चयों का बीजगणित", "datos": ["समुच्चयों की समता", "पूरक", "अंतर", "सममित अंतर", "कार्तीय गुणनफल", "समुच्चयों का बीजगणित"]},
+"steps":[
+{"title": "समुच्चय सिद्धांत", "sub": "परिभाषाओं का सारांश और समुच्चयों का बीजगणित", "clear": 1, "say": "नमस्ते। इस वीडियो में हम सीधे सूत्रों के साथ समुच्चयों के बीच की मूल संक्रियाओं को, और उनसे बनने वाले बूलियन बीजगणित को दोहराएँगे।", "L": [["txt", "समता · पूरक · अंतर · सममित अंतर · कार्तीय गुणनफल"]]},
+
+{"title": "समुच्चयों की समता", "clear": 1, "say": "समता से शुरू करते हैं। A बराबर है B के, यदि और केवल यदि A, B में समाहित है, और B, A में समाहित है। अर्थात्, समुच्चयों की समता सिद्ध करने के लिए दोनों समावेश सिद्ध किए जाते हैं।", "L": [["sub", "A = B  ⇔  A ⊆ B  ∧  B ⊆ A<span class='tag'>दोहरे समावेश से समता</span>"]]},
+
+{"title": "पूरक", "clear": 1, "say": "A का पूरक, जिसे हम A के ऊपर एक c लगाकर लिखते हैं, सार्वत्रिक समुच्चय U के उन x का समुच्चय है जो A में नहीं हैं।", "L": [["sub", "A<sup>c</sup> = { x ∈ U | x ∉ A }<span class='tag'>पूरक</span>"]]},
+
+{"title": "अंतर", "clear": 1, "say": "A घटा B का अंतर, A के उन x का समुच्चय है जो B में नहीं हैं। और यह A सर्वनिष्ठ B के पूरक के बराबर है।", "L": [["sub", "A ∖ B = { x ∈ A | x ∉ B }<span class='tag'>अंतर</span>"], ["res", "A ∖ B = A ∩ B<sup>c</sup>"]]},
+
+{"title": "सममित अंतर", "clear": 1, "say": "A और B का सममित अंतर, A घटा B और B घटा A का सम्मिलन है।", "L": [["sub", "A △ B = (A ∖ B) ∪ (B ∖ A)<span class='tag'>सममित अंतर</span>"]]},
+
+{"title": "कार्तीय गुणनफल", "clear": 1, "say": "समुच्चय A एक, A दो, से लेकर A n तक का कार्तीय गुणनफल, उन n-टपल x एक, x दो, से लेकर x n तक का समुच्चय है, जिनमें x एक, A एक में है, x दो, A दो में है, और इसी तरह x n तक, जो A n में है।", "L": [["sub", "A₁ × A₂ × … × Aₙ = { (x₁, x₂, …, xₙ) | x₁ ∈ A₁, x₂ ∈ A₂, …, xₙ ∈ Aₙ }<span class='tag'>कार्तीय गुणनफल</span>"]]},
+
+{"say": "आगे उपयोग के लिए परिभाषाएँ बाईं ओर लिख लेते हैं।", "pin": "A = B ⇔ A ⊆ B और B ⊆ A<br>A<sup>c</sup> = { x ∈ U | x ∉ A }<br>A ∖ B = A ∩ B<sup>c</sup><br>A △ B = (A ∖ B) ∪ (B ∖ A)"},
+
+{"title": "समुच्चयों का बीजगणित", "clear": 1, "say": "अब मुख्य परिणाम। किसी भी समुच्चय U के लिए, U के घात समुच्चय, सम्मिलन और सर्वनिष्ठ से बना त्रिक एक बूलियन बीजगणित है।", "L": [["goal", "(𝒫(U), ∪, ∩)  एक बूलियन बीजगणित है  ∀ U"]]},
+
+{"say": "U का घात समुच्चय U के सभी संभव उपसमुच्चयों से बना होता है।", "L": [["sub", "𝒫(U) = { A | A ⊆ U }<span class='tag'>U का घात समुच्चय</span>"]]},
+
+{"say": "संक्रियाएँ सम्मिलन और सर्वनिष्ठ हैं। और बूलियन बीजगणित का पूरक, समुच्चयों का वही पूरक है जिसे हमने पहले परिभाषित किया।", "L": [["hyp", "⊕  =  ∪       ⊙  =  ∩"], ["hyp", "∼A  =  A<sup>c</sup>"]]},
+
+{"say": "तटस्थ अवयव हैं रिक्त समुच्चय, जो सम्मिलन का तटस्थ अवयव है, और सार्वत्रिक समुच्चय U, जो सर्वनिष्ठ का तटस्थ अवयव है।", "L": [["res", "A ∪ ∅ = A<span class='tag'>∅, ∪ का तटस्थ अवयव  (यह 0 है)</span>"], ["res", "A ∩ U = A<span class='tag'>U, ∩ का तटस्थ अवयव  (यह 1 है)</span>"]]},
+
+{"say": "और पूरक दोनों शर्तें पूरी करते हैं: A सम्मिलन उसका पूरक U है, और A सर्वनिष्ठ उसका पूरक रिक्त समुच्चय है।", "L": [["res", "A ∪ A<sup>c</sup> = U"], ["res", "A ∩ A<sup>c</sup> = ∅"]]},
+
+{"title": "सारांश", "clear": 1, "say": "सारांश में। हमने दोहरे समावेश से समता, पूरक, अंतर, सममित अंतर और कार्तीय गुणनफल देखे, और यह भी कि किसी समुच्चय U का घात समुच्चय, सम्मिलन और सर्वनिष्ठ के साथ, एक बूलियन बीजगणित बनाता है। देखने के लिए धन्यवाद।", "L": [["res", "A = B ⇔ A ⊆ B ∧ B ⊆ A"], ["res", "A<sup>c</sup>,  A ∖ B = A ∩ B<sup>c</sup>,  A △ B,  A₁ × … × Aₙ"], ["res", "(𝒫(U), ∪, ∩) बूलियन बीजगणित:  0 = ∅,  1 = U"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){const d=document.createElement('div');d.className='l hyp';d.innerHTML=s.pin;if(k<n)d.style.animation='none';pins.appendChild(d)}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' प्लस ').replace(/⊙/g,' गुणा ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ फिर से चलाएँ'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ जारी रखें'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ रोकें';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^hi/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/madhur|hemant|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="समुच्चय सिद्धांत";$('sub').textContent="परिभाषाओं का सारांश और समुच्चयों का बीजगणित";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

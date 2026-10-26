@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Set theory</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:30%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Remember</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Start</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Speed <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Recording mode (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"en-US",
+"meta":{"nivel": 0, "titulo": "Set theory", "enunciado": "Summary of definitions and the algebra of sets", "datos": ["Equality of sets", "Complement", "Difference", "Symmetric difference", "Cartesian product", "Algebra of sets"]},
+"steps":[
+{"title": "Set theory", "sub": "Summary of definitions and the algebra of sets", "clear": 1, "say": "Hello. In this video we review, directly with the formulas, the basic operations between sets and the Boolean algebra they form.", "L": [["txt", "Equality · Complement · Difference · Symmetric difference · Cartesian product"]]},
+
+{"title": "Equality of sets", "clear": 1, "say": "We start with equality. A equals B if and only if A is contained in B, and B is contained in A. That is, to prove an equality of sets we prove both inclusions.", "L": [["sub", "A = B  ⇔  A ⊆ B  ∧  B ⊆ A<span class='tag'>Equality by double inclusion</span>"]]},
+
+{"title": "Complement", "clear": 1, "say": "The complement of A, which we write as A with a superscript c, is the set of all x in the universe U such that x does not belong to A.", "L": [["sub", "A<sup>c</sup> = { x ∈ U | x ∉ A }<span class='tag'>Complement</span>"]]},
+
+{"title": "Difference", "clear": 1, "say": "The difference A minus B is the set of all x in A such that x does not belong to B. And it equals A intersection the complement of B.", "L": [["sub", "A ∖ B = { x ∈ A | x ∉ B }<span class='tag'>Difference</span>"], ["res", "A ∖ B = A ∩ B<sup>c</sup>"]]},
+
+{"title": "Symmetric difference", "clear": 1, "say": "The symmetric difference of A and B is the union of A minus B with B minus A.", "L": [["sub", "A △ B = (A ∖ B) ∪ (B ∖ A)<span class='tag'>Symmetric difference</span>"]]},
+
+{"title": "Cartesian product", "clear": 1, "say": "The Cartesian product of the sets A one, A two, up to A n, is the set of n-tuples, x one, x two, up to x n, such that x one belongs to A one, x two belongs to A two, and so on up to x n, which belongs to A n.", "L": [["sub", "A₁ × A₂ × … × Aₙ = { (x₁, x₂, …, xₙ) | x₁ ∈ A₁, x₂ ∈ A₂, …, xₙ ∈ Aₙ }<span class='tag'>Cartesian product</span>"]]},
+
+{"say": "We note the definitions on the left, to use them in what follows.", "pin": "A = B ⇔ A ⊆ B and B ⊆ A<br>A<sup>c</sup> = { x ∈ U | x ∉ A }<br>A ∖ B = A ∩ B<sup>c</sup><br>A △ B = (A ∖ B) ∪ (B ∖ A)"},
+
+{"title": "Algebra of sets", "clear": 1, "say": "Now the main result. For any set U, the triple formed by the power set of U, union and intersection, is a Boolean algebra.", "L": [["goal", "(𝒫(U), ∪, ∩)  is a Boolean algebra  ∀ U"]]},
+
+{"say": "The power set of U is made up of all the possible subsets of U.", "L": [["sub", "𝒫(U) = { A | A ⊆ U }<span class='tag'>Power set of U</span>"]]},
+
+{"say": "The operations are union and intersection. And the complement of the Boolean algebra is the set complement we defined before.", "L": [["hyp", "⊕  =  ∪       ⊙  =  ∩"], ["hyp", "∼A  =  A<sup>c</sup>"]]},
+
+{"say": "The neutral elements are the empty set, which is neutral for union, and the universal set U, which is neutral for intersection.", "L": [["res", "A ∪ ∅ = A<span class='tag'>∅ is neutral for ∪  (it is the 0)</span>"], ["res", "A ∩ U = A<span class='tag'>U is neutral for ∩  (it is the 1)</span>"]]},
+
+{"say": "And the complements satisfy both conditions: A union its complement is U, and A intersection its complement is the empty set.", "L": [["res", "A ∪ A<sup>c</sup> = U"], ["res", "A ∩ A<sup>c</sup> = ∅"]]},
+
+{"title": "Summary", "clear": 1, "say": "To sum up. We have seen equality by double inclusion, the complement, the difference, the symmetric difference and the Cartesian product, and that the power set of a set U, with union and intersection, forms a Boolean algebra. Thanks for watching.", "L": [["res", "A = B ⇔ A ⊆ B ∧ B ⊆ A"], ["res", "A<sup>c</sup>,  A ∖ B = A ∩ B<sup>c</sup>,  A △ B,  A₁ × … × Aₙ"], ["res", "(𝒫(U), ∪, ∩) Boolean algebra:  0 = ∅,  1 = U"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){const d=document.createElement('div');d.className='l hyp';d.innerHTML=s.pin;if(k<n)d.style.animation='none';pins.appendChild(d)}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' plus ').replace(/⊙/g,' times ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Replay'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Resume'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pause';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/andrew|guy|brian|christopher|eric|david|mark|male|google us english$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Set theory";$('sub').textContent="Summary of definitions and the algebra of sets";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>نظرية المجموعات</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:30%;border-inline-end:2px dashed #3d5a50;padding-inline-end:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-inline-start:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>تذكّر</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ ابدأ</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>السرعة <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">وضع التسجيل (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ar-SA",
+"meta":{"nivel": 0, "titulo": "نظرية المجموعات", "enunciado": "ملخص التعريفات وجبر المجموعات", "datos": ["تساوي المجموعات", "المتممة", "الفرق", "الفرق التناظري", "الضرب الديكارتي", "جبر المجموعات"]},
+"steps":[
+{"title": "نظرية المجموعات", "sub": "ملخص التعريفات وجبر المجموعات", "clear": 1, "say": "مرحبًا. في هذا الفيديو نراجع، مباشرة بالصيغ، العمليات الأساسية بين المجموعات، والجبر البولياني الذي تكوّنه.", "L": [["txt", "التساوي <span dir='ltr'>·</span> المتممة <span dir='ltr'>·</span> الفرق <span dir='ltr'>·</span> الفرق التناظري <span dir='ltr'>·</span> الضرب الديكارتي"]]},
+
+{"title": "تساوي المجموعات", "clear": 1, "say": "نبدأ بالتساوي. A تساوي B إذا وفقط إذا كانت A محتواة في B، و B محتواة في A. أي أنه لإثبات تساوي مجموعتين نثبت الاحتواءين.", "L": [["sub", "<span dir='ltr'>A = B  ⇔  A ⊆ B  ∧  B ⊆ A</span><span class='tag'>التساوي بالاحتواء المزدوج</span>"]]},
+
+{"title": "المتممة", "clear": 1, "say": "متممة A، التي نكتبها A مع حرف c في الأعلى، هي مجموعة عناصر x من المجموعة الشاملة U بحيث لا ينتمي x إلى A.", "L": [["sub", "<span dir='ltr'>A<sup>c</sup> = { x ∈ U | x ∉ A }</span><span class='tag'>المتممة</span>"]]},
+
+{"title": "الفرق", "clear": 1, "say": "الفرق A ناقص B هو مجموعة عناصر x من A بحيث لا ينتمي x إلى B. وهو يساوي A تقاطع متممة B.", "L": [["sub", "<span dir='ltr'>A ∖ B = { x ∈ A | x ∉ B }</span><span class='tag'>الفرق</span>"], ["res", "<span dir='ltr'>A ∖ B = A ∩ B<sup>c</sup></span>"]]},
+
+{"title": "الفرق التناظري", "clear": 1, "say": "الفرق التناظري بين A و B هو اتحاد A ناقص B مع B ناقص A.", "L": [["sub", "<span dir='ltr'>A △ B = (A ∖ B) ∪ (B ∖ A)</span><span class='tag'>الفرق التناظري</span>"]]},
+
+{"title": "الضرب الديكارتي", "clear": 1, "say": "الضرب الديكارتي للمجموعات A واحد، و A اثنين، وصولًا إلى A n، هو مجموعة الصفوف ذات n مركبة، x واحد، و x اثنين، وصولًا إلى x n، بحيث ينتمي x واحد إلى A واحد، و x اثنين إلى A اثنين، وهكذا حتى x n الذي ينتمي إلى A n.", "L": [["sub", "<span dir='ltr'>A₁ × A₂ × … × Aₙ = { (x₁, x₂, …, xₙ) | x₁ ∈ A₁, x₂ ∈ A₂, …, xₙ ∈ Aₙ }</span><span class='tag'>الضرب الديكارتي</span>"]]},
+
+{"say": "نسجل التعريفات على الجانب، لنستخدمها فيما يلي.", "pin": "<span dir='ltr'>A = B ⇔ A ⊆ B</span> و <span dir='ltr'>B ⊆ A</span><br><span dir='ltr'>A<sup>c</sup> = { x ∈ U | x ∉ A }</span><br><span dir='ltr'>A ∖ B = A ∩ B<sup>c</sup></span><br><span dir='ltr'>A △ B = (A ∖ B) ∪ (B ∖ A)</span>"},
+
+{"title": "جبر المجموعات", "clear": 1, "say": "والآن النتيجة الرئيسية. لأي مجموعة U، فإن الثلاثي المكوّن من مجموعة أجزاء U، والاتحاد، والتقاطع، هو جبر بولياني.", "L": [["goal", "<span dir='ltr'>(𝒫(U), ∪, ∩)</span>  جبر بولياني  <span dir='ltr'>∀ U</span>"]]},
+
+{"say": "مجموعة أجزاء U تتكون من جميع المجموعات الجزئية الممكنة من U.", "L": [["sub", "<span dir='ltr'>𝒫(U) = { A | A ⊆ U }</span><span class='tag'>مجموعة أجزاء <span dir='ltr'>U</span></span>"]]},
+
+{"say": "العمليتان هما الاتحاد والتقاطع. ومتمم الجبر البولياني هو متممة المجموعات التي عرّفناها من قبل.", "L": [["hyp", "<span dir='ltr'>⊕  =  ∪       ⊙  =  ∩</span>"], ["hyp", "<span dir='ltr'>∼A  =  A<sup>c</sup></span>"]]},
+
+{"say": "العنصران المحايدان هما المجموعة الخالية، وهي محايدة للاتحاد، والمجموعة الشاملة U، وهي محايدة للتقاطع.", "L": [["res", "<span dir='ltr'>A ∪ ∅ = A</span><span class='tag'><span dir='ltr'>∅</span> محايدة لـ <span dir='ltr'>∪</span>  (هي الصفر)</span>"], ["res", "<span dir='ltr'>A ∩ U = A</span><span class='tag'><span dir='ltr'>U</span> محايدة لـ <span dir='ltr'>∩</span>  (هي الواحد)</span>"]]},
+
+{"say": "والمتممات تحقق الشرطين: A اتحاد متممتها هو U، و A تقاطع متممتها هو المجموعة الخالية.", "L": [["res", "<span dir='ltr'>A ∪ A<sup>c</sup> = U</span>"], ["res", "<span dir='ltr'>A ∩ A<sup>c</sup> = ∅</span>"]]},
+
+{"title": "الخلاصة", "clear": 1, "say": "نلخص. رأينا التساوي بالاحتواء المزدوج، والمتممة، والفرق، والفرق التناظري، والضرب الديكارتي، ورأينا أن أجزاء مجموعة U، مع الاتحاد والتقاطع، تكوّن جبرًا بوليانيًا. شكرًا على المشاهدة.", "L": [["res", "<span dir='ltr'>A = B ⇔ A ⊆ B ∧ B ⊆ A</span>"], ["res", "<span dir='ltr'>A<sup>c</sup>,  A ∖ B = A ∩ B<sup>c</sup>,  A △ B,  A₁ × … × Aₙ</span>"], ["res", "<span dir='ltr'>(𝒫(U), ∪, ∩)</span> جبر بولياني:  <span dir='ltr'>0 = ∅</span>،  <span dir='ltr'>1 = U</span>"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){const d=document.createElement('div');d.className='l hyp';d.innerHTML=s.pin;if(k<n)d.style.animation='none';pins.appendChild(d)}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' زائد ').replace(/⊙/g,' ضرب ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ إعادة'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ متابعة'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ إيقاف مؤقت';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ إيقاف مؤقت';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ إيقاف مؤقت';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ar/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/hamed|shakir|naayf|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="نظرية المجموعات";$('sub').textContent="ملخص التعريفات وجبر المجموعات";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

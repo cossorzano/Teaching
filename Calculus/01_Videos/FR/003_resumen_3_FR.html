@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Théorie des ensembles</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:30%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>À retenir</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Commencer</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Vitesse <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Mode enregistrement (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"fr-FR",
+"meta":{"nivel": 0, "titulo": "Théorie des ensembles", "enunciado": "Résumé des définitions et algèbre des ensembles", "datos": ["Égalité d’ensembles", "Complémentaire", "Différence", "Différence symétrique", "Produit cartésien", "Algèbre des ensembles"]},
+"steps":[
+{"title": "Théorie des ensembles", "sub": "Résumé des définitions et algèbre des ensembles", "clear": 1, "say": "Bonjour. Dans cette vidéo, nous révisons, directement avec les formules, les opérations de base entre ensembles et l’algèbre de Boole qu’elles forment.", "L": [["txt", "Égalité · Complémentaire · Différence · Différence symétrique · Produit cartésien"]]},
+
+{"title": "Égalité d’ensembles", "clear": 1, "say": "Commençons par l’égalité. A est égal à B si et seulement si A est inclus dans B, et B est inclus dans A. Autrement dit, pour prouver une égalité d’ensembles, on prouve les deux inclusions.", "L": [["sub", "A = B  ⇔  A ⊆ B  ∧  B ⊆ A<span class='tag'>Égalité par double inclusion</span>"]]},
+
+{"title": "Complémentaire", "clear": 1, "say": "Le complémentaire de A, que l’on note A avec un c en exposant, est l’ensemble des x de l’univers U tels que x n’appartient pas à A.", "L": [["sub", "A<sup>c</sup> = { x ∈ U | x ∉ A }<span class='tag'>Complémentaire</span>"]]},
+
+{"title": "Différence", "clear": 1, "say": "La différence A moins B est l’ensemble des x de A tels que x n’appartient pas à B. Et elle est égale à A inter le complémentaire de B.", "L": [["sub", "A ∖ B = { x ∈ A | x ∉ B }<span class='tag'>Différence</span>"], ["res", "A ∖ B = A ∩ B<sup>c</sup>"]]},
+
+{"title": "Différence symétrique", "clear": 1, "say": "La différence symétrique de A et B est la réunion de A moins B et de B moins A.", "L": [["sub", "A △ B = (A ∖ B) ∪ (B ∖ A)<span class='tag'>Différence symétrique</span>"]]},
+
+{"title": "Produit cartésien", "clear": 1, "say": "Le produit cartésien des ensembles A un, A deux, jusqu’à A n, est l’ensemble des n-uplets, x un, x deux, jusqu’à x n, tels que x un appartient à A un, x deux appartient à A deux, et ainsi de suite jusqu’à x n, qui appartient à A n.", "L": [["sub", "A₁ × A₂ × … × Aₙ = { (x₁, x₂, …, xₙ) | x₁ ∈ A₁, x₂ ∈ A₂, …, xₙ ∈ Aₙ }<span class='tag'>Produit cartésien</span>"]]},
+
+{"say": "Notons les définitions à gauche, pour les utiliser dans la suite.", "pin": "A = B ⇔ A ⊆ B et B ⊆ A<br>A<sup>c</sup> = { x ∈ U | x ∉ A }<br>A ∖ B = A ∩ B<sup>c</sup><br>A △ B = (A ∖ B) ∪ (B ∖ A)"},
+
+{"title": "Algèbre des ensembles", "clear": 1, "say": "Voici maintenant le résultat principal. Pour tout ensemble U, le triplet formé de l’ensemble des parties de U, de la réunion et de l’intersection, est une algèbre de Boole.", "L": [["goal", "(𝒫(U), ∪, ∩)  est une algèbre de Boole  ∀ U"]]},
+
+{"say": "L’ensemble des parties de U est formé de tous les sous-ensembles possibles de U.", "L": [["sub", "𝒫(U) = { A | A ⊆ U }<span class='tag'>Ensemble des parties de U</span>"]]},
+
+{"say": "Les lois sont la réunion et l’intersection. Et le complément de l’algèbre de Boole est le complémentaire d’ensembles défini plus haut.", "L": [["hyp", "⊕  =  ∪       ⊙  =  ∩"], ["hyp", "∼A  =  A<sup>c</sup>"]]},
+
+{"say": "Les éléments neutres sont l’ensemble vide, neutre pour la réunion, et l’ensemble universel U, neutre pour l’intersection.", "L": [["res", "A ∪ ∅ = A<span class='tag'>∅ est neutre pour ∪  (c’est le 0)</span>"], ["res", "A ∩ U = A<span class='tag'>U est neutre pour ∩  (c’est le 1)</span>"]]},
+
+{"say": "Et les complémentaires vérifient les deux conditions : A union son complémentaire vaut U, et A inter son complémentaire vaut l’ensemble vide.", "L": [["res", "A ∪ A<sup>c</sup> = U"], ["res", "A ∩ A<sup>c</sup> = ∅"]]},
+
+{"title": "Résumé", "clear": 1, "say": "En résumé. Nous avons vu l’égalité par double inclusion, le complémentaire, la différence, la différence symétrique et le produit cartésien, et que les parties d’un ensemble U, avec la réunion et l’intersection, forment une algèbre de Boole. Merci d’avoir regardé cette vidéo.", "L": [["res", "A = B ⇔ A ⊆ B ∧ B ⊆ A"], ["res", "A<sup>c</sup>,  A ∖ B = A ∩ B<sup>c</sup>,  A △ B,  A₁ × … × Aₙ"], ["res", "(𝒫(U), ∪, ∩) algèbre de Boole :  0 = ∅,  1 = U"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){const d=document.createElement('div');d.className='l hyp';d.innerHTML=s.pin;if(k<n)d.style.animation='none';pins.appendChild(d)}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' plus ').replace(/⊙/g,' fois ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Rejouer'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Reprendre'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pause';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^fr/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/henri|paul|claude|remy|rémy|male|google français$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Théorie des ensembles";$('sub').textContent="Résumé des définitions et algèbre des ensembles";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

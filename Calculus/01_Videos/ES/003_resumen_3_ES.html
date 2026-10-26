@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Teoría de conjuntos</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:30%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Recuerda</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Empezar</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Velocidad <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Modo grabación (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"es-ES",
+"meta":{"nivel": 0, "titulo": "Teoría de conjuntos", "enunciado": "Resumen de definiciones y álgebra de conjuntos", "datos": ["Igualdad de conjuntos", "Complementario", "Diferencia", "Diferencia simétrica", "Producto cartesiano", "Álgebra de conjuntos"]},
+"steps":[
+{"title":"Teoría de conjuntos","sub":"Resumen de definiciones y álgebra de conjuntos","clear":1,
+"say":"Hola. En este vídeo repasamos, directamente con las fórmulas, las operaciones básicas entre conjuntos y el álgebra de Boole que forman.",
+"L":[["txt","Igualdad · Complementario · Diferencia · Diferencia simétrica · Producto cartesiano"]]},
+
+{"title":"Igualdad de conjuntos","clear":1,
+"say":"Empezamos con la igualdad. A es igual a B si y solo si A está contenido en B, y B está contenido en A. Es decir, para probar una igualdad de conjuntos se prueban las dos inclusiones.",
+"L":[["sub","A = B  ⇔  A ⊆ B  ∧  B ⊆ A<span class='tag'>Igualdad por doble inclusión</span>"]]},
+
+{"title":"Complementario","clear":1,
+"say":"El complementario de A, que escribimos A con una c arriba, es el conjunto de los x del universo U tales que x no pertenece a A.",
+"L":[["sub","A<sup>c</sup> = { x ∈ U | x ∉ A }<span class='tag'>Complementario</span>"]]},
+
+{"title":"Diferencia","clear":1,
+"say":"La diferencia de A menos B es el conjunto de los x que pertenecen a A, tales que x no pertenece a B. Y es igual a A intersección el complementario de B.",
+"L":[["sub","A ∖ B = { x ∈ A | x ∉ B }<span class='tag'>Diferencia</span>"],["res","A ∖ B = A ∩ B<sup>c</sup>"]]},
+
+{"title":"Diferencia simétrica","clear":1,
+"say":"La diferencia simétrica de A y B es la unión de A menos B, con B menos A.",
+"L":[["sub","A △ B = (A ∖ B) ∪ (B ∖ A)<span class='tag'>Diferencia simétrica</span>"]]},
+
+{"title":"Producto cartesiano","clear":1,
+"say":"El producto cartesiano de los conjuntos A uno, A dos, hasta A n, es el conjunto de las n-tuplas, x uno, x dos, hasta x n, tales que x uno pertenece a A uno, x dos pertenece a A dos, y así hasta x n, que pertenece a A n.",
+"L":[["sub","A₁ × A₂ × … × Aₙ = { (x₁, x₂, …, xₙ) | x₁ ∈ A₁, x₂ ∈ A₂, …, xₙ ∈ Aₙ }<span class='tag'>Producto cartesiano</span>"]]},
+
+{"say":"Anotamos a la izquierda las definiciones, para usarlas en lo que sigue.",
+"pin":"A = B ⇔ A ⊆ B y B ⊆ A<br>A<sup>c</sup> = { x ∈ U | x ∉ A }<br>A ∖ B = A ∩ B<sup>c</sup><br>A △ B = (A ∖ B) ∪ (B ∖ A)"},
+
+{"title":"Álgebra de conjuntos","clear":1,
+"say":"Ahora el resultado principal. Para cualquier conjunto U, la terna formada por el conjunto de partes de U, la unión y la intersección, es un álgebra de Boole.",
+"L":[["goal","(𝒫(U), ∪, ∩)  es un álgebra de Boole  ∀ U"]]},
+
+{"say":"El conjunto de partes de U está formado por todos los subconjuntos posibles de U.",
+"L":[["sub","𝒫(U) = { A | A ⊆ U }<span class='tag'>Conjunto de partes de U</span>"]]},
+
+{"say":"Las operaciones son la unión y la intersección. Y el complemento del álgebra de Boole es el complemento de conjuntos que hemos definido antes.",
+"L":[["hyp","⊕  =  ∪       ⊙  =  ∩"],["hyp","∼A  =  A<sup>c</sup>"]]},
+
+{"say":"Los elementos neutros son el conjunto vacío, que es neutro de la unión, y el conjunto universal U, que es neutro de la intersección.",
+"L":[["res","A ∪ ∅ = A<span class='tag'>∅ es neutro de ∪  (es el 0)</span>"],["res","A ∩ U = A<span class='tag'>U es neutro de ∩  (es el 1)</span>"]]},
+
+{"say":"Y los complementarios cumplen las dos condiciones: A unión su complementario es U, y A intersección su complementario es el conjunto vacío.",
+"L":[["res","A ∪ A<sup>c</sup> = U"],["res","A ∩ A<sup>c</sup> = ∅"]]},
+
+{"title":"Resumen","clear":1,
+"say":"Resumiendo. Hemos visto la igualdad por doble inclusión, el complementario, la diferencia, la diferencia simétrica y el producto cartesiano, y que las partes de un conjunto U, con la unión y la intersección, forman un álgebra de Boole. Gracias por ver el vídeo.",
+"L":[["res","A = B ⇔ A ⊆ B ∧ B ⊆ A"],["res","A<sup>c</sup>,  A ∖ B = A ∩ B<sup>c</sup>,  A △ B,  A₁ × … × Aₙ"],["res","(𝒫(U), ∪, ∩) álgebra de Boole:  0 = ∅,  1 = U"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){const d=document.createElement('div');d.className='l hyp';d.innerHTML=s.pin;if(k<n)d.style.animation='none';pins.appendChild(d)}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Repetir'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Continuar'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pausa';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^es/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/pablo|jorge|diego|enrique|miguel|alvaro|álvaro|male|google español$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent='Teoría de conjuntos';$('sub').textContent='Resumen de definiciones y álgebra de conjuntos';
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Теория множеств</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:30%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Запомним</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Начать</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Скорость <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Режим записи (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ru-RU",
+"meta":{"nivel": 0, "titulo": "Теория множеств", "enunciado": "Конспект определений и алгебра множеств", "datos": ["Равенство множеств", "Дополнение", "Разность", "Симметрическая разность", "Декартово произведение", "Алгебра множеств"]},
+"steps":[
+{"title": "Теория множеств", "sub": "Конспект определений и алгебра множеств", "clear": 1, "say": "Здравствуйте. В этом видео мы повторим, прямо по формулам, основные операции над множествами и булеву алгебру, которую они образуют.", "L": [["txt", "Равенство · Дополнение · Разность · Симметрическая разность · Декартово произведение"]]},
+
+{"title": "Равенство множеств", "clear": 1, "say": "Начнём с равенства. А равно Бэ тогда и только тогда, когда А содержится в Бэ, и Бэ содержится в А. То есть, чтобы доказать равенство множеств, доказывают оба включения.", "L": [["sub", "A = B  ⇔  A ⊆ B  ∧  B ⊆ A<span class='tag'>Равенство через двойное включение</span>"]]},
+
+{"title": "Дополнение", "clear": 1, "say": "Дополнение А, которое мы обозначаем буквой А с маленькой буквой цэ сверху, — это множество всех икс из универсального множества У, таких что икс не принадлежит А.", "L": [["sub", "A<sup>c</sup> = { x ∈ U | x ∉ A }<span class='tag'>Дополнение</span>"]]},
+
+{"title": "Разность", "clear": 1, "say": "Разность А минус Бэ — это множество всех икс из А, таких что икс не принадлежит Бэ. И она равна А пересечение дополнение Бэ.", "L": [["sub", "A ∖ B = { x ∈ A | x ∉ B }<span class='tag'>Разность</span>"], ["res", "A ∖ B = A ∩ B<sup>c</sup>"]]},
+
+{"title": "Симметрическая разность", "clear": 1, "say": "Симметрическая разность А и Бэ — это объединение А минус Бэ и Бэ минус А.", "L": [["sub", "A △ B = (A ∖ B) ∪ (B ∖ A)<span class='tag'>Симметрическая разность</span>"]]},
+
+{"title": "Декартово произведение", "clear": 1, "say": "Декартово произведение множеств А один, А два, и так далее до А эн, — это множество наборов икс один, икс два, и так далее до икс эн, таких что икс один принадлежит А один, икс два принадлежит А два, и так далее до икс эн, который принадлежит А эн.", "L": [["sub", "A₁ × A₂ × … × Aₙ = { (x₁, x₂, …, xₙ) | x₁ ∈ A₁, x₂ ∈ A₂, …, xₙ ∈ Aₙ }<span class='tag'>Декартово произведение</span>"]]},
+
+{"say": "Запишем определения слева, чтобы пользоваться ими дальше.", "pin": "A = B ⇔ A ⊆ B и B ⊆ A<br>A<sup>c</sup> = { x ∈ U | x ∉ A }<br>A ∖ B = A ∩ B<sup>c</sup><br>A △ B = (A ∖ B) ∪ (B ∖ A)"},
+
+{"title": "Алгебра множеств", "clear": 1, "say": "Теперь главный результат. Для любого множества У тройка, составленная из множества всех подмножеств У, объединения и пересечения, является булевой алгеброй.", "L": [["goal", "(𝒫(U), ∪, ∩)  — булева алгебра  ∀ U"]]},
+
+{"say": "Множество всех подмножеств У состоит из всех возможных подмножеств У.", "L": [["sub", "𝒫(U) = { A | A ⊆ U }<span class='tag'>Множество всех подмножеств U</span>"]]},
+
+{"say": "Операции — это объединение и пересечение. А дополнение в булевой алгебре — это дополнение множеств, которое мы определили раньше.", "L": [["hyp", "⊕  =  ∪       ⊙  =  ∩"], ["hyp", "∼A  =  A<sup>c</sup>"]]},
+
+{"say": "Нейтральные элементы — это пустое множество, нейтральное для объединения, и универсальное множество У, нейтральное для пересечения.", "L": [["res", "A ∪ ∅ = A<span class='tag'>∅ нейтрально для ∪  (это 0)</span>"], ["res", "A ∩ U = A<span class='tag'>U нейтрально для ∩  (это 1)</span>"]]},
+
+{"say": "И дополнения удовлетворяют обоим условиям: А объединение его дополнение есть У, а А пересечение его дополнение есть пустое множество.", "L": [["res", "A ∪ A<sup>c</sup> = U"], ["res", "A ∩ A<sup>c</sup> = ∅"]]},
+
+{"title": "Итоги", "clear": 1, "say": "Подведём итоги. Мы рассмотрели равенство через двойное включение, дополнение, разность, симметрическую разность и декартово произведение, а также увидели, что множество всех подмножеств множества У с объединением и пересечением образует булеву алгебру. Спасибо за внимание.", "L": [["res", "A = B ⇔ A ⊆ B ∧ B ⊆ A"], ["res", "A<sup>c</sup>,  A ∖ B = A ∩ B<sup>c</sup>,  A △ B,  A₁ × … × Aₙ"], ["res", "(𝒫(U), ∪, ∩) — булева алгебра:  0 = ∅,  1 = U"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){const d=document.createElement('div');d.className='l hyp';d.innerHTML=s.pin;if(k<n)d.style.animation='none';pins.appendChild(d)}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' плюс ').replace(/⊙/g,' умножить на ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Повторить'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Продолжить'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Пауза';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Пауза';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Пауза';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ru/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/dmitry|pavel|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Теория множеств";$('sub').textContent="Конспект определений и алгебра множеств";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
