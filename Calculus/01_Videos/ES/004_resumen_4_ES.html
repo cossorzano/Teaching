@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fórmulas útiles</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:30%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Recuerda</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Empezar</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Velocidad <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Modo grabación (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"es-ES",
+"meta":{"nivel": 0, "titulo": "Fórmulas útiles", "enunciado": "Operaciones con conjuntos", "datos": ["Diferencia y complementario", "Diferencia simétrica", "Producto cartesiano y unión", "Producto cartesiano e intersección", "Producto cartesiano y diferencia", "Fórmula de expansión", "Diferencia doble"]},
+"steps":[
+{"title":"Fórmulas útiles","sub":"Operaciones con conjuntos","clear":1,
+"say":"Hola. En este vídeo repasamos, directamente con las fórmulas, las identidades más útiles entre conjuntos: complementarios, diferencias y productos cartesianos.",
+"L":[["txt","Complementarios · Diferencias · Producto cartesiano"]]},
+
+{"title":"Diferencia y complementario","clear":1,
+"say":"Empezamos con la diferencia. A menos B es igual a A intersección el complementario de B. Esta fórmula convierte una diferencia en una intersección.",
+"L":[["res","A ∖ B = A ∩ B<sup>c</sup>"]]},
+
+{"say":"Las leyes de De Morgan para conjuntos. El complementario de A unión B es el complementario de A intersección el complementario de B. Y el complementario de A intersección B es el complementario de A unión el complementario de B.",
+"L":[["res","(A ∪ B)<sup>c</sup> = A<sup>c</sup> ∩ B<sup>c</sup>"],["res","(A ∩ B)<sup>c</sup> = A<sup>c</sup> ∪ B<sup>c</sup><span class='tag'>Leyes de De Morgan</span>"]]},
+
+{"title":"Diferencia simétrica","clear":1,
+"say":"La diferencia simétrica de A y B es la unión de A menos B, con B menos A. Y también es igual a la unión de A y B, menos la intersección de A y B.",
+"L":[["sub","A △ B = (A ∖ B) ∪ (B ∖ A)<span class='tag'>Definición</span>"],["res","A △ B = (A ∪ B) ∖ (A ∩ B)"]]},
+
+{"say":"Una identidad más: A menos B es igual a la diferencia simétrica de A con, A intersección B.",
+"L":[["res","A ∖ B = A △ (A ∩ B)"]]},
+
+{"say":"Anotamos a la izquierda estas dos fórmulas básicas.",
+"pin":"A ∖ B = A ∩ B<sup>c</sup><br>(A ∪ B)<sup>c</sup> = A<sup>c</sup> ∩ B<sup>c</sup><br>(A ∩ B)<sup>c</sup> = A<sup>c</sup> ∪ B<sup>c</sup>"},
+
+{"title":"Producto cartesiano y unión","clear":1,
+"say":"Pasamos al producto cartesiano. Con la unión: A unión B, producto cartesiano C, es igual a, A por C, unión, B por C. Y por el otro lado: A por, B unión C, es igual a, A por B, unión, A por C.",
+"L":[["res","(A ∪ B) × C = (A × C) ∪ (B × C)"],["res","A × (B ∪ C) = (A × B) ∪ (A × C)"]]},
+
+{"title":"Producto cartesiano e intersección","clear":1,
+"say":"Con la intersección ocurre igual. A intersección B, por C, es igual a, A por C, intersección, B por C. Y A por, B intersección C, es igual a, A por B, intersección, A por C.",
+"L":[["res","(A ∩ B) × C = (A × C) ∩ (B × C)"],["res","A × (B ∩ C) = (A × B) ∩ (A × C)"]]},
+
+{"title":"Producto cartesiano y diferencia","clear":1,
+"say":"Y con la diferencia. A menos B, por C, es igual a, A por C, menos, B por C. Y A por, B menos C, es igual a, A por B, menos, A por C.",
+"L":[["res","(A ∖ B) × C = (A × C) ∖ (B × C)"],["res","A × (B ∖ C) = (A × B) ∖ (A × C)"]]},
+
+{"title":"Fórmula de expansión","clear":1,
+"say":"Combinando la propiedad de la unión por los dos lados se obtiene la fórmula de expansión. A unión B, por, C unión D, es la unión de cuatro productos: A por C, B por C, A por D y B por D.",
+"L":[["res","(A ∪ B) × (C ∪ D) = (A × C) ∪ (B × C) ∪ (A × D) ∪ (B × D)"],["warn","(A ∪ B) × (C ∪ D) ≠ (A × C) ∪ (B × D)<span class='tag'>Cuidado: son cuatro productos, no dos</span>"]]},
+
+{"title":"Diferencia doble","clear":1,
+"say":"Última fórmula. A menos B, menos C, es igual a A menos, B unión C. Quitar B y luego C es lo mismo que quitar de golpe la unión de B y C.",
+"L":[["res","(A ∖ B) ∖ C = A ∖ (B ∪ C)"]]},
+
+{"title":"Resumen","clear":1,
+"say":"Resumiendo. La diferencia se escribe con el complementario, De Morgan relaciona unión e intersección a través del complementario, y el producto cartesiano se distribuye respecto de la unión, la intersección y la diferencia. Gracias por ver el vídeo.",
+"L":[["res","A ∖ B = A ∩ B<sup>c</sup>,    (A ∪ B)<sup>c</sup> = A<sup>c</sup> ∩ B<sup>c</sup>,    (A ∩ B)<sup>c</sup> = A<sup>c</sup> ∪ B<sup>c</sup>"],["res","A △ B = (A ∖ B) ∪ (B ∖ A) = (A ∪ B) ∖ (A ∩ B),    A ∖ B = A △ (A ∩ B)"],["res","× distribuye sobre ∪, ∩ y ∖ ;   (A ∖ B) ∖ C = A ∖ (B ∪ C)"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){const d=document.createElement('div');d.className='l hyp';d.innerHTML=s.pin;if(k<n)d.style.animation='none';pins.appendChild(d)}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Repetir'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Continuar'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pausa';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^es/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/pablo|jorge|diego|enrique|miguel|alvaro|álvaro|male|google español$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent='Fórmulas útiles';$('sub').textContent='Operaciones con conjuntos';
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
