@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>जालक: ⊕ और ⊙ की वर्गसमता</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--mut:#9fb3aa;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root{--bg:#16231f}}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3.2vw,40px);margin:12px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(16px,2.2vw,28px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t">बीजीय जालक: वर्गसमता</h1><div id="sub">कलन · अभ्यास 1</div>
+<div id="main"><div id="pin" class="pin"><h2>परिकल्पनाएँ</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ शुरू करें</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>गति <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">रिकॉर्डिंग मोड (H)</button><span id="cap"></span></div></div>
+<script>
+const A='a ⊕ a = a', S=(c,t)=>({c,t});
+const meta={nivel:2,titulo:'बीजीय जालक: वर्गसमता',
+ enunciado:'मान लीजिए (B, ⊕, ⊙) एक जालक है। ⊕ और ⊙ की वर्गसमता सिद्ध कीजिए:',
+ tesis:'∀a∈B:   a ⊕ a = a,   a ⊙ a = a',
+ datos:['(Abs1)  x ⊕ (x ⊙ y) = x','(Abs2)  x ⊙ (x ⊕ y) = x']};
+const steps=[
+{title:'बीजीय जालक: वर्गसमता',sub:'अभ्यास 1',clear:1,say:'नमस्ते। इस वीडियो में हम बीजीय जालक पर एक प्रश्न हल करेंगे। हम बहुत धीरे-धीरे चलेंगे, हर समीकरण लिखेंगे और हर चरण का कारण बताएँगे।',L:[S('txt','सिद्ध कीजिए कि ⊕ और ⊙ वर्गसम हैं')]},
+{say:'पहले, दी गई जानकारी। B एक समुच्चय है जिस पर दो संक्रियाएँ हैं: जालक योग और जालक गुणनफल। दोनों संवृत हैं: यदि हम B के दो अवयवों पर संक्रिया करें, तो परिणाम भी B में ही रहता है।',L:[S('hyp','(B, ⊕, ⊙) जालक<span class="tag">परिकल्पना</span>'),S('hyp','⊕, ⊙ संवृत: x ⊕ y ∈ B,  x ⊙ y ∈ B<span class="tag">परिकल्पना</span>')]},
+{say:'इसके अलावा, ये दोनों क्रमविनिमेय और साहचर्य हैं। लेकिन ध्यान दें: पूरी उपपत्ति में हमें इनकी ज़रूरत नहीं पड़ेगी। हम केवल अवशोषण नियमों का उपयोग करेंगे।',L:[S('hyp','⊕, ⊙ क्रमविनिमेय और साहचर्य<span class="tag">परिकल्पना (उपयोग नहीं होगी)</span>')]},
+{say:'यह पहला अवशोषण नियम है, Abs1। यह कहता है कि B के किन्हीं भी x और y के लिए, x ⊕ (x ⊙ y) बराबर x है। हम इसे बाईं ओर रख देते हैं, क्योंकि यह एक परिकल्पना है जिसका हम उपयोग करेंगे।',pin:'(Abs1) x ⊕ (x ⊙ y) = x   ∀x,y∈B'},
+{say:'और दूसरा, Abs2: x ⊙ (x ⊕ y) बराबर x है, यह भी सभी x और y के लिए। यह वही विचार है, बस संक्रियाएँ आपस में बदल दी गई हैं।',pin:'(Abs2) x ⊙ (x ⊕ y) = x   ∀x,y∈B'},
+{say:'हमें यह सिद्ध करना है: B के हर अवयव a के लिए, a ⊕ a बराबर a है, और a ⊙ a बराबर a है। यानी, किसी अवयव की स्वयं के साथ संक्रिया करने पर वह नहीं बदलता। इसे वर्गसमता कहते हैं।',L:[S('goal','सिद्ध करना है: ∀a∈B, a ⊕ a = a  और  a ⊙ a = a<span class="tag">लक्ष्य</span>')]},
+{title:'भाग 1: ⊕ की वर्गसमता',clear:1,say:'हम योग की वर्गसमता से शुरू करते हैं। B का कोई भी अवयव a लेते हैं। क्योंकि a स्वेच्छ है, जो हम सिद्ध करेंगे वह सभी अवयवों के लिए सत्य होगा।',L:[S('txt','मान लीजिए a ∈ B  (स्वेच्छ)'),S('goal','लक्ष्य: a ⊕ a = a<span class="tag">लक्ष्य</span>')]},
+{say:'हम Abs2 से शुरू करते हैं। याद कीजिए: x ⊙ (x ⊕ y) = x, और यह B के सभी x और y के लिए सत्य है।',L:[S('hyp','(Abs2)  x ⊙ (x ⊕ y) = x<span class="tag">परिकल्पना</span>')]},
+{say:'क्योंकि Abs2 किन्हीं भी x और y के लिए सत्य है, इसलिए विशेष रूप से x बराबर a और y बराबर a लेने पर भी सत्य है। यह मान्य है, क्योंकि a, B का अवयव है।',L:[S('sub','x = a,   y = a<span class="tag">चयन</span>')]},
+{say:'अब प्रतिस्थापन करते हैं। जहाँ x था वहाँ a लिखते हैं, और जहाँ y था वहाँ भी a लिखते हैं। बाईं ओर a ⊙ (a ⊕ a) बचता है, और दाईं ओर x, a बन जाता है। इस समीकरण को हम समीकरण एक कहते हैं।',L:[S('sub','a ⊙ (a ⊕ a) = a      (1)<span class="tag">Abs2, x=a, y=a लेकर</span>')]},
+{say:'ध्यान दीजिए कि a ⊕ a पहले ही आ गया है, यही वह व्यंजक है जिसे हम सरल करना चाहते हैं। लेकिन बाहर वाले गुणनफल को अभी हटाना बाकी है। इसके लिए हम Abs1 का उपयोग करेंगे।',L:[S('hyp','(Abs1)  x ⊕ (x ⊙ y) = x<span class="tag">परिकल्पना</span>')]},
+{say:'अब हम x बराबर a लेते हैं, लेकिन इस बार y बराबर a ⊕ a। क्या यह मान्य है? हाँ: क्योंकि योग एक संवृत संक्रिया है, a ⊕ a भी B का अवयव है, इसलिए यह y की भूमिका निभा सकता है।',L:[S('sub','x = a,   y = a ⊕ a  ∈ B<span class="tag">चयन (⊕ संवृत)</span>')]},
+{say:'इसे Abs1 में प्रतिस्थापित करते हैं। x की जगह a आता है, और y की जगह कोष्ठक a ⊕ a। हमें मिलता है: a ⊕ (a ⊙ (a ⊕ a)) बराबर a। यह समीकरण दो है।',L:[S('sub','a ⊕ ( a ⊙ (a ⊕ a) ) = a      (2)<span class="tag">Abs1, x=a, y=a⊕a लेकर</span>')]},
+{say:'अब आता है मुख्य कदम। समीकरण दो के कोष्ठक के अंदर देखिए: वहाँ ठीक a ⊙ (a ⊕ a) है। समीकरण एक के अनुसार, यह व्यंजक a के बराबर है। इसे चिह्नित कर देते हैं।',L:[S('sub','a ⊕ ( <mark>a ⊙ (a ⊕ a)</mark> ) = a      (2)'),S('txt','(1) से:  <mark>a ⊙ (a ⊕ a)</mark> = a')]},
+{say:'उस खंड को a से बदल देते हैं। समीकरण दो बन जाता है: a ⊕ a बराबर a।',L:[S('sub','a ⊕ ( <mark>a</mark> ) = a'),S('res','a ⊕ a = a   ∎<span class="tag">निष्कर्ष: ⊕ वर्गसम है</span>')]},
+{say:'क्योंकि a स्वेच्छ था, यह B के हर a के लिए सत्य है। योग की वर्गसमता सिद्ध हो गई।',L:[S('res','∀a∈B:  a ⊕ a = a')]},
+{title:'भाग 2: ⊙ की वर्गसमता',clear:1,say:'अब गुणनफल की वर्गसमता। विचार वही है, बस Abs1 और Abs2 की भूमिकाएँ बदल जाती हैं। फिर से B में एक स्वेच्छ a लेते हैं।',L:[S('txt','मान लीजिए a ∈ B  (स्वेच्छ)'),S('goal','लक्ष्य: a ⊙ a = a<span class="tag">लक्ष्य</span>')]},
+{say:'इस बार हम Abs1 से शुरू करते हैं: x ⊕ (x ⊙ y) = x।',L:[S('hyp','(Abs1)  x ⊕ (x ⊙ y) = x<span class="tag">परिकल्पना</span>')]},
+{say:'हम x बराबर a और y बराबर a लेते हैं। यह सभी x और y के लिए सत्य है, इसलिए इनके लिए भी।',L:[S('sub','x = a,   y = a<span class="tag">चयन</span>')]},
+{say:'प्रतिस्थापन करने पर: a ⊕ (a ⊙ a) बराबर a। यह समीकरण तीन है। अब a ⊙ a आ गया है, जिसे हम सरल करना चाहते हैं।',L:[S('sub','a ⊕ (a ⊙ a) = a      (3)<span class="tag">Abs1, x=a, y=a लेकर</span>')]},
+{say:'अब हम Abs2 का उपयोग करते हैं: x ⊙ (x ⊕ y) = x।',L:[S('hyp','(Abs2)  x ⊙ (x ⊕ y) = x<span class="tag">परिकल्पना</span>')]},
+{say:'हम x बराबर a और y बराबर a ⊙ a लेते हैं। यह मान्य है क्योंकि गुणनफल एक संवृत संक्रिया है, इसलिए a ⊙ a भी B में है।',L:[S('sub','x = a,   y = a ⊙ a  ∈ B<span class="tag">चयन (⊙ संवृत)</span>')]},
+{say:'प्रतिस्थापन करते हैं: a ⊙ (a ⊕ (a ⊙ a)) बराबर a। यह समीकरण चार है।',L:[S('sub','a ⊙ ( a ⊕ (a ⊙ a) ) = a      (4)<span class="tag">Abs2, x=a, y=a⊙a लेकर</span>')]},
+{say:'समीकरण चार के अंदर वाले कोष्ठक को देखिए: यह a ⊕ (a ⊙ a) है। समीकरण तीन के अनुसार, यह a के बराबर है।',L:[S('sub','a ⊙ ( <mark>a ⊕ (a ⊙ a)</mark> ) = a      (4)'),S('txt','(3) से:  <mark>a ⊕ (a ⊙ a)</mark> = a')]},
+{say:'उस खंड को a से बदलने पर, समीकरण चार बन जाता है: a ⊙ a बराबर a।',L:[S('sub','a ⊙ ( <mark>a</mark> ) = a'),S('res','a ⊙ a = a   ∎<span class="tag">निष्कर्ष: ⊙ वर्गसम है</span>')]},
+{title:'सारांश',clear:1,say:'सारांश में। केवल दो अवशोषण नियमों और संक्रियाओं के संवृत होने का उपयोग करके, हमने सिद्ध किया कि B के हर a के लिए, a ⊕ a बराबर a है, और a ⊙ a बराबर a है। दोनों बार हमने एक ही तरीका अपनाया: पहले एक अवशोषण नियम को x और y दोनों को a लेकर लगाया, फिर दूसरे नियम को y को उस परिणाम के बराबर लेकर लगाया, और अंत में प्रतिस्थापन किया। वीडियो देखने के लिए धन्यवाद।',L:[S('res','∀a∈B:  a ⊕ a = a'),S('res','∀a∈B:  a ⊙ a = a')]}
+];
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l.c;d.innerHTML=l.t;if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){const d=document.createElement('div');d.className='l hyp';d.textContent=s.pin;if(k<n)d.style.animation='none';pins.appendChild(d)}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();txt=txt.replace(/⊕/g,' प्लस ').replace(/⊙/g,' गुणा ').replace(/[()]/g,', ').replace(/\s+/g,' ');const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang='hi-IN';
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ फिर से चलाएँ'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ जारी रखें'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ रोकें';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^hi/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/madhur|hemant|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+document.body.addEventListener('click',()=>{},{once:true});
+render(-1);$('cap').textContent='0 / '+steps.length;
+</script></body></html>

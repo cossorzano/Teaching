@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ল্যাটিস: ⊕ ও ⊙-এর বর্গসমতা</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--mut:#9fb3aa;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root{--bg:#16231f}}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3.2vw,40px);margin:12px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(16px,2.2vw,28px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t">বীজগাণিতিক ল্যাটিস: বর্গসমতা</h1><div id="sub">ক্যালকুলাস · অনুশীলনী 1</div>
+<div id="main"><div id="pin" class="pin"><h2>অনুমানসমূহ</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ শুরু করুন</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>গতি <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">রেকর্ডিং মোড (H)</button><span id="cap"></span></div></div>
+<script>
+const A='a ⊕ a = a', S=(c,t)=>({c,t});
+const meta={nivel:2,titulo:'বীজগাণিতিক ল্যাটিস: বর্গসমতা',
+ enunciado:'ধরা যাক (B, ⊕, ⊙) একটি ল্যাটিস। প্রমাণ করুন যে ⊕ ও ⊙ বর্গসম:',
+ tesis:'∀a∈B:   a ⊕ a = a,   a ⊙ a = a',
+ datos:['(Abs1)  x ⊕ (x ⊙ y) = x','(Abs2)  x ⊙ (x ⊕ y) = x']};
+const steps=[
+{title:'বীজগাণিতিক ল্যাটিস: বর্গসমতা',sub:'অনুশীলনী 1',clear:1,say:'সবাইকে স্বাগতম। এই ভিডিওতে আমরা বীজগাণিতিক ল্যাটিস নিয়ে একটি অনুশীলনী সমাধান করব। আমরা খুব ধীরে ধীরে এগোব, প্রতিটি সমীকরণ লিখব এবং প্রতিটি ধাপের কারণ ব্যাখ্যা করব।',L:[S('txt','প্রমাণ করুন যে ⊕ ও ⊙ বর্গসম')]},
+{say:'প্রথমে, প্রদত্ত তথ্য। B একটি সেট, যার উপর দুটি প্রক্রিয়া আছে: ল্যাটিস যোগ এবং ল্যাটিস গুণ। দুটিই আবদ্ধ: B-এর দুটি উপাদানের উপর প্রক্রিয়া করলে ফলাফলও B-তেই থাকে।',L:[S('hyp','(B, ⊕, ⊙) ল্যাটিস<span class="tag">অনুমান</span>'),S('hyp','⊕, ⊙ আবদ্ধ: x ⊕ y ∈ B,  x ⊙ y ∈ B<span class="tag">অনুমান</span>')]},
+{say:'এছাড়া, এরা বিনিময়যোগ্য ও সহযোজ্য। কিন্তু লক্ষ করুন: পুরো প্রমাণে আমাদের এগুলোর প্রয়োজন হবে না। আমরা কেবল শোষণ বিধি ব্যবহার করব।',L:[S('hyp','⊕, ⊙ বিনিময়যোগ্য ও সহযোজ্য<span class="tag">অনুমান (ব্যবহার হবে না)</span>')]},
+{say:'এটি প্রথম শোষণ বিধি। এটি বলে যে B-এর যেকোনো x ও y-এর জন্য, x ⊕ (x ⊙ y) সমান x। আমরা এটিকে বাম দিকে রেখে দিচ্ছি, কারণ এটি একটি অনুমান যা আমরা ব্যবহার করব।',pin:'(Abs1) x ⊕ (x ⊙ y) = x   ∀x,y∈B'},
+{say:'এবং দ্বিতীয়টি, দ্বিতীয় শোষণ বিধি: x ⊙ (x ⊕ y) সমান x, এটিও সব x ও y-এর জন্য। একই ধারণা, শুধু প্রক্রিয়া দুটি অদলবদল করা হয়েছে।',pin:'(Abs2) x ⊙ (x ⊕ y) = x   ∀x,y∈B'},
+{say:'আমাদের যা প্রমাণ করতে হবে: B-এর প্রতিটি উপাদান a-এর জন্য, a ⊕ a সমান a, এবং a ⊙ a সমান a। অর্থাৎ, কোনো উপাদানের নিজের সাথে প্রক্রিয়া করলে সেটি বদলায় না। একেই বর্গসমতা বলে।',L:[S('goal','প্রমাণ করতে হবে: ∀a∈B, a ⊕ a = a  এবং  a ⊙ a = a<span class="tag">লক্ষ্য</span>')]},
+{title:'অংশ 1: ⊕-এর বর্গসমতা',clear:1,say:'আমরা যোগের বর্গসমতা দিয়ে শুরু করি। B থেকে যেকোনো একটি উপাদান a নিই। যেহেতু a যেকোনো, তাই আমরা যা প্রমাণ করব তা সব উপাদানের জন্যই সত্য হবে।',L:[S('txt','ধরা যাক a ∈ B  (যেকোনো)'),S('goal','লক্ষ্য: a ⊕ a = a<span class="tag">লক্ষ্য</span>')]},
+{say:'আমরা দ্বিতীয় শোষণ বিধি দিয়ে শুরু করি। মনে করুন: x ⊙ (x ⊕ y) = x, এবং এটি B-এর সব x ও y-এর জন্য সত্য।',L:[S('hyp','(Abs2)  x ⊙ (x ⊕ y) = x<span class="tag">অনুমান</span>')]},
+{say:'যেহেতু এই বিধি যেকোনো x ও y-এর জন্য সত্য, তাই বিশেষভাবে x সমান a এবং y সমান a নিলেও সত্য। এটি বৈধ, কারণ a, B-এর একটি উপাদান।',L:[S('sub','x = a,   y = a<span class="tag">নির্বাচন</span>')]},
+{say:'এবার প্রতিস্থাপন করি। যেখানে x ছিল সেখানে a লিখি, আর যেখানে y ছিল সেখানেও a লিখি। বাম পক্ষে থাকে a ⊙ (a ⊕ a), আর ডান পক্ষে x হয়ে যায় a। এই সমতাকে আমরা সমীকরণ এক বলি।',L:[S('sub','a ⊙ (a ⊕ a) = a      (1)<span class="tag">Abs2, x=a, y=a নিয়ে</span>')]},
+{say:'লক্ষ করুন, a ⊕ a ইতিমধ্যেই এসে গেছে, এটিই সেই রাশি যা আমরা সরল করতে চাই। কিন্তু বাইরের গুণটি এখনও সরাতে হবে। এর জন্য আমরা প্রথম শোষণ বিধি ব্যবহার করব।',L:[S('hyp','(Abs1)  x ⊕ (x ⊙ y) = x<span class="tag">অনুমান</span>')]},
+{say:'এবার আমরা x সমান a নিই, কিন্তু এবার y সমান a ⊕ a। এটি কি বৈধ? হ্যাঁ: যেহেতু যোগ একটি আবদ্ধ প্রক্রিয়া, a ⊕ a-ও B-এর উপাদান, তাই এটি y-এর ভূমিকা নিতে পারে।',L:[S('sub','x = a,   y = a ⊕ a  ∈ B<span class="tag">নির্বাচন (⊕ আবদ্ধ)</span>')]},
+{say:'প্রথম শোষণ বিধিতে প্রতিস্থাপন করি। x-এর জায়গায় আসে a, আর y-এর জায়গায় বন্ধনী a ⊕ a। আমরা পাই: a ⊕ (a ⊙ (a ⊕ a)) সমান a। এটি সমীকরণ দুই।',L:[S('sub','a ⊕ ( a ⊙ (a ⊕ a) ) = a      (2)<span class="tag">Abs1, x=a, y=a⊕a নিয়ে</span>')]},
+{say:'এবার আসল ধাপ। সমীকরণ দুই-এর বন্ধনীর ভেতরে দেখুন: সেখানে ঠিক a ⊙ (a ⊕ a) আছে। সমীকরণ এক অনুযায়ী, এই রাশি a-এর সমান। এটিকে চিহ্নিত করি।',L:[S('sub','a ⊕ ( <mark>a ⊙ (a ⊕ a)</mark> ) = a      (2)'),S('txt','(1) থেকে:  <mark>a ⊙ (a ⊕ a)</mark> = a')]},
+{say:'ওই অংশটিকে a দিয়ে বদলে দিই। সমীকরণ দুই হয়ে যায়: a ⊕ a সমান a।',L:[S('sub','a ⊕ ( <mark>a</mark> ) = a'),S('res','a ⊕ a = a   ∎<span class="tag">সিদ্ধান্ত: ⊕ বর্গসম</span>')]},
+{say:'যেহেতু a যেকোনো ছিল, এটি B-এর প্রতিটি a-এর জন্য সত্য। যোগের বর্গসমতা প্রমাণিত হলো।',L:[S('res','∀a∈B:  a ⊕ a = a')]},
+{title:'অংশ 2: ⊙-এর বর্গসমতা',clear:1,say:'এবার গুণের বর্গসমতা। ধারণা একই, শুধু দুটি শোষণ বিধির ভূমিকা অদলবদল হয়। আবার B থেকে যেকোনো একটি a নিই।',L:[S('txt','ধরা যাক a ∈ B  (যেকোনো)'),S('goal','লক্ষ্য: a ⊙ a = a<span class="tag">লক্ষ্য</span>')]},
+{say:'এবার আমরা প্রথম শোষণ বিধি দিয়ে শুরু করি: x ⊕ (x ⊙ y) = x।',L:[S('hyp','(Abs1)  x ⊕ (x ⊙ y) = x<span class="tag">অনুমান</span>')]},
+{say:'আমরা x সমান a এবং y সমান a নিই। এটি সব x ও y-এর জন্য সত্য, তাই এদের জন্যও সত্য।',L:[S('sub','x = a,   y = a<span class="tag">নির্বাচন</span>')]},
+{say:'প্রতিস্থাপন করে পাই: a ⊕ (a ⊙ a) সমান a। এটি সমীকরণ তিন। এখন a ⊙ a এসেছে, যা আমরা সরল করতে চাই।',L:[S('sub','a ⊕ (a ⊙ a) = a      (3)<span class="tag">Abs1, x=a, y=a নিয়ে</span>')]},
+{say:'এবার দ্বিতীয় শোষণ বিধি ব্যবহার করি: x ⊙ (x ⊕ y) = x।',L:[S('hyp','(Abs2)  x ⊙ (x ⊕ y) = x<span class="tag">অনুমান</span>')]},
+{say:'আমরা x সমান a এবং y সমান a ⊙ a নিই। এটি বৈধ, কারণ গুণ একটি আবদ্ধ প্রক্রিয়া, তাই a ⊙ a-ও B-তে আছে।',L:[S('sub','x = a,   y = a ⊙ a  ∈ B<span class="tag">নির্বাচন (⊙ আবদ্ধ)</span>')]},
+{say:'প্রতিস্থাপন করি: a ⊙ (a ⊕ (a ⊙ a)) সমান a। এটি সমীকরণ চার।',L:[S('sub','a ⊙ ( a ⊕ (a ⊙ a) ) = a      (4)<span class="tag">Abs2, x=a, y=a⊙a নিয়ে</span>')]},
+{say:'সমীকরণ চার-এর ভেতরের বন্ধনীটি দেখুন: এটি a ⊕ (a ⊙ a)। সমীকরণ তিন অনুযায়ী, এটি a-এর সমান।',L:[S('sub','a ⊙ ( <mark>a ⊕ (a ⊙ a)</mark> ) = a      (4)'),S('txt','(3) থেকে:  <mark>a ⊕ (a ⊙ a)</mark> = a')]},
+{say:'ওই অংশটিকে a দিয়ে বদলালে, সমীকরণ চার হয়ে যায়: a ⊙ a সমান a।',L:[S('sub','a ⊙ ( <mark>a</mark> ) = a'),S('res','a ⊙ a = a   ∎<span class="tag">সিদ্ধান্ত: ⊙ বর্গসম</span>')]},
+{title:'সারসংক্ষেপ',clear:1,say:'সংক্ষেপে বলি। কেবল দুটি শোষণ বিধি এবং প্রক্রিয়াগুলোর আবদ্ধতা ব্যবহার করে আমরা প্রমাণ করলাম যে B-এর প্রতিটি a-এর জন্য, a ⊕ a সমান a, এবং a ⊙ a সমান a। দুবারই আমরা একই পদ্ধতি অনুসরণ করেছি: প্রথমে একটি শোষণ বিধি x ও y দুটিকেই a ধরে প্রয়োগ করেছি, তারপর অন্য বিধিটি y-কে সেই ফলাফলের সমান ধরে প্রয়োগ করেছি, এবং শেষে প্রতিস্থাপন করেছি। ভিডিওটি দেখার জন্য ধন্যবাদ।',L:[S('res','∀a∈B:  a ⊕ a = a'),S('res','∀a∈B:  a ⊙ a = a')]}
+];
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l.c;d.innerHTML=l.t;if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){const d=document.createElement('div');d.className='l hyp';d.textContent=s.pin;if(k<n)d.style.animation='none';pins.appendChild(d)}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();txt=txt.replace(/⊕/g,' প্লাস ').replace(/⊙/g,' গুণ ').replace(/[()]/g,', ').replace(/\s+/g,' ');const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang='bn-BD';
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ আবার চালান'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ চালিয়ে যান'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ বিরতি';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^bn/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/pradeep|bashkar|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+document.body.addEventListener('click',()=>{},{once:true});
+render(-1);$('cap').textContent='0 / '+steps.length;
+</script></body></html>

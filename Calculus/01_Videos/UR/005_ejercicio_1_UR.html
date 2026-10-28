@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>لیٹس: ⊕ اور ⊙ کی ہم قوتی</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--mut:#9fb3aa;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root{--bg:#16231f}}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-inline-end:2px dashed #3d5a50;padding-inline-end:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3.2vw,40px);margin:12px 0;padding:6px 12px;border-inline-start:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(16px,2.2vw,28px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t">الجبری لیٹس: ہم قوتی</h1><div id="sub">کیلکولس · مشق 1</div>
+<div id="main"><div id="pin" class="pin"><h2>مفروضات</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ شروع کریں</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>رفتار <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">ریکارڈنگ موڈ (H)</button><span id="cap"></span></div></div>
+<script>
+const A='a ⊕ a = a', S=(c,t)=>({c,t});
+const M=t=>'<span dir="ltr">'+t+'</span>';
+const meta={nivel:2,titulo:'الجبری لیٹس: ہم قوتی',
+ enunciado:'فرض کریں '+M('(B, ⊕, ⊙)')+' ایک لیٹس ہے۔ ثابت کیجیے کہ '+M('⊕')+' اور '+M('⊙')+' ہم قوت ہیں:',
+ tesis:M('∀a∈B:   a ⊕ a = a,   a ⊙ a = a'),
+ datos:[M('(Abs1)  x ⊕ (x ⊙ y) = x'),M('(Abs2)  x ⊙ (x ⊕ y) = x')]};
+const steps=[
+{title:'الجبری لیٹس: ہم قوتی',sub:'مشق 1',clear:1,say:'خوش آمدید۔ اس ویڈیو میں ہم الجبری لیٹس پر ایک مشق حل کریں گے۔ ہم بہت آہستہ آہستہ چلیں گے، ہر مساوات لکھیں گے اور ہر قدم کی وجہ بیان کریں گے۔',L:[S('txt','ثابت کیجیے کہ '+M('⊕')+' اور '+M('⊙')+' ہم قوت ہیں')]},
+{say:'پہلے، دی گئی معلومات۔ B ایک سیٹ ہے جس پر دو عملیات ہیں: لیٹس جمع اور لیٹس ضرب۔ دونوں بند ہیں: اگر ہم B کے دو ارکان پر عمل کریں تو نتیجہ بھی B میں ہی رہتا ہے۔',L:[S('hyp',M('(B, ⊕, ⊙)')+' لیٹس<span class="tag">مفروضہ</span>'),S('hyp',M('⊕, ⊙')+' بند: '+M('x ⊕ y ∈ B,  x ⊙ y ∈ B')+'<span class="tag">مفروضہ</span>')]},
+{say:'اس کے علاوہ، یہ دونوں مبادلی اور تلازمی ہیں۔ لیکن دھیان دیں: پورے ثبوت میں ہمیں ان کی ضرورت نہیں پڑے گی۔ ہم صرف قوانینِ جذب استعمال کریں گے۔',L:[S('hyp',M('⊕, ⊙')+' مبادلی اور تلازمی<span class="tag">مفروضہ (استعمال نہیں ہوگا)</span>')]},
+{say:'یہ پہلا قانونِ جذب ہے۔ یہ کہتا ہے کہ B کے کسی بھی x اور y کے لیے، x ⊕ (x ⊙ y)، x کے برابر ہے۔ ہم اسے ایک طرف لکھ دیتے ہیں، کیونکہ یہ ایک مفروضہ ہے جسے ہم استعمال کریں گے۔',pin:M('(Abs1) x ⊕ (x ⊙ y) = x   ∀x,y∈B')},
+{say:'اور دوسرا قانونِ جذب: x ⊙ (x ⊕ y)، x کے برابر ہے، یہ بھی تمام x اور y کے لیے۔ خیال وہی ہے، بس دونوں عملیات کی جگہ بدل دی گئی ہے۔',pin:M('(Abs2) x ⊙ (x ⊕ y) = x   ∀x,y∈B')},
+{say:'ہمیں یہ ثابت کرنا ہے: B کے ہر رکن a کے لیے، a ⊕ a، a کے برابر ہے، اور a ⊙ a بھی a کے برابر ہے۔ یعنی کسی رکن پر اس کے اپنے ساتھ عمل کرنے سے وہ نہیں بدلتا۔ اسی کو ہم قوتی کہتے ہیں۔',L:[S('goal','ثابت کرنا ہے: '+M('∀a∈B, a ⊕ a = a')+'  اور  '+M('a ⊙ a = a')+'<span class="tag">مطلوب</span>')]},
+{title:'حصہ 1: ⊕ کی ہم قوتی',clear:1,say:'ہم جمع کی ہم قوتی سے شروع کرتے ہیں۔ B کا کوئی بھی رکن a لیتے ہیں۔ چونکہ a اختیاری ہے، اس لیے جو ہم ثابت کریں گے وہ تمام ارکان کے لیے درست ہوگا۔',L:[S('txt','فرض کریں '+M('a ∈ B')+'  (اختیاری)'),S('goal','ہم چاہتے ہیں: '+M('a ⊕ a = a')+'<span class="tag">مطلوب</span>')]},
+{say:'ہم دوسرے قانونِ جذب سے شروع کرتے ہیں۔ یاد کیجیے: x ⊙ (x ⊕ y) = x، اور یہ B کے تمام x اور y کے لیے درست ہے۔',L:[S('hyp',M('(Abs2)  x ⊙ (x ⊕ y) = x')+'<span class="tag">مفروضہ</span>')]},
+{say:'چونکہ یہ قانون کسی بھی x اور y کے لیے درست ہے، اس لیے خاص طور پر x کو a اور y کو a لینے پر بھی درست ہے۔ یہ جائز ہے، کیونکہ a، B کا رکن ہے۔',L:[S('sub',M('x = a,   y = a')+'<span class="tag">انتخاب</span>')]},
+{say:'اب ہم قیمتیں رکھتے ہیں۔ جہاں x تھا وہاں a لکھتے ہیں، اور جہاں y تھا وہاں بھی a لکھتے ہیں۔ بائیں طرف a ⊙ (a ⊕ a) رہ جاتا ہے، اور دائیں طرف x کی جگہ a آ جاتا ہے۔ اس مساوات کو ہم مساوات ایک کہتے ہیں۔',L:[S('sub',M('a ⊙ (a ⊕ a) = a      (1)')+'<span class="tag">'+M('Abs2')+'، '+M('x=a, y=a')+' لے کر</span>')]},
+{say:'غور کیجیے کہ a ⊕ a پہلے ہی آ چکا ہے، یہی وہ عبارت ہے جسے ہم سادہ کرنا چاہتے ہیں۔ لیکن باہر والی ضرب کو ابھی ہٹانا باقی ہے۔ اس کے لیے ہم پہلا قانونِ جذب استعمال کریں گے۔',L:[S('hyp',M('(Abs1)  x ⊕ (x ⊙ y) = x')+'<span class="tag">مفروضہ</span>')]},
+{say:'اب ہم x کو a لیتے ہیں، لیکن اس بار y کو a ⊕ a لیتے ہیں۔ کیا یہ جائز ہے؟ جی ہاں: چونکہ جمع ایک بند عمل ہے، a ⊕ a بھی B کا رکن ہے، اس لیے یہ y کا کردار ادا کر سکتا ہے۔',L:[S('sub',M('x = a,   y = a ⊕ a  ∈ B')+'<span class="tag">انتخاب ('+M('⊕')+' بند)</span>')]},
+{say:'اسے پہلے قانونِ جذب میں رکھتے ہیں۔ x کی جگہ a آتا ہے، اور y کی جگہ قوسین a ⊕ a۔ ہمیں ملتا ہے: a ⊕ (a ⊙ (a ⊕ a))، a کے برابر ہے۔ یہ مساوات دو ہے۔',L:[S('sub',M('a ⊕ ( a ⊙ (a ⊕ a) ) = a      (2)')+'<span class="tag">'+M('Abs1')+'، '+M('x=a, y=a⊕a')+' لے کر</span>')]},
+{say:'اب آتا ہے اہم قدم۔ مساوات دو کی قوسین کے اندر دیکھیے: وہاں بالکل a ⊙ (a ⊕ a) ہے۔ مساوات ایک کے مطابق، یہ عبارت a کے برابر ہے۔ اسے نمایاں کر دیتے ہیں۔',L:[S('sub',M('a ⊕ ( <mark>a ⊙ (a ⊕ a)</mark> ) = a      (2)')),S('txt',M('(1)')+' سے:  '+M('<mark>a ⊙ (a ⊕ a)</mark> = a'))]},
+{say:'اس حصے کو a سے بدل دیتے ہیں۔ مساوات دو بن جاتی ہے: a ⊕ a، a کے برابر ہے۔',L:[S('sub',M('a ⊕ ( <mark>a</mark> ) = a')),S('res',M('a ⊕ a = a   ∎')+'<span class="tag">نتیجہ: '+M('⊕')+' ہم قوت ہے</span>')]},
+{say:'چونکہ a اختیاری تھا، یہ B کے ہر a کے لیے درست ہے۔ جمع کی ہم قوتی ثابت ہو گئی۔',L:[S('res',M('∀a∈B:  a ⊕ a = a'))]},
+{title:'حصہ 2: ⊙ کی ہم قوتی',clear:1,say:'اب ضرب کی ہم قوتی۔ خیال وہی ہے، بس دونوں قوانینِ جذب کے کردار بدل جاتے ہیں۔ پھر سے B کا کوئی اختیاری رکن a لیتے ہیں۔',L:[S('txt','فرض کریں '+M('a ∈ B')+'  (اختیاری)'),S('goal','ہم چاہتے ہیں: '+M('a ⊙ a = a')+'<span class="tag">مطلوب</span>')]},
+{say:'اس بار ہم پہلے قانونِ جذب سے شروع کرتے ہیں: x ⊕ (x ⊙ y) = x۔',L:[S('hyp',M('(Abs1)  x ⊕ (x ⊙ y) = x')+'<span class="tag">مفروضہ</span>')]},
+{say:'ہم x کو a اور y کو a لیتے ہیں۔ یہ تمام x اور y کے لیے درست ہے، اس لیے ان کے لیے بھی۔',L:[S('sub',M('x = a,   y = a')+'<span class="tag">انتخاب</span>')]},
+{say:'قیمتیں رکھنے پر: a ⊕ (a ⊙ a)، a کے برابر ہے۔ یہ مساوات تین ہے۔ اب a ⊙ a آ گیا ہے، جسے ہم سادہ کرنا چاہتے ہیں۔',L:[S('sub',M('a ⊕ (a ⊙ a) = a      (3)')+'<span class="tag">'+M('Abs1')+'، '+M('x=a, y=a')+' لے کر</span>')]},
+{say:'اب ہم دوسرا قانونِ جذب استعمال کرتے ہیں: x ⊙ (x ⊕ y) = x۔',L:[S('hyp',M('(Abs2)  x ⊙ (x ⊕ y) = x')+'<span class="tag">مفروضہ</span>')]},
+{say:'ہم x کو a اور y کو a ⊙ a لیتے ہیں۔ یہ جائز ہے کیونکہ ضرب ایک بند عمل ہے، اس لیے a ⊙ a بھی B میں ہے۔',L:[S('sub',M('x = a,   y = a ⊙ a  ∈ B')+'<span class="tag">انتخاب ('+M('⊙')+' بند)</span>')]},
+{say:'قیمتیں رکھتے ہیں: a ⊙ (a ⊕ (a ⊙ a))، a کے برابر ہے۔ یہ مساوات چار ہے۔',L:[S('sub',M('a ⊙ ( a ⊕ (a ⊙ a) ) = a      (4)')+'<span class="tag">'+M('Abs2')+'، '+M('x=a, y=a⊙a')+' لے کر</span>')]},
+{say:'مساوات چار کی اندرونی قوسین دیکھیے: یہ a ⊕ (a ⊙ a) ہے۔ مساوات تین کے مطابق، یہ a کے برابر ہے۔',L:[S('sub',M('a ⊙ ( <mark>a ⊕ (a ⊙ a)</mark> ) = a      (4)')),S('txt',M('(3)')+' سے:  '+M('<mark>a ⊕ (a ⊙ a)</mark> = a'))]},
+{say:'اس حصے کو a سے بدلنے پر، مساوات چار بن جاتی ہے: a ⊙ a، a کے برابر ہے۔',L:[S('sub',M('a ⊙ ( <mark>a</mark> ) = a')),S('res',M('a ⊙ a = a   ∎')+'<span class="tag">نتیجہ: '+M('⊙')+' ہم قوت ہے</span>')]},
+{title:'خلاصہ',clear:1,say:'خلاصہ یہ ہے۔ صرف دو قوانینِ جذب اور عملیات کے بند ہونے کو استعمال کر کے، ہم نے ثابت کیا کہ B کے ہر a کے لیے، a ⊕ a، a کے برابر ہے، اور a ⊙ a بھی a کے برابر ہے۔ دونوں بار ہم نے ایک ہی طریقہ اپنایا: پہلے ایک قانونِ جذب کو x اور y دونوں کو a لے کر لگایا، پھر دوسرے قانون کو y کو اس نتیجے کے برابر لے کر لگایا، اور آخر میں قیمت رکھ دی۔ ویڈیو دیکھنے کا شکریہ۔',L:[S('res',M('∀a∈B:  a ⊕ a = a')),S('res',M('∀a∈B:  a ⊙ a = a'))]}
+];
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l.c;d.innerHTML=l.t;if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){const d=document.createElement('div');d.className='l hyp';d.innerHTML=s.pin;if(k<n)d.style.animation='none';pins.appendChild(d)}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();txt=txt.replace(/⊕/g,' جمع ').replace(/⊙/g,' ضرب ').replace(/[()]/g,', ').replace(/\s+/g,' ');const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang='ur-PK';
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ دوبارہ چلائیں'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ جاری رکھیں'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ وقفہ';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ وقفہ';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ وقفہ';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ur/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/asad|salman|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+document.body.addEventListener('click',()=>{},{once:true});
+render(-1);$('cap').textContent='0 / '+steps.length;
+</script></body></html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>格：⊕ 与 ⊙ 的幂等性</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--mut:#9fb3aa;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root{--bg:#16231f}}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3.2vw,40px);margin:12px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(16px,2.2vw,28px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t">代数格：幂等性</h1><div id="sub">微积分 · 练习 1</div>
+<div id="main"><div id="pin" class="pin"><h2>假设</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ 开始</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>速度 <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">录制模式 (H)</button><span id="cap"></span></div></div>
+<script>
+const A='a ⊕ a = a', S=(c,t)=>({c,t});
+const meta={nivel:2,titulo:'代数格：幂等性',
+ enunciado:'设 (B, ⊕, ⊙) 是一个格。证明 ⊕ 和 ⊙ 的幂等性：',
+ tesis:'∀a∈B:   a ⊕ a = a,   a ⊙ a = a',
+ datos:['(Abs1)  x ⊕ (x ⊙ y) = x','(Abs2)  x ⊙ (x ⊕ y) = x']};
+const steps=[
+{title:'代数格：幂等性',sub:'练习 1',clear:1,say:'大家好。在这个视频中，我们来解一道关于代数格的练习题。我们会讲得很慢，写下每一个等式，并说明每一步的理由。',L:[S('txt','证明 ⊕ 和 ⊙ 的幂等性')]},
+{say:'首先看已知条件。B 是一个集合，上面有两种运算：格的和与格的积。两种运算都是封闭的：B 中任意两个元素运算后，结果仍然属于 B。',L:[S('hyp','(B, ⊕, ⊙) 是格<span class="tag">假设</span>'),S('hyp','⊕, ⊙ 封闭：x ⊕ y ∈ B,  x ⊙ y ∈ B<span class="tag">假设</span>')]},
+{say:'此外，它们满足交换律和结合律。但请注意：在整个证明中我们都不会用到它们，只会用到吸收律。',L:[S('hyp','⊕, ⊙ 满足交换律和结合律<span class="tag">假设（不会用到）</span>')]},
+{say:'这是第一条吸收律，记作 Abs1。它说的是：对 B 中任意的 x 和 y，x ⊕ (x ⊙ y) 等于 x。我们把它固定在左边，因为这是我们要用到的假设。',pin:'(Abs1) x ⊕ (x ⊙ y) = x   ∀x,y∈B'},
+{say:'还有第二条，记作 Abs2：x ⊙ (x ⊕ y) 等于 x，同样对所有 x 和 y 成立。思路相同，只是把两种运算互换了。',pin:'(Abs2) x ⊙ (x ⊕ y) = x   ∀x,y∈B'},
+{say:'我们要证明的是：对 B 中的每个元素 a，a ⊕ a 等于 a，并且 a ⊙ a 等于 a。也就是说，一个元素与自身运算后保持不变。这就叫做幂等性。',L:[S('goal','证明：∀a∈B, a ⊕ a = a  且  a ⊙ a = a<span class="tag">目标</span>')]},
+{title:'第一部分：⊕ 的幂等性',clear:1,say:'我们先证明和的幂等性。在 B 中任取一个元素 a。因为 a 是任意的，我们证明的结论对所有元素都成立。',L:[S('txt','设 a ∈ B（任意）'),S('goal','目标：a ⊕ a = a<span class="tag">目标</span>')]},
+{say:'我们从 Abs2 开始。回忆一下：x ⊙ (x ⊕ y) = x，它对 B 中所有的 x 和 y 都成立。',L:[S('hyp','(Abs2)  x ⊙ (x ⊕ y) = x<span class="tag">假设</span>')]},
+{say:'既然 Abs2 对任意 x 和 y 都成立，那么特别地，取 x 等于 a、y 等于 a 时也成立。这样做是合理的，因为 a 属于 B。',L:[S('sub','x = a,   y = a<span class="tag">选取</span>')]},
+{say:'代入。原来是 x 的地方写 a，原来是 y 的地方也写 a。左边得到 a ⊙ (a ⊕ a)，右边的 x 变成 a。我们把这个等式称为等式一。',L:[S('sub','a ⊙ (a ⊕ a) = a      (1)<span class="tag">Abs2，取 x=a, y=a</span>')]},
+{say:'注意，这里已经出现了 a ⊕ a，正是我们想要化简的表达式。但我们还需要去掉外面的积。为此，我们要用 Abs1。',L:[S('hyp','(Abs1)  x ⊕ (x ⊙ y) = x<span class="tag">假设</span>')]},
+{say:'现在取 x 等于 a，但这次取 y 等于 a ⊕ a。这样合理吗？合理：因为和是封闭运算，a ⊕ a 属于 B，所以它可以充当 y。',L:[S('sub','x = a,   y = a ⊕ a  ∈ B<span class="tag">选取（⊕ 封闭）</span>')]},
+{say:'代入 Abs1。x 变成 a，y 变成括号里的 a ⊕ a。我们得到 a ⊕ (a ⊙ (a ⊕ a)) 等于 a。这是等式二。',L:[S('sub','a ⊕ ( a ⊙ (a ⊕ a) ) = a      (2)<span class="tag">Abs1，取 x=a, y=a⊕a</span>')]},
+{say:'现在是关键的一步。看等式二的括号里面：恰好是 a ⊙ (a ⊕ a)。根据等式一，这个表达式等于 a。我们把它标出来。',L:[S('sub','a ⊕ ( <mark>a ⊙ (a ⊕ a)</mark> ) = a      (2)'),S('txt','由 (1)：  <mark>a ⊙ (a ⊕ a)</mark> = a')]},
+{say:'把这一块替换成 a。等式二就变成：a ⊕ a 等于 a。',L:[S('sub','a ⊕ ( <mark>a</mark> ) = a'),S('res','a ⊕ a = a   ∎<span class="tag">结论：⊕ 是幂等的</span>')]},
+{say:'因为 a 是任意的，所以这对 B 中所有的 a 都成立。和的幂等性就证明完了。',L:[S('res','∀a∈B:  a ⊕ a = a')]},
+{title:'第二部分：⊙ 的幂等性',clear:1,say:'现在证明积的幂等性。思路相同，只是把 Abs1 和 Abs2 的角色互换。我们再次在 B 中任取一个 a。',L:[S('txt','设 a ∈ B（任意）'),S('goal','目标：a ⊙ a = a<span class="tag">目标</span>')]},
+{say:'这次我们从 Abs1 开始：x ⊕ (x ⊙ y) = x。',L:[S('hyp','(Abs1)  x ⊕ (x ⊙ y) = x<span class="tag">假设</span>')]},
+{say:'取 x 等于 a，y 等于 a。它对所有的 x 和 y 都成立，所以对这一取法也成立。',L:[S('sub','x = a,   y = a<span class="tag">选取</span>')]},
+{say:'代入得到：a ⊕ (a ⊙ a) 等于 a。这是等式三。现在出现了 a ⊙ a，这正是我们要化简的。',L:[S('sub','a ⊕ (a ⊙ a) = a      (3)<span class="tag">Abs1，取 x=a, y=a</span>')]},
+{say:'现在使用 Abs2：x ⊙ (x ⊕ y) = x。',L:[S('hyp','(Abs2)  x ⊙ (x ⊕ y) = x<span class="tag">假设</span>')]},
+{say:'取 x 等于 a，y 等于 a ⊙ a。这样做是合理的，因为积是封闭运算，所以 a ⊙ a 属于 B。',L:[S('sub','x = a,   y = a ⊙ a  ∈ B<span class="tag">选取（⊙ 封闭）</span>')]},
+{say:'代入：a ⊙ (a ⊕ (a ⊙ a)) 等于 a。这是等式四。',L:[S('sub','a ⊙ ( a ⊕ (a ⊙ a) ) = a      (4)<span class="tag">Abs2，取 x=a, y=a⊙a</span>')]},
+{say:'观察等式四里面的括号：它是 a ⊕ (a ⊙ a)。根据等式三，它等于 a。',L:[S('sub','a ⊙ ( <mark>a ⊕ (a ⊙ a)</mark> ) = a      (4)'),S('txt','由 (3)：  <mark>a ⊕ (a ⊙ a)</mark> = a')]},
+{say:'把这一块替换成 a，等式四就变成：a ⊙ a 等于 a。',L:[S('sub','a ⊙ ( <mark>a</mark> ) = a'),S('res','a ⊙ a = a   ∎<span class="tag">结论：⊙ 是幂等的</span>')]},
+{title:'总结',clear:1,say:'总结一下。只用两条吸收律，再加上运算的封闭性，我们证明了：对 B 中的每个 a，a ⊕ a 等于 a，a ⊙ a 等于 a。两次我们都用了同样的模式：先用一条吸收律，取 x 和 y 都等于 a；再用另一条，取 y 等于刚才的结果；最后代入。感谢观看。',L:[S('res','∀a∈B:  a ⊕ a = a'),S('res','∀a∈B:  a ⊙ a = a')]}
+];
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l.c;d.innerHTML=l.t;if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){const d=document.createElement('div');d.className='l hyp';d.textContent=s.pin;if(k<n)d.style.animation='none';pins.appendChild(d)}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();txt=txt.replace(/⊕/g,' 加 ').replace(/⊙/g,' 乘 ').replace(/[()]/g,', ').replace(/\s+/g,' ');const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang='zh-CN';
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ 重播'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ 继续'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ 暂停';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^zh/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/yunyang|yunxi|yunjian|kangkang|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+document.body.addEventListener('click',()=>{},{once:true});
+render(-1);$('cap').textContent='0 / '+steps.length;
+</script></body></html>

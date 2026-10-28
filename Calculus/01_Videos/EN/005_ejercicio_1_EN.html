@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lattices: idempotence of ⊕ and ⊙</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--mut:#9fb3aa;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root{--bg:#16231f}}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3.2vw,40px);margin:12px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(16px,2.2vw,28px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t">Algebraic lattices: idempotence</h1><div id="sub">Calculus · Exercise 1</div>
+<div id="main"><div id="pin" class="pin"><h2>Hypotheses</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Start</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Speed <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Recording mode (H)</button><span id="cap"></span></div></div>
+<script>
+const A='a ⊕ a = a', S=(c,t)=>({c,t});
+const meta={nivel:2,titulo:'Algebraic lattices: idempotence',
+ enunciado:'Let (B, ⊕, ⊙) be a lattice. Prove the idempotence of ⊕ and ⊙:',
+ tesis:'∀a∈B:   a ⊕ a = a,   a ⊙ a = a',
+ datos:['(Abs1)  x ⊕ (x ⊙ y) = x','(Abs2)  x ⊙ (x ⊕ y) = x']};
+const steps=[
+{title:'Algebraic lattices: idempotence',sub:'Exercise 1',clear:1,say:'Hello. In this video we are going to solve an exercise on algebraic lattices. We will go very slowly, writing down every equation and justifying every step.',L:[S('txt','Prove the idempotence of ⊕ and ⊙')]},
+{say:'First, the data. B is a set with two operations, the lattice sum and the lattice product. Both are internal: if we combine two elements of B, the result is still in B.',L:[S('hyp','(B, ⊕, ⊙) lattice<span class="tag">Hypothesis</span>'),S('hyp','⊕, ⊙ internal: x ⊕ y ∈ B,  x ⊙ y ∈ B<span class="tag">Hypothesis</span>')]},
+{say:'Moreover, they are commutative and associative. But note: we will not need these properties anywhere in the proof. We will only use the absorption laws.',L:[S('hyp','⊕, ⊙ commutative and associative<span class="tag">Hypothesis (not used)</span>')]},
+{say:'Here is the first absorption law, Abs1. It says that, for any x and y in B, x ⊕ (x ⊙ y) equals x. We pin it on the left, because it is a hypothesis we are going to use.',pin:'(Abs1) x ⊕ (x ⊙ y) = x   ∀x,y∈B'},
+{say:'And the second one, Abs2: x ⊙ (x ⊕ y) equals x, also for all x and y. It is the same idea with the operations swapped.',pin:'(Abs2) x ⊙ (x ⊕ y) = x   ∀x,y∈B'},
+{say:'What we want to prove: for every element a of B, a ⊕ a equals a, and a ⊙ a equals a. In other words, combining an element with itself does not change it. This is called idempotence.',L:[S('goal','Prove: ∀a∈B, a ⊕ a = a  and  a ⊙ a = a<span class="tag">Goal</span>')]},
+{title:'Part 1: idempotence of ⊕',clear:1,say:'Let us start with the idempotence of the sum. We take any element a of B. Since it is arbitrary, whatever we prove will hold for all of them.',L:[S('txt','Let a ∈ B  (arbitrary)'),S('goal','We want: a ⊕ a = a<span class="tag">Goal</span>')]},
+{say:'We start with Abs2. Recall: x ⊙ (x ⊕ y) = x, and it holds for all x and y in B.',L:[S('hyp','(Abs2)  x ⊙ (x ⊕ y) = x<span class="tag">Hypothesis</span>')]},
+{say:'Since Abs2 holds for any x and y, in particular it holds if we choose x equal to a, and y equal to a. This is legitimate, because a belongs to B.',L:[S('sub','x = a,   y = a<span class="tag">Choice</span>')]},
+{say:'We substitute. Wherever there was an x we write a, and wherever there was a y we write a. On the left we get a ⊙ (a ⊕ a), and on the right, x becomes a. We call this equality equation one.',L:[S('sub','a ⊙ (a ⊕ a) = a      (1)<span class="tag">Abs2 with x=a, y=a</span>')]},
+{say:'Notice that a ⊕ a already appears, which is the expression we want to simplify. But we still have to get rid of the product outside. For that we will use Abs1.',L:[S('hyp','(Abs1)  x ⊕ (x ⊙ y) = x<span class="tag">Hypothesis</span>')]},
+{say:'Now we choose x equal to a, but this time y equal to a ⊕ a. Is this legitimate? Yes: since the sum is an internal operation, a ⊕ a belongs to B, so it can play the role of y.',L:[S('sub','x = a,   y = a ⊕ a  ∈ B<span class="tag">Choice (⊕ internal)</span>')]},
+{say:'We substitute into Abs1. The x becomes a. And the y becomes the bracket a ⊕ a. We get a ⊕ (a ⊙ (a ⊕ a)) equals a. This is equation two.',L:[S('sub','a ⊕ ( a ⊙ (a ⊕ a) ) = a      (2)<span class="tag">Abs1 with x=a, y=a⊕a</span>')]},
+{say:'Now comes the key step. Look inside the bracket of equation two: it contains exactly a ⊙ (a ⊕ a). By equation one, this expression equals a. Let us highlight it.',L:[S('sub','a ⊕ ( <mark>a ⊙ (a ⊕ a)</mark> ) = a      (2)'),S('txt','By (1):  <mark>a ⊙ (a ⊕ a)</mark> = a')]},
+{say:'We replace that block by a. Equation two becomes: a ⊕ a equals a.',L:[S('sub','a ⊕ ( <mark>a</mark> ) = a'),S('res','a ⊕ a = a   ∎<span class="tag">Conclusion: ⊕ is idempotent</span>')]},
+{say:'Since a was arbitrary, this holds for every a in B. We have proved the idempotence of the sum.',L:[S('res','∀a∈B:  a ⊕ a = a')]},
+{title:'Part 2: idempotence of ⊙',clear:1,say:'Now the idempotence of the product. The idea is the same, but swapping the roles of Abs1 and Abs2. Again, we take an arbitrary a in B.',L:[S('txt','Let a ∈ B  (arbitrary)'),S('goal','We want: a ⊙ a = a<span class="tag">Goal</span>')]},
+{say:'This time we start with Abs1: x ⊕ (x ⊙ y) = x.',L:[S('hyp','(Abs1)  x ⊕ (x ⊙ y) = x<span class="tag">Hypothesis</span>')]},
+{say:'We choose x equal to a, and y equal to a. It holds for all x and y, so in particular for these.',L:[S('sub','x = a,   y = a<span class="tag">Choice</span>')]},
+{say:'Substituting: a ⊕ (a ⊙ a) equals a. This is equation three. Now a ⊙ a appears, which is what we want to simplify.',L:[S('sub','a ⊕ (a ⊙ a) = a      (3)<span class="tag">Abs1 with x=a, y=a</span>')]},
+{say:'Now we use Abs2: x ⊙ (x ⊕ y) = x.',L:[S('hyp','(Abs2)  x ⊙ (x ⊕ y) = x<span class="tag">Hypothesis</span>')]},
+{say:'We choose x equal to a, and y equal to a ⊙ a. This is legitimate because the product is an internal operation, and therefore a ⊙ a is in B.',L:[S('sub','x = a,   y = a ⊙ a  ∈ B<span class="tag">Choice (⊙ internal)</span>')]},
+{say:'We substitute: a ⊙ (a ⊕ (a ⊙ a)) equals a. This is equation four.',L:[S('sub','a ⊙ ( a ⊕ (a ⊙ a) ) = a      (4)<span class="tag">Abs2 with x=a, y=a⊙a</span>')]},
+{say:'Look at the inner bracket of equation four: it is a ⊕ (a ⊙ a). By equation three, it equals a.',L:[S('sub','a ⊙ ( <mark>a ⊕ (a ⊙ a)</mark> ) = a      (4)'),S('txt','By (3):  <mark>a ⊕ (a ⊙ a)</mark> = a')]},
+{say:'Replacing that block by a, equation four becomes: a ⊙ a equals a.',L:[S('sub','a ⊙ ( <mark>a</mark> ) = a'),S('res','a ⊙ a = a   ∎<span class="tag">Conclusion: ⊙ is idempotent</span>')]},
+{title:'Summary',clear:1,say:'To sum up. Using only the two absorption laws, and the fact that the operations are internal, we have proved that for every a in B, a ⊕ a is a, and a ⊙ a is a. We followed the same pattern both times: apply one absorption law with x and y equal to a, apply the other one with y equal to the result, and substitute. Thanks for watching.',L:[S('res','∀a∈B:  a ⊕ a = a'),S('res','∀a∈B:  a ⊙ a = a')]}
+];
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l.c;d.innerHTML=l.t;if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){const d=document.createElement('div');d.className='l hyp';d.textContent=s.pin;if(k<n)d.style.animation='none';pins.appendChild(d)}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();txt=txt.replace(/⊕/g,' plus ').replace(/⊙/g,' times ').replace(/[()]/g,', ').replace(/\s+/g,' ');const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang='en-US';
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Replay'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Resume'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pause';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/andrew|guy|brian|christopher|eric|david|mark|male|google us english$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+document.body.addEventListener('click',()=>{},{once:true});
+render(-1);$('cap').textContent='0 / '+steps.length;
+</script></body></html>
