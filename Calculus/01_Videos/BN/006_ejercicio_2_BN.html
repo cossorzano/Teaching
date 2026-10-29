@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ল্যাটিসে ক্রম</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>মনে রাখুন</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ শুরু</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>গতি <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">রেকর্ডিং মোড (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"bn-BD",
+"meta":{"nivel": 2, "titulo": "ল্যাটিসে ক্রম", "enunciado": "ধরা যাক (B, ⊕, ⊙) একটি ল্যাটিস। B তে সম্পর্ক  x ≤ y ⇔ x ⊕ y = y  সংজ্ঞায়িত করি। প্রমাণ করুন যে, যেকোনো a, b ∈ B এর জন্য:", "tesis": "a ≤ a ⊕ b,   b ≤ a ⊕ b", "datos": ["(বিনি)  x ⊕ y = y ⊕ x", "(সংযো)  x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(স্বগু)  x ⊕ x = x"]},
+"steps":[
+{"title": "ল্যাটিসে ক্রম", "sub": "অনুশীলনী · বীজগাণিতিক ল্যাটিস", "clear": 1, "say": "নমস্কার। এই ভিডিওতে আমরা বীজগাণিতিক ল্যাটিস নিয়ে একটি অনুশীলনী সমাধান করব। আমরা খুব ধীরে এগোব, প্রতিটি সমীকরণ লিখব এবং প্রতিটি ধাপের যুক্তি দেব।", "L": [["txt", "ল্যাটিসের যোগ দিয়ে সংজ্ঞায়িত একটি ক্রম সম্পর্ক"]]},
+
+{"say": "প্রথমে, প্রদত্ত তথ্য। B একটি সেট, যার উপর দুটি প্রক্রিয়া আছে, ল্যাটিস যোগ আর ল্যাটিস গুণ, এবং B একটি ল্যাটিস। অর্থাৎ, দুটি প্রক্রিয়াই আবদ্ধ, বিনিময়যোগ্য, সংযোজনযোগ্য, এবং শোষণ বিধি মেনে চলে।", "L": [["hyp", "(B, ⊕, ⊙) ল্যাটিস<span class='tag'>অনুমান</span>"]]},
+
+{"say": "এই অনুশীলনীতে আমরা যোগের কেবল তিনটি ধর্ম ব্যবহার করব। বিনিময়: a প্লাস b হলো b প্লাস a। সংযোজন: a প্লাস, b প্লাস c, হলো a প্লাস b, প্লাস c। আর স্বগুণিতা, যা ল্যাটিসের একটি উপপাদ্য: a প্লাস a হলো a। এগুলো আমরা বাঁ দিকে আটকে রাখি, কারণ এগুলো কাজে লাগবে।", "pin": ["(বিনি) x ⊕ y = y ⊕ x", "(সংযো) x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(স্বগু) x ⊕ x = x"]},
+
+{"say": "এবার সংজ্ঞা। B তে আমরা একটি সম্পর্ক, ছোট বা সমান, এভাবে সংজ্ঞায়িত করি। x, y এর চেয়ে ছোট বা সমান, যদি এবং কেবল যদি x প্লাস y সমান y হয়। এটি একটি সংজ্ঞা: ছোট বা সমান সম্পর্কের অর্থ, সংজ্ঞা অনুযায়ী, x কে y এর সঙ্গে যোগ করলে y পাওয়া যায়। সেটের ক্ষেত্রে এটি পরিচিত ধর্ম: A, B এর অন্তর্ভুক্ত, যদি এবং কেবল যদি A সংযোগ B সমান B হয়।", "L": [["sub", "x ≤ y  ⇔  x ⊕ y = y<span class='tag'>≤ এর সংজ্ঞা</span>"], ["txt", "সেট দিয়ে উদাহরণ:  A ⊆ B  ⇔  A ∪ B = B"]]},
+
+{"say": "সংজ্ঞাটিও আমরা বাঁ দিকে, আগের ধর্মগুলোর নিচে লিখে রাখি, কারণ এটিই এই অনুশীলনীর মূল চাবি। লক্ষ করুন, বাঁ দিকের কলামে এটি আলাদা করে চিহ্নিত দেখাচ্ছে।", "pin": ["(সংজ্ঞা) x ≤ y ⇔ x ⊕ y = y"]},
+
+{"say": "যা প্রমাণ করতে চাই। B এর যেকোনো a ও b এর জন্য দুটি কথা সত্য: a, a প্লাস b এর চেয়ে ছোট বা সমান, এবং b, a প্লাস b এর চেয়ে ছোট বা সমান।", "L": [["goal", "∀ a, b ∈ B:   a ≤ a ⊕ b   এবং   b ≤ a ⊕ b<span class='tag'>প্রতিপাদ্য</span>"]]},
+
+{"title": "অংশ ১: a ≤ a ⊕ b", "clear": 1, "say": "প্রথমটি দিয়ে শুরু করি। ধরা যাক a ও b, B এর যেকোনো দুটি উপাদান। আমরা প্রমাণ করতে চাই যে a, a প্লাস b এর চেয়ে ছোট বা সমান।", "L": [["txt", "ধরি a, b ∈ B  (যেকোনো)"], ["goal", "চাই:  a ≤ a ⊕ b<span class='tag'>এই অংশের প্রতিপাদ্য</span>"]]},
+
+{"say": "সংজ্ঞাটি মনে করি: x, y এর চেয়ে ছোট বা সমান, যদি এবং কেবল যদি x প্লাস y সমান y হয়।", "L": [["hyp", "x ≤ y  ⇔  x ⊕ y = y<span class='tag'>সংজ্ঞা</span>"]]},
+
+{"say": "আমরা x সমান a, এবং y সমান a প্লাস b নিয়ে সংজ্ঞাটি প্রয়োগ করি। এটি বৈধ, কারণ যোগ আবদ্ধ, তাই a প্লাস b, B এর অন্তর্গত।", "L": [["sub", "x = a,   y = a ⊕ b  ∈ B<span class='tag'>নির্বাচন (⊕ আবদ্ধ)</span>"]]},
+
+{"say": "প্রতিস্থাপন করলে, a, a প্লাস b এর চেয়ে ছোট বা সমান, যদি এবং কেবল যদি a প্লাস, a প্লাস b, সমান a প্লাস b হয়।", "L": [["sub", "a ≤ a ⊕ b  ⇔  a ⊕ (a ⊕ b) = a ⊕ b<span class='tag'>সংজ্ঞা, x=a, y=a⊕b নিয়ে</span>"]]},
+
+{"say": "অতএব ডান দিকের সমতাটি প্রমাণ করলেই যথেষ্ট: a প্লাস, a প্লাস b, সমান a প্লাস b। এটি আর অসমতা নয়, বরং একটি সমতা, যা আমরা যোগের ধর্ম দিয়ে প্রমাণ করতে পারি।", "L": [["goal", "প্রমাণ করাই যথেষ্ট:  a ⊕ (a ⊕ b) = a ⊕ b<span class='tag'>নতুন প্রতিপাদ্য</span>"]]},
+
+{"say": "আমরা বাম পক্ষ, a প্লাস, a প্লাস b, থেকে শুরু করি, এবং ধাপে ধাপে রূপান্তর করি যতক্ষণ না ডান পক্ষ পাই।", "L": [["txt", "a ⊕ (a ⊕ b)"]]},
+
+{"say": "প্রথম ধাপ। যোগের সংযোজন ধর্ম প্রয়োগ করি, x সমান a, y সমান a, আর z সমান b নিয়ে। বন্ধনী সরাই: a প্লাস, a প্লাস b, হয়ে যায় a প্লাস a, প্লাস b।", "L": [["sub", "a ⊕ (a ⊕ b)  =  (a ⊕ a) ⊕ b<span class='tag'>⊕ এর সংযোজন, x=a, y=a, z=b নিয়ে</span>"]]},
+
+{"say": "দ্বিতীয় ধাপ। বন্ধনীর ভেতরে a প্লাস a আছে। স্বগুণিতা অনুযায়ী, a প্লাস a সমান a। এটি চিহ্নিত করি।", "L": [["sub", "a ⊕ (a ⊕ b)  =  (<mark>a ⊕ a</mark>) ⊕ b"], ["txt", "(স্বগু) অনুযায়ী:  <mark>a ⊕ a</mark> = a"]]},
+
+{"say": "ওই অংশের জায়গায় a বসাই। থাকে a প্লাস b।", "L": [["sub", "(<mark>a</mark>) ⊕ b"], ["res", "a ⊕ (a ⊕ b)  =  a ⊕ b<span class='tag'>⊕ এর স্বগুণিতা</span>"]]},
+
+{"say": "আমরা সমতাটি প্রমাণ করলাম। আগে দেখা সমতুল্যতা অনুযায়ী, এই সমতার অর্থ ঠিক এটাই যে a, a প্লাস b এর চেয়ে ছোট বা সমান। এতে প্রথম অংশ শেষ হলো।", "L": [["res", "a ⊕ (a ⊕ b) = a ⊕ b   ⟹   a ≤ a ⊕ b   ∎"]]},
+
+{"title": "অংশ ২: b ≤ a ⊕ b", "clear": 1, "say": "এবার দ্বিতীয় অংশ। একই যেকোনো a ও b নিয়ে, আমরা প্রমাণ করতে চাই যে b, a প্লাস b এর চেয়ে ছোট বা সমান। পদ্ধতি একই, তবে এখানে একটি অতিরিক্ত ধাপ আসবে, কারণ b প্রথম অবস্থানে নেই।", "L": [["txt", "ধরি a, b ∈ B  (যেকোনো)"], ["goal", "চাই:  b ≤ a ⊕ b<span class='tag'>এই অংশের প্রতিপাদ্য</span>"]]},
+
+{"say": "আমরা x সমান b, এবং y সমান a প্লাস b নিয়ে সংজ্ঞাটি প্রয়োগ করি, যা আবারও B এর অন্তর্গত, কারণ যোগ আবদ্ধ।", "L": [["sub", "x = b,   y = a ⊕ b  ∈ B<span class='tag'>নির্বাচন (⊕ আবদ্ধ)</span>"], ["sub", "b ≤ a ⊕ b  ⇔  b ⊕ (a ⊕ b) = a ⊕ b<span class='tag'>সংজ্ঞা, x=b, y=a⊕b নিয়ে</span>"]]},
+
+{"say": "অতএব এটা প্রমাণ করাই যথেষ্ট যে b প্লাস, a প্লাস b, সমান a প্লাস b। আমরা বাম পক্ষ থেকে শুরু করি।", "L": [["goal", "প্রমাণ করাই যথেষ্ট:  b ⊕ (a ⊕ b) = a ⊕ b<span class='tag'>নতুন প্রতিপাদ্য</span>"], ["txt", "b ⊕ (a ⊕ b)"]]},
+
+{"say": "প্রথম ধাপ। যোগের সংযোজন ধর্ম, x সমান b, y সমান a, আর z সমান b নিয়ে। b প্লাস, a প্লাস b, থেকে আমরা যাই b প্লাস a, প্লাস b তে।", "L": [["sub", "b ⊕ (a ⊕ b)  =  (b ⊕ a) ⊕ b<span class='tag'>⊕ এর সংযোজন, x=b, y=a, z=b নিয়ে</span>"]]},
+
+{"say": "দ্বিতীয় ধাপ। এখন বন্ধনীর ভেতরে b প্লাস a, আর আমরা চাই a প্লাস b। বিনিময় ধর্ম প্রয়োগ করি: b প্লাস a সমান a প্লাস b।", "L": [["sub", "(<mark>b ⊕ a</mark>) ⊕ b"], ["txt", "(বিনি) অনুযায়ী:  <mark>b ⊕ a</mark> = a ⊕ b"], ["sub", "b ⊕ (a ⊕ b)  =  (a ⊕ b) ⊕ b<span class='tag'>⊕ এর বিনিময় ধর্ম</span>"]]},
+
+{"say": "তৃতীয় ধাপ। আমরা দুটি b কে একসঙ্গে আনতে চাই। আবার সংযোজন ধর্ম প্রয়োগ করি, এবার x সমান a, y সমান b, আর z সমান b নিয়ে। a প্লাস b, প্লাস b, থেকে আমরা যাই a প্লাস, b প্লাস b তে।", "L": [["sub", "b ⊕ (a ⊕ b)  =  a ⊕ (b ⊕ b)<span class='tag'>⊕ এর সংযোজন, x=a, y=b, z=b নিয়ে</span>"]]},
+
+{"say": "চতুর্থ ধাপ। বন্ধনীর ভেতরে b প্লাস b আছে। স্বগুণিতা অনুযায়ী, b প্লাস b হলো b। এটি চিহ্নিত করে প্রতিস্থাপন করি।", "L": [["sub", "a ⊕ (<mark>b ⊕ b</mark>)"], ["txt", "(স্বগু) অনুযায়ী:  <mark>b ⊕ b</mark> = b"], ["res", "b ⊕ (a ⊕ b)  =  a ⊕ b<span class='tag'>⊕ এর স্বগুণিতা</span>"]]},
+
+{"say": "আমরা সমতাটি প্রমাণ করলাম। সংজ্ঞা অনুযায়ী, এই সমতার অর্থ b, a প্লাস b এর চেয়ে ছোট বা সমান। এতে দ্বিতীয় অংশ শেষ হলো।", "L": [["res", "b ⊕ (a ⊕ b) = a ⊕ b   ⟹   b ≤ a ⊕ b   ∎"]]},
+
+{"title": "সারসংক্ষেপ", "clear": 1, "say": "সংক্ষেপে বলি। ছোট বা সমানের সংজ্ঞা অনুযায়ী, x, y এর চেয়ে ছোট বা সমান প্রমাণ করা মানে x প্লাস y সমান y প্রমাণ করা। a, a প্লাস b এর চেয়ে ছোট বা সমান, এর জন্য সংযোজন আর স্বগুণিতাই যথেষ্ট ছিল। b, a প্লাস b এর চেয়ে ছোট বা সমান, এর জন্য বিনিময় ধর্মও লেগেছে। এভাবে a প্লাস b, a ও b দুটিরই চেয়ে বড় বা সমান। দেখার জন্য ধন্যবাদ।", "L": [["res", "a ≤ a ⊕ b   (সংযোজন + স্বগুণিতা)"], ["res", "b ≤ a ⊕ b   (সংযোজন + বিনিময় + সংযোজন + স্বগুণিতা)"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' প্লাস ').replace(/⊙/g,' গুণ ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ আবার চালান'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ চালিয়ে যান'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ বিরতি';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^bn/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/pradeep|bashkar|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="ল্যাটিসে ক্রম";$('sub').textContent="অনুশীলনী · বীজগাণিতিক ল্যাটিস";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

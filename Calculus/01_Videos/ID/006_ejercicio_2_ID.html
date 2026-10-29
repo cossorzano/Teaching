@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Urutan pada latis</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Ingat</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Mulai</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Kecepatan <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Mode rekam (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"id-ID",
+"meta":{"nivel": 2, "titulo": "Urutan pada latis", "enunciado": "Misalkan (B, ⊕, ⊙) sebuah latis. Definisikan pada B relasi  x ≤ y ⇔ x ⊕ y = y.  Buktikan bahwa untuk sebarang a, b ∈ B:", "tesis": "a ≤ a ⊕ b,   b ≤ a ⊕ b", "datos": ["(Kom)  x ⊕ y = y ⊕ x", "(Aso)  x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(Idem)  x ⊕ x = x"]},
+"steps":[
+{"title": "Urutan pada latis", "sub": "Latihan · Latis aljabar", "clear": 1, "say": "Halo. Dalam video ini kita akan menyelesaikan sebuah soal tentang latis aljabar. Kita akan berjalan sangat perlahan, menuliskan setiap persamaan dan memberikan alasan untuk setiap langkah.", "L": [["txt", "Sebuah relasi urutan yang didefinisikan dengan jumlah latis"]]},
+
+{"say": "Pertama, data yang diketahui. B adalah himpunan dengan dua operasi, jumlah latis dan hasil kali latis, dan B adalah latis. Artinya, kedua operasi tertutup, komutatif, asosiatif, dan memenuhi hukum absorpsi.", "L": [["hyp", "(B, ⊕, ⊙) latis<span class='tag'>Hipotesis</span>"]]},
+
+{"say": "Dalam soal ini kita hanya akan memakai tiga sifat penjumlahan. Komutatif: a tambah b adalah b tambah a. Asosiatif: a tambah, b tambah c, adalah a tambah b, tambah c. Dan idempoten, yang merupakan teorema pada latis: a tambah a adalah a. Kita tempelkan di sebelah kiri, karena akan kita gunakan.", "pin": ["(Kom) x ⊕ y = y ⊕ x", "(Aso) x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(Idem) x ⊕ x = x"]},
+
+{"say": "Sekarang definisinya. Pada B kita definisikan sebuah relasi, kurang dari atau sama dengan, sebagai berikut. x kurang dari atau sama dengan y jika dan hanya jika x tambah y sama dengan y. Ini adalah definisi: relasi kurang dari atau sama dengan berarti, menurut definisi, bahwa menjumlahkan x dengan y menghasilkan y. Pada himpunan, ini adalah sifat yang sudah dikenal: A termuat di dalam B jika dan hanya jika A gabung B sama dengan B.", "L": [["sub", "x ≤ y  ⇔  x ⊕ y = y<span class='tag'>Definisi ≤</span>"], ["txt", "Contoh dengan himpunan:  A ⊆ B  ⇔  A ∪ B = B"]]},
+
+{"say": "Kita catat juga definisi ini di sebelah kiri, di bawah sifat-sifat sebelumnya, karena inilah kunci soal ini. Perhatikan bahwa definisi itu tampil tersorot di kolom kiri.", "pin": ["(Def) x ≤ y ⇔ x ⊕ y = y"]},
+
+{"say": "Yang ingin kita buktikan. Untuk sebarang a dan b di B, berlaku dua hal: a kurang dari atau sama dengan a tambah b, dan b kurang dari atau sama dengan a tambah b.", "L": [["goal", "∀ a, b ∈ B:   a ≤ a ⊕ b   dan   b ≤ a ⊕ b<span class='tag'>Yang dibuktikan</span>"]]},
+
+{"title": "Bagian 1: a ≤ a ⊕ b", "clear": 1, "say": "Kita mulai dengan yang pertama. Misalkan a dan b dua anggota sebarang dari B. Kita ingin membuktikan bahwa a kurang dari atau sama dengan a tambah b.", "L": [["txt", "Misalkan a, b ∈ B  (sebarang)"], ["goal", "Kita ingin:  a ≤ a ⊕ b<span class='tag'>Yang dibuktikan di bagian ini</span>"]]},
+
+{"say": "Ingat definisinya: x kurang dari atau sama dengan y jika dan hanya jika x tambah y sama dengan y.", "L": [["hyp", "x ≤ y  ⇔  x ⊕ y = y<span class='tag'>Definisi</span>"]]},
+
+{"say": "Kita terapkan definisi dengan x sama dengan a, dan y sama dengan a tambah b. Ini sah, karena penjumlahan tertutup, sehingga a tambah b adalah anggota B.", "L": [["sub", "x = a,   y = a ⊕ b  ∈ B<span class='tag'>Pemilihan (⊕ tertutup)</span>"]]},
+
+{"say": "Dengan substitusi, a kurang dari atau sama dengan a tambah b, jika dan hanya jika a tambah, a tambah b, sama dengan a tambah b.", "L": [["sub", "a ≤ a ⊕ b  ⇔  a ⊕ (a ⊕ b) = a ⊕ b<span class='tag'>Definisi dengan x=a, y=a⊕b</span>"]]},
+
+{"say": "Jadi, cukup dibuktikan kesamaan di ruas kanan: a tambah, a tambah b, sama dengan a tambah b. Ini bukan lagi ketaksamaan, melainkan kesamaan yang dapat kita buktikan dengan sifat-sifat penjumlahan.", "L": [["goal", "Cukup dibuktikan:  a ⊕ (a ⊕ b) = a ⊕ b<span class='tag'>Yang dibuktikan, baru</span>"]]},
+
+{"say": "Kita mulai dari ruas kiri, a tambah, a tambah b, lalu mengubahnya langkah demi langkah sampai mendapatkan ruas kanan.", "L": [["txt", "a ⊕ (a ⊕ b)"]]},
+
+{"say": "Langkah pertama. Kita terapkan sifat asosiatif penjumlahan, dengan x sama dengan a, y sama dengan a, dan z sama dengan b. Kita pindahkan tanda kurung: a tambah, a tambah b, menjadi a tambah a, tambah b.", "L": [["sub", "a ⊕ (a ⊕ b)  =  (a ⊕ a) ⊕ b<span class='tag'>Asosiatif ⊕, dengan x=a, y=a, z=b</span>"]]},
+
+{"say": "Langkah kedua. Di dalam tanda kurung muncul a tambah a. Menurut sifat idempoten, a tambah a sama dengan a. Kita tandai.", "L": [["sub", "a ⊕ (a ⊕ b)  =  (<mark>a ⊕ a</mark>) ⊕ b"], ["txt", "Menurut (Idem):  <mark>a ⊕ a</mark> = a"]]},
+
+{"say": "Kita ganti blok itu dengan a. Tersisa a tambah b.", "L": [["sub", "(<mark>a</mark>) ⊕ b"], ["res", "a ⊕ (a ⊕ b)  =  a ⊕ b<span class='tag'>Idempoten ⊕</span>"]]},
+
+{"say": "Kesamaan itu sudah terbukti. Menurut ekuivalensi yang kita lihat sebelumnya, kesamaan ini berarti tepat bahwa a kurang dari atau sama dengan a tambah b. Dengan ini bagian pertama selesai.", "L": [["res", "a ⊕ (a ⊕ b) = a ⊕ b   ⟹   a ≤ a ⊕ b   ∎"]]},
+
+{"title": "Bagian 2: b ≤ a ⊕ b", "clear": 1, "say": "Sekarang bagian kedua. Dengan a dan b sebarang yang sama, kita ingin membuktikan bahwa b kurang dari atau sama dengan a tambah b. Caranya sama, tetapi di sini akan ada satu langkah tambahan, karena b tidak berada di posisi pertama.", "L": [["txt", "Misalkan a, b ∈ B  (sebarang)"], ["goal", "Kita ingin:  b ≤ a ⊕ b<span class='tag'>Yang dibuktikan di bagian ini</span>"]]},
+
+{"say": "Kita terapkan definisi dengan x sama dengan b, dan y sama dengan a tambah b, yang lagi-lagi anggota B karena penjumlahan tertutup.", "L": [["sub", "x = b,   y = a ⊕ b  ∈ B<span class='tag'>Pemilihan (⊕ tertutup)</span>"], ["sub", "b ≤ a ⊕ b  ⇔  b ⊕ (a ⊕ b) = a ⊕ b<span class='tag'>Definisi dengan x=b, y=a⊕b</span>"]]},
+
+{"say": "Jadi, cukup dibuktikan bahwa b tambah, a tambah b, sama dengan a tambah b. Kita mulai dari ruas kiri.", "L": [["goal", "Cukup dibuktikan:  b ⊕ (a ⊕ b) = a ⊕ b<span class='tag'>Yang dibuktikan, baru</span>"], ["txt", "b ⊕ (a ⊕ b)"]]},
+
+{"say": "Langkah pertama. Sifat asosiatif penjumlahan, dengan x sama dengan b, y sama dengan a, dan z sama dengan b. Dari b tambah, a tambah b, kita peroleh b tambah a, tambah b.", "L": [["sub", "b ⊕ (a ⊕ b)  =  (b ⊕ a) ⊕ b<span class='tag'>Asosiatif ⊕, dengan x=b, y=a, z=b</span>"]]},
+
+{"say": "Langkah kedua. Sekarang di dalam tanda kurung ada b tambah a, padahal kita ingin a tambah b. Kita terapkan sifat komutatif: b tambah a sama dengan a tambah b.", "L": [["sub", "(<mark>b ⊕ a</mark>) ⊕ b"], ["txt", "Menurut (Kom):  <mark>b ⊕ a</mark> = a ⊕ b"], ["sub", "b ⊕ (a ⊕ b)  =  (a ⊕ b) ⊕ b<span class='tag'>Komutatif ⊕</span>"]]},
+
+{"say": "Langkah ketiga. Kita ingin menyatukan kedua b. Kita terapkan lagi sifat asosiatif, kini dengan x sama dengan a, y sama dengan b, dan z sama dengan b. Dari a tambah b, tambah b, kita peroleh a tambah, b tambah b.", "L": [["sub", "b ⊕ (a ⊕ b)  =  a ⊕ (b ⊕ b)<span class='tag'>Asosiatif ⊕, dengan x=a, y=b, z=b</span>"]]},
+
+{"say": "Langkah keempat. Di dalam tanda kurung muncul b tambah b. Menurut sifat idempoten, b tambah b adalah b. Kita tandai lalu kita ganti.", "L": [["sub", "a ⊕ (<mark>b ⊕ b</mark>)"], ["txt", "Menurut (Idem):  <mark>b ⊕ b</mark> = b"], ["res", "b ⊕ (a ⊕ b)  =  a ⊕ b<span class='tag'>Idempoten ⊕</span>"]]},
+
+{"say": "Kesamaan itu sudah terbukti. Menurut definisi, kesamaan ini berarti bahwa b kurang dari atau sama dengan a tambah b. Dengan ini bagian kedua selesai.", "L": [["res", "b ⊕ (a ⊕ b) = a ⊕ b   ⟹   b ≤ a ⊕ b   ∎"]]},
+
+{"title": "Ringkasan", "clear": 1, "say": "Ringkasnya. Dengan definisi kurang dari atau sama dengan, membuktikan bahwa x kurang dari atau sama dengan y berarti membuktikan bahwa x tambah y sama dengan y. Untuk a kurang dari atau sama dengan a tambah b, cukup memakai sifat asosiatif dan idempoten. Untuk b kurang dari atau sama dengan a tambah b, diperlukan juga sifat komutatif. Jadi, a tambah b lebih dari atau sama dengan a maupun b. Terima kasih sudah menonton.", "L": [["res", "a ≤ a ⊕ b   (asosiatif + idempoten)"], ["res", "b ≤ a ⊕ b   (asosiatif + komutatif + asosiatif + idempoten)"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' tambah ').replace(/⊙/g,' kali ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Ulangi'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Lanjutkan'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Jeda';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Jeda';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Jeda';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^id/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/ardi|andika|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Urutan pada latis";$('sub').textContent="Latihan · Latis aljabar";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

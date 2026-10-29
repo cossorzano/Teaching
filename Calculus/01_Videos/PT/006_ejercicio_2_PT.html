@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ordem em um reticulado</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Lembre-se</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Começar</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Velocidade <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Modo gravação (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"pt-BR",
+"meta":{"nivel": 2, "titulo": "Ordem em um reticulado", "enunciado": "Seja (B, ⊕, ⊙) um reticulado. Define-se em B a relação  x ≤ y ⇔ x ⊕ y = y.  Provar que, para quaisquer a, b ∈ B:", "tesis": "a ≤ a ⊕ b,   b ≤ a ⊕ b", "datos": ["(Comut)  x ⊕ y = y ⊕ x", "(Assoc)  x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(Idem)  x ⊕ x = x"]},
+"steps":[
+{"title": "Ordem em um reticulado", "sub": "Exercício · Reticulados algébricos", "clear": 1, "say": "Olá. Neste vídeo vamos resolver um exercício sobre reticulados algébricos. Vamos bem devagar, escrevendo cada equação e justificando cada passo.", "L": [["txt", "Uma relação de ordem definida com a soma do reticulado"]]},
+
+{"say": "Primeiro, os dados. B é um conjunto com duas operações, a soma e o produto do reticulado, e é um reticulado. Ou seja, as duas operações são internas, comutativas, associativas, e cumprem as leis de absorção.", "L": [["hyp", "(B, ⊕, ⊙) reticulado<span class='tag'>Hipótese</span>"]]},
+
+{"say": "Neste exercício vamos usar apenas três propriedades da soma. A comutatividade: a mais b é b mais a. A associatividade: a mais, b mais c, é a mais b, mais c. E a idempotência, que é um teorema dos reticulados: a mais a é a. Deixamos as três fixadas à esquerda, porque vamos usá-las.", "pin": ["(Comut) x ⊕ y = y ⊕ x", "(Assoc) x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(Idem) x ⊕ x = x"]},
+
+{"say": "Agora a definição. Em B definimos uma relação, menor ou igual, da seguinte forma. x é menor ou igual a y se e somente se x mais y é igual a y. É uma definição: a relação menor ou igual significa, por definição, que ao somar x com y obtemos y. Com conjuntos, é a propriedade conhecida: A está contido em B se e somente se A união B é igual a B.", "L": [["sub", "x ≤ y  ⇔  x ⊕ y = y<span class='tag'>Definição de ≤</span>"], ["txt", "Exemplo com conjuntos:  A ⊆ B  ⇔  A ∪ B = B"]]},
+
+{"say": "Anotamos também a definição à esquerda, abaixo das propriedades anteriores, porque ela é a chave do exercício. Repare que ela aparece destacada na coluna da esquerda.", "pin": ["(Def) x ≤ y ⇔ x ⊕ y = y"]},
+
+{"say": "O que queremos demonstrar. Para quaisquer a e b de B, valem duas coisas: a é menor ou igual a a mais b, e b é menor ou igual a a mais b.", "L": [["goal", "∀ a, b ∈ B:   a ≤ a ⊕ b   e   b ≤ a ⊕ b<span class='tag'>Tese</span>"]]},
+
+{"title": "Parte 1: a ≤ a ⊕ b", "clear": 1, "say": "Começamos pela primeira. Sejam a e b dois elementos quaisquer de B. Queremos provar que a é menor ou igual a a mais b.", "L": [["txt", "Sejam a, b ∈ B  (arbitrários)"], ["goal", "Queremos:  a ≤ a ⊕ b<span class='tag'>Tese desta parte</span>"]]},
+
+{"say": "Lembremos a definição: x é menor ou igual a y se e somente se x mais y é igual a y.", "L": [["hyp", "x ≤ y  ⇔  x ⊕ y = y<span class='tag'>Definição</span>"]]},
+
+{"say": "Aplicamos a definição com x igual a a, e y igual a a mais b. Isso é legítimo, porque a soma é interna e, portanto, a mais b pertence a B.", "L": [["sub", "x = a,   y = a ⊕ b  ∈ B<span class='tag'>Escolha (⊕ é interna)</span>"]]},
+
+{"say": "Substituindo, a é menor ou igual a a mais b, se e somente se a mais, a mais b, é igual a a mais b.", "L": [["sub", "a ≤ a ⊕ b  ⇔  a ⊕ (a ⊕ b) = a ⊕ b<span class='tag'>Definição com x=a, y=a⊕b</span>"]]},
+
+{"say": "Portanto, basta provar a igualdade da direita: a mais, a mais b, é igual a a mais b. Isso já não é uma desigualdade, mas uma igualdade que podemos demonstrar com as propriedades da soma.", "L": [["goal", "Basta provar:  a ⊕ (a ⊕ b) = a ⊕ b<span class='tag'>Nova tese</span>"]]},
+
+{"say": "Partimos do lado esquerdo, a mais, a mais b, e o transformamos passo a passo até chegar ao lado direito.", "L": [["txt", "a ⊕ (a ⊕ b)"]]},
+
+{"say": "Primeiro passo. Aplicamos a associatividade da soma, com x igual a a, y igual a a, e z igual a b. Mudamos os parênteses: a mais, a mais b, passa a ser a mais a, mais b.", "L": [["sub", "a ⊕ (a ⊕ b)  =  (a ⊕ a) ⊕ b<span class='tag'>Associatividade de ⊕, com x=a, y=a, z=b</span>"]]},
+
+{"say": "Segundo passo. Dentro dos parênteses aparece a mais a. Pela idempotência, a mais a é igual a a. Destacamos isso.", "L": [["sub", "a ⊕ (a ⊕ b)  =  (<mark>a ⊕ a</mark>) ⊕ b"], ["txt", "Por (Idem):  <mark>a ⊕ a</mark> = a"]]},
+
+{"say": "Substituímos esse bloco por a. Fica a mais b.", "L": [["sub", "(<mark>a</mark>) ⊕ b"], ["res", "a ⊕ (a ⊕ b)  =  a ⊕ b<span class='tag'>Idempotência de ⊕</span>"]]},
+
+{"say": "Provamos a igualdade. Pela equivalência que vimos antes, essa igualdade significa exatamente que a é menor ou igual a a mais b. Com isso termina a primeira parte.", "L": [["res", "a ⊕ (a ⊕ b) = a ⊕ b   ⟹   a ≤ a ⊕ b   ∎"]]},
+
+{"title": "Parte 2: b ≤ a ⊕ b", "clear": 1, "say": "Passamos à segunda parte. Com os mesmos a e b arbitrários, queremos provar que b é menor ou igual a a mais b. Faz-se do mesmo modo, mas aqui aparecerá um passo extra, porque b não está na primeira posição.", "L": [["txt", "Sejam a, b ∈ B  (arbitrários)"], ["goal", "Queremos:  b ≤ a ⊕ b<span class='tag'>Tese desta parte</span>"]]},
+
+{"say": "Aplicamos a definição com x igual a b, e y igual a a mais b, que de novo pertence a B porque a soma é interna.", "L": [["sub", "x = b,   y = a ⊕ b  ∈ B<span class='tag'>Escolha (⊕ é interna)</span>"], ["sub", "b ≤ a ⊕ b  ⇔  b ⊕ (a ⊕ b) = a ⊕ b<span class='tag'>Definição com x=b, y=a⊕b</span>"]]},
+
+{"say": "Portanto, basta provar que b mais, a mais b, é igual a a mais b. Partimos do lado esquerdo.", "L": [["goal", "Basta provar:  b ⊕ (a ⊕ b) = a ⊕ b<span class='tag'>Nova tese</span>"], ["txt", "b ⊕ (a ⊕ b)"]]},
+
+{"say": "Primeiro passo. Associatividade da soma, com x igual a b, y igual a a, e z igual a b. Passamos de b mais, a mais b, para b mais a, mais b.", "L": [["sub", "b ⊕ (a ⊕ b)  =  (b ⊕ a) ⊕ b<span class='tag'>Associatividade de ⊕, com x=b, y=a, z=b</span>"]]},
+
+{"say": "Segundo passo. Agora temos b mais a dentro dos parênteses, e queremos a mais b. Aplicamos a comutatividade: b mais a é igual a a mais b.", "L": [["sub", "(<mark>b ⊕ a</mark>) ⊕ b"], ["txt", "Por (Comut):  <mark>b ⊕ a</mark> = a ⊕ b"], ["sub", "b ⊕ (a ⊕ b)  =  (a ⊕ b) ⊕ b<span class='tag'>Comutatividade de ⊕</span>"]]},
+
+{"say": "Terceiro passo. Queremos juntar os dois b. Aplicamos de novo a associatividade, agora com x igual a a, y igual a b, e z igual a b. Passamos de a mais b, mais b, para a mais, b mais b.", "L": [["sub", "b ⊕ (a ⊕ b)  =  a ⊕ (b ⊕ b)<span class='tag'>Associatividade de ⊕, com x=a, y=b, z=b</span>"]]},
+
+{"say": "Quarto passo. Dentro dos parênteses aparece b mais b. Pela idempotência, b mais b é b. Destacamos e substituímos.", "L": [["sub", "a ⊕ (<mark>b ⊕ b</mark>)"], ["txt", "Por (Idem):  <mark>b ⊕ b</mark> = b"], ["res", "b ⊕ (a ⊕ b)  =  a ⊕ b<span class='tag'>Idempotência de ⊕</span>"]]},
+
+{"say": "Provamos a igualdade. Pela definição, essa igualdade significa que b é menor ou igual a a mais b. Com isso termina a segunda parte.", "L": [["res", "b ⊕ (a ⊕ b) = a ⊕ b   ⟹   b ≤ a ⊕ b   ∎"]]},
+
+{"title": "Resumo", "clear": 1, "say": "Resumindo. Com a definição de menor ou igual, provar que x é menor ou igual a y é provar que x mais y é igual a y. Para a menor ou igual a a mais b, bastou associar e usar a idempotência. Para b menor ou igual a a mais b, foi preciso também a comutatividade. Assim, a mais b é maior ou igual a a e a b. Obrigado por assistir.", "L": [["res", "a ≤ a ⊕ b   (associatividade + idempotência)"], ["res", "b ≤ a ⊕ b   (associatividade + comutatividade + associatividade + idempotência)"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' mais ').replace(/⊙/g,' vezes ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Repetir'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Continuar'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pausa';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^pt/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/antonio|antônio|donato|fabio|duarte|male|google português$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Ordem em um reticulado";$('sub').textContent="Exercício · Reticulados algébricos";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

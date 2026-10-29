@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>格中的序</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>备忘</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ 开始</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>语速 <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">录制模式 (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"zh-CN",
+"meta":{"nivel": 2, "titulo": "格中的序", "enunciado": "设 (B, ⊕, ⊙) 是一个格。在 B 上定义关系  x ≤ y ⇔ x ⊕ y = y。证明：对任意 a, b ∈ B，", "tesis": "a ≤ a ⊕ b,   b ≤ a ⊕ b", "datos": ["(交换)  x ⊕ y = y ⊕ x", "(结合)  x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(幂等)  x ⊕ x = x"]},
+"steps":[
+{"title": "格中的序", "sub": "练习 · 代数格", "clear": 1, "say": "大家好。在这个视频里，我们来解一道关于代数格的练习。我们会讲得很慢，写下每一个等式，并说明每一步的理由。", "L": [["txt", "用格的加法定义的一个序关系"]]},
+
+{"say": "首先是已知条件。B 是一个带有两个运算的集合，这两个运算是格的加法和格的乘法，并且 B 是一个格。也就是说，两个运算都是封闭的，满足交换律、结合律以及吸收律。", "L": [["hyp", "(B, ⊕, ⊙) 是格<span class='tag'>假设</span>"]]},
+
+{"say": "在这道题里，我们只用到加法的三个性质。交换律：a 加 b 等于 b 加 a。结合律：a 加上 b 加 c，等于 a 加 b 再加 c。还有幂等律，这是格的一个定理：a 加 a 等于 a。我们把它们固定在左边，因为后面要用。", "pin": ["(交换) x ⊕ y = y ⊕ x", "(结合) x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(幂等) x ⊕ x = x"]},
+
+{"say": "现在是定义。在 B 上我们这样定义一个关系，叫做小于或等于。x 小于或等于 y，当且仅当 x 加 y 等于 y。这是一个定义：小于或等于这个关系，按定义就是说，x 加上 y 得到 y。对集合来说，这就是我们熟悉的性质：A 包含于 B，当且仅当 A 并 B 等于 B。", "L": [["sub", "x ≤ y  ⇔  x ⊕ y = y<span class='tag'>≤ 的定义</span>"], ["txt", "集合的例子：  A ⊆ B  ⇔  A ∪ B = B"]]},
+
+{"say": "我们把这个定义也记在左边，放在前面那些性质的下面，因为它是这道题的关键。注意，它在左栏中是高亮显示的。", "pin": ["(定义) x ≤ y ⇔ x ⊕ y = y"]},
+
+{"say": "我们要证明的是：对 B 中任意的 a 和 b，有两件事成立：a 小于或等于 a 加 b，并且 b 小于或等于 a 加 b。", "L": [["goal", "∀ a, b ∈ B:   a ≤ a ⊕ b   且   b ≤ a ⊕ b<span class='tag'>待证结论</span>"]]},
+
+{"title": "第一部分：a ≤ a ⊕ b", "clear": 1, "say": "先证第一个。设 a 和 b 是 B 中任意两个元素。我们要证明 a 小于或等于 a 加 b。", "L": [["txt", "设 a, b ∈ B  （任意）"], ["goal", "要证：  a ≤ a ⊕ b<span class='tag'>本部分的结论</span>"]]},
+
+{"say": "回顾一下定义：x 小于或等于 y，当且仅当 x 加 y 等于 y。", "L": [["hyp", "x ≤ y  ⇔  x ⊕ y = y<span class='tag'>定义</span>"]]},
+
+{"say": "我们取 x 等于 a，y 等于 a 加 b，来应用这个定义。这是合理的，因为加法是封闭的，所以 a 加 b 属于 B。", "L": [["sub", "x = a,   y = a ⊕ b  ∈ B<span class='tag'>选取（⊕ 是封闭的）</span>"]]},
+
+{"say": "代入后得到：a 小于或等于 a 加 b，当且仅当 a 加上 a 加 b，等于 a 加 b。", "L": [["sub", "a ≤ a ⊕ b  ⇔  a ⊕ (a ⊕ b) = a ⊕ b<span class='tag'>定义，取 x=a, y=a⊕b</span>"]]},
+
+{"say": "所以，只需证明右边的等式：a 加上 a 加 b，等于 a 加 b。这已经不是不等式，而是一个可以用加法性质来证明的等式。", "L": [["goal", "只需证明：  a ⊕ (a ⊕ b) = a ⊕ b<span class='tag'>新的结论</span>"]]},
+
+{"say": "我们从左边，也就是 a 加上 a 加 b 出发，一步一步地变形，直到得到右边。", "L": [["txt", "a ⊕ (a ⊕ b)"]]},
+
+{"say": "第一步。应用加法的结合律，取 x 等于 a，y 等于 a，z 等于 b。我们移动括号：a 加上 a 加 b，变成 a 加 a 的结果再加 b。", "L": [["sub", "a ⊕ (a ⊕ b)  =  (a ⊕ a) ⊕ b<span class='tag'>⊕ 的结合律，取 x=a, y=a, z=b</span>"]]},
+
+{"say": "第二步。括号里出现了 a 加 a。由幂等律，a 加 a 等于 a。我们把它标出来。", "L": [["sub", "a ⊕ (a ⊕ b)  =  (<mark>a ⊕ a</mark>) ⊕ b"], ["txt", "由 (幂等)：  <mark>a ⊕ a</mark> = a"]]},
+
+{"say": "把这一块换成 a。剩下的就是 a 加 b。", "L": [["sub", "(<mark>a</mark>) ⊕ b"], ["res", "a ⊕ (a ⊕ b)  =  a ⊕ b<span class='tag'>⊕ 的幂等律</span>"]]},
+
+{"say": "等式证明完毕。根据前面得到的等价关系，这个等式恰好说明 a 小于或等于 a 加 b。第一部分到此结束。", "L": [["res", "a ⊕ (a ⊕ b) = a ⊕ b   ⟹   a ≤ a ⊕ b   ∎"]]},
+
+{"title": "第二部分：b ≤ a ⊕ b", "clear": 1, "say": "接下来是第二部分。对同样任意的 a 和 b，我们要证明 b 小于或等于 a 加 b。方法相同，但这里会多一步，因为 b 不在第一个位置。", "L": [["txt", "设 a, b ∈ B  （任意）"], ["goal", "要证：  b ≤ a ⊕ b<span class='tag'>本部分的结论</span>"]]},
+
+{"say": "我们取 x 等于 b，y 等于 a 加 b，来应用定义。因为加法是封闭的，a 加 b 同样属于 B。", "L": [["sub", "x = b,   y = a ⊕ b  ∈ B<span class='tag'>选取（⊕ 是封闭的）</span>"], ["sub", "b ≤ a ⊕ b  ⇔  b ⊕ (a ⊕ b) = a ⊕ b<span class='tag'>定义，取 x=b, y=a⊕b</span>"]]},
+
+{"say": "所以，只需证明 b 加上 a 加 b，等于 a 加 b。我们从左边出发。", "L": [["goal", "只需证明：  b ⊕ (a ⊕ b) = a ⊕ b<span class='tag'>新的结论</span>"], ["txt", "b ⊕ (a ⊕ b)"]]},
+
+{"say": "第一步。加法的结合律，取 x 等于 b，y 等于 a，z 等于 b。从 b 加上 a 加 b，变成 b 加 a 的结果再加 b。", "L": [["sub", "b ⊕ (a ⊕ b)  =  (b ⊕ a) ⊕ b<span class='tag'>⊕ 的结合律，取 x=b, y=a, z=b</span>"]]},
+
+{"say": "第二步。现在括号里是 b 加 a，而我们想要 a 加 b。应用交换律：b 加 a 等于 a 加 b。", "L": [["sub", "(<mark>b ⊕ a</mark>) ⊕ b"], ["txt", "由 (交换)：  <mark>b ⊕ a</mark> = a ⊕ b"], ["sub", "b ⊕ (a ⊕ b)  =  (a ⊕ b) ⊕ b<span class='tag'>⊕ 的交换律</span>"]]},
+
+{"say": "第三步。我们想把两个 b 放到一起。再次应用结合律，这次取 x 等于 a，y 等于 b，z 等于 b。从 a 加 b 的结果再加 b，变成 a 加上 b 加 b。", "L": [["sub", "b ⊕ (a ⊕ b)  =  a ⊕ (b ⊕ b)<span class='tag'>⊕ 的结合律，取 x=a, y=b, z=b</span>"]]},
+
+{"say": "第四步。括号里出现了 b 加 b。由幂等律，b 加 b 等于 b。我们把它标出来并替换掉。", "L": [["sub", "a ⊕ (<mark>b ⊕ b</mark>)"], ["txt", "由 (幂等)：  <mark>b ⊕ b</mark> = b"], ["res", "b ⊕ (a ⊕ b)  =  a ⊕ b<span class='tag'>⊕ 的幂等律</span>"]]},
+
+{"say": "等式证明完毕。根据定义，这个等式说明 b 小于或等于 a 加 b。第二部分到此结束。", "L": [["res", "b ⊕ (a ⊕ b) = a ⊕ b   ⟹   b ≤ a ⊕ b   ∎"]]},
+
+{"title": "总结", "clear": 1, "say": "总结一下。根据小于或等于的定义，证明 x 小于或等于 y，就是证明 x 加 y 等于 y。对于 a 小于或等于 a 加 b，只需用结合律和幂等律。对于 b 小于或等于 a 加 b，还需要交换律。所以，a 加 b 既大于或等于 a，也大于或等于 b。感谢观看。", "L": [["res", "a ≤ a ⊕ b   （结合律 + 幂等律）"], ["res", "b ≤ a ⊕ b   （结合律 + 交换律 + 结合律 + 幂等律）"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' 加 ').replace(/⊙/g,' 乘 ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ 重播'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ 继续'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ 暂停';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^zh/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/yunyang|yunxi|yunjian|kangkang|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="格中的序";$('sub').textContent="练习 · 代数格";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
