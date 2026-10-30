@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hasil kali kurang dari setiap faktornya</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Ingat</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Mulai</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Kecepatan <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Mode rekam (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"id-ID",
+"meta":{"nivel": 2, "titulo": "Hasil kali kurang dari setiap faktornya", "enunciado": "Misalkan (B, ⊕, ⊙) sebuah latis, dengan relasi  x ≤ y ⇔ x ⊕ y = y.  Buktikan bahwa untuk sebarang a, b ∈ B:", "tesis": "a ⊙ b ≤ a,   a ⊙ b ≤ b", "datos": ["(Kom ⊕)  x ⊕ y = y ⊕ x", "(Kom ⊙)  x ⊙ y = y ⊙ x", "(Abs1)  x ⊕ (x ⊙ y) = x"]},
+"steps":[
+{"title": "Hasil kali kurang dari setiap faktornya", "sub": "Latihan · Latis aljabar", "clear": 1, "say": "Halo. Dalam video ini kita akan menyelesaikan sebuah soal tentang latis aljabar. Kita akan berjalan sangat perlahan, menuliskan setiap persamaan dan memberikan alasan untuk setiap langkah.", "L": [["txt", "Hasil kali a ⊙ b kurang dari atau sama dengan a maupun b"]]},
+
+{"say": "Pertama, data yang diketahui. B adalah himpunan dengan dua operasi, jumlah latis dan hasil kali latis, dan B adalah latis. Artinya, kedua operasi tertutup, komutatif, asosiatif, dan memenuhi hukum absorpsi.", "L": [["hyp", "(B, ⊕, ⊙) latis<span class='tag'>Hipotesis</span>"]]},
+
+{"say": "Dalam soal ini kita hanya akan memakai tiga sifat. Sifat komutatif penjumlahan: a tambah b adalah b tambah a. Sifat komutatif perkalian: a kali b adalah b kali a. Dan hukum absorpsi pertama: x tambah, x kali y, sama dengan x. Kita tempelkan di sebelah kiri, karena akan kita gunakan.", "pin": ["(Kom ⊕) x ⊕ y = y ⊕ x", "(Kom ⊙) x ⊙ y = y ⊙ x", "(Abs1) x ⊕ (x ⊙ y) = x"]},
+
+{"say": "Sekarang definisinya. Pada B kita definisikan sebuah relasi, kurang dari atau sama dengan, sebagai berikut. x kurang dari atau sama dengan y jika dan hanya jika x tambah y sama dengan y. Pada himpunan, ini adalah sifat yang sudah dikenal: A termuat di dalam B jika dan hanya jika A gabung B sama dengan B.", "L": [["sub", "x ≤ y  ⇔  x ⊕ y = y<span class='tag'>Definisi ≤</span>"], ["txt", "Pada himpunan:  A ⊆ B  ⇔  A ∪ B = B"]]},
+
+{"say": "Kita catat juga definisi ini di sebelah kiri, di bawah sifat-sifat sebelumnya, karena inilah kunci soal ini.", "pin": ["(Def) x ≤ y ⇔ x ⊕ y = y"]},
+
+{"say": "Yang ingin kita buktikan. Untuk sebarang a dan b di B, berlaku dua hal: a kali b kurang dari atau sama dengan a, dan a kali b kurang dari atau sama dengan b. Pada himpunan, ini berarti irisan A dan B termuat di dalam A, dan juga termuat di dalam B.", "L": [["goal", "∀ a, b ∈ B:   a ⊙ b ≤ a   dan   a ⊙ b ≤ b<span class='tag'>Yang dibuktikan</span>"], ["txt", "Pada himpunan:  A ∩ B ⊆ A   dan   A ∩ B ⊆ B"]]},
+
+{"title": "Penyederhanaan dengan definisi", "clear": 1, "say": "Sebelum mulai, kita gunakan definisi untuk mengubah ketaksamaan menjadi kesamaan. Misalkan a dan b dua anggota sebarang dari B.", "L": [["txt", "Misalkan a, b ∈ B  (sebarang)"], ["hyp", "x ≤ y  ⇔  x ⊕ y = y<span class='tag'>Definisi</span>"]]},
+
+{"say": "Kita terapkan definisi dengan x sama dengan a kali b, dan y sama dengan a. Ini sah, karena perkalian tertutup, sehingga a kali b adalah anggota B.", "L": [["sub", "x = a ⊙ b  ∈ B,   y = a<span class='tag'>Pemilihan (⊙ tertutup)</span>"]]},
+
+{"say": "Dengan substitusi, a kali b kurang dari atau sama dengan a, jika dan hanya jika, a kali b, tambah a, sama dengan a.", "L": [["sub", "a ⊙ b ≤ a  ⇔  (a ⊙ b) ⊕ a = a<span class='tag'>Definisi dengan x=a⊙b, y=a</span>"]]},
+
+{"say": "Kita lakukan hal yang sama untuk yang kedua: x sama dengan a kali b, dan y sama dengan b. Kita peroleh bahwa a kali b kurang dari atau sama dengan b, jika dan hanya jika, a kali b, tambah b, sama dengan b.", "L": [["sub", "a ⊙ b ≤ b  ⇔  (a ⊙ b) ⊕ b = b<span class='tag'>Definisi dengan x=a⊙b, y=b</span>"]]},
+
+{"say": "Jadi, cukup dibuktikan kedua kesamaan ini. Inilah yang akan kita buktikan.", "L": [["goal", "Cukup dibuktikan:  (a ⊙ b) ⊕ a = a   dan   (a ⊙ b) ⊕ b = b<span class='tag'>Yang dibuktikan, baru</span>"]]},
+
+{"title": "Bagian 1: a ⊙ b ≤ a", "clear": 1, "say": "Kita mulai dengan yang pertama. Kita ingin membuktikan bahwa a kali b, tambah a, sama dengan a. Kita mulai dari ruas kiri.", "L": [["goal", "Kita ingin:  (a ⊙ b) ⊕ a = a<span class='tag'>Yang dibuktikan di bagian ini</span>"], ["txt", "(a ⊙ b) ⊕ a"]]},
+
+{"say": "Langkah pertama. Perhatikan bahwa bentuk ekspresi ini kebalikan dari bentuk hukum absorpsi, karena a berada di kanan. Kita terapkan sifat komutatif penjumlahan, dengan x sama dengan a kali b, dan y sama dengan a. Dari a kali b, tambah a, kita peroleh a tambah, a kali b.", "L": [["sub", "(a ⊙ b) ⊕ a  =  a ⊕ (a ⊙ b)<span class='tag'>Komutatif ⊕, dengan x=a⊙b, y=a</span>"]]},
+
+{"say": "Langkah kedua. Sekarang kita mendapatkan tepat hukum absorpsi pertama, dengan x sama dengan a, dan y sama dengan b: a tambah, a kali b, sama dengan a. Kita tandai.", "L": [["sub", "(a ⊙ b) ⊕ a  =  <mark>a ⊕ (a ⊙ b)</mark>"], ["txt", "Menurut (Abs1) dengan x=a, y=b:  <mark>a ⊕ (a ⊙ b)</mark> = a"]]},
+
+{"say": "Kita ganti blok itu dengan a. Kita peroleh a kali b, tambah a, sama dengan a.", "L": [["res", "(a ⊙ b) ⊕ a  =  a<span class='tag'>Absorpsi</span>"]]},
+
+{"say": "Kesamaan itu sudah terbukti. Menurut ekuivalensi yang kita lihat sebelumnya, kesamaan ini berarti tepat bahwa a kali b kurang dari atau sama dengan a. Pada himpunan: irisan A dan B termuat di dalam A. Dengan ini bagian pertama selesai.", "L": [["res", "(a ⊙ b) ⊕ a = a   ⟹   a ⊙ b ≤ a   ∎"], ["txt", "Pada himpunan:  A ∩ B ⊆ A"]]},
+
+{"title": "Bagian 2: a ⊙ b ≤ b", "clear": 1, "say": "Sekarang bagian kedua. Kita ingin membuktikan bahwa a kali b, tambah b, sama dengan b. Caranya sama, tetapi di sini akan ada satu langkah tambahan, karena hasil kalinya adalah a kali b, bukan b kali a.", "L": [["goal", "Kita ingin:  (a ⊙ b) ⊕ b = b<span class='tag'>Yang dibuktikan di bagian ini</span>"], ["txt", "(a ⊙ b) ⊕ b"]]},
+
+{"say": "Langkah pertama. Kita terapkan sifat komutatif penjumlahan, dengan x sama dengan a kali b, dan y sama dengan b. Dari a kali b, tambah b, kita peroleh b tambah, a kali b.", "L": [["sub", "(a ⊙ b) ⊕ b  =  b ⊕ (a ⊙ b)<span class='tag'>Komutatif ⊕, dengan x=a⊙b, y=b</span>"]]},
+
+{"say": "Langkah kedua. Sekarang kita ingin memakai absorpsi, tetapi dengan x sama dengan b. Itu menuntut adanya b kali a di dalam tanda kurung, bukan a kali b. Kita terapkan sifat komutatif perkalian: a kali b sama dengan b kali a.", "L": [["sub", "b ⊕ (<mark>a ⊙ b</mark>)"], ["txt", "Menurut (Kom ⊙):  <mark>a ⊙ b</mark> = b ⊙ a"], ["sub", "(a ⊙ b) ⊕ b  =  b ⊕ (b ⊙ a)<span class='tag'>Komutatif ⊙</span>"]]},
+
+{"say": "Langkah ketiga. Sekarang barulah kita mendapatkan hukum absorpsi pertama, dengan x sama dengan b, dan y sama dengan a: b tambah, b kali a, sama dengan b. Kita tandai lalu kita substitusikan.", "L": [["sub", "(a ⊙ b) ⊕ b  =  <mark>b ⊕ (b ⊙ a)</mark>"], ["txt", "Menurut (Abs1) dengan x=b, y=a:  <mark>b ⊕ (b ⊙ a)</mark> = b"], ["res", "(a ⊙ b) ⊕ b  =  b<span class='tag'>Absorpsi</span>"]]},
+
+{"say": "Kesamaan itu sudah terbukti. Menurut definisi, kesamaan ini berarti bahwa a kali b kurang dari atau sama dengan b. Pada himpunan: irisan A dan B termuat di dalam B. Dengan ini bagian kedua selesai.", "L": [["res", "(a ⊙ b) ⊕ b = b   ⟹   a ⊙ b ≤ b   ∎"], ["txt", "Pada himpunan:  A ∩ B ⊆ B"]]},
+
+{"title": "Ringkasan", "clear": 1, "say": "Ringkasnya. Dengan definisi kurang dari atau sama dengan, membuktikan bahwa a kali b kurang dari atau sama dengan a berarti membuktikan bahwa a kali b, tambah a, sama dengan a. Untuk bagian pertama, cukup sifat komutatif penjumlahan dan absorpsi. Untuk bagian kedua, diperlukan juga sifat komutatif perkalian. Jadi, a kali b kurang dari atau sama dengan a maupun b. Pada himpunan, irisan termuat di dalam masing-masing dari kedua himpunan. Terima kasih sudah menonton.", "L": [["res", "a ⊙ b ≤ a   (komutatif ⊕ + absorpsi)"], ["res", "a ⊙ b ≤ b   (komutatif ⊕ + komutatif ⊙ + absorpsi)"], ["txt", "Pada himpunan:  A ∩ B ⊆ A   dan   A ∩ B ⊆ B"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' tambah ').replace(/⊙/g,' kali ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Ulangi'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Lanjutkan'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Jeda';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Jeda';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Jeda';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^id/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/ardi|andika|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Hasil kali kurang dari setiap faktornya";$('sub').textContent="Latihan · Latis aljabar";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

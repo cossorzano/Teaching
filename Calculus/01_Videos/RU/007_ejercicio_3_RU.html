@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Произведение не больше каждого множителя</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Запомним</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Начать</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Скорость <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Режим записи (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ru-RU",
+"meta":{"nivel": 2, "titulo": "Произведение не больше каждого множителя", "enunciado": "Пусть (B, ⊕, ⊙) — решётка с отношением  x ≤ y ⇔ x ⊕ y = y.  Доказать, что для любых a, b ∈ B:", "tesis": "a ⊙ b ≤ a,   a ⊙ b ≤ b", "datos": ["(Комм ⊕)  x ⊕ y = y ⊕ x", "(Комм ⊙)  x ⊙ y = y ⊙ x", "(Abs1)  x ⊕ (x ⊙ y) = x"]},
+"steps":[
+{"title": "Произведение не больше каждого множителя", "sub": "Упражнение · Алгебраические решётки", "clear": 1, "say": "Здравствуйте. В этом видео мы решим упражнение об алгебраических решётках. Мы будем двигаться очень медленно, записывая каждое равенство и обосновывая каждый шаг.", "L": [["txt", "Произведение a ⊙ b меньше или равно и a, и b"]]},
+
+{"say": "Сначала данные. Бэ — множество с двумя операциями, решёточной суммой и решёточным произведением, и это решётка. То есть обе операции внутренние, коммутативные, ассоциативные и удовлетворяют законам поглощения.", "L": [["hyp", "(B, ⊕, ⊙) — решётка<span class='tag'>Гипотеза</span>"]]},
+
+{"say": "В этом упражнении мы используем только три свойства. Коммутативность суммы: а плюс бэ равно бэ плюс а. Коммутативность произведения: а умножить на бэ равно бэ умножить на а. И первый закон поглощения: икс плюс, икс умножить на игрек, равно икс. Закрепим их слева, потому что будем ими пользоваться.", "pin": ["(Комм ⊕) x ⊕ y = y ⊕ x", "(Комм ⊙) x ⊙ y = y ⊙ x", "(Abs1) x ⊕ (x ⊙ y) = x"]},
+
+{"say": "Теперь определение. На Бэ мы определяем отношение, меньше или равно, следующим образом. Икс меньше или равен игрек тогда и только тогда, когда икс плюс игрек равно игрек. Для множеств это хорошо известное свойство: А содержится в Бэ тогда и только тогда, когда А объединение Бэ равно Бэ.", "L": [["sub", "x ≤ y  ⇔  x ⊕ y = y<span class='tag'>Определение ≤</span>"], ["txt", "Для множеств:  A ⊆ B  ⇔  A ∪ B = B"]]},
+
+{"say": "Запишем определение тоже слева, под предыдущими свойствами, потому что это ключ к упражнению.", "pin": ["(Опр) x ≤ y ⇔ x ⊕ y = y"]},
+
+{"say": "Что нужно доказать. Для любых а и бэ из Бэ выполняются два утверждения: а умножить на бэ меньше или равно а, и а умножить на бэ меньше или равно бэ. Для множеств это означает, что пересечение А и Бэ содержится в А и содержится также в Бэ.", "L": [["goal", "∀ a, b ∈ B:   a ⊙ b ≤ a   и   a ⊙ b ≤ b<span class='tag'>Утверждение</span>"], ["txt", "Для множеств:  A ∩ B ⊆ A   и   A ∩ B ⊆ B"]]},
+
+{"title": "Сведение с помощью определения", "clear": 1, "say": "Прежде чем начать, воспользуемся определением, чтобы превратить неравенства в равенства. Пусть а и бэ — два произвольных элемента Бэ.", "L": [["txt", "Пусть a, b ∈ B  (произвольные)"], ["hyp", "x ≤ y  ⇔  x ⊕ y = y<span class='tag'>Определение</span>"]]},
+
+{"say": "Применим определение при икс, равном а умножить на бэ, и игрек, равном а. Это законно, потому что произведение — внутренняя операция, а значит, а умножить на бэ принадлежит Бэ.", "L": [["sub", "x = a ⊙ b  ∈ B,   y = a<span class='tag'>Выбор (⊙ внутренняя)</span>"]]},
+
+{"say": "Подставляя, получаем: а умножить на бэ меньше или равно а тогда и только тогда, когда, а умножить на бэ, плюс а, равно а.", "L": [["sub", "a ⊙ b ≤ a  ⇔  (a ⊙ b) ⊕ a = a<span class='tag'>Определение при x=a⊙b, y=a</span>"]]},
+
+{"say": "То же самое делаем со вторым: икс равен а умножить на бэ, а игрек равен бэ. Получаем, что а умножить на бэ меньше или равно бэ тогда и только тогда, когда, а умножить на бэ, плюс бэ, равно бэ.", "L": [["sub", "a ⊙ b ≤ b  ⇔  (a ⊙ b) ⊕ b = b<span class='tag'>Определение при x=a⊙b, y=b</span>"]]},
+
+{"say": "Значит, достаточно доказать эти два равенства. Это мы и будем доказывать.", "L": [["goal", "Достаточно доказать:  (a ⊙ b) ⊕ a = a   и   (a ⊙ b) ⊕ b = b<span class='tag'>Новое утверждение</span>"]]},
+
+{"title": "Часть 1: a ⊙ b ≤ a", "clear": 1, "say": "Начнём с первого. Мы хотим доказать, что а умножить на бэ, плюс а, равно а. Начнём с левой части.", "L": [["goal", "Нужно:  (a ⊙ b) ⊕ a = a<span class='tag'>Утверждение этой части</span>"], ["txt", "(a ⊙ b) ⊕ a"]]},
+
+{"say": "Первый шаг. Обратите внимание, что выражение имеет форму, обратную закону поглощения, потому что а стоит справа. Применим коммутативность суммы при икс, равном а умножить на бэ, и игрек, равном а. Переходим от а умножить на бэ, плюс а, к а плюс, а умножить на бэ.", "L": [["sub", "(a ⊙ b) ⊕ a  =  a ⊕ (a ⊙ b)<span class='tag'>Коммутативность ⊕ при x=a⊙b, y=a</span>"]]},
+
+{"say": "Второй шаг. Теперь у нас в точности первый закон поглощения при икс, равном а, и игрек, равном бэ: а плюс, а умножить на бэ, равно а. Выделим это.", "L": [["sub", "(a ⊙ b) ⊕ a  =  <mark>a ⊕ (a ⊙ b)</mark>"], ["txt", "По (Abs1) при x=a, y=b:  <mark>a ⊕ (a ⊙ b)</mark> = a"]]},
+
+{"say": "Заменим этот блок на а. Получаем, что а умножить на бэ, плюс а, равно а.", "L": [["res", "(a ⊙ b) ⊕ a  =  a<span class='tag'>Поглощение</span>"]]},
+
+{"say": "Мы доказали равенство. По равносильности, которую мы видели раньше, это равенство в точности означает, что а умножить на бэ меньше или равно а. Для множеств: пересечение А и Бэ содержится в А. На этом первая часть закончена.", "L": [["res", "(a ⊙ b) ⊕ a = a   ⟹   a ⊙ b ≤ a   ∎"], ["txt", "Для множеств:  A ∩ B ⊆ A"]]},
+
+{"title": "Часть 2: a ⊙ b ≤ b", "clear": 1, "say": "Переходим ко второй части. Мы хотим доказать, что а умножить на бэ, плюс бэ, равно бэ. Действуем так же, но здесь появится лишний шаг, потому что произведение — это а умножить на бэ, а не бэ умножить на а.", "L": [["goal", "Нужно:  (a ⊙ b) ⊕ b = b<span class='tag'>Утверждение этой части</span>"], ["txt", "(a ⊙ b) ⊕ b"]]},
+
+{"say": "Первый шаг. Применим коммутативность суммы при икс, равном а умножить на бэ, и игрек, равном бэ. Переходим от а умножить на бэ, плюс бэ, к бэ плюс, а умножить на бэ.", "L": [["sub", "(a ⊙ b) ⊕ b  =  b ⊕ (a ⊙ b)<span class='tag'>Коммутативность ⊕ при x=a⊙b, y=b</span>"]]},
+
+{"say": "Второй шаг. Теперь мы хотим применить поглощение, но при икс, равном бэ. Для этого в скобках должно стоять бэ умножить на а, а не а умножить на бэ. Применим коммутативность произведения: а умножить на бэ равно бэ умножить на а.", "L": [["sub", "b ⊕ (<mark>a ⊙ b</mark>)"], ["txt", "По (Комм ⊙):  <mark>a ⊙ b</mark> = b ⊙ a"], ["sub", "(a ⊙ b) ⊕ b  =  b ⊕ (b ⊙ a)<span class='tag'>Коммутативность ⊙</span>"]]},
+
+{"say": "Третий шаг. Вот теперь у нас первый закон поглощения при икс, равном бэ, и игрек, равном а: бэ плюс, бэ умножить на а, равно бэ. Выделим и подставим.", "L": [["sub", "(a ⊙ b) ⊕ b  =  <mark>b ⊕ (b ⊙ a)</mark>"], ["txt", "По (Abs1) при x=b, y=a:  <mark>b ⊕ (b ⊙ a)</mark> = b"], ["res", "(a ⊙ b) ⊕ b  =  b<span class='tag'>Поглощение</span>"]]},
+
+{"say": "Мы доказали равенство. По определению это равенство означает, что а умножить на бэ меньше или равно бэ. Для множеств: пересечение А и Бэ содержится в Бэ. На этом вторая часть закончена.", "L": [["res", "(a ⊙ b) ⊕ b = b   ⟹   a ⊙ b ≤ b   ∎"], ["txt", "Для множеств:  A ∩ B ⊆ B"]]},
+
+{"title": "Итоги", "clear": 1, "say": "Подведём итоги. По определению меньше или равно, доказать, что а умножить на бэ меньше или равно а, значит доказать, что а умножить на бэ, плюс а, равно а. Для первой части хватило коммутативности суммы и поглощения. Для второй понадобилась ещё и коммутативность произведения. Итак, а умножить на бэ меньше или равно и а, и бэ. Для множеств пересечение содержится в каждом из двух множеств. Спасибо за внимание.", "L": [["res", "a ⊙ b ≤ a   (коммутативность ⊕ + поглощение)"], ["res", "a ⊙ b ≤ b   (коммутативность ⊕ + коммутативность ⊙ + поглощение)"], ["txt", "Для множеств:  A ∩ B ⊆ A   и   A ∩ B ⊆ B"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' плюс ').replace(/⊙/g,' умножить на ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Повторить'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Продолжить'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Пауза';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Пауза';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Пауза';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ru/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/dmitry|pavel|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Произведение не больше каждого множителя";$('sub').textContent="Упражнение · Алгебраические решётки";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

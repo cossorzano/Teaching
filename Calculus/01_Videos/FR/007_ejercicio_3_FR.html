@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Le produit est inférieur à chaque facteur</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>À retenir</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Commencer</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Vitesse <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Mode enregistrement (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"fr-FR",
+"meta":{"nivel": 2, "titulo": "Le produit est inférieur à chaque facteur", "enunciado": "Soit (B, ⊕, ⊙) un treillis, muni de la relation  x ≤ y ⇔ x ⊕ y = y.  Montrer que, pour tous a, b ∈ B :", "tesis": "a ⊙ b ≤ a,   a ⊙ b ≤ b", "datos": ["(Comm ⊕)  x ⊕ y = y ⊕ x", "(Comm ⊙)  x ⊙ y = y ⊙ x", "(Abs1)  x ⊕ (x ⊙ y) = x"]},
+"steps":[
+{"title": "Le produit est inférieur à chaque facteur", "sub": "Exercice · Treillis algébriques", "clear": 1, "say": "Bonjour. Dans cette vidéo, nous allons résoudre un exercice sur les treillis algébriques. Nous irons très lentement, en écrivant chaque équation et en justifiant chaque étape.", "L": [["txt", "Le produit a ⊙ b est inférieur ou égal à a et à b"]]},
+
+{"say": "D’abord, les données. B est un ensemble muni de deux lois, la somme et le produit du treillis, et c’est un treillis. Autrement dit, les deux lois sont internes, commutatives, associatives, et vérifient les lois d’absorption.", "L": [["hyp", "(B, ⊕, ⊙) treillis<span class='tag'>Hypothèse</span>"]]},
+
+{"say": "Dans cet exercice, nous n’utiliserons que trois propriétés. La commutativité de la somme : a plus b égale b plus a. La commutativité du produit : a fois b égale b fois a. Et la première loi d’absorption : x plus, x fois y, est égal à x. Nous les épinglons à gauche, car nous allons les utiliser.", "pin": ["(Comm ⊕) x ⊕ y = y ⊕ x", "(Comm ⊙) x ⊙ y = y ⊙ x", "(Abs1) x ⊕ (x ⊙ y) = x"]},
+
+{"say": "Voici maintenant la définition. Sur B, on définit une relation, inférieur ou égal, de la façon suivante. x est inférieur ou égal à y si et seulement si x plus y est égal à y. Avec des ensembles, c’est la propriété bien connue : A est inclus dans B si et seulement si A union B est égal à B.", "L": [["sub", "x ≤ y  ⇔  x ⊕ y = y<span class='tag'>Définition de ≤</span>"], ["txt", "Avec des ensembles :  A ⊆ B  ⇔  A ∪ B = B"]]},
+
+{"say": "Nous notons aussi la définition à gauche, sous les propriétés précédentes, car c’est la clé de l’exercice.", "pin": ["(Déf) x ≤ y ⇔ x ⊕ y = y"]},
+
+{"say": "Ce que nous voulons démontrer. Pour tous a et b de B, deux choses sont vraies : a fois b est inférieur ou égal à a, et a fois b est inférieur ou égal à b. Avec des ensembles, cela dit que l’intersection de A et B est incluse dans A, et aussi dans B.", "L": [["goal", "∀ a, b ∈ B :   a ⊙ b ≤ a   et   a ⊙ b ≤ b<span class='tag'>Thèse</span>"], ["txt", "Avec des ensembles :  A ∩ B ⊆ A   et   A ∩ B ⊆ B"]]},
+
+{"title": "Réduction par la définition", "clear": 1, "say": "Avant de commencer, utilisons la définition pour transformer les inégalités en égalités. Soient a et b deux éléments quelconques de B.", "L": [["txt", "Soient a, b ∈ B  (quelconques)"], ["hyp", "x ≤ y  ⇔  x ⊕ y = y<span class='tag'>Définition</span>"]]},
+
+{"say": "Appliquons la définition avec x égal à a fois b, et y égal à a. C’est légitime, car le produit est interne, donc a fois b appartient à B.", "L": [["sub", "x = a ⊙ b  ∈ B,   y = a<span class='tag'>Choix (⊙ est interne)</span>"]]},
+
+{"say": "En substituant, a fois b est inférieur ou égal à a, si et seulement si, a fois b, plus a, est égal à a.", "L": [["sub", "a ⊙ b ≤ a  ⇔  (a ⊙ b) ⊕ a = a<span class='tag'>Définition avec x=a⊙b, y=a</span>"]]},
+
+{"say": "Faisons de même avec la seconde : x égal à a fois b, et y égal à b. On obtient que a fois b est inférieur ou égal à b, si et seulement si, a fois b, plus b, est égal à b.", "L": [["sub", "a ⊙ b ≤ b  ⇔  (a ⊙ b) ⊕ b = b<span class='tag'>Définition avec x=a⊙b, y=b</span>"]]},
+
+{"say": "Il suffit donc de prouver ces deux égalités. C’est ce que nous allons démontrer.", "L": [["goal", "Il suffit de prouver :  (a ⊙ b) ⊕ a = a   et   (a ⊙ b) ⊕ b = b<span class='tag'>Nouvelle thèse</span>"]]},
+
+{"title": "Partie 1 : a ⊙ b ≤ a", "clear": 1, "say": "Commençons par la première. Nous voulons prouver que a fois b, plus a, est égal à a. Nous partons du membre de gauche.", "L": [["goal", "On veut :  (a ⊙ b) ⊕ a = a<span class='tag'>Thèse de cette partie</span>"], ["txt", "(a ⊙ b) ⊕ a"]]},
+
+{"say": "Première étape. Remarquez que l’expression a la forme inverse de celle de l’absorption, car le a est à droite. Nous appliquons la commutativité de la somme, avec x égal à a fois b, et y égal à a. Nous passons de a fois b, plus a, à a plus, a fois b.", "L": [["sub", "(a ⊙ b) ⊕ a  =  a ⊕ (a ⊙ b)<span class='tag'>Commutativité de ⊕, avec x=a⊙b, y=a</span>"]]},
+
+{"say": "Deuxième étape. Nous avons maintenant exactement la première loi d’absorption, avec x égal à a, et y égal à b : a plus, a fois b, est égal à a. Nous la surlignons.", "L": [["sub", "(a ⊙ b) ⊕ a  =  <mark>a ⊕ (a ⊙ b)</mark>"], ["txt", "Par (Abs1) avec x=a, y=b :  <mark>a ⊕ (a ⊙ b)</mark> = a"]]},
+
+{"say": "Nous remplaçons ce bloc par a. On obtient que a fois b, plus a, est égal à a.", "L": [["res", "(a ⊙ b) ⊕ a  =  a<span class='tag'>Absorption</span>"]]},
+
+{"say": "Nous avons prouvé l’égalité. D’après l’équivalence vue plus haut, cette égalité signifie exactement que a fois b est inférieur ou égal à a. Avec des ensembles : l’intersection de A et B est incluse dans A. Ceci termine la première partie.", "L": [["res", "(a ⊙ b) ⊕ a = a   ⟹   a ⊙ b ≤ a   ∎"], ["txt", "Avec des ensembles :  A ∩ B ⊆ A"]]},
+
+{"title": "Partie 2 : a ⊙ b ≤ b", "clear": 1, "say": "Passons à la deuxième partie. Nous voulons prouver que a fois b, plus b, est égal à b. On procède de la même façon, mais il y aura ici une étape de plus, car le produit est a fois b, et non b fois a.", "L": [["goal", "On veut :  (a ⊙ b) ⊕ b = b<span class='tag'>Thèse de cette partie</span>"], ["txt", "(a ⊙ b) ⊕ b"]]},
+
+{"say": "Première étape. Nous appliquons la commutativité de la somme, avec x égal à a fois b, et y égal à b. Nous passons de a fois b, plus b, à b plus, a fois b.", "L": [["sub", "(a ⊙ b) ⊕ b  =  b ⊕ (a ⊙ b)<span class='tag'>Commutativité de ⊕, avec x=a⊙b, y=b</span>"]]},
+
+{"say": "Deuxième étape. Nous voulons maintenant utiliser l’absorption, mais avec x égal à b. Cela exige que b fois a apparaisse entre les parenthèses, et non a fois b. Nous appliquons la commutativité du produit : a fois b est égal à b fois a.", "L": [["sub", "b ⊕ (<mark>a ⊙ b</mark>)"], ["txt", "Par (Comm ⊙) :  <mark>a ⊙ b</mark> = b ⊙ a"], ["sub", "(a ⊙ b) ⊕ b  =  b ⊕ (b ⊙ a)<span class='tag'>Commutativité de ⊙</span>"]]},
+
+{"say": "Troisième étape. Nous avons cette fois la première loi d’absorption, avec x égal à b, et y égal à a : b plus, b fois a, est égal à b. Nous la surlignons et nous substituons.", "L": [["sub", "(a ⊙ b) ⊕ b  =  <mark>b ⊕ (b ⊙ a)</mark>"], ["txt", "Par (Abs1) avec x=b, y=a :  <mark>b ⊕ (b ⊙ a)</mark> = b"], ["res", "(a ⊙ b) ⊕ b  =  b<span class='tag'>Absorption</span>"]]},
+
+{"say": "Nous avons prouvé l’égalité. D’après la définition, cette égalité signifie que a fois b est inférieur ou égal à b. Avec des ensembles : l’intersection de A et B est incluse dans B. Ceci termine la deuxième partie.", "L": [["res", "(a ⊙ b) ⊕ b = b   ⟹   a ⊙ b ≤ b   ∎"], ["txt", "Avec des ensembles :  A ∩ B ⊆ B"]]},
+
+{"title": "Résumé", "clear": 1, "say": "En résumé. Avec la définition de inférieur ou égal, prouver que a fois b est inférieur ou égal à a revient à prouver que a fois b, plus a, est égal à a. Pour la première partie, la commutativité de la somme et l’absorption ont suffi. Pour la seconde, il a fallu en plus la commutativité du produit. Ainsi, a fois b est inférieur ou égal à a et à b. Avec des ensembles, l’intersection est incluse dans chacun des deux ensembles. Merci d’avoir regardé cette vidéo.", "L": [["res", "a ⊙ b ≤ a   (commutativité de ⊕ + absorption)"], ["res", "a ⊙ b ≤ b   (commutativité de ⊕ + commutativité de ⊙ + absorption)"], ["txt", "Avec des ensembles :  A ∩ B ⊆ A   et   A ∩ B ⊆ B"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' plus ').replace(/⊙/g,' fois ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Rejouer'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Reprendre'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pause';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^fr/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/henri|paul|claude|remy|rémy|male|google français$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Le produit est inférieur à chaque facteur";$('sub').textContent="Exercice · Treillis algébriques";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

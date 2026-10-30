@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>حاصل ضرب ہر جزوِ ضرب سے چھوٹا ہے</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-inline-end:2px dashed #3d5a50;padding-inline-end:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-inline-start:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>یاد رکھیں</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ شروع کریں</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>رفتار <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">ریکارڈنگ موڈ (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ur-PK",
+"meta":{"nivel": 2, "titulo": "حاصل ضرب ہر جزوِ ضرب سے چھوٹا ہے", "enunciado": "فرض کریں <span dir='ltr'>(B, ⊕, ⊙)</span> ایک لیٹس ہے، جس پر رشتہ  <span dir='ltr'>x ≤ y ⇔ x ⊕ y = y</span>  ہے۔ ثابت کریں کہ کسی بھی <span dir='ltr'>a, b ∈ B</span> کے لیے:", "tesis": "a ⊙ b ≤ a,   a ⊙ b ≤ b", "datos": ["(جمع کا مبادلہ)  <span dir='ltr'>x ⊕ y = y ⊕ x</span>", "(ضرب کا مبادلہ)  <span dir='ltr'>x ⊙ y = y ⊙ x</span>", "<span dir='ltr'>(Abs1)  x ⊕ (x ⊙ y) = x</span>"]},
+"steps":[
+{"title": "حاصل ضرب ہر جزوِ ضرب سے چھوٹا ہے", "sub": "مشق · الجبری لیٹس", "clear": 1, "say": "السلام علیکم۔ اس ویڈیو میں ہم الجبری لیٹس پر ایک مشق حل کریں گے۔ ہم بہت آہستہ چلیں گے، ہر مساوات لکھیں گے اور ہر قدم کی وجہ بتائیں گے۔", "L": [["txt", "حاصل ضرب <span dir='ltr'>a ⊙ b</span>، <span dir='ltr'>a</span> اور <span dir='ltr'>b</span> دونوں سے چھوٹا یا برابر ہے"]]},
+
+{"say": "پہلے، دی گئی باتیں۔ B ایک سیٹ ہے جس پر دو عملیات ہیں، لیٹس جمع اور لیٹس ضرب، اور B ایک لیٹس ہے۔ یعنی دونوں عملیات بند، مبادلی اور تلازمی ہیں، اور قوانینِ جذب پورے کرتی ہیں۔", "L": [["hyp", "<span dir='ltr'>(B, ⊕, ⊙)</span> لیٹس<span class='tag'>مفروضہ</span>"]]},
+
+{"say": "اس مشق میں ہم صرف تین خصوصیات استعمال کریں گے۔ جمع کی مبادلیت: a جمع b، b جمع a ہے۔ ضرب کی مبادلیت: a ضرب b، b ضرب a ہے۔ اور پہلا قانونِ جذب: x جمع، x ضرب y، برابر ہے x کے۔ انہیں ہم ایک طرف لگا دیتے ہیں، کیونکہ انہیں استعمال کرنا ہے۔", "pin": ["(جمع کا مبادلہ) <span dir='ltr'>x ⊕ y = y ⊕ x</span>", "(ضرب کا مبادلہ) <span dir='ltr'>x ⊙ y = y ⊙ x</span>", "<span dir='ltr'>(Abs1) x ⊕ (x ⊙ y) = x</span>"]},
+
+{"say": "اب تعریف۔ B پر ہم ایک رشتہ، چھوٹا یا برابر، اس طرح بیان کرتے ہیں۔ x، y سے چھوٹا یا برابر ہے، اگر اور صرف اگر x جمع y برابر ہو y کے۔ سیٹ میں یہ جانی پہچانی خصوصیت ہے: A، B میں شامل ہے، اگر اور صرف اگر A اتصال B برابر ہو B کے۔", "L": [["sub", "<span dir='ltr'>x ≤ y  ⇔  x ⊕ y = y</span><span class='tag'><span dir='ltr'>≤</span> کی تعریف</span>"], ["txt", "سیٹ کے ساتھ:  <span dir='ltr'>A ⊆ B  ⇔  A ∪ B = B</span>"]]},
+
+{"say": "تعریف کو بھی ہم ایک طرف، پچھلی خصوصیات کے نیچے لکھ لیتے ہیں، کیونکہ یہی اس مشق کی کنجی ہے۔", "pin": ["(تعریف) <span dir='ltr'>x ≤ y ⇔ x ⊕ y = y</span>"]},
+
+{"say": "ہمیں کیا ثابت کرنا ہے۔ B کے کسی بھی a اور b کے لیے دو باتیں درست ہیں: a ضرب b، a سے چھوٹا یا برابر ہے، اور a ضرب b، b سے چھوٹا یا برابر ہے۔ سیٹ میں اس کا مطلب ہے کہ A اور B کا تقاطع A میں شامل ہے، اور B میں بھی شامل ہے۔", "L": [["goal", "<span dir='ltr'>∀ a, b ∈ B:   a ⊙ b ≤ a</span>   اور   <span dir='ltr'>a ⊙ b ≤ b</span><span class='tag'>دعویٰ</span>"], ["txt", "سیٹ کے ساتھ:  <span dir='ltr'>A ∩ B ⊆ A</span>   اور   <span dir='ltr'>A ∩ B ⊆ B</span>"]]},
+
+{"title": "تعریف کے ذریعے تبدیلی", "clear": 1, "say": "شروع کرنے سے پہلے، ہم تعریف کی مدد سے عدم مساوات کو مساوات میں بدلتے ہیں۔ فرض کریں a اور b، B کے کوئی بھی دو ارکان ہیں۔", "L": [["txt", "فرض کریں <span dir='ltr'>a, b ∈ B</span>  (اختیاری)"], ["hyp", "<span dir='ltr'>x ≤ y  ⇔  x ⊕ y = y</span><span class='tag'>تعریف</span>"]]},
+
+{"say": "ہم تعریف کو x برابر a ضرب b، اور y برابر a لے کر لگاتے ہیں۔ یہ جائز ہے، کیونکہ ضرب بند ہے، اس لیے a ضرب b، B میں ہے۔", "L": [["sub", "<span dir='ltr'>x = a ⊙ b  ∈ B,   y = a</span><span class='tag'>انتخاب <span dir='ltr'>(⊙</span> بند ہے)</span>"]]},
+
+{"say": "قیمتیں رکھنے پر، a ضرب b، a سے چھوٹا یا برابر ہے، اگر اور صرف اگر، a ضرب b، جمع a، برابر ہو a کے۔", "L": [["sub", "<span dir='ltr'>a ⊙ b ≤ a  ⇔  (a ⊙ b) ⊕ a = a</span><span class='tag'>تعریف، <span dir='ltr'>x=a⊙b, y=a</span> لے کر</span>"]]},
+
+{"say": "دوسرے کے ساتھ بھی یہی کرتے ہیں: x برابر a ضرب b، اور y برابر b۔ ہمیں ملتا ہے کہ a ضرب b، b سے چھوٹا یا برابر ہے، اگر اور صرف اگر، a ضرب b، جمع b، برابر ہو b کے۔", "L": [["sub", "<span dir='ltr'>a ⊙ b ≤ b  ⇔  (a ⊙ b) ⊕ b = b</span><span class='tag'>تعریف، <span dir='ltr'>x=a⊙b, y=b</span> لے کر</span>"]]},
+
+{"say": "لہٰذا ان دو مساوات کو ثابت کرنا کافی ہے۔ یہی ہم ثابت کریں گے۔", "L": [["goal", "ثابت کرنا کافی ہے:  <span dir='ltr'>(a ⊙ b) ⊕ a = a</span>   اور   <span dir='ltr'>(a ⊙ b) ⊕ b = b</span><span class='tag'>نیا دعویٰ</span>"]]},
+
+{"title": "حصہ 1: a ⊙ b ≤ a", "clear": 1, "say": "پہلے سے شروع کرتے ہیں۔ ہمیں ثابت کرنا ہے کہ a ضرب b، جمع a، برابر ہے a کے۔ ہم بائیں طرف سے شروع کرتے ہیں۔", "L": [["goal", "ہمیں چاہیے:  <span dir='ltr'>(a ⊙ b) ⊕ a = a</span><span class='tag'>اس حصے کا دعویٰ</span>"], ["txt", "<span dir='ltr'>(a ⊙ b) ⊕ a</span>"]]},
+
+{"say": "پہلا قدم۔ غور کریں کہ اس اظہاریے کی شکل قانونِ جذب کے الٹ ہے، کیونکہ a دائیں طرف ہے۔ ہم جمع کی مبادلیت لگاتے ہیں، x برابر a ضرب b، اور y برابر a لے کر۔ a ضرب b، جمع a، سے ہم a جمع، a ضرب b تک پہنچتے ہیں۔", "L": [["sub", "<span dir='ltr'>(a ⊙ b) ⊕ a  =  a ⊕ (a ⊙ b)</span><span class='tag'><span dir='ltr'>⊕</span> کی مبادلیت، <span dir='ltr'>x=a⊙b, y=a</span> لے کر</span>"]]},
+
+{"say": "دوسرا قدم۔ اب ہمارے پاس ٹھیک پہلا قانونِ جذب ہے، x برابر a، اور y برابر b لے کر: a جمع، a ضرب b، برابر ہے a کے۔ اسے نمایاں کرتے ہیں۔", "L": [["sub", "<span dir='ltr'>(a ⊙ b) ⊕ a  =  <mark>a ⊕ (a ⊙ b)</mark></span>"], ["txt", "<span dir='ltr'>(Abs1)</span> سے، <span dir='ltr'>x=a, y=b</span> لے کر:  <span dir='ltr'><mark>a ⊕ (a ⊙ b)</mark> = a</span>"]]},
+
+{"say": "اس حصے کی جگہ a رکھتے ہیں۔ ہمیں ملتا ہے کہ a ضرب b، جمع a، برابر ہے a کے۔", "L": [["res", "<span dir='ltr'>(a ⊙ b) ⊕ a  =  a</span><span class='tag'>جذب</span>"]]},
+
+{"say": "ہم نے مساوات ثابت کر دی۔ پہلے دیکھی گئی مساویت کی رو سے، اس مساوات کا ٹھیک یہی مطلب ہے کہ a ضرب b، a سے چھوٹا یا برابر ہے۔ سیٹ میں: A اور B کا تقاطع A میں شامل ہے۔ اس کے ساتھ پہلا حصہ مکمل ہوتا ہے۔", "L": [["res", "<span dir='ltr'>(a ⊙ b) ⊕ a = a   ⟹   a ⊙ b ≤ a   ∎</span>"], ["txt", "سیٹ کے ساتھ:  <span dir='ltr'>A ∩ B ⊆ A</span>"]]},
+
+{"title": "حصہ 2: a ⊙ b ≤ b", "clear": 1, "say": "اب دوسرا حصہ۔ ہمیں ثابت کرنا ہے کہ a ضرب b، جمع b، برابر ہے b کے۔ طریقہ وہی ہے، لیکن یہاں ایک اضافی قدم آئے گا، کیونکہ حاصل ضرب a ضرب b ہے، b ضرب a نہیں۔", "L": [["goal", "ہمیں چاہیے:  <span dir='ltr'>(a ⊙ b) ⊕ b = b</span><span class='tag'>اس حصے کا دعویٰ</span>"], ["txt", "<span dir='ltr'>(a ⊙ b) ⊕ b</span>"]]},
+
+{"say": "پہلا قدم۔ ہم جمع کی مبادلیت لگاتے ہیں، x برابر a ضرب b، اور y برابر b لے کر۔ a ضرب b، جمع b، سے ہم b جمع، a ضرب b تک پہنچتے ہیں۔", "L": [["sub", "<span dir='ltr'>(a ⊙ b) ⊕ b  =  b ⊕ (a ⊙ b)</span><span class='tag'><span dir='ltr'>⊕</span> کی مبادلیت، <span dir='ltr'>x=a⊙b, y=b</span> لے کر</span>"]]},
+
+{"say": "دوسرا قدم۔ اب ہم جذب استعمال کرنا چاہتے ہیں، لیکن x برابر b لے کر۔ اس کے لیے قوسین کے اندر b ضرب a ہونا چاہیے، a ضرب b نہیں۔ ضرب کی مبادلیت لگاتے ہیں: a ضرب b برابر ہے b ضرب a کے۔", "L": [["sub", "<span dir='ltr'>b ⊕ (<mark>a ⊙ b</mark>)</span>"], ["txt", "(ضرب کا مبادلہ) سے:  <span dir='ltr'><mark>a ⊙ b</mark> = b ⊙ a</span>"], ["sub", "<span dir='ltr'>(a ⊙ b) ⊕ b  =  b ⊕ (b ⊙ a)</span><span class='tag'><span dir='ltr'>⊙</span> کی مبادلیت</span>"]]},
+
+{"say": "تیسرا قدم۔ اب واقعی پہلا قانونِ جذب ہے، x برابر b، اور y برابر a لے کر: b جمع، b ضرب a، برابر ہے b کے۔ اسے نمایاں کر کے قیمت رکھتے ہیں۔", "L": [["sub", "<span dir='ltr'>(a ⊙ b) ⊕ b  =  <mark>b ⊕ (b ⊙ a)</mark></span>"], ["txt", "<span dir='ltr'>(Abs1)</span> سے، <span dir='ltr'>x=b, y=a</span> لے کر:  <span dir='ltr'><mark>b ⊕ (b ⊙ a)</mark> = b</span>"], ["res", "<span dir='ltr'>(a ⊙ b) ⊕ b  =  b</span><span class='tag'>جذب</span>"]]},
+
+{"say": "ہم نے مساوات ثابت کر دی۔ تعریف کی رو سے، اس مساوات کا مطلب ہے کہ a ضرب b، b سے چھوٹا یا برابر ہے۔ سیٹ میں: A اور B کا تقاطع B میں شامل ہے۔ اس کے ساتھ دوسرا حصہ مکمل ہوتا ہے۔", "L": [["res", "<span dir='ltr'>(a ⊙ b) ⊕ b = b   ⟹   a ⊙ b ≤ b   ∎</span>"], ["txt", "سیٹ کے ساتھ:  <span dir='ltr'>A ∩ B ⊆ B</span>"]]},
+
+{"title": "خلاصہ", "clear": 1, "say": "خلاصہ یہ ہے۔ چھوٹا یا برابر کی تعریف سے، a ضرب b کا a سے چھوٹا یا برابر ہونا ثابت کرنا، یہ ثابت کرنا ہے کہ a ضرب b، جمع a، برابر ہے a کے۔ پہلے حصے کے لیے جمع کی مبادلیت اور جذب کافی تھے۔ دوسرے حصے کے لیے ضرب کی مبادلیت بھی درکار تھی۔ اس طرح a ضرب b، a اور b دونوں سے چھوٹا یا برابر ہے۔ سیٹ میں، تقاطع دونوں سیٹ میں سے ہر ایک میں شامل ہے۔ دیکھنے کا شکریہ۔", "L": [["res", "<span dir='ltr'>a ⊙ b ≤ a   (⊕</span> کی مبادلیت + جذب)"], ["res", "<span dir='ltr'>a ⊙ b ≤ b   (⊕</span> کی مبادلیت + <span dir='ltr'>⊙</span> کی مبادلیت + جذب)"], ["txt", "سیٹ کے ساتھ:  <span dir='ltr'>A ∩ B ⊆ A</span>   اور   <span dir='ltr'>A ∩ B ⊆ B</span>"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' جمع ').replace(/⊙/g,' ضرب ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ دوبارہ چلائیں'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ جاری رکھیں'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ وقفہ';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ وقفہ';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ وقفہ';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ur/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/asad|salman|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="حاصل ضرب ہر جزوِ ضرب سے چھوٹا ہے";$('sub').textContent="مشق · الجبری لیٹس";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

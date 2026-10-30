@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The product is below each factor</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Remember</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Start</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Speed <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Recording mode (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"en-US",
+"meta":{"nivel": 2, "titulo": "The product is below each factor", "enunciado": "Let (B, ⊕, ⊙) be a lattice, with the relation  x ≤ y ⇔ x ⊕ y = y.  Prove that, for any a, b ∈ B:", "tesis": "a ⊙ b ≤ a,   a ⊙ b ≤ b", "datos": ["(Comm ⊕)  x ⊕ y = y ⊕ x", "(Comm ⊙)  x ⊙ y = y ⊙ x", "(Abs1)  x ⊕ (x ⊙ y) = x"]},
+"steps":[
+{"title": "The product is below each factor", "sub": "Exercise · Algebraic lattices", "clear": 1, "say": "Hello. In this video we will solve an exercise about algebraic lattices. We will go very slowly, writing down every equation and justifying every step.", "L": [["txt", "The product a ⊙ b is less than or equal to both a and b"]]},
+
+{"say": "First, the data. B is a set with two operations, the lattice sum and the lattice product, and it is a lattice. That is, both operations are internal, commutative, associative, and satisfy the absorption laws.", "L": [["hyp", "(B, ⊕, ⊙) lattice<span class='tag'>Hypothesis</span>"]]},
+
+{"say": "In this exercise we will only use three properties. Commutativity of the sum: a plus b is b plus a. Commutativity of the product: a times b is b times a. And the first absorption law: x plus, x times y, equals x. We pin them on the left, because we are going to use them.", "pin": ["(Comm ⊕) x ⊕ y = y ⊕ x", "(Comm ⊙) x ⊙ y = y ⊙ x", "(Abs1) x ⊕ (x ⊙ y) = x"]},
+
+{"say": "Now the definition. On B we define a relation, less than or equal to, as follows. x is less than or equal to y if and only if x plus y equals y. With sets, it is the well-known property: A is contained in B if and only if A union B equals B.", "L": [["sub", "x ≤ y  ⇔  x ⊕ y = y<span class='tag'>Definition of ≤</span>"], ["txt", "With sets:  A ⊆ B  ⇔  A ∪ B = B"]]},
+
+{"say": "We also note the definition on the left, below the previous properties, because it is the key to the exercise.", "pin": ["(Def) x ≤ y ⇔ x ⊕ y = y"]},
+
+{"say": "What we want to prove. For any a and b in B, two things hold: a times b is less than or equal to a, and a times b is less than or equal to b. With sets, this says that the intersection of A and B is contained in A, and is also contained in B.", "L": [["goal", "∀ a, b ∈ B:   a ⊙ b ≤ a   and   a ⊙ b ≤ b<span class='tag'>Claim</span>"], ["txt", "With sets:  A ∩ B ⊆ A   and   A ∩ B ⊆ B"]]},
+
+{"title": "Reduction using the definition", "clear": 1, "say": "Before starting, we use the definition to turn the inequalities into equalities. Let a and b be any two elements of B.", "L": [["txt", "Let a, b ∈ B  (arbitrary)"], ["hyp", "x ≤ y  ⇔  x ⊕ y = y<span class='tag'>Definition</span>"]]},
+
+{"say": "We apply the definition with x equal to a times b, and y equal to a. This is legitimate, because the product is internal, so a times b belongs to B.", "L": [["sub", "x = a ⊙ b  ∈ B,   y = a<span class='tag'>Choice (⊙ is internal)</span>"]]},
+
+{"say": "Substituting, a times b is less than or equal to a, if and only if, a times b, plus a, equals a.", "L": [["sub", "a ⊙ b ≤ a  ⇔  (a ⊙ b) ⊕ a = a<span class='tag'>Definition with x=a⊙b, y=a</span>"]]},
+
+{"say": "We do the same with the second one: x equal to a times b, and y equal to b. We get that a times b is less than or equal to b, if and only if, a times b, plus b, equals b.", "L": [["sub", "a ⊙ b ≤ b  ⇔  (a ⊙ b) ⊕ b = b<span class='tag'>Definition with x=a⊙b, y=b</span>"]]},
+
+{"say": "Therefore, it is enough to prove these two equalities. This is what we are going to prove.", "L": [["goal", "It suffices to prove:  (a ⊙ b) ⊕ a = a   and   (a ⊙ b) ⊕ b = b<span class='tag'>New claim</span>"]]},
+
+{"title": "Part 1: a ⊙ b ≤ a", "clear": 1, "say": "Let's start with the first one. We want to prove that a times b, plus a, equals a. We start from the left-hand side.", "L": [["goal", "We want:  (a ⊙ b) ⊕ a = a<span class='tag'>Claim of this part</span>"], ["txt", "(a ⊙ b) ⊕ a"]]},
+
+{"say": "First step. Notice that the expression has the opposite form to the absorption law, because the a is on the right. We apply commutativity of the sum, with x equal to a times b, and y equal to a. We go from a times b, plus a, to a plus, a times b.", "L": [["sub", "(a ⊙ b) ⊕ a  =  a ⊕ (a ⊙ b)<span class='tag'>Commutativity of ⊕, with x=a⊙b, y=a</span>"]]},
+
+{"say": "Second step. Now we have exactly the first absorption law, with x equal to a, and y equal to b: a plus, a times b, equals a. We highlight it.", "L": [["sub", "(a ⊙ b) ⊕ a  =  <mark>a ⊕ (a ⊙ b)</mark>"], ["txt", "By (Abs1) with x=a, y=b:  <mark>a ⊕ (a ⊙ b)</mark> = a"]]},
+
+{"say": "We replace that block with a. We get that a times b, plus a, equals a.", "L": [["res", "(a ⊙ b) ⊕ a  =  a<span class='tag'>Absorption</span>"]]},
+
+{"say": "We have proved the equality. By the equivalence we saw before, this equality means exactly that a times b is less than or equal to a. With sets: the intersection of A and B is contained in A. This completes the first part.", "L": [["res", "(a ⊙ b) ⊕ a = a   ⟹   a ⊙ b ≤ a   ∎"], ["txt", "With sets:  A ∩ B ⊆ A"]]},
+
+{"title": "Part 2: a ⊙ b ≤ b", "clear": 1, "say": "Now the second part. We want to prove that a times b, plus b, equals b. It works the same way, but here there will be an extra step, because the product is a times b, and not b times a.", "L": [["goal", "We want:  (a ⊙ b) ⊕ b = b<span class='tag'>Claim of this part</span>"], ["txt", "(a ⊙ b) ⊕ b"]]},
+
+{"say": "First step. We apply commutativity of the sum, with x equal to a times b, and y equal to b. We go from a times b, plus b, to b plus, a times b.", "L": [["sub", "(a ⊙ b) ⊕ b  =  b ⊕ (a ⊙ b)<span class='tag'>Commutativity of ⊕, with x=a⊙b, y=b</span>"]]},
+
+{"say": "Second step. Now we want to use absorption, but with x equal to b. That requires b times a inside the parentheses, not a times b. We apply commutativity of the product: a times b equals b times a.", "L": [["sub", "b ⊕ (<mark>a ⊙ b</mark>)"], ["txt", "By (Comm ⊙):  <mark>a ⊙ b</mark> = b ⊙ a"], ["sub", "(a ⊙ b) ⊕ b  =  b ⊕ (b ⊙ a)<span class='tag'>Commutativity of ⊙</span>"]]},
+
+{"say": "Third step. Now we do have the first absorption law, with x equal to b, and y equal to a: b plus, b times a, equals b. We highlight it and substitute.", "L": [["sub", "(a ⊙ b) ⊕ b  =  <mark>b ⊕ (b ⊙ a)</mark>"], ["txt", "By (Abs1) with x=b, y=a:  <mark>b ⊕ (b ⊙ a)</mark> = b"], ["res", "(a ⊙ b) ⊕ b  =  b<span class='tag'>Absorption</span>"]]},
+
+{"say": "We have proved the equality. By the definition, this equality means that a times b is less than or equal to b. With sets: the intersection of A and B is contained in B. This completes the second part.", "L": [["res", "(a ⊙ b) ⊕ b = b   ⟹   a ⊙ b ≤ b   ∎"], ["txt", "With sets:  A ∩ B ⊆ B"]]},
+
+{"title": "Summary", "clear": 1, "say": "To sum up. With the definition of less than or equal to, proving that a times b is less than or equal to a means proving that a times b, plus a, equals a. For the first part, commutativity of the sum and absorption were enough. For the second, we also needed commutativity of the product. So a times b is less than or equal to both a and b. With sets, the intersection is contained in each of the two sets. Thanks for watching.", "L": [["res", "a ⊙ b ≤ a   (commutativity of ⊕ + absorption)"], ["res", "a ⊙ b ≤ b   (commutativity of ⊕ + commutativity of ⊙ + absorption)"], ["txt", "With sets:  A ∩ B ⊆ A   and   A ∩ B ⊆ B"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' plus ').replace(/⊙/g,' times ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Replay'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Resume'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pause';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/andrew|guy|brian|christopher|eric|david|mark|male|google us english$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="The product is below each factor";$('sub').textContent="Exercise · Algebraic lattices";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

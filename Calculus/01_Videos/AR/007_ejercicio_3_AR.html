@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>الضرب أصغر من كل عامل</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-inline-end:2px dashed #3d5a50;padding-inline-end:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-inline-start:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>تذكّر</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ ابدأ</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>السرعة <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">وضع التسجيل (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ar-SA",
+"meta":{"nivel": 2, "titulo": "الضرب أصغر من كل عامل", "enunciado": "لتكن <span dir='ltr'>(B, ⊕, ⊙)</span> شبكة، مع العلاقة  <span dir='ltr'>x ≤ y ⇔ x ⊕ y = y.</span>  أثبت أنه لكل <span dir='ltr'>a, b ∈ B:</span>", "tesis": "a ⊙ b ≤ a,   a ⊙ b ≤ b", "datos": ["(إبدال الجمع)  <span dir='ltr'>x ⊕ y = y ⊕ x</span>", "(إبدال الضرب)  <span dir='ltr'>x ⊙ y = y ⊙ x</span>", "<span dir='ltr'>(Abs1)  x ⊕ (x ⊙ y) = x</span>"]},
+"steps":[
+{"title": "الضرب أصغر من كل عامل", "sub": "تمرين · الشبكات الجبرية", "clear": 1, "say": "مرحبًا. في هذا الفيديو سنحل تمرينًا عن الشبكات الجبرية. سنتقدم ببطء شديد، فنكتب كل معادلة ونبرر كل خطوة.", "L": [["txt", "حاصل الضرب <span dir='ltr'>a ⊙ b</span> أصغر من أو يساوي كلًا من <span dir='ltr'>a</span> و <span dir='ltr'>b</span>"]]},
+
+{"say": "أولًا، المعطيات. B مجموعة معرّف عليها عمليتان، جمع الشبكة وضرب الشبكة، وهي شبكة. أي أن العمليتين داخليتان، إبداليتان، تجميعيتان، وتحققان قانوني الامتصاص.", "L": [["hyp", "<span dir='ltr'>(B, ⊕, ⊙)</span> شبكة<span class='tag'>فرضية</span>"]]},
+
+{"say": "في هذا التمرين سنستخدم ثلاث خواص فقط. إبدالية الجمع: a زائد b يساوي b زائد a. إبدالية الضرب: a ضرب b يساوي b ضرب a. وقانون الامتصاص الأول: x زائد، x ضرب y، يساوي x. نثبّتها على الجانب لأننا سنستخدمها.", "pin": ["(إبدال الجمع) <span dir='ltr'>x ⊕ y = y ⊕ x</span>", "(إبدال الضرب) <span dir='ltr'>x ⊙ y = y ⊙ x</span>", "<span dir='ltr'>(Abs1) x ⊕ (x ⊙ y) = x</span>"]},
+
+{"say": "والآن التعريف. نعرّف على B علاقة، أصغر من أو يساوي، على النحو التالي. x أصغر من أو يساوي y إذا وفقط إذا كان x زائد y يساوي y. وفي المجموعات هي الخاصية المعروفة: A محتواة في B إذا وفقط إذا كان A اتحاد B يساوي B.", "L": [["sub", "<span dir='ltr'>x ≤ y  ⇔  x ⊕ y = y</span><span class='tag'>تعريف <span dir='ltr'>≤</span></span>"], ["txt", "مع المجموعات:  <span dir='ltr'>A ⊆ B  ⇔  A ∪ B = B</span>"]]},
+
+{"say": "نسجل التعريف أيضًا على الجانب، تحت الخواص السابقة، لأنه مفتاح التمرين.", "pin": ["(تعريف) <span dir='ltr'>x ≤ y ⇔ x ⊕ y = y</span>"]},
+
+{"say": "المطلوب إثباته. لكل a و b من B يتحقق أمران: a ضرب b أصغر من أو يساوي a، و a ضرب b أصغر من أو يساوي b. وفي المجموعات، يعني هذا أن تقاطع A و B محتوى في A، ومحتوى أيضًا في B.", "L": [["goal", "<span dir='ltr'>∀ a, b ∈ B:   a ⊙ b ≤ a</span>   و   <span dir='ltr'>a ⊙ b ≤ b</span><span class='tag'>المطلوب</span>"], ["txt", "مع المجموعات:  <span dir='ltr'>A ∩ B ⊆ A</span>   و   <span dir='ltr'>A ∩ B ⊆ B</span>"]]},
+
+{"title": "التحويل بواسطة التعريف", "clear": 1, "say": "قبل أن نبدأ، نستخدم التعريف لتحويل المتباينات إلى مساواة. ليكن a و b عنصرين ما من B.", "L": [["txt", "ليكن <span dir='ltr'>a, b ∈ B</span>  (اختياريين)"], ["hyp", "<span dir='ltr'>x ≤ y  ⇔  x ⊕ y = y</span><span class='tag'>تعريف</span>"]]},
+
+{"say": "نطبق التعريف مع x يساوي a ضرب b، و y يساوي a. وهذا مشروع، لأن الضرب عملية داخلية، وبالتالي a ضرب b ينتمي إلى B.", "L": [["sub", "<span dir='ltr'>x = a ⊙ b  ∈ B,   y = a</span><span class='tag'>اختيار <span dir='ltr'>(⊙</span> داخلية)</span>"]]},
+
+{"say": "بالتعويض، a ضرب b أصغر من أو يساوي a، إذا وفقط إذا كان، a ضرب b، زائد a، يساوي a.", "L": [["sub", "<span dir='ltr'>a ⊙ b ≤ a  ⇔  (a ⊙ b) ⊕ a = a</span><span class='tag'>التعريف مع <span dir='ltr'>x=a⊙b, y=a</span></span>"]]},
+
+{"say": "نفعل الشيء نفسه مع الثانية: x يساوي a ضرب b، و y يساوي b. فنحصل على أن a ضرب b أصغر من أو يساوي b، إذا وفقط إذا كان، a ضرب b، زائد b، يساوي b.", "L": [["sub", "<span dir='ltr'>a ⊙ b ≤ b  ⇔  (a ⊙ b) ⊕ b = b</span><span class='tag'>التعريف مع <span dir='ltr'>x=a⊙b, y=b</span></span>"]]},
+
+{"say": "إذن يكفي إثبات هاتين المساواتين. وهذا ما سنثبته.", "L": [["goal", "يكفي إثبات:  <span dir='ltr'>(a ⊙ b) ⊕ a = a</span>   و   <span dir='ltr'>(a ⊙ b) ⊕ b = b</span><span class='tag'>مطلوب جديد</span>"]]},
+
+{"title": "الجزء الأول: a ⊙ b ≤ a", "clear": 1, "say": "نبدأ بالأولى. نريد إثبات أن a ضرب b، زائد a، يساوي a. ننطلق من الطرف الأيسر.", "L": [["goal", "نريد:  <span dir='ltr'>(a ⊙ b) ⊕ a = a</span><span class='tag'>مطلوب هذا الجزء</span>"], ["txt", "<span dir='ltr'>(a ⊙ b) ⊕ a</span>"]]},
+
+{"say": "الخطوة الأولى. لاحظ أن العبارة على صورة معاكسة لصورة الامتصاص، لأن a في اليمين. نطبق إبدالية الجمع، مع x يساوي a ضرب b، و y يساوي a. ننتقل من a ضرب b، زائد a، إلى a زائد، a ضرب b.", "L": [["sub", "<span dir='ltr'>(a ⊙ b) ⊕ a  =  a ⊕ (a ⊙ b)</span><span class='tag'>إبدالية <span dir='ltr'>⊕</span>، مع <span dir='ltr'>x=a⊙b, y=a</span></span>"]]},
+
+{"say": "الخطوة الثانية. لدينا الآن قانون الامتصاص الأول تمامًا، مع x يساوي a، و y يساوي b: a زائد، a ضرب b، يساوي a. نميّزه.", "L": [["sub", "<span dir='ltr'>(a ⊙ b) ⊕ a  =  <mark>a ⊕ (a ⊙ b)</mark></span>"], ["txt", "بحسب <span dir='ltr'>(Abs1)</span> مع <span dir='ltr'>x=a, y=b:  <mark>a ⊕ (a ⊙ b)</mark> = a</span>"]]},
+
+{"say": "نستبدل هذه الكتلة بـ a. فنحصل على أن a ضرب b، زائد a، يساوي a.", "L": [["res", "<span dir='ltr'>(a ⊙ b) ⊕ a  =  a</span><span class='tag'>الامتصاص</span>"]]},
+
+{"say": "لقد أثبتنا المساواة. وبحسب التكافؤ الذي رأيناه، فإن هذه المساواة تعني تمامًا أن a ضرب b أصغر من أو يساوي a. وفي المجموعات: تقاطع A و B محتوى في A. وبهذا ينتهي الجزء الأول.", "L": [["res", "<span dir='ltr'>(a ⊙ b) ⊕ a = a   ⟹   a ⊙ b ≤ a   ∎</span>"], ["txt", "مع المجموعات:  <span dir='ltr'>A ∩ B ⊆ A</span>"]]},
+
+{"title": "الجزء الثاني: a ⊙ b ≤ b", "clear": 1, "say": "ننتقل إلى الجزء الثاني. نريد إثبات أن a ضرب b، زائد b، يساوي b. نعمل بالطريقة نفسها، لكن ستظهر هنا خطوة إضافية، لأن حاصل الضرب هو a ضرب b، وليس b ضرب a.", "L": [["goal", "نريد:  <span dir='ltr'>(a ⊙ b) ⊕ b = b</span><span class='tag'>مطلوب هذا الجزء</span>"], ["txt", "<span dir='ltr'>(a ⊙ b) ⊕ b</span>"]]},
+
+{"say": "الخطوة الأولى. نطبق إبدالية الجمع، مع x يساوي a ضرب b، و y يساوي b. ننتقل من a ضرب b، زائد b، إلى b زائد، a ضرب b.", "L": [["sub", "<span dir='ltr'>(a ⊙ b) ⊕ b  =  b ⊕ (a ⊙ b)</span><span class='tag'>إبدالية <span dir='ltr'>⊕</span>، مع <span dir='ltr'>x=a⊙b, y=b</span></span>"]]},
+
+{"say": "الخطوة الثانية. نريد الآن استخدام الامتصاص، لكن مع x يساوي b. وهذا يتطلب أن يظهر داخل القوس b ضرب a، لا a ضرب b. نطبق إبدالية الضرب: a ضرب b يساوي b ضرب a.", "L": [["sub", "<span dir='ltr'>b ⊕ (<mark>a ⊙ b</mark>)</span>"], ["txt", "بحسب (إبدال الضرب):  <span dir='ltr'><mark>a ⊙ b</mark> = b ⊙ a</span>"], ["sub", "<span dir='ltr'>(a ⊙ b) ⊕ b  =  b ⊕ (b ⊙ a)</span><span class='tag'>إبدالية <span dir='ltr'>⊙</span></span>"]]},
+
+{"say": "الخطوة الثالثة. الآن لدينا فعلًا قانون الامتصاص الأول، مع x يساوي b، و y يساوي a: b زائد، b ضرب a، يساوي b. نميّزه ونعوّض.", "L": [["sub", "<span dir='ltr'>(a ⊙ b) ⊕ b  =  <mark>b ⊕ (b ⊙ a)</mark></span>"], ["txt", "بحسب <span dir='ltr'>(Abs1)</span> مع <span dir='ltr'>x=b, y=a:  <mark>b ⊕ (b ⊙ a)</mark> = b</span>"], ["res", "<span dir='ltr'>(a ⊙ b) ⊕ b  =  b</span><span class='tag'>الامتصاص</span>"]]},
+
+{"say": "لقد أثبتنا المساواة. وبحسب التعريف، فإن هذه المساواة تعني أن a ضرب b أصغر من أو يساوي b. وفي المجموعات: تقاطع A و B محتوى في B. وبهذا ينتهي الجزء الثاني.", "L": [["res", "<span dir='ltr'>(a ⊙ b) ⊕ b = b   ⟹   a ⊙ b ≤ b   ∎</span>"], ["txt", "مع المجموعات:  <span dir='ltr'>A ∩ B ⊆ B</span>"]]},
+
+{"title": "الخلاصة", "clear": 1, "say": "نلخص. بحسب تعريف أصغر من أو يساوي، فإن إثبات أن a ضرب b أصغر من أو يساوي a يعني إثبات أن a ضرب b، زائد a، يساوي a. في الجزء الأول كفت إبدالية الجمع والامتصاص. وفي الجزء الثاني احتجنا أيضًا إلى إبدالية الضرب. وهكذا فإن a ضرب b أصغر من أو يساوي كلًا من a و b. وفي المجموعات، التقاطع محتوى في كل من المجموعتين. شكرًا على المشاهدة.", "L": [["res", "<span dir='ltr'>a ⊙ b ≤ a</span>   (إبدالية <span dir='ltr'>⊕</span> + الامتصاص)"], ["res", "<span dir='ltr'>a ⊙ b ≤ b</span>   (إبدالية <span dir='ltr'>⊕</span> + إبدالية <span dir='ltr'>⊙</span> + الامتصاص)"], ["txt", "مع المجموعات:  <span dir='ltr'>A ∩ B ⊆ A</span>   و   <span dir='ltr'>A ∩ B ⊆ B</span>"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' زائد ').replace(/⊙/g,' ضرب ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ إعادة'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ متابعة'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ إيقاف مؤقت';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ إيقاف مؤقت';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ إيقاف مؤقت';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ar/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/hamed|shakir|naayf|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="الضرب أصغر من كل عامل";$('sub').textContent="تمرين · الشبكات الجبرية";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

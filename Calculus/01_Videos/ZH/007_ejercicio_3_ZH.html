@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>积小于或等于每个因子</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>备忘</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ 开始</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>语速 <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">录制模式 (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"zh-CN",
+"meta":{"nivel": 2, "titulo": "积小于或等于每个因子", "enunciado": "设 (B, ⊕, ⊙) 是一个格，关系定义为  x ≤ y ⇔ x ⊕ y = y。证明：对任意 a, b ∈ B，", "tesis": "a ⊙ b ≤ a,   a ⊙ b ≤ b", "datos": ["(交换 ⊕)  x ⊕ y = y ⊕ x", "(交换 ⊙)  x ⊙ y = y ⊙ x", "(Abs1)  x ⊕ (x ⊙ y) = x"]},
+"steps":[
+{"title": "积小于或等于每个因子", "sub": "练习 · 代数格", "clear": 1, "say": "大家好。在这个视频里，我们来解一道关于代数格的练习。我们会讲得很慢，写下每一个等式，并说明每一步的理由。", "L": [["txt", "积 a ⊙ b 既小于或等于 a，也小于或等于 b"]]},
+
+{"say": "首先是已知条件。B 是一个带有两个运算的集合，这两个运算是格的加法和格的乘法，并且 B 是一个格。也就是说，两个运算都是封闭的，满足交换律、结合律以及吸收律。", "L": [["hyp", "(B, ⊕, ⊙) 是格<span class='tag'>假设</span>"]]},
+
+{"say": "在这道题里，我们只用到三个性质。加法交换律：a 加 b 等于 b 加 a。乘法交换律：a 乘 b 等于 b 乘 a。还有第一吸收律：x 加上 x 乘 y，等于 x。我们把它们固定在左边，因为后面要用。", "pin": ["(交换 ⊕) x ⊕ y = y ⊕ x", "(交换 ⊙) x ⊙ y = y ⊙ x", "(Abs1) x ⊕ (x ⊙ y) = x"]},
+
+{"say": "现在是定义。在 B 上我们这样定义一个关系，叫做小于或等于。x 小于或等于 y，当且仅当 x 加 y 等于 y。对集合来说，这就是我们熟悉的性质：A 包含于 B，当且仅当 A 并 B 等于 B。", "L": [["sub", "x ≤ y  ⇔  x ⊕ y = y<span class='tag'>≤ 的定义</span>"], ["txt", "对集合：  A ⊆ B  ⇔  A ∪ B = B"]]},
+
+{"say": "我们把这个定义也记在左边，放在前面那些性质的下面，因为它是这道题的关键。", "pin": ["(定义) x ≤ y ⇔ x ⊕ y = y"]},
+
+{"say": "我们要证明的是：对 B 中任意的 a 和 b，有两件事成立：a 乘 b 小于或等于 a，并且 a 乘 b 小于或等于 b。对集合来说，这就是说 A 与 B 的交集包含于 A，也包含于 B。", "L": [["goal", "∀ a, b ∈ B:   a ⊙ b ≤ a   且   a ⊙ b ≤ b<span class='tag'>待证结论</span>"], ["txt", "对集合：  A ∩ B ⊆ A   且   A ∩ B ⊆ B"]]},
+
+{"title": "用定义进行转化", "clear": 1, "say": "开始之前，我们先用定义把不等式变成等式。设 a 和 b 是 B 中任意两个元素。", "L": [["txt", "设 a, b ∈ B  （任意）"], ["hyp", "x ≤ y  ⇔  x ⊕ y = y<span class='tag'>定义</span>"]]},
+
+{"say": "我们取 x 等于 a 乘 b，y 等于 a，来应用定义。这是合理的，因为乘法是封闭的，所以 a 乘 b 属于 B。", "L": [["sub", "x = a ⊙ b  ∈ B,   y = a<span class='tag'>选取（⊙ 是封闭的）</span>"]]},
+
+{"say": "代入后得到：a 乘 b 小于或等于 a，当且仅当 a 乘 b 的结果加上 a，等于 a。", "L": [["sub", "a ⊙ b ≤ a  ⇔  (a ⊙ b) ⊕ a = a<span class='tag'>定义，取 x=a⊙b, y=a</span>"]]},
+
+{"say": "对第二个也这样做：取 x 等于 a 乘 b，y 等于 b。得到：a 乘 b 小于或等于 b，当且仅当 a 乘 b 的结果加上 b，等于 b。", "L": [["sub", "a ⊙ b ≤ b  ⇔  (a ⊙ b) ⊕ b = b<span class='tag'>定义，取 x=a⊙b, y=b</span>"]]},
+
+{"say": "所以，只需证明这两个等式。这就是我们要证明的内容。", "L": [["goal", "只需证明：  (a ⊙ b) ⊕ a = a   且   (a ⊙ b) ⊕ b = b<span class='tag'>新的结论</span>"]]},
+
+{"title": "第一部分：a ⊙ b ≤ a", "clear": 1, "say": "先证第一个。我们要证明 a 乘 b 的结果加上 a，等于 a。我们从左边出发。", "L": [["goal", "要证：  (a ⊙ b) ⊕ a = a<span class='tag'>本部分的结论</span>"], ["txt", "(a ⊙ b) ⊕ a"]]},
+
+{"say": "第一步。注意这个表达式的形式和吸收律正好相反，因为 a 在右边。我们应用加法交换律，取 x 等于 a 乘 b，y 等于 a。从 a 乘 b 的结果加 a，变成 a 加上 a 乘 b。", "L": [["sub", "(a ⊙ b) ⊕ a  =  a ⊕ (a ⊙ b)<span class='tag'>⊕ 的交换律，取 x=a⊙b, y=a</span>"]]},
+
+{"say": "第二步。现在恰好是第一吸收律，取 x 等于 a，y 等于 b：a 加上 a 乘 b，等于 a。我们把它标出来。", "L": [["sub", "(a ⊙ b) ⊕ a  =  <mark>a ⊕ (a ⊙ b)</mark>"], ["txt", "由 (Abs1)，取 x=a, y=b：  <mark>a ⊕ (a ⊙ b)</mark> = a"]]},
+
+{"say": "把这一块换成 a。得到 a 乘 b 的结果加上 a，等于 a。", "L": [["res", "(a ⊙ b) ⊕ a  =  a<span class='tag'>吸收律</span>"]]},
+
+{"say": "等式证明完毕。根据前面得到的等价关系，这个等式恰好说明 a 乘 b 小于或等于 a。对集合来说：A 与 B 的交集包含于 A。第一部分到此结束。", "L": [["res", "(a ⊙ b) ⊕ a = a   ⟹   a ⊙ b ≤ a   ∎"], ["txt", "对集合：  A ∩ B ⊆ A"]]},
+
+{"title": "第二部分：a ⊙ b ≤ b", "clear": 1, "say": "接下来是第二部分。我们要证明 a 乘 b 的结果加上 b，等于 b。方法相同，但这里会多一步，因为积是 a 乘 b，而不是 b 乘 a。", "L": [["goal", "要证：  (a ⊙ b) ⊕ b = b<span class='tag'>本部分的结论</span>"], ["txt", "(a ⊙ b) ⊕ b"]]},
+
+{"say": "第一步。应用加法交换律，取 x 等于 a 乘 b，y 等于 b。从 a 乘 b 的结果加 b，变成 b 加上 a 乘 b。", "L": [["sub", "(a ⊙ b) ⊕ b  =  b ⊕ (a ⊙ b)<span class='tag'>⊕ 的交换律，取 x=a⊙b, y=b</span>"]]},
+
+{"say": "第二步。现在我们想用吸收律，但要取 x 等于 b。这就要求括号里是 b 乘 a，而不是 a 乘 b。应用乘法交换律：a 乘 b 等于 b 乘 a。", "L": [["sub", "b ⊕ (<mark>a ⊙ b</mark>)"], ["txt", "由 (交换 ⊙)：  <mark>a ⊙ b</mark> = b ⊙ a"], ["sub", "(a ⊙ b) ⊕ b  =  b ⊕ (b ⊙ a)<span class='tag'>⊙ 的交换律</span>"]]},
+
+{"say": "第三步。现在确实是第一吸收律了，取 x 等于 b，y 等于 a：b 加上 b 乘 a，等于 b。我们把它标出来并替换。", "L": [["sub", "(a ⊙ b) ⊕ b  =  <mark>b ⊕ (b ⊙ a)</mark>"], ["txt", "由 (Abs1)，取 x=b, y=a：  <mark>b ⊕ (b ⊙ a)</mark> = b"], ["res", "(a ⊙ b) ⊕ b  =  b<span class='tag'>吸收律</span>"]]},
+
+{"say": "等式证明完毕。根据定义，这个等式说明 a 乘 b 小于或等于 b。对集合来说：A 与 B 的交集包含于 B。第二部分到此结束。", "L": [["res", "(a ⊙ b) ⊕ b = b   ⟹   a ⊙ b ≤ b   ∎"], ["txt", "对集合：  A ∩ B ⊆ B"]]},
+
+{"title": "总结", "clear": 1, "say": "总结一下。根据小于或等于的定义，证明 a 乘 b 小于或等于 a，就是证明 a 乘 b 的结果加上 a 等于 a。第一部分只需加法交换律和吸收律。第二部分还需要乘法交换律。所以，a 乘 b 既小于或等于 a，也小于或等于 b。对集合来说，交集包含于这两个集合中的每一个。感谢观看。", "L": [["res", "a ⊙ b ≤ a   （⊕ 的交换律 + 吸收律）"], ["res", "a ⊙ b ≤ b   （⊕ 的交换律 + ⊙ 的交换律 + 吸收律）"], ["txt", "对集合：  A ∩ B ⊆ A   且   A ∩ B ⊆ B"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' 加 ').replace(/⊙/g,' 乘 ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ 重播'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ 继续'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ 暂停';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^zh/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/yunyang|yunxi|yunjian|kangkang|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="积小于或等于每个因子";$('sub').textContent="练习 · 代数格";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

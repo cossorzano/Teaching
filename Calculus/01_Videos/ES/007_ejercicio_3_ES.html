@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>El producto es una cota inferior</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Recuerda</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Empezar</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Velocidad <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Modo grabación (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"es-ES",
+"meta":{"nivel": 2, "titulo": "El producto es menor que cada factor", "enunciado": "Sea (B, ⊕, ⊙) un retículo, con la relación  x ≤ y ⇔ x ⊕ y = y.  Probar que, para cualesquiera a, b ∈ B:", "tesis": "a ⊙ b ≤ a,   a ⊙ b ≤ b", "datos": ["(Conm ⊕)  x ⊕ y = y ⊕ x", "(Conm ⊙)  x ⊙ y = y ⊙ x", "(Abs1)  x ⊕ (x ⊙ y) = x"]},
+"steps":[
+{"title":"El producto es menor que cada factor","sub":"Ejercicio · Retículos algebraicos","clear":1,
+"say":"Hola. En este vídeo vamos a resolver un ejercicio sobre retículos algebraicos. Vamos a ir muy despacio, escribiendo cada ecuación y justificando cada paso.",
+"L":[["txt","El producto a ⊙ b es menor o igual que a y que b"]]},
+
+{"say":"Primero, los datos. B es un conjunto con dos operaciones, la suma reticular y el producto reticular, y es un retículo. Es decir, ambas operaciones son internas, conmutativas, asociativas, y cumplen las leyes de absorción.",
+"L":[["hyp","(B, ⊕, ⊙) retículo<span class='tag'>Hipótesis</span>"]]},
+
+{"say":"En este ejercicio solo vamos a usar tres propiedades. La conmutatividad de la suma: a más b es b más a. La conmutatividad del producto: a por b es b por a. Y la primera ley de absorción: x más, x por y, es igual a x. Las dejamos fijadas a la izquierda, porque las vamos a utilizar.",
+"pin":["(Conm ⊕) x ⊕ y = y ⊕ x","(Conm ⊙) x ⊙ y = y ⊙ x","(Abs1) x ⊕ (x ⊙ y) = x"]},
+
+{"say":"Ahora la definición. En B definimos una relación, menor o igual, de la siguiente forma. x es menor o igual que y si y solo si x más y es igual a y. Con conjuntos, es la propiedad conocida: A está contenido en B si y solo si A unión B es igual a B.",
+"L":[["sub","x ≤ y  ⇔  x ⊕ y = y<span class='tag'>Definición de ≤</span>"],["txt","Con conjuntos:  A ⊆ B  ⇔  A ∪ B = B"]]},
+
+{"say":"Anotamos también la definición a la izquierda, debajo de las propiedades anteriores, porque es la clave del ejercicio.",
+"pin":["(Def) x ≤ y ⇔ x ⊕ y = y"]},
+
+{"say":"Lo que queremos demostrar. Para cualesquiera a y b de B, se cumplen dos cosas: a por b es menor o igual que a, y a por b es menor o igual que b. Con conjuntos, esto dice que la intersección de A y B está contenida en A, y también está contenida en B.",
+"L":[["goal","∀ a, b ∈ B:   a ⊙ b ≤ a   y   a ⊙ b ≤ b<span class='tag'>Tesis</span>"],["txt","Con conjuntos:  A ∩ B ⊆ A   y   A ∩ B ⊆ B"]]},
+
+{"title":"Reducción con la definición","clear":1,
+"say":"Antes de empezar, usamos la definición para transformar las desigualdades en igualdades. Sean a y b dos elementos cualesquiera de B.",
+"L":[["txt","Sean a, b ∈ B  (arbitrarios)"],["hyp","x ≤ y  ⇔  x ⊕ y = y<span class='tag'>Definición</span>"]]},
+
+{"say":"Aplicamos la definición con x igual a a por b, e y igual a a. Es legítimo, porque el producto es interno, y por tanto a por b pertenece a B.",
+"L":[["sub","x = a ⊙ b  ∈ B,   y = a<span class='tag'>Elección (⊙ es interna)</span>"]]},
+
+{"say":"Sustituyendo, a por b es menor o igual que a, si y solo si, a por b, más a, es igual a a.",
+"L":[["sub","a ⊙ b ≤ a  ⇔  (a ⊙ b) ⊕ a = a<span class='tag'>Definición con x=a⊙b, y=a</span>"]]},
+
+{"say":"Hacemos lo mismo con la segunda: x igual a a por b, e y igual a b. Obtenemos que a por b es menor o igual que b, si y solo si, a por b, más b, es igual a b.",
+"L":[["sub","a ⊙ b ≤ b  ⇔  (a ⊙ b) ⊕ b = b<span class='tag'>Definición con x=a⊙b, y=b</span>"]]},
+
+{"say":"Por tanto, basta probar estas dos igualdades. Esto es lo que vamos a demostrar.",
+"L":[["goal","Basta probar:  (a ⊙ b) ⊕ a = a   y   (a ⊙ b) ⊕ b = b<span class='tag'>Nueva tesis</span>"]]},
+
+{"title":"Parte 1: a ⊙ b ≤ a","clear":1,
+"say":"Empezamos con la primera. Queremos probar que a por b, más a, es igual a a. Partimos del lado izquierdo.",
+"L":[["goal","Queremos:  (a ⊙ b) ⊕ a = a<span class='tag'>Tesis de esta parte</span>"],["txt","(a ⊙ b) ⊕ a"]]},
+
+{"say":"Primer paso. Fíjate en que la expresión tiene la forma contraria a la de la absorción, porque la a está a la derecha. Aplicamos la conmutatividad de la suma, con x igual a a por b, e y igual a a. Pasamos de a por b, más a, a a más, a por b.",
+"L":[["sub","(a ⊙ b) ⊕ a  =  a ⊕ (a ⊙ b)<span class='tag'>Conmutatividad de ⊕, con x=a⊙b, y=a</span>"]]},
+
+{"say":"Segundo paso. Ahora tenemos exactamente la primera ley de absorción, con x igual a a, e y igual a b: a más, a por b, es igual a a. Lo marcamos.",
+"L":[["sub","(a ⊙ b) ⊕ a  =  <mark>a ⊕ (a ⊙ b)</mark>"],["txt","Por (Abs1) con x=a, y=b:  <mark>a ⊕ (a ⊙ b)</mark> = a"]]},
+
+{"say":"Sustituimos ese bloque por a. Obtenemos que a por b, más a, es igual a a.",
+"L":[["res","(a ⊙ b) ⊕ a  =  a<span class='tag'>Absorción</span>"]]},
+
+{"say":"Hemos probado la igualdad. Por la equivalencia que vimos antes, esa igualdad significa justo que a por b es menor o igual que a. Con conjuntos: la intersección de A y B está contenida en A. Con esto termina la primera parte.",
+"L":[["res","(a ⊙ b) ⊕ a = a   ⟹   a ⊙ b ≤ a   ∎"],["txt","Con conjuntos:  A ∩ B ⊆ A"]]},
+
+{"title":"Parte 2: a ⊙ b ≤ b","clear":1,
+"say":"Pasamos a la segunda parte. Queremos probar que a por b, más b, es igual a b. Se hace igual, pero aquí aparecerá un paso extra, porque el producto es a por b, y no b por a.",
+"L":[["goal","Queremos:  (a ⊙ b) ⊕ b = b<span class='tag'>Tesis de esta parte</span>"],["txt","(a ⊙ b) ⊕ b"]]},
+
+{"say":"Primer paso. Aplicamos la conmutatividad de la suma, con x igual a a por b, e y igual a b. Pasamos de a por b, más b, a b más, a por b.",
+"L":[["sub","(a ⊙ b) ⊕ b  =  b ⊕ (a ⊙ b)<span class='tag'>Conmutatividad de ⊕, con x=a⊙b, y=b</span>"]]},
+
+{"say":"Segundo paso. Ahora queremos usar la absorción, pero con x igual a b. Eso exige que dentro del paréntesis aparezca b por a, y no a por b. Aplicamos la conmutatividad del producto: a por b es igual a b por a.",
+"L":[["sub","b ⊕ (<mark>a ⊙ b</mark>)"],["txt","Por (Conm ⊙):  <mark>a ⊙ b</mark> = b ⊙ a"],["sub","(a ⊙ b) ⊕ b  =  b ⊕ (b ⊙ a)<span class='tag'>Conmutatividad de ⊙</span>"]]},
+
+{"say":"Tercer paso. Ahora sí tenemos la primera ley de absorción, con x igual a b, e y igual a a: b más, b por a, es igual a b. Lo marcamos y sustituimos.",
+"L":[["sub","(a ⊙ b) ⊕ b  =  <mark>b ⊕ (b ⊙ a)</mark>"],["txt","Por (Abs1) con x=b, y=a:  <mark>b ⊕ (b ⊙ a)</mark> = b"],["res","(a ⊙ b) ⊕ b  =  b<span class='tag'>Absorción</span>"]]},
+
+{"say":"Hemos probado la igualdad. Por la definición, esa igualdad significa que a por b es menor o igual que b. Con conjuntos: la intersección de A y B está contenida en B. Con esto termina la segunda parte.",
+"L":[["res","(a ⊙ b) ⊕ b = b   ⟹   a ⊙ b ≤ b   ∎"],["txt","Con conjuntos:  A ∩ B ⊆ B"]]},
+
+{"title":"Resumen","clear":1,
+"say":"Resumiendo. Con la definición de menor o igual, probar que a por b es menor o igual que a, es probar que a por b, más a, es igual a a. Para la primera parte bastó la conmutatividad de la suma y la absorción. Para la segunda hizo falta además la conmutatividad del producto. Así, a por b es menor o igual que a y que b. Con conjuntos, la intersección está contenida en cada uno de los dos conjuntos. Gracias por ver el vídeo.",
+"L":[["res","a ⊙ b ≤ a   (conmutatividad de ⊕ + absorción)"],["res","a ⊙ b ≤ b   (conmutatividad de ⊕ + conmutatividad de ⊙ + absorción)"],["txt","Con conjuntos:  A ∩ B ⊆ A   y   A ∩ B ⊆ B"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' más ').replace(/⊙/g,' por ').replace(/≤/g,' menor o igual que ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Repetir'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Continuar'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pausa';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^es/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/pablo|jorge|diego|enrique|miguel|alvaro|álvaro|male|google español$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent='El producto es menor que cada factor';$('sub').textContent='Ejercicio · Retículos algebraicos';
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

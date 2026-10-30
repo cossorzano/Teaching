@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>গুণফল প্রতিটি উৎপাদকের চেয়ে ছোট</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>মনে রাখুন</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ শুরু</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>গতি <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">রেকর্ডিং মোড (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"bn-BD",
+"meta":{"nivel": 2, "titulo": "গুণফল প্রতিটি উৎপাদকের চেয়ে ছোট", "enunciado": "ধরা যাক (B, ⊕, ⊙) একটি ল্যাটিস, যেখানে সম্পর্ক  x ≤ y ⇔ x ⊕ y = y।  প্রমাণ করুন যে, যেকোনো a, b ∈ B এর জন্য:", "tesis": "a ⊙ b ≤ a,   a ⊙ b ≤ b", "datos": ["(বিনি ⊕)  x ⊕ y = y ⊕ x", "(বিনি ⊙)  x ⊙ y = y ⊙ x", "(Abs1)  x ⊕ (x ⊙ y) = x"]},
+"steps":[
+{"title": "গুণফল প্রতিটি উৎপাদকের চেয়ে ছোট", "sub": "অনুশীলনী · বীজগাণিতিক ল্যাটিস", "clear": 1, "say": "নমস্কার। এই ভিডিওতে আমরা বীজগাণিতিক ল্যাটিস নিয়ে একটি অনুশীলনী সমাধান করব। আমরা খুব ধীরে এগোব, প্রতিটি সমীকরণ লিখব এবং প্রতিটি ধাপের যুক্তি দেব।", "L": [["txt", "গুণফল a ⊙ b, a এবং b দুটিরই চেয়ে ছোট বা সমান"]]},
+
+{"say": "প্রথমে, প্রদত্ত তথ্য। B একটি সেট, যার উপর দুটি প্রক্রিয়া আছে, ল্যাটিস যোগ আর ল্যাটিস গুণ, এবং B একটি ল্যাটিস। অর্থাৎ, দুটি প্রক্রিয়াই আবদ্ধ, বিনিময়যোগ্য, সংযোজনযোগ্য, এবং শোষণ বিধি মেনে চলে।", "L": [["hyp", "(B, ⊕, ⊙) ল্যাটিস<span class='tag'>অনুমান</span>"]]},
+
+{"say": "এই অনুশীলনীতে আমরা কেবল তিনটি ধর্ম ব্যবহার করব। যোগের বিনিময়: a প্লাস b হলো b প্লাস a। গুণের বিনিময়: a গুণ b হলো b গুণ a। আর প্রথম শোষণ বিধি: x প্লাস, x গুণ y, সমান x। এগুলো আমরা বাঁ দিকে আটকে রাখি, কারণ এগুলো কাজে লাগবে।", "pin": ["(বিনি ⊕) x ⊕ y = y ⊕ x", "(বিনি ⊙) x ⊙ y = y ⊙ x", "(Abs1) x ⊕ (x ⊙ y) = x"]},
+
+{"say": "এবার সংজ্ঞা। B তে আমরা একটি সম্পর্ক, ছোট বা সমান, এভাবে সংজ্ঞায়িত করি। x, y এর চেয়ে ছোট বা সমান, যদি এবং কেবল যদি x প্লাস y সমান y হয়। সেটের ক্ষেত্রে এটি পরিচিত ধর্ম: A, B এর অন্তর্ভুক্ত, যদি এবং কেবল যদি A সংযোগ B সমান B হয়।", "L": [["sub", "x ≤ y  ⇔  x ⊕ y = y<span class='tag'>≤ এর সংজ্ঞা</span>"], ["txt", "সেটের ক্ষেত্রে:  A ⊆ B  ⇔  A ∪ B = B"]]},
+
+{"say": "সংজ্ঞাটিও আমরা বাঁ দিকে, আগের ধর্মগুলোর নিচে লিখে রাখি, কারণ এটিই এই অনুশীলনীর মূল চাবি।", "pin": ["(সংজ্ঞা) x ≤ y ⇔ x ⊕ y = y"]},
+
+{"say": "যা প্রমাণ করতে চাই। B এর যেকোনো a ও b এর জন্য দুটি কথা সত্য: a গুণ b, a এর চেয়ে ছোট বা সমান, এবং a গুণ b, b এর চেয়ে ছোট বা সমান। সেটের ক্ষেত্রে, এর অর্থ A ও B এর ছেদ A এর অন্তর্ভুক্ত, এবং B এরও অন্তর্ভুক্ত।", "L": [["goal", "∀ a, b ∈ B:   a ⊙ b ≤ a   এবং   a ⊙ b ≤ b<span class='tag'>প্রতিপাদ্য</span>"], ["txt", "সেটের ক্ষেত্রে:  A ∩ B ⊆ A   এবং   A ∩ B ⊆ B"]]},
+
+{"title": "সংজ্ঞা দিয়ে রূপান্তর", "clear": 1, "say": "শুরুর আগে, সংজ্ঞা ব্যবহার করে অসমতাগুলোকে সমতায় রূপান্তর করি। ধরা যাক a ও b, B এর যেকোনো দুটি উপাদান।", "L": [["txt", "ধরি a, b ∈ B  (যেকোনো)"], ["hyp", "x ≤ y  ⇔  x ⊕ y = y<span class='tag'>সংজ্ঞা</span>"]]},
+
+{"say": "আমরা x সমান a গুণ b, এবং y সমান a নিয়ে সংজ্ঞাটি প্রয়োগ করি। এটি বৈধ, কারণ গুণ আবদ্ধ, তাই a গুণ b, B এর অন্তর্গত।", "L": [["sub", "x = a ⊙ b  ∈ B,   y = a<span class='tag'>নির্বাচন (⊙ আবদ্ধ)</span>"]]},
+
+{"say": "প্রতিস্থাপন করলে, a গুণ b, a এর চেয়ে ছোট বা সমান, যদি এবং কেবল যদি, a গুণ b, প্লাস a, সমান a হয়।", "L": [["sub", "a ⊙ b ≤ a  ⇔  (a ⊙ b) ⊕ a = a<span class='tag'>সংজ্ঞা, x=a⊙b, y=a নিয়ে</span>"]]},
+
+{"say": "দ্বিতীয়টির ক্ষেত্রেও একই করি: x সমান a গুণ b, আর y সমান b। পাই যে a গুণ b, b এর চেয়ে ছোট বা সমান, যদি এবং কেবল যদি, a গুণ b, প্লাস b, সমান b হয়।", "L": [["sub", "a ⊙ b ≤ b  ⇔  (a ⊙ b) ⊕ b = b<span class='tag'>সংজ্ঞা, x=a⊙b, y=b নিয়ে</span>"]]},
+
+{"say": "অতএব এই দুটি সমতা প্রমাণ করলেই যথেষ্ট। এটাই আমরা প্রমাণ করব।", "L": [["goal", "প্রমাণ করাই যথেষ্ট:  (a ⊙ b) ⊕ a = a   এবং   (a ⊙ b) ⊕ b = b<span class='tag'>নতুন প্রতিপাদ্য</span>"]]},
+
+{"title": "অংশ ১: a ⊙ b ≤ a", "clear": 1, "say": "প্রথমটি দিয়ে শুরু করি। আমরা প্রমাণ করতে চাই যে a গুণ b, প্লাস a, সমান a। আমরা বাম পক্ষ থেকে শুরু করি।", "L": [["goal", "চাই:  (a ⊙ b) ⊕ a = a<span class='tag'>এই অংশের প্রতিপাদ্য</span>"], ["txt", "(a ⊙ b) ⊕ a"]]},
+
+{"say": "প্রথম ধাপ। লক্ষ করুন, রাশিটির রূপ শোষণ বিধির উল্টো, কারণ a আছে ডান দিকে। আমরা যোগের বিনিময় ধর্ম প্রয়োগ করি, x সমান a গুণ b, আর y সমান a নিয়ে। a গুণ b, প্লাস a, থেকে যাই a প্লাস, a গুণ b তে।", "L": [["sub", "(a ⊙ b) ⊕ a  =  a ⊕ (a ⊙ b)<span class='tag'>⊕ এর বিনিময়, x=a⊙b, y=a নিয়ে</span>"]]},
+
+{"say": "দ্বিতীয় ধাপ। এখন আমাদের কাছে ঠিক প্রথম শোষণ বিধি, x সমান a, আর y সমান b নিয়ে: a প্লাস, a গুণ b, সমান a। এটি চিহ্নিত করি।", "L": [["sub", "(a ⊙ b) ⊕ a  =  <mark>a ⊕ (a ⊙ b)</mark>"], ["txt", "(Abs1) অনুযায়ী, x=a, y=b নিয়ে:  <mark>a ⊕ (a ⊙ b)</mark> = a"]]},
+
+{"say": "ওই অংশের জায়গায় a বসাই। পাই যে a গুণ b, প্লাস a, সমান a।", "L": [["res", "(a ⊙ b) ⊕ a  =  a<span class='tag'>শোষণ</span>"]]},
+
+{"say": "আমরা সমতাটি প্রমাণ করলাম। আগে দেখা সমতুল্যতা অনুযায়ী, এই সমতার অর্থ ঠিক এটাই যে a গুণ b, a এর চেয়ে ছোট বা সমান। সেটের ক্ষেত্রে: A ও B এর ছেদ A এর অন্তর্ভুক্ত। এতে প্রথম অংশ শেষ হলো।", "L": [["res", "(a ⊙ b) ⊕ a = a   ⟹   a ⊙ b ≤ a   ∎"], ["txt", "সেটের ক্ষেত্রে:  A ∩ B ⊆ A"]]},
+
+{"title": "অংশ ২: a ⊙ b ≤ b", "clear": 1, "say": "এবার দ্বিতীয় অংশ। আমরা প্রমাণ করতে চাই যে a গুণ b, প্লাস b, সমান b। পদ্ধতি একই, তবে এখানে একটি অতিরিক্ত ধাপ আসবে, কারণ গুণফলটি a গুণ b, b গুণ a নয়।", "L": [["goal", "চাই:  (a ⊙ b) ⊕ b = b<span class='tag'>এই অংশের প্রতিপাদ্য</span>"], ["txt", "(a ⊙ b) ⊕ b"]]},
+
+{"say": "প্রথম ধাপ। যোগের বিনিময় ধর্ম প্রয়োগ করি, x সমান a গুণ b, আর y সমান b নিয়ে। a গুণ b, প্লাস b, থেকে যাই b প্লাস, a গুণ b তে।", "L": [["sub", "(a ⊙ b) ⊕ b  =  b ⊕ (a ⊙ b)<span class='tag'>⊕ এর বিনিময়, x=a⊙b, y=b নিয়ে</span>"]]},
+
+{"say": "দ্বিতীয় ধাপ। এখন আমরা শোষণ বিধি ব্যবহার করতে চাই, তবে x সমান b নিয়ে। তার জন্য বন্ধনীর ভেতরে b গুণ a থাকতে হবে, a গুণ b নয়। গুণের বিনিময় ধর্ম প্রয়োগ করি: a গুণ b সমান b গুণ a।", "L": [["sub", "b ⊕ (<mark>a ⊙ b</mark>)"], ["txt", "(বিনি ⊙) অনুযায়ী:  <mark>a ⊙ b</mark> = b ⊙ a"], ["sub", "(a ⊙ b) ⊕ b  =  b ⊕ (b ⊙ a)<span class='tag'>⊙ এর বিনিময়</span>"]]},
+
+{"say": "তৃতীয় ধাপ। এবার সত্যিই প্রথম শোষণ বিধি পাওয়া গেল, x সমান b, আর y সমান a নিয়ে: b প্লাস, b গুণ a, সমান b। এটি চিহ্নিত করে প্রতিস্থাপন করি।", "L": [["sub", "(a ⊙ b) ⊕ b  =  <mark>b ⊕ (b ⊙ a)</mark>"], ["txt", "(Abs1) অনুযায়ী, x=b, y=a নিয়ে:  <mark>b ⊕ (b ⊙ a)</mark> = b"], ["res", "(a ⊙ b) ⊕ b  =  b<span class='tag'>শোষণ</span>"]]},
+
+{"say": "আমরা সমতাটি প্রমাণ করলাম। সংজ্ঞা অনুযায়ী, এই সমতার অর্থ a গুণ b, b এর চেয়ে ছোট বা সমান। সেটের ক্ষেত্রে: A ও B এর ছেদ B এর অন্তর্ভুক্ত। এতে দ্বিতীয় অংশ শেষ হলো।", "L": [["res", "(a ⊙ b) ⊕ b = b   ⟹   a ⊙ b ≤ b   ∎"], ["txt", "সেটের ক্ষেত্রে:  A ∩ B ⊆ B"]]},
+
+{"title": "সারসংক্ষেপ", "clear": 1, "say": "সংক্ষেপে বলি। ছোট বা সমানের সংজ্ঞা অনুযায়ী, a গুণ b, a এর চেয়ে ছোট বা সমান প্রমাণ করা মানে a গুণ b, প্লাস a, সমান a প্রমাণ করা। প্রথম অংশে যোগের বিনিময় আর শোষণই যথেষ্ট ছিল। দ্বিতীয় অংশে গুণের বিনিময়ও লেগেছে। এভাবে a গুণ b, a ও b দুটিরই চেয়ে ছোট বা সমান। সেটের ক্ষেত্রে, ছেদ দুটি সেটের প্রতিটির অন্তর্ভুক্ত। দেখার জন্য ধন্যবাদ।", "L": [["res", "a ⊙ b ≤ a   (⊕ এর বিনিময় + শোষণ)"], ["res", "a ⊙ b ≤ b   (⊕ এর বিনিময় + ⊙ এর বিনিময় + শোষণ)"], ["txt", "সেটের ক্ষেত্রে:  A ∩ B ⊆ A   এবং   A ∩ B ⊆ B"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' প্লাস ').replace(/⊙/g,' গুণ ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ আবার চালান'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ চালিয়ে যান'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ বিরতি';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^bn/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/pradeep|bashkar|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="গুণফল প্রতিটি উৎপাদকের চেয়ে ছোট";$('sub').textContent="অনুশীলনী · বীজগাণিতিক ল্যাটিস";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
