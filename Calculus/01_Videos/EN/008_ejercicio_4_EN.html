@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Two orders that coincide</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+sub{font-size:.6em}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Remember</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Start</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Speed <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Recording mode (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"en-US",
+"meta":{"nivel": 2, "titulo": "Two orders that coincide", "enunciado": "Let (B, ⊕, ⊙) be a lattice. We define  x ≤⊕ y ⇔ x ⊕ y = y  and  x ≤⊙ y ⇔ x ⊙ y = x.  Prove that, for any x, y ∈ B:", "tesis": "x ≤⊕ y  ⇔  x ≤⊙ y", "datos": ["(Comm ⊕)  x ⊕ y = y ⊕ x", "(Comm ⊙)  x ⊙ y = y ⊙ x", "(Abs1)  x ⊕ (x ⊙ y) = x", "(Abs2)  x ⊙ (x ⊕ y) = x"]},
+"steps":[
+{"title": "Two orders that coincide", "sub": "Exercise · Algebraic lattices", "clear": 1, "say": "Hello. In this video we are going to solve an exercise about algebraic lattices. We will go very slowly, writing every equation and justifying every step.", "L": [["txt", "Two ways of defining an order on a lattice: are they the same?"]]},
+
+{"say": "First, the data. B is a set with two operations, the lattice sum and the lattice product, and it is a lattice. That is, both operations are internal, commutative, associative, and satisfy the absorption laws.", "L": [["hyp", "(B, ⊕, ⊙) lattice<span class='tag'>Hypothesis</span>"]]},
+
+{"say": "In this exercise we will use four properties. Commutativity of the sum: x plus y is y plus x. Commutativity of the product: x times y is y times x. The first absorption law: x plus, x times y, is x. And the second one: x times, x plus y, is x. We pin them on the left, because we are going to use them.", "pin": ["(Comm ⊕) x ⊕ y = y ⊕ x", "(Comm ⊙) x ⊙ y = y ⊙ x", "(Abs1) x ⊕ (x ⊙ y) = x", "(Abs2) x ⊙ (x ⊕ y) = x"]},
+
+{"say": "Now the definitions. On B we define two relations. The first one, which we call less than or equal with respect to the sum: x is less than or equal to y if and only if x plus y equals y. With sets, it is the well-known property: A is contained in B if and only if A union B equals B.", "L": [["sub", "x ≤<sub>⊕</sub> y  ⇔  x ⊕ y = y<span class='tag'>Definition of ≤⊕</span>"], ["txt", "With sets:  A ⊆ B  ⇔  A ∪ B = B"]]},
+
+{"say": "The second one, which we call less than or equal with respect to the product: x is less than or equal to y if and only if x times y equals x. With sets, it is also a well-known property: A is contained in B if and only if A intersection B equals A.", "L": [["sub", "x ≤<sub>⊙</sub> y  ⇔  x ⊙ y = x<span class='tag'>Definition of ≤⊙</span>"], ["txt", "With sets:  A ⊆ B  ⇔  A ∩ B = A"]]},
+
+{"say": "We write both definitions on the left, below the previous properties, because they are the key to the exercise.", "pin": ["(Def ⊕) x ≤<sub>⊕</sub> y ⇔ x ⊕ y = y", "(Def ⊙) x ≤<sub>⊙</sub> y ⇔ x ⊙ y = x"]},
+
+{"say": "What we want to prove. For any x and y in B, x is less than or equal to y with respect to the sum, if and only if, x is less than or equal to y with respect to the product. That is, the two relations coincide. With sets, this says that A union B is B exactly when A intersection B is A.", "L": [["goal", "∀ x, y ∈ B:   x ≤<sub>⊕</sub> y  ⇔  x ≤<sub>⊙</sub> y<span class='tag'>Claim</span>"], ["txt", "With sets:  A ∪ B = B  ⇔  A ∩ B = A"]]},
+
+{"say": "Since it is an equivalence, we prove it in two parts. First the implication to the right, and then the implication to the left. Let x and y be any two elements of B.", "L": [["txt", "Let x, y ∈ B  (arbitrary)"], ["goal", "(1)  x ≤<sub>⊕</sub> y  ⇒  x ≤<sub>⊙</sub> y"], ["goal", "(2)  x ≤<sub>⊙</sub> y  ⇒  x ≤<sub>⊕</sub> y"]]},
+
+{"title": "Part 1: ≤⊕ implies ≤⊙", "clear": 1, "say": "We start with the first implication. We assume that x is less than or equal to y with respect to the sum. This is a hypothesis, and by the definition it means that x plus y equals y.", "L": [["hyp", "x ≤<sub>⊕</sub> y<span class='tag'>Hypothesis</span>"], ["hyp", "x ⊕ y = y<span class='tag'>Hypothesis, by the definition of ≤⊕</span>"]]},
+
+{"say": "We want to prove that x is less than or equal to y with respect to the product. By the definition, this means that x times y equals x. This is the equality we are going to prove. We start from the left-hand side, x times y.", "L": [["goal", "We want:  x ⊙ y = x<span class='tag'>Claim, by the definition of ≤⊙</span>"], ["txt", "x ⊙ y"]]},
+
+{"say": "First step. We use the hypothesis: y equals x plus y. So we can replace the y on the right with x plus y. We leave the first x as it is. We go from x times y, to x times, x plus y.", "L": [["sub", "x ⊙ y  =  x ⊙ (x ⊕ y)<span class='tag'>Substitution: y = x ⊕ y  (hypothesis)</span>"]]},
+
+{"say": "Second step. Now we have exactly the second absorption law, with x equal to x, and y equal to y: x times, x plus y, equals x. We highlight it.", "L": [["sub", "x ⊙ y  =  <mark>x ⊙ (x ⊕ y)</mark>"], ["txt", "By (Abs2):  <mark>x ⊙ (x ⊕ y)</mark> = x"]]},
+
+{"say": "We replace that block with x. We get that x times y equals x.", "L": [["res", "x ⊙ y  =  x<span class='tag'>Absorption</span>"]]},
+
+{"say": "By the definition, this equality means that x is less than or equal to y with respect to the product. This ends the first implication.", "L": [["res", "x ⊙ y = x   ⟹   x ≤<sub>⊙</sub> y   ∎"]]},
+
+{"title": "Part 2: ≤⊙ implies ≤⊕", "clear": 1, "say": "We move on to the second implication. Now we assume that x is less than or equal to y with respect to the product. By the definition, this means that x times y equals x. This is the hypothesis of this part.", "L": [["hyp", "x ≤<sub>⊙</sub> y<span class='tag'>Hypothesis</span>"], ["hyp", "x ⊙ y = x<span class='tag'>Hypothesis, by the definition of ≤⊙</span>"]]},
+
+{"say": "We want to prove that x is less than or equal to y with respect to the sum. By the definition, this means that x plus y equals y. We start from the left-hand side, x plus y.", "L": [["goal", "We want:  x ⊕ y = y<span class='tag'>Claim, by the definition of ≤⊕</span>"], ["txt", "x ⊕ y"]]},
+
+{"say": "First step. We use the hypothesis: x equals x times y. We replace the x on the left with x times y, and we leave the y as it is. We go from x plus y, to, x times y, plus y.", "L": [["sub", "x ⊕ y  =  (x ⊙ y) ⊕ y<span class='tag'>Substitution: x = x ⊙ y  (hypothesis)</span>"]]},
+
+{"say": "Second step. The expression has the y on the right, and absorption needs it on the left. We apply commutativity of the sum, with x equal to x times y, and y equal to y. We go from x times y, plus y, to y plus, x times y.", "L": [["sub", "x ⊕ y  =  y ⊕ (x ⊙ y)<span class='tag'>Commutativity of ⊕</span>"]]},
+
+{"say": "Third step. To apply the first absorption law with x equal to y, the parenthesis must contain y times x, not x times y. We apply commutativity of the product: x times y equals y times x.", "L": [["sub", "y ⊕ (<mark>x ⊙ y</mark>)"], ["txt", "By (Comm ⊙):  <mark>x ⊙ y</mark> = y ⊙ x"], ["sub", "x ⊕ y  =  y ⊕ (y ⊙ x)<span class='tag'>Commutativity of ⊙</span>"]]},
+
+{"say": "Fourth step. Now we do have the first absorption law, with x equal to y, and y equal to x: y plus, y times x, equals y. We highlight it and substitute.", "L": [["sub", "x ⊕ y  =  <mark>y ⊕ (y ⊙ x)</mark>"], ["txt", "By (Abs1) with x=y, y=x:  <mark>y ⊕ (y ⊙ x)</mark> = y"], ["res", "x ⊕ y  =  y<span class='tag'>Absorption</span>"]]},
+
+{"say": "By the definition, this equality means that x is less than or equal to y with respect to the sum. This ends the second implication.", "L": [["res", "x ⊕ y = y   ⟹   x ≤<sub>⊕</sub> y   ∎"]]},
+
+{"title": "Conclusion", "clear": 1, "say": "We have proved both implications. Therefore, for any x and y in B, x is less than or equal to y with respect to the sum, if and only if, x is less than or equal to y with respect to the product. The two definitions of order are equivalent.", "L": [["res", "(1)  x ≤<sub>⊕</sub> y  ⇒  x ≤<sub>⊙</sub> y   ∎"], ["res", "(2)  x ≤<sub>⊙</sub> y  ⇒  x ≤<sub>⊕</sub> y   ∎"], ["res", "x ≤<sub>⊕</sub> y  ⇔  x ≤<sub>⊙</sub> y"]]},
+
+{"title": "Summary", "clear": 1, "say": "To sum up. For the first implication, we replaced y with x plus y and applied the second absorption law. For the second one, we replaced x with x times y, commuted the sum, commuted the product, and applied the first absorption law. With sets, it is the well-known equivalence: A union B is B, if and only if, A intersection B is A. Thanks for watching.", "L": [["res", "(1)  substitution + Abs2"], ["res", "(2)  substitution + Comm ⊕ + Comm ⊙ + Abs1"], ["txt", "With sets:  A ∪ B = B  ⇔  A ∩ B = A"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' plus ').replace(/⊙/g,' times ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Replay'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Resume'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pause';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/andrew|guy|brian|christopher|eric|david|mark|male|google us english$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Two orders that coincide";$('sub').textContent="Exercise · Algebraic lattices";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

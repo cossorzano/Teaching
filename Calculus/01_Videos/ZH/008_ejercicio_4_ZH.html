@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>两个序是一致的</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+sub{font-size:.6em}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>备忘</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ 开始</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>语速 <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">录制模式 (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"zh-CN",
+"meta":{"nivel": 2, "titulo": "两个序是一致的", "enunciado": "设 (B, ⊕, ⊙) 是一个格。定义  x ≤⊕ y ⇔ x ⊕ y = y  以及  x ≤⊙ y ⇔ x ⊙ y = x。证明：对任意 x, y ∈ B，", "tesis": "x ≤⊕ y  ⇔  x ≤⊙ y", "datos": ["(交换 ⊕)  x ⊕ y = y ⊕ x", "(交换 ⊙)  x ⊙ y = y ⊙ x", "(Abs1)  x ⊕ (x ⊙ y) = x", "(Abs2)  x ⊙ (x ⊕ y) = x"]},
+"steps":[
+{"title": "两个序是一致的", "sub": "练习 · 代数格", "clear": 1, "say": "你好。在这个视频里，我们来解一道关于代数格的练习。我们会讲得很慢，写出每一个等式，并说明每一步的理由。", "L": [["txt", "在格上定义序的两种方式：它们是同一个序吗？"]]},
+
+{"say": "首先是已知条件。B 是一个带有两种运算的集合，即格的加法和格的乘法，并且它是一个格。也就是说，这两种运算都是封闭的、可交换的、可结合的，并且满足吸收律。", "L": [["hyp", "(B, ⊕, ⊙) 是格<span class='tag'>假设</span>"]]},
+
+{"say": "在这道题里，我们要用到四个性质。加法交换律：x 加 y 等于 y 加 x。乘法交换律：x 乘 y 等于 y 乘 x。第一吸收律：x 加上 x 乘 y，等于 x。还有第二吸收律：x 乘以 x 加 y 的和，等于 x。我们把它们固定在左边，因为后面要用。", "pin": ["(交换 ⊕) x ⊕ y = y ⊕ x", "(交换 ⊙) x ⊙ y = y ⊙ x", "(Abs1) x ⊕ (x ⊙ y) = x", "(Abs2) x ⊙ (x ⊕ y) = x"]},
+
+{"say": "现在是定义。在 B 上我们定义两个关系。第一个，我们叫它关于加法的小于或等于：x 小于或等于 y，当且仅当 x 加 y 等于 y。对集合来说，这就是我们熟悉的性质：A 包含于 B，当且仅当 A 并 B 等于 B。", "L": [["sub", "x ≤<sub>⊕</sub> y  ⇔  x ⊕ y = y<span class='tag'>≤⊕ 的定义</span>"], ["txt", "对集合：  A ⊆ B  ⇔  A ∪ B = B"]]},
+
+{"say": "第二个，我们叫它关于乘法的小于或等于：x 小于或等于 y，当且仅当 x 乘 y 等于 x。对集合来说，这也是熟悉的性质：A 包含于 B，当且仅当 A 交 B 等于 A。", "L": [["sub", "x ≤<sub>⊙</sub> y  ⇔  x ⊙ y = x<span class='tag'>≤⊙ 的定义</span>"], ["txt", "对集合：  A ⊆ B  ⇔  A ∩ B = A"]]},
+
+{"say": "我们把这两个定义记在左边，放在前面那些性质的下面，因为它们是这道题的关键。", "pin": ["(定义 ⊕) x ≤<sub>⊕</sub> y ⇔ x ⊕ y = y", "(定义 ⊙) x ≤<sub>⊙</sub> y ⇔ x ⊙ y = x"]},
+
+{"say": "我们要证明的是：对 B 中任意的 x 和 y，x 关于加法小于或等于 y，当且仅当，x 关于乘法小于或等于 y。也就是说，这两个关系是一致的。对集合来说，这就是说：A 并 B 等于 B，恰好当 A 交 B 等于 A 的时候。", "L": [["goal", "∀ x, y ∈ B:   x ≤<sub>⊕</sub> y  ⇔  x ≤<sub>⊙</sub> y<span class='tag'>结论</span>"], ["txt", "对集合：  A ∪ B = B  ⇔  A ∩ B = A"]]},
+
+{"say": "因为这是一个等价关系，我们分两部分来证明。先证向右的蕴含，再证向左的蕴含。设 x 和 y 是 B 中任意两个元素。", "L": [["txt", "设 x, y ∈ B  （任意）"], ["goal", "(1)  x ≤<sub>⊕</sub> y  ⇒  x ≤<sub>⊙</sub> y"], ["goal", "(2)  x ≤<sub>⊙</sub> y  ⇒  x ≤<sub>⊕</sub> y"]]},
+
+{"title": "第一部分：≤⊕ 蕴含 ≤⊙", "clear": 1, "say": "我们从第一个蕴含开始。假设 x 关于加法小于或等于 y。这是一个假设，根据定义，它的意思是 x 加 y 等于 y。", "L": [["hyp", "x ≤<sub>⊕</sub> y<span class='tag'>假设</span>"], ["hyp", "x ⊕ y = y<span class='tag'>假设，由 ≤⊕ 的定义</span>"]]},
+
+{"say": "我们要证明 x 关于乘法小于或等于 y。根据定义，这意味着 x 乘 y 等于 x。这就是我们要证明的等式。我们从左边 x 乘 y 出发。", "L": [["goal", "要证：  x ⊙ y = x<span class='tag'>结论，由 ≤⊙ 的定义</span>"], ["txt", "x ⊙ y"]]},
+
+{"say": "第一步。我们使用假设：y 等于 x 加 y。所以可以把右边的 y 换成 x 加 y。第一个 x 保持不变。从 x 乘 y，变成 x 乘以 x 加 y 的和。", "L": [["sub", "x ⊙ y  =  x ⊙ (x ⊕ y)<span class='tag'>代入：y = x ⊕ y （假设）</span>"]]},
+
+{"say": "第二步。现在恰好是第二吸收律，取 x 等于 x，y 等于 y：x 乘以 x 加 y 的和，等于 x。我们把它标出来。", "L": [["sub", "x ⊙ y  =  <mark>x ⊙ (x ⊕ y)</mark>"], ["txt", "由 (Abs2)：  <mark>x ⊙ (x ⊕ y)</mark> = x"]]},
+
+{"say": "把这一块换成 x。得到 x 乘 y 等于 x。", "L": [["res", "x ⊙ y  =  x<span class='tag'>吸收律</span>"]]},
+
+{"say": "根据定义，这个等式意味着 x 关于乘法小于或等于 y。第一个蕴含证完了。", "L": [["res", "x ⊙ y = x   ⟹   x ≤<sub>⊙</sub> y   ∎"]]},
+
+{"title": "第二部分：≤⊙ 蕴含 ≤⊕", "clear": 1, "say": "下面证第二个蕴含。现在假设 x 关于乘法小于或等于 y。根据定义，这意味着 x 乘 y 等于 x。这是这一部分的假设。", "L": [["hyp", "x ≤<sub>⊙</sub> y<span class='tag'>假设</span>"], ["hyp", "x ⊙ y = x<span class='tag'>假设，由 ≤⊙ 的定义</span>"]]},
+
+{"say": "我们要证明 x 关于加法小于或等于 y。根据定义，这意味着 x 加 y 等于 y。我们从左边 x 加 y 出发。", "L": [["goal", "要证：  x ⊕ y = y<span class='tag'>结论，由 ≤⊕ 的定义</span>"], ["txt", "x ⊕ y"]]},
+
+{"say": "第一步。我们使用假设：x 等于 x 乘 y。把左边的 x 换成 x 乘 y，y 保持不变。从 x 加 y，变成 x 乘 y 的结果再加 y。", "L": [["sub", "x ⊕ y  =  (x ⊙ y) ⊕ y<span class='tag'>代入：x = x ⊙ y （假设）</span>"]]},
+
+{"say": "第二步。这个式子中 y 在右边，而吸收律需要它在左边。我们应用加法交换律，取 x 等于 x 乘 y，y 等于 y。从 x 乘 y 的结果加 y，变成 y 加上 x 乘 y。", "L": [["sub", "x ⊕ y  =  y ⊕ (x ⊙ y)<span class='tag'>⊕ 的交换律</span>"]]},
+
+{"say": "第三步。要用 x 等于 y 的第一吸收律，括号里必须是 y 乘 x，而不是 x 乘 y。我们应用乘法交换律：x 乘 y 等于 y 乘 x。", "L": [["sub", "y ⊕ (<mark>x ⊙ y</mark>)"], ["txt", "由 (交换 ⊙)：  <mark>x ⊙ y</mark> = y ⊙ x"], ["sub", "x ⊕ y  =  y ⊕ (y ⊙ x)<span class='tag'>⊙ 的交换律</span>"]]},
+
+{"say": "第四步。现在确实是第一吸收律了，取 x 等于 y，y 等于 x：y 加上 y 乘 x，等于 y。我们把它标出来并代入。", "L": [["sub", "x ⊕ y  =  <mark>y ⊕ (y ⊙ x)</mark>"], ["txt", "由 (Abs1)，取 x=y, y=x：  <mark>y ⊕ (y ⊙ x)</mark> = y"], ["res", "x ⊕ y  =  y<span class='tag'>吸收律</span>"]]},
+
+{"say": "根据定义，这个等式意味着 x 关于加法小于或等于 y。第二个蕴含证完了。", "L": [["res", "x ⊕ y = y   ⟹   x ≤<sub>⊕</sub> y   ∎"]]},
+
+{"title": "结论", "clear": 1, "say": "两个蕴含都证明了。因此，对 B 中任意的 x 和 y，x 关于加法小于或等于 y，当且仅当，x 关于乘法小于或等于 y。序的两种定义是等价的。", "L": [["res", "(1)  x ≤<sub>⊕</sub> y  ⇒  x ≤<sub>⊙</sub> y   ∎"], ["res", "(2)  x ≤<sub>⊙</sub> y  ⇒  x ≤<sub>⊕</sub> y   ∎"], ["res", "x ≤<sub>⊕</sub> y  ⇔  x ≤<sub>⊙</sub> y"]]},
+
+{"title": "总结", "clear": 1, "say": "总结一下。第一个蕴含，我们把 y 换成 x 加 y，再用第二吸收律。第二个蕴含，我们把 x 换成 x 乘 y，交换加法，交换乘法，再用第一吸收律。对集合来说，这就是熟悉的等价：A 并 B 等于 B，当且仅当，A 交 B 等于 A。谢谢观看。", "L": [["res", "(1)  代入 + Abs2"], ["res", "(2)  代入 + 交换 ⊕ + 交换 ⊙ + Abs1"], ["txt", "对集合：  A ∪ B = B  ⇔  A ∩ B = A"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' 加 ').replace(/⊙/g,' 乘 ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ 重播'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ 继续'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ 暂停';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^zh/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/yunyang|yunxi|yunjian|kangkang|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="两个序是一致的";$('sub').textContent="练习 · 代数格";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Duas ordens que coincidem</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+sub{font-size:.6em}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Lembre-se</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Começar</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Velocidade <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Modo gravação (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"pt-BR",
+"meta":{"nivel": 2, "titulo": "Duas ordens que coincidem", "enunciado": "Seja (B, ⊕, ⊙) um reticulado. Definimos  x ≤⊕ y ⇔ x ⊕ y = y  e  x ≤⊙ y ⇔ x ⊙ y = x.  Provar que, para quaisquer x, y ∈ B:", "tesis": "x ≤⊕ y  ⇔  x ≤⊙ y", "datos": ["(Comut ⊕)  x ⊕ y = y ⊕ x", "(Comut ⊙)  x ⊙ y = y ⊙ x", "(Abs1)  x ⊕ (x ⊙ y) = x", "(Abs2)  x ⊙ (x ⊕ y) = x"]},
+"steps":[
+{"title": "Duas ordens que coincidem", "sub": "Exercício · Reticulados algébricos", "clear": 1, "say": "Olá. Neste vídeo vamos resolver um exercício sobre reticulados algébricos. Vamos bem devagar, escrevendo cada equação e justificando cada passo.", "L": [["txt", "Duas formas de definir uma ordem num reticulado: são a mesma?"]]},
+
+{"say": "Primeiro, os dados. B é um conjunto com duas operações, a soma e o produto do reticulado, e é um reticulado. Ou seja, as duas operações são internas, comutativas, associativas, e cumprem as leis de absorção.", "L": [["hyp", "(B, ⊕, ⊙) reticulado<span class='tag'>Hipótese</span>"]]},
+
+{"say": "Neste exercício vamos usar quatro propriedades. A comutatividade da soma: x mais y é y mais x. A comutatividade do produto: x vezes y é y vezes x. A primeira lei de absorção: x mais, x vezes y, é x. E a segunda: x vezes, x mais y, é x. Deixamos as quatro fixadas à esquerda, porque vamos usá-las.", "pin": ["(Comut ⊕) x ⊕ y = y ⊕ x", "(Comut ⊙) x ⊙ y = y ⊙ x", "(Abs1) x ⊕ (x ⊙ y) = x", "(Abs2) x ⊙ (x ⊕ y) = x"]},
+
+{"say": "Agora as definições. Em B definimos duas relações. A primeira, que chamamos menor ou igual em relação à soma: x é menor ou igual a y se e somente se x mais y é igual a y. Com conjuntos, é a propriedade conhecida: A está contido em B se e somente se A união B é igual a B.", "L": [["sub", "x ≤<sub>⊕</sub> y  ⇔  x ⊕ y = y<span class='tag'>Definição de ≤⊕</span>"], ["txt", "Com conjuntos:  A ⊆ B  ⇔  A ∪ B = B"]]},
+
+{"say": "A segunda, que chamamos menor ou igual em relação ao produto: x é menor ou igual a y se e somente se x vezes y é igual a x. Com conjuntos, também é uma propriedade conhecida: A está contido em B se e somente se A interseção B é igual a A.", "L": [["sub", "x ≤<sub>⊙</sub> y  ⇔  x ⊙ y = x<span class='tag'>Definição de ≤⊙</span>"], ["txt", "Com conjuntos:  A ⊆ B  ⇔  A ∩ B = A"]]},
+
+{"say": "Anotamos as duas definições à esquerda, abaixo das propriedades anteriores, porque elas são a chave do exercício.", "pin": ["(Def ⊕) x ≤<sub>⊕</sub> y ⇔ x ⊕ y = y", "(Def ⊙) x ≤<sub>⊙</sub> y ⇔ x ⊙ y = x"]},
+
+{"say": "O que queremos provar. Para quaisquer x e y de B, x é menor ou igual a y em relação à soma, se e somente se, x é menor ou igual a y em relação ao produto. Ou seja, as duas relações coincidem. Com conjuntos, isto diz que A união B é B exatamente quando A interseção B é A.", "L": [["goal", "∀ x, y ∈ B:   x ≤<sub>⊕</sub> y  ⇔  x ≤<sub>⊙</sub> y<span class='tag'>Tese</span>"], ["txt", "Com conjuntos:  A ∪ B = B  ⇔  A ∩ B = A"]]},
+
+{"say": "Como é uma equivalência, provamos em duas partes. Primeiro a implicação para a direita, e depois a implicação para a esquerda. Sejam x e y dois elementos quaisquer de B.", "L": [["txt", "Sejam x, y ∈ B  (arbitrários)"], ["goal", "(1)  x ≤<sub>⊕</sub> y  ⇒  x ≤<sub>⊙</sub> y"], ["goal", "(2)  x ≤<sub>⊙</sub> y  ⇒  x ≤<sub>⊕</sub> y"]]},
+
+{"title": "Parte 1: ≤⊕ implica ≤⊙", "clear": 1, "say": "Começamos pela primeira implicação. Supomos que x é menor ou igual a y em relação à soma. Isto é uma hipótese, e pela definição significa que x mais y é igual a y.", "L": [["hyp", "x ≤<sub>⊕</sub> y<span class='tag'>Hipótese</span>"], ["hyp", "x ⊕ y = y<span class='tag'>Hipótese, pela definição de ≤⊕</span>"]]},
+
+{"say": "Queremos provar que x é menor ou igual a y em relação ao produto. Pela definição, isto significa que x vezes y é igual a x. Esta é a igualdade que vamos demonstrar. Partimos do lado esquerdo, x vezes y.", "L": [["goal", "Queremos:  x ⊙ y = x<span class='tag'>Tese, pela definição de ≤⊙</span>"], ["txt", "x ⊙ y"]]},
+
+{"say": "Primeiro passo. Usamos a hipótese: y é igual a x mais y. Portanto, podemos substituir o y da direita por x mais y. Deixamos o primeiro x como está. Passamos de x vezes y, para x vezes, x mais y.", "L": [["sub", "x ⊙ y  =  x ⊙ (x ⊕ y)<span class='tag'>Substituição: y = x ⊕ y  (hipótese)</span>"]]},
+
+{"say": "Segundo passo. Agora temos exatamente a segunda lei de absorção, com x igual a x, e y igual a y: x vezes, x mais y, é igual a x. Destacamos isso.", "L": [["sub", "x ⊙ y  =  <mark>x ⊙ (x ⊕ y)</mark>"], ["txt", "Por (Abs2):  <mark>x ⊙ (x ⊕ y)</mark> = x"]]},
+
+{"say": "Substituímos esse bloco por x. Obtemos que x vezes y é igual a x.", "L": [["res", "x ⊙ y  =  x<span class='tag'>Absorção</span>"]]},
+
+{"say": "Pela definição, esta igualdade significa que x é menor ou igual a y em relação ao produto. Com isto termina a primeira implicação.", "L": [["res", "x ⊙ y = x   ⟹   x ≤<sub>⊙</sub> y   ∎"]]},
+
+{"title": "Parte 2: ≤⊙ implica ≤⊕", "clear": 1, "say": "Passamos à segunda implicação. Agora supomos que x é menor ou igual a y em relação ao produto. Pela definição, isto significa que x vezes y é igual a x. É a hipótese desta parte.", "L": [["hyp", "x ≤<sub>⊙</sub> y<span class='tag'>Hipótese</span>"], ["hyp", "x ⊙ y = x<span class='tag'>Hipótese, pela definição de ≤⊙</span>"]]},
+
+{"say": "Queremos provar que x é menor ou igual a y em relação à soma. Pela definição, isto significa que x mais y é igual a y. Partimos do lado esquerdo, x mais y.", "L": [["goal", "Queremos:  x ⊕ y = y<span class='tag'>Tese, pela definição de ≤⊕</span>"], ["txt", "x ⊕ y"]]},
+
+{"say": "Primeiro passo. Usamos a hipótese: x é igual a x vezes y. Substituímos o x da esquerda por x vezes y, e deixamos o y como está. Passamos de x mais y, para, x vezes y, mais y.", "L": [["sub", "x ⊕ y  =  (x ⊙ y) ⊕ y<span class='tag'>Substituição: x = x ⊙ y  (hipótese)</span>"]]},
+
+{"say": "Segundo passo. A expressão tem o y à direita, e a absorção precisa que ele esteja à esquerda. Aplicamos a comutatividade da soma, com x igual a x vezes y, e y igual a y. Passamos de x vezes y, mais y, para y mais, x vezes y.", "L": [["sub", "x ⊕ y  =  y ⊕ (x ⊙ y)<span class='tag'>Comutatividade de ⊕</span>"]]},
+
+{"say": "Terceiro passo. Para aplicar a primeira absorção com x igual a y, dentro do parêntese deve aparecer y vezes x, e não x vezes y. Aplicamos a comutatividade do produto: x vezes y é igual a y vezes x.", "L": [["sub", "y ⊕ (<mark>x ⊙ y</mark>)"], ["txt", "Por (Comut ⊙):  <mark>x ⊙ y</mark> = y ⊙ x"], ["sub", "x ⊕ y  =  y ⊕ (y ⊙ x)<span class='tag'>Comutatividade de ⊙</span>"]]},
+
+{"say": "Quarto passo. Agora sim temos a primeira lei de absorção, com x igual a y, e y igual a x: y mais, y vezes x, é igual a y. Destacamos e substituímos.", "L": [["sub", "x ⊕ y  =  <mark>y ⊕ (y ⊙ x)</mark>"], ["txt", "Por (Abs1) com x=y, y=x:  <mark>y ⊕ (y ⊙ x)</mark> = y"], ["res", "x ⊕ y  =  y<span class='tag'>Absorção</span>"]]},
+
+{"say": "Pela definição, esta igualdade significa que x é menor ou igual a y em relação à soma. Com isto termina a segunda implicação.", "L": [["res", "x ⊕ y = y   ⟹   x ≤<sub>⊕</sub> y   ∎"]]},
+
+{"title": "Conclusão", "clear": 1, "say": "Provamos as duas implicações. Portanto, para quaisquer x e y de B, x é menor ou igual a y em relação à soma, se e somente se, x é menor ou igual a y em relação ao produto. As duas definições de ordem são equivalentes.", "L": [["res", "(1)  x ≤<sub>⊕</sub> y  ⇒  x ≤<sub>⊙</sub> y   ∎"], ["res", "(2)  x ≤<sub>⊙</sub> y  ⇒  x ≤<sub>⊕</sub> y   ∎"], ["res", "x ≤<sub>⊕</sub> y  ⇔  x ≤<sub>⊙</sub> y"]]},
+
+{"title": "Resumo", "clear": 1, "say": "Resumindo. Para a primeira implicação, substituímos y por x mais y e aplicamos a segunda absorção. Para a segunda, substituímos x por x vezes y, comutamos a soma, comutamos o produto, e aplicamos a primeira absorção. Com conjuntos, é a equivalência conhecida: A união B é B, se e somente se, A interseção B é A. Obrigado por assistir.", "L": [["res", "(1)  substituição + Abs2"], ["res", "(2)  substituição + Comut ⊕ + Comut ⊙ + Abs1"], ["txt", "Com conjuntos:  A ∪ B = B  ⇔  A ∩ B = A"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' mais ').replace(/⊙/g,' vezes ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Repetir'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Continuar'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pausa';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^pt/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/antonio|antônio|donato|fabio|duarte|male|google português$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Duas ordens que coincidem";$('sub').textContent="Exercício · Reticulados algébricos";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

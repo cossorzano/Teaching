@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Два совпадающих порядка</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+sub{font-size:.6em}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Запомним</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Начать</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Скорость <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Режим записи (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ru-RU",
+"meta":{"nivel": 2, "titulo": "Два совпадающих порядка", "enunciado": "Пусть (B, ⊕, ⊙) — решётка. Определим  x ≤⊕ y ⇔ x ⊕ y = y  и  x ≤⊙ y ⇔ x ⊙ y = x.  Доказать, что для любых x, y ∈ B:", "tesis": "x ≤⊕ y  ⇔  x ≤⊙ y", "datos": ["(Комм ⊕)  x ⊕ y = y ⊕ x", "(Комм ⊙)  x ⊙ y = y ⊙ x", "(Abs1)  x ⊕ (x ⊙ y) = x", "(Abs2)  x ⊙ (x ⊕ y) = x"]},
+"steps":[
+{"title": "Два совпадающих порядка", "sub": "Упражнение · Алгебраические решётки", "clear": 1, "say": "Здравствуйте. В этом видео мы решим упражнение об алгебраических решётках. Мы будем двигаться очень медленно, записывая каждое равенство и обосновывая каждый шаг.", "L": [["txt", "Два способа задать порядок на решётке: один ли это порядок?"]]},
+
+{"say": "Сначала данные. Бэ — множество с двумя операциями, решёточной суммой и решёточным произведением, и это решётка. То есть обе операции внутренние, коммутативные, ассоциативные и удовлетворяют законам поглощения.", "L": [["hyp", "(B, ⊕, ⊙) — решётка<span class='tag'>Гипотеза</span>"]]},
+
+{"say": "В этом упражнении мы используем четыре свойства. Коммутативность суммы: икс плюс игрек равно игрек плюс икс. Коммутативность произведения: икс умножить на игрек равно игрек умножить на икс. Первый закон поглощения: икс плюс, икс умножить на игрек, равно икс. И второй: икс умножить на, икс плюс игрек, равно икс. Закрепим их слева, потому что будем ими пользоваться.", "pin": ["(Комм ⊕) x ⊕ y = y ⊕ x", "(Комм ⊙) x ⊙ y = y ⊙ x", "(Abs1) x ⊕ (x ⊙ y) = x", "(Abs2) x ⊙ (x ⊕ y) = x"]},
+
+{"say": "Теперь определения. На Бэ мы определяем два отношения. Первое назовём меньше или равно по сумме: икс меньше или равен игрек тогда и только тогда, когда икс плюс игрек равно игрек. Для множеств это хорошо известное свойство: А содержится в Бэ тогда и только тогда, когда А объединение Бэ равно Бэ.", "L": [["sub", "x ≤<sub>⊕</sub> y  ⇔  x ⊕ y = y<span class='tag'>Определение ≤⊕</span>"], ["txt", "Для множеств:  A ⊆ B  ⇔  A ∪ B = B"]]},
+
+{"say": "Второе назовём меньше или равно по произведению: икс меньше или равен игрек тогда и только тогда, когда икс умножить на игрек равно икс. Для множеств это тоже известное свойство: А содержится в Бэ тогда и только тогда, когда А пересечение Бэ равно А.", "L": [["sub", "x ≤<sub>⊙</sub> y  ⇔  x ⊙ y = x<span class='tag'>Определение ≤⊙</span>"], ["txt", "Для множеств:  A ⊆ B  ⇔  A ∩ B = A"]]},
+
+{"say": "Запишем оба определения слева, под предыдущими свойствами, потому что они — ключ к упражнению.", "pin": ["(Опр ⊕) x ≤<sub>⊕</sub> y ⇔ x ⊕ y = y", "(Опр ⊙) x ≤<sub>⊙</sub> y ⇔ x ⊙ y = x"]},
+
+{"say": "Что нужно доказать. Для любых икс и игрек из Бэ, икс меньше или равен игрек по сумме тогда и только тогда, когда икс меньше или равен игрек по произведению. То есть два отношения совпадают. Для множеств это значит, что А объединение Бэ равно Бэ ровно тогда, когда А пересечение Бэ равно А.", "L": [["goal", "∀ x, y ∈ B:   x ≤<sub>⊕</sub> y  ⇔  x ≤<sub>⊙</sub> y<span class='tag'>Утверждение</span>"], ["txt", "Для множеств:  A ∪ B = B  ⇔  A ∩ B = A"]]},
+
+{"say": "Поскольку это равносильность, докажем её в две части. Сначала импликацию вправо, а затем импликацию влево. Пусть икс и игрек — два произвольных элемента Бэ.", "L": [["txt", "Пусть x, y ∈ B  (произвольные)"], ["goal", "(1)  x ≤<sub>⊕</sub> y  ⇒  x ≤<sub>⊙</sub> y"], ["goal", "(2)  x ≤<sub>⊙</sub> y  ⇒  x ≤<sub>⊕</sub> y"]]},
+
+{"title": "Часть 1: из ≤⊕ следует ≤⊙", "clear": 1, "say": "Начнём с первой импликации. Предположим, что икс меньше или равен игрек по сумме. Это гипотеза, и по определению она означает, что икс плюс игрек равно игрек.", "L": [["hyp", "x ≤<sub>⊕</sub> y<span class='tag'>Гипотеза</span>"], ["hyp", "x ⊕ y = y<span class='tag'>Гипотеза, по определению ≤⊕</span>"]]},
+
+{"say": "Мы хотим доказать, что икс меньше или равен игрек по произведению. По определению это означает, что икс умножить на игрек равно икс. Именно это равенство мы и докажем. Начнём с левой части, икс умножить на игрек.", "L": [["goal", "Нужно:  x ⊙ y = x<span class='tag'>Утверждение, по определению ≤⊙</span>"], ["txt", "x ⊙ y"]]},
+
+{"say": "Первый шаг. Используем гипотезу: игрек равно икс плюс игрек. Значит, игрек справа можно заменить на икс плюс игрек. Первый икс оставляем как есть. Переходим от икс умножить на игрек к икс умножить на, икс плюс игрек.", "L": [["sub", "x ⊙ y  =  x ⊙ (x ⊕ y)<span class='tag'>Подстановка: y = x ⊕ y  (гипотеза)</span>"]]},
+
+{"say": "Второй шаг. Теперь у нас в точности второй закон поглощения, при икс, равном икс, и игрек, равном игрек: икс умножить на, икс плюс игрек, равно икс. Выделим это.", "L": [["sub", "x ⊙ y  =  <mark>x ⊙ (x ⊕ y)</mark>"], ["txt", "По (Abs2):  <mark>x ⊙ (x ⊕ y)</mark> = x"]]},
+
+{"say": "Заменим этот блок на икс. Получаем, что икс умножить на игрек равно икс.", "L": [["res", "x ⊙ y  =  x<span class='tag'>Поглощение</span>"]]},
+
+{"say": "По определению это равенство означает, что икс меньше или равен игрек по произведению. На этом первая импликация доказана.", "L": [["res", "x ⊙ y = x   ⟹   x ≤<sub>⊙</sub> y   ∎"]]},
+
+{"title": "Часть 2: из ≤⊙ следует ≤⊕", "clear": 1, "say": "Переходим ко второй импликации. Теперь предположим, что икс меньше или равен игрек по произведению. По определению это означает, что икс умножить на игрек равно икс. Это гипотеза данной части.", "L": [["hyp", "x ≤<sub>⊙</sub> y<span class='tag'>Гипотеза</span>"], ["hyp", "x ⊙ y = x<span class='tag'>Гипотеза, по определению ≤⊙</span>"]]},
+
+{"say": "Мы хотим доказать, что икс меньше или равен игрек по сумме. По определению это означает, что икс плюс игрек равно игрек. Начнём с левой части, икс плюс игрек.", "L": [["goal", "Нужно:  x ⊕ y = y<span class='tag'>Утверждение, по определению ≤⊕</span>"], ["txt", "x ⊕ y"]]},
+
+{"say": "Первый шаг. Используем гипотезу: икс равно икс умножить на игрек. Заменим икс слева на икс умножить на игрек, а игрек оставим как есть. Переходим от икс плюс игрек к, икс умножить на игрек, плюс игрек.", "L": [["sub", "x ⊕ y  =  (x ⊙ y) ⊕ y<span class='tag'>Подстановка: x = x ⊙ y  (гипотеза)</span>"]]},
+
+{"say": "Второй шаг. В выражении игрек стоит справа, а для поглощения он нужен слева. Применим коммутативность суммы при икс, равном икс умножить на игрек, и игрек, равном игрек. Переходим от, икс умножить на игрек, плюс игрек, к игрек плюс, икс умножить на игрек.", "L": [["sub", "x ⊕ y  =  y ⊕ (x ⊙ y)<span class='tag'>Коммутативность ⊕</span>"]]},
+
+{"say": "Третий шаг. Чтобы применить первое поглощение при икс, равном игрек, в скобках должно стоять игрек умножить на икс, а не икс умножить на игрек. Применим коммутативность произведения: икс умножить на игрек равно игрек умножить на икс.", "L": [["sub", "y ⊕ (<mark>x ⊙ y</mark>)"], ["txt", "По (Комм ⊙):  <mark>x ⊙ y</mark> = y ⊙ x"], ["sub", "x ⊕ y  =  y ⊕ (y ⊙ x)<span class='tag'>Коммутативность ⊙</span>"]]},
+
+{"say": "Четвёртый шаг. Вот теперь у нас первый закон поглощения при икс, равном игрек, и игрек, равном икс: игрек плюс, игрек умножить на икс, равно игрек. Выделим и подставим.", "L": [["sub", "x ⊕ y  =  <mark>y ⊕ (y ⊙ x)</mark>"], ["txt", "По (Abs1) при x=y, y=x:  <mark>y ⊕ (y ⊙ x)</mark> = y"], ["res", "x ⊕ y  =  y<span class='tag'>Поглощение</span>"]]},
+
+{"say": "По определению это равенство означает, что икс меньше или равен игрек по сумме. На этом вторая импликация доказана.", "L": [["res", "x ⊕ y = y   ⟹   x ≤<sub>⊕</sub> y   ∎"]]},
+
+{"title": "Вывод", "clear": 1, "say": "Мы доказали обе импликации. Следовательно, для любых икс и игрек из Бэ, икс меньше или равен игрек по сумме тогда и только тогда, когда икс меньше или равен игрек по произведению. Два определения порядка равносильны.", "L": [["res", "(1)  x ≤<sub>⊕</sub> y  ⇒  x ≤<sub>⊙</sub> y   ∎"], ["res", "(2)  x ≤<sub>⊙</sub> y  ⇒  x ≤<sub>⊕</sub> y   ∎"], ["res", "x ≤<sub>⊕</sub> y  ⇔  x ≤<sub>⊙</sub> y"]]},
+
+{"title": "Итоги", "clear": 1, "say": "Подведём итоги. Для первой импликации мы заменили игрек на икс плюс игрек и применили второй закон поглощения. Для второй мы заменили икс на икс умножить на игрек, переставили слагаемые, переставили множители и применили первый закон поглощения. Для множеств это известная равносильность: А объединение Бэ равно Бэ тогда и только тогда, когда А пересечение Бэ равно А. Спасибо за внимание.", "L": [["res", "(1)  подстановка + Abs2"], ["res", "(2)  подстановка + Комм ⊕ + Комм ⊙ + Abs1"], ["txt", "Для множеств:  A ∪ B = B  ⇔  A ∩ B = A"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' плюс ').replace(/⊙/g,' умножить на ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Повторить'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Продолжить'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Пауза';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Пауза';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Пауза';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ru/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/dmitry|pavel|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Два совпадающих порядка";$('sub').textContent="Упражнение · Алгебраические решётки";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

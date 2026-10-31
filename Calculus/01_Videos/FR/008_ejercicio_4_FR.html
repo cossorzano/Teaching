@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Deux ordres qui coïncident</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+sub{font-size:.6em}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>À retenir</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Commencer</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Vitesse <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Mode enregistrement (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"fr-FR",
+"meta":{"nivel": 2, "titulo": "Deux ordres qui coïncident", "enunciado": "Soit (B, ⊕, ⊙) un treillis. On définit  x ≤⊕ y ⇔ x ⊕ y = y  et  x ≤⊙ y ⇔ x ⊙ y = x.  Montrer que, pour tous x, y ∈ B :", "tesis": "x ≤⊕ y  ⇔  x ≤⊙ y", "datos": ["(Comm ⊕)  x ⊕ y = y ⊕ x", "(Comm ⊙)  x ⊙ y = y ⊙ x", "(Abs1)  x ⊕ (x ⊙ y) = x", "(Abs2)  x ⊙ (x ⊕ y) = x"]},
+"steps":[
+{"title": "Deux ordres qui coïncident", "sub": "Exercice · Treillis algébriques", "clear": 1, "say": "Bonjour. Dans cette vidéo, nous allons résoudre un exercice sur les treillis algébriques. Nous irons très lentement, en écrivant chaque équation et en justifiant chaque étape.", "L": [["txt", "Deux façons de définir un ordre sur un treillis : est-ce le même ?"]]},
+
+{"say": "D’abord, les données. B est un ensemble muni de deux opérations, la somme et le produit du treillis, et c’est un treillis. Autrement dit, les deux opérations sont internes, commutatives, associatives, et vérifient les lois d’absorption.", "L": [["hyp", "(B, ⊕, ⊙) treillis<span class='tag'>Hypothèse</span>"]]},
+
+{"say": "Dans cet exercice, nous allons utiliser quatre propriétés. La commutativité de la somme : x plus y égale y plus x. La commutativité du produit : x fois y égale y fois x. La première loi d’absorption : x plus, x fois y, égale x. Et la seconde : x fois, x plus y, égale x. Nous les épinglons à gauche, car nous allons les utiliser.", "pin": ["(Comm ⊕) x ⊕ y = y ⊕ x", "(Comm ⊙) x ⊙ y = y ⊙ x", "(Abs1) x ⊕ (x ⊙ y) = x", "(Abs2) x ⊙ (x ⊕ y) = x"]},
+
+{"say": "Voici maintenant les définitions. Sur B, on définit deux relations. La première, que nous appelons inférieur ou égal pour la somme : x est inférieur ou égal à y si et seulement si x plus y est égal à y. Avec des ensembles, c’est la propriété bien connue : A est inclus dans B si et seulement si A union B est égal à B.", "L": [["sub", "x ≤<sub>⊕</sub> y  ⇔  x ⊕ y = y<span class='tag'>Définition de ≤⊕</span>"], ["txt", "Avec des ensembles :  A ⊆ B  ⇔  A ∪ B = B"]]},
+
+{"say": "La seconde, que nous appelons inférieur ou égal pour le produit : x est inférieur ou égal à y si et seulement si x fois y est égal à x. Avec des ensembles, c’est aussi une propriété connue : A est inclus dans B si et seulement si A inter B est égal à A.", "L": [["sub", "x ≤<sub>⊙</sub> y  ⇔  x ⊙ y = x<span class='tag'>Définition de ≤⊙</span>"], ["txt", "Avec des ensembles :  A ⊆ B  ⇔  A ∩ B = A"]]},
+
+{"say": "Nous notons les deux définitions à gauche, sous les propriétés précédentes, car elles sont la clé de l’exercice.", "pin": ["(Déf ⊕) x ≤<sub>⊕</sub> y ⇔ x ⊕ y = y", "(Déf ⊙) x ≤<sub>⊙</sub> y ⇔ x ⊙ y = x"]},
+
+{"say": "Ce que nous voulons démontrer. Pour tous x et y de B, x est inférieur ou égal à y pour la somme, si et seulement si, x est inférieur ou égal à y pour le produit. Autrement dit, les deux relations coïncident. Avec des ensembles, cela dit que A union B vaut B exactement quand A inter B vaut A.", "L": [["goal", "∀ x, y ∈ B :   x ≤<sub>⊕</sub> y  ⇔  x ≤<sub>⊙</sub> y<span class='tag'>Thèse</span>"], ["txt", "Avec des ensembles :  A ∪ B = B  ⇔  A ∩ B = A"]]},
+
+{"say": "Comme c’est une équivalence, nous la démontrons en deux parties. D’abord l’implication vers la droite, puis l’implication vers la gauche. Soient x et y deux éléments quelconques de B.", "L": [["txt", "Soient x, y ∈ B  (quelconques)"], ["goal", "(1)  x ≤<sub>⊕</sub> y  ⇒  x ≤<sub>⊙</sub> y"], ["goal", "(2)  x ≤<sub>⊙</sub> y  ⇒  x ≤<sub>⊕</sub> y"]]},
+
+{"title": "Partie 1 : ≤⊕ implique ≤⊙", "clear": 1, "say": "Commençons par la première implication. Nous supposons que x est inférieur ou égal à y pour la somme. C’est une hypothèse, et par la définition, elle signifie que x plus y est égal à y.", "L": [["hyp", "x ≤<sub>⊕</sub> y<span class='tag'>Hypothèse</span>"], ["hyp", "x ⊕ y = y<span class='tag'>Hypothèse, par la définition de ≤⊕</span>"]]},
+
+{"say": "Nous voulons montrer que x est inférieur ou égal à y pour le produit. Par la définition, cela signifie que x fois y est égal à x. C’est l’égalité que nous allons démontrer. Partons du membre de gauche, x fois y.", "L": [["goal", "Nous voulons :  x ⊙ y = x<span class='tag'>Thèse, par la définition de ≤⊙</span>"], ["txt", "x ⊙ y"]]},
+
+{"say": "Première étape. Nous utilisons l’hypothèse : y est égal à x plus y. Nous pouvons donc remplacer le y de droite par x plus y. Nous laissons le premier x tel quel. Nous passons de x fois y, à x fois, x plus y.", "L": [["sub", "x ⊙ y  =  x ⊙ (x ⊕ y)<span class='tag'>Substitution : y = x ⊕ y  (hypothèse)</span>"]]},
+
+{"say": "Deuxième étape. Nous avons maintenant exactement la seconde loi d’absorption, avec x égal à x, et y égal à y : x fois, x plus y, est égal à x. Nous la surlignons.", "L": [["sub", "x ⊙ y  =  <mark>x ⊙ (x ⊕ y)</mark>"], ["txt", "Par (Abs2) :  <mark>x ⊙ (x ⊕ y)</mark> = x"]]},
+
+{"say": "Nous remplaçons ce bloc par x. Nous obtenons que x fois y est égal à x.", "L": [["res", "x ⊙ y  =  x<span class='tag'>Absorption</span>"]]},
+
+{"say": "Par la définition, cette égalité signifie que x est inférieur ou égal à y pour le produit. La première implication est terminée.", "L": [["res", "x ⊙ y = x   ⟹   x ≤<sub>⊙</sub> y   ∎"]]},
+
+{"title": "Partie 2 : ≤⊙ implique ≤⊕", "clear": 1, "say": "Passons à la seconde implication. Nous supposons maintenant que x est inférieur ou égal à y pour le produit. Par la définition, cela signifie que x fois y est égal à x. C’est l’hypothèse de cette partie.", "L": [["hyp", "x ≤<sub>⊙</sub> y<span class='tag'>Hypothèse</span>"], ["hyp", "x ⊙ y = x<span class='tag'>Hypothèse, par la définition de ≤⊙</span>"]]},
+
+{"say": "Nous voulons montrer que x est inférieur ou égal à y pour la somme. Par la définition, cela signifie que x plus y est égal à y. Partons du membre de gauche, x plus y.", "L": [["goal", "Nous voulons :  x ⊕ y = y<span class='tag'>Thèse, par la définition de ≤⊕</span>"], ["txt", "x ⊕ y"]]},
+
+{"say": "Première étape. Nous utilisons l’hypothèse : x est égal à x fois y. Nous remplaçons le x de gauche par x fois y, et nous laissons le y tel quel. Nous passons de x plus y, à, x fois y, plus y.", "L": [["sub", "x ⊕ y  =  (x ⊙ y) ⊕ y<span class='tag'>Substitution : x = x ⊙ y  (hypothèse)</span>"]]},
+
+{"say": "Deuxième étape. L’expression a le y à droite, et l’absorption a besoin qu’il soit à gauche. Nous appliquons la commutativité de la somme, avec x égal à x fois y, et y égal à y. Nous passons de x fois y, plus y, à y plus, x fois y.", "L": [["sub", "x ⊕ y  =  y ⊕ (x ⊙ y)<span class='tag'>Commutativité de ⊕</span>"]]},
+
+{"say": "Troisième étape. Pour appliquer la première absorption avec x égal à y, il faut que la parenthèse contienne y fois x, et non x fois y. Nous appliquons la commutativité du produit : x fois y est égal à y fois x.", "L": [["sub", "y ⊕ (<mark>x ⊙ y</mark>)"], ["txt", "Par (Comm ⊙) :  <mark>x ⊙ y</mark> = y ⊙ x"], ["sub", "x ⊕ y  =  y ⊕ (y ⊙ x)<span class='tag'>Commutativité de ⊙</span>"]]},
+
+{"say": "Quatrième étape. Cette fois, nous avons bien la première loi d’absorption, avec x égal à y, et y égal à x : y plus, y fois x, est égal à y. Nous la surlignons et nous substituons.", "L": [["sub", "x ⊕ y  =  <mark>y ⊕ (y ⊙ x)</mark>"], ["txt", "Par (Abs1) avec x=y, y=x :  <mark>y ⊕ (y ⊙ x)</mark> = y"], ["res", "x ⊕ y  =  y<span class='tag'>Absorption</span>"]]},
+
+{"say": "Par la définition, cette égalité signifie que x est inférieur ou égal à y pour la somme. La seconde implication est terminée.", "L": [["res", "x ⊕ y = y   ⟹   x ≤<sub>⊕</sub> y   ∎"]]},
+
+{"title": "Conclusion", "clear": 1, "say": "Nous avons démontré les deux implications. Donc, pour tous x et y de B, x est inférieur ou égal à y pour la somme, si et seulement si, x est inférieur ou égal à y pour le produit. Les deux définitions de l’ordre sont équivalentes.", "L": [["res", "(1)  x ≤<sub>⊕</sub> y  ⇒  x ≤<sub>⊙</sub> y   ∎"], ["res", "(2)  x ≤<sub>⊙</sub> y  ⇒  x ≤<sub>⊕</sub> y   ∎"], ["res", "x ≤<sub>⊕</sub> y  ⇔  x ≤<sub>⊙</sub> y"]]},
+
+{"title": "Résumé", "clear": 1, "say": "En résumé. Pour la première implication, nous avons remplacé y par x plus y et appliqué la seconde absorption. Pour la seconde, nous avons remplacé x par x fois y, commuté la somme, commuté le produit, puis appliqué la première absorption. Avec des ensembles, c’est l’équivalence bien connue : A union B vaut B, si et seulement si, A inter B vaut A. Merci d’avoir regardé.", "L": [["res", "(1)  substitution + Abs2"], ["res", "(2)  substitution + Comm ⊕ + Comm ⊙ + Abs1"], ["txt", "Avec des ensembles :  A ∪ B = B  ⇔  A ∩ B = A"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' plus ').replace(/⊙/g,' fois ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Rejouer'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Reprendre'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pause';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^fr/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/henri|paul|claude|remy|rémy|male|google français$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Deux ordres qui coïncident";$('sub').textContent="Exercice · Treillis algébriques";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
