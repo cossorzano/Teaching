@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Порядок, супремум и инфимум</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Запомним</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Начать</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Скорость <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Режим записи (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ru-RU",
+"meta":{"nivel": 2, "titulo": "Порядок, супремум и инфимум", "enunciado": "Пусть (B, ⊕, ⊙) — решётка с отношением  a ≤ b ⇔ a ⊕ b = b.  Доказать, что ≤ — частичный порядок и что для любых a, b ∈ B:", "tesis": "a ⊕ b = sup{a, b},   a ⊙ b = inf{a, b}", "datos": ["(Комм ⊕)  x ⊕ y = y ⊕ x", "(Асс ⊕)  x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(Идем ⊕)  x ⊕ x = x", "(Асс ⊙)  x ⊙ (y ⊙ z) = (x ⊙ y) ⊙ z"]},
+"steps":[
+{"title": "Порядок, супремум и инфимум", "sub": "Упражнение · Алгебраические решётки", "clear": 1, "say": "Здравствуйте. В этом видео мы решим упражнение об алгебраических решётках. Мы будем двигаться очень медленно, записывая каждое равенство и обосновывая каждый шаг.", "L": [["txt", "Сумма — это супремум, а произведение — инфимум порядка"]]},
+
+{"say": "Сначала данные. Бэ — множество с двумя операциями, решёточной суммой и решёточным произведением, и это решётка. То есть обе операции внутренние, коммутативные, ассоциативные и удовлетворяют законам поглощения.", "L": [["hyp", "(B, ⊕, ⊙) — решётка<span class='tag'>Гипотеза</span>"]]},
+
+{"say": "Мы используем три свойства суммы. Коммутативность: а плюс бэ равно бэ плюс а. Ассоциативность: а плюс, бэ плюс цэ, равно а плюс бэ, плюс цэ. И идемпотентность, это теорема о решётках: а плюс а равно а. Закрепим их слева.", "pin": ["(Комм ⊕) x ⊕ y = y ⊕ x", "(Асс ⊕) x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(Идем ⊕) x ⊕ x = x"]},
+
+{"say": "Теперь определение. На Бэ мы определяем отношение, меньше или равно, следующим образом: а меньше или равно бэ тогда и только тогда, когда а плюс бэ равно бэ. Для множеств это хорошо известное свойство: А содержится в Бэ тогда и только тогда, когда А объединение Бэ равно Бэ.", "L": [["sub", "a ≤ b  ⇔  a ⊕ b = b<span class='tag'>Определение ≤</span>"], ["txt", "Для множеств:  A ⊆ B  ⇔  A ∪ B = B"]]},
+
+{"say": "Запишем определение слева, под предыдущими свойствами, потому что это ключ к упражнению.", "pin": ["(Опр) a ≤ b ⇔ a ⊕ b = b"]},
+
+{"say": "То, что нужно доказать, состоит из трёх частей. Первое: меньше или равно — это отношение частичного порядка. Второе: сумма а и бэ — это супремум множества, образованного элементами а и бэ. И третье: произведение а и бэ — это инфимум этого множества. Для множеств, по включению, супремум — это объединение, а инфимум — пересечение.", "L": [["goal", "(1)  ≤ — отношение частичного порядка на B"], ["goal", "(2)  a ⊕ b = sup{a, b}"], ["goal", "(3)  a ⊙ b = inf{a, b}<span class='tag'>Утверждение</span>"], ["txt", "Для множеств:  sup = ∪,   inf = ∩   (по включению ⊆)"]]},
+
+{"title": "Часть 1: ≤ — частичный порядок", "clear": 1, "say": "Начнём с первой части. Отношение является частичным порядком, если оно обладает тремя свойствами: рефлексивностью, антисимметричностью и транзитивностью. Докажем их по очереди.", "L": [["goal", "Рефлексивность:  a ≤ a"], ["goal", "Антисимметричность:  a ≤ b  и  b ≤ a  ⇒  a = b"], ["goal", "Транзитивность:  a ≤ b  и  b ≤ c  ⇒  a ≤ c"]]},
+
+{"title": "Рефлексивность", "clear": 1, "say": "Рефлексивность. Пусть а — произвольный элемент Бэ. Мы хотим доказать, что а меньше или равно а.", "L": [["txt", "Пусть a ∈ B  (произвольный)"], ["goal", "Нужно:  a ≤ a<span class='tag'>Утверждение</span>"]]},
+
+{"say": "По определению, при бэ, равном а, а меньше или равно а тогда и только тогда, когда а плюс а равно а.", "L": [["sub", "a ≤ a  ⇔  a ⊕ a = a<span class='tag'>Определение при b = a</span>"]]},
+
+{"say": "А это равенство и есть идемпотентность суммы. Следовательно, а меньше или равно а.", "L": [["res", "a ⊕ a = a   ⟹   a ≤ a   ∎<span class='tag'>Идемпотентность ⊕</span>"]]},
+
+{"title": "Антисимметричность", "clear": 1, "say": "Антисимметричность. Пусть а и бэ — два элемента Бэ. Предположим, что а меньше или равно бэ, и бэ меньше или равно а. Это гипотеза.", "L": [["hyp", "a ≤ b   и   b ≤ a<span class='tag'>Гипотеза</span>"]]},
+
+{"say": "По определению, первое неравенство означает, что а плюс бэ равно бэ. А второе означает, что бэ плюс а равно а.", "L": [["hyp", "a ⊕ b = b<span class='tag'>Гипотеза (a ≤ b)</span>"], ["hyp", "b ⊕ a = a<span class='tag'>Гипотеза (b ≤ a)</span>"]]},
+
+{"say": "Мы хотим доказать, что а равно бэ. Начнём с левой части, а.", "L": [["goal", "Нужно:  a = b<span class='tag'>Утверждение</span>"], ["txt", "a"]]},
+
+{"say": "Первый шаг. Используем вторую гипотезу: бэ плюс а равно а. Заменим а на бэ плюс а.", "L": [["sub", "a  =  b ⊕ a<span class='tag'>Гипотеза: b ⊕ a = a</span>"]]},
+
+{"say": "Второй шаг. Применим коммутативность суммы: бэ плюс а равно а плюс бэ.", "L": [["sub", "a  =  a ⊕ b<span class='tag'>Коммутативность ⊕</span>"]]},
+
+{"say": "Третий шаг. Используем первую гипотезу: а плюс бэ равно бэ. Подставим.", "L": [["res", "a  =  b<span class='tag'>Гипотеза: a ⊕ b = b</span>"], ["res", "a ≤ b  и  b ≤ a   ⟹   a = b   ∎"]]},
+
+{"title": "Транзитивность", "clear": 1, "say": "Транзитивность. Пусть а, бэ и цэ — элементы Бэ. Предположим, что а меньше или равно бэ, и бэ меньше или равно цэ. Это гипотеза.", "L": [["hyp", "a ≤ b   и   b ≤ c<span class='tag'>Гипотеза</span>"]]},
+
+{"say": "По определению это означает, что а плюс бэ равно бэ, и бэ плюс цэ равно цэ.", "L": [["hyp", "a ⊕ b = b<span class='tag'>Гипотеза (a ≤ b)</span>"], ["hyp", "b ⊕ c = c<span class='tag'>Гипотеза (b ≤ c)</span>"]]},
+
+{"say": "Мы хотим доказать, что а меньше или равно цэ. По определению это означает, что а плюс цэ равно цэ. Начнём с левой части, а плюс цэ.", "L": [["goal", "Нужно:  a ⊕ c = c<span class='tag'>Утверждение, по определению ≤</span>"], ["txt", "a ⊕ c"]]},
+
+{"say": "Первый шаг. Используем вторую гипотезу: бэ плюс цэ равно цэ. Заменим цэ справа на бэ плюс цэ.", "L": [["sub", "a ⊕ c  =  a ⊕ (b ⊕ c)<span class='tag'>Гипотеза: b ⊕ c = c</span>"]]},
+
+{"say": "Второй шаг. Применим ассоциативность суммы: а плюс, бэ плюс цэ, равно, а плюс бэ, плюс цэ.", "L": [["sub", "a ⊕ c  =  (a ⊕ b) ⊕ c<span class='tag'>Ассоциативность ⊕</span>"]]},
+
+{"say": "Третий шаг. Используем первую гипотезу: а плюс бэ равно бэ. Выделим и подставим.", "L": [["sub", "a ⊕ c  =  (<mark>a ⊕ b</mark>) ⊕ c"], ["txt", "Гипотеза:  <mark>a ⊕ b</mark> = b"], ["sub", "a ⊕ c  =  b ⊕ c<span class='tag'>Гипотеза: a ⊕ b = b</span>"]]},
+
+{"say": "Четвёртый шаг. Снова используем вторую гипотезу: бэ плюс цэ равно цэ.", "L": [["res", "a ⊕ c  =  c<span class='tag'>Гипотеза: b ⊕ c = c</span>"], ["res", "a ≤ b  и  b ≤ c   ⟹   a ≤ c   ∎"]]},
+
+{"say": "Мы доказали все три свойства. Следовательно, меньше или равно — это отношение частичного порядка на Бэ. На этом первая часть закончена.", "L": [["res", "≤ рефлексивно, антисимметрично и транзитивно"], ["res", "≤ — частичный порядок на B   ∎"]]},
+
+{"title": "Часть 2: ⊕ — супремум", "clear": 1, "say": "Переходим ко второй части. Вспомним, что такое супремум двух элементов. Это наименьшая из верхних границ. Поэтому нужно доказать две вещи: что а плюс бэ — верхняя граница для а и бэ, и что она наименьшая из всех верхних границ. Для множеств: объединение А и Бэ содержит А и Бэ, и это наименьшее такое множество.", "L": [["goal", "(i)  a ⊕ b — верхняя граница:  a ≤ a ⊕ b   и   b ≤ a ⊕ b"], ["goal", "(ii)  Она наименьшая: если a ≤ c и b ≤ c, то a ⊕ b ≤ c"], ["txt", "Для множеств:  A ⊆ A ∪ B,   B ⊆ A ∪ B,   и это наименьшее множество, содержащее A и B"]]},
+
+{"say": "Первое свойство — базовый результат о решётках: а меньше или равно а плюс бэ, и бэ меньше или равно а плюс бэ. Значит, а плюс бэ — верхняя граница для а и бэ. Запишем это слева, потому что будем этим пользоваться. Осталось доказать, что она наименьшая.", "pin": ["(Верх. гр.) a ≤ a ⊕ b,   b ≤ a ⊕ b"]},
+
+{"say": "Минимальность. Пусть цэ — элемент Бэ, который является верхней границей для а и бэ. Это означает, что а меньше или равно цэ, и бэ меньше или равно цэ. Это гипотеза данной части.", "L": [["txt", "Пусть c ∈ B"], ["hyp", "a ≤ c   и   b ≤ c<span class='tag'>Гипотеза: c — верхняя граница</span>"]]},
+
+{"say": "По определению меньше или равно это равносильно тому, что а плюс цэ равно цэ, и бэ плюс цэ равно цэ.", "L": [["hyp", "a ⊕ c = c<span class='tag'>Гипотеза (a ≤ c)</span>"], ["hyp", "b ⊕ c = c<span class='tag'>Гипотеза (b ≤ c)</span>"]]},
+
+{"say": "Мы хотим доказать, что а плюс бэ меньше или равно цэ. По определению это означает, что, а плюс бэ, плюс цэ, равно цэ. Начнём с левой части.", "L": [["goal", "Нужно:  (a ⊕ b) ⊕ c = c<span class='tag'>Утверждение, по определению ≤</span>"], ["txt", "(a ⊕ b) ⊕ c"]]},
+
+{"say": "Первый шаг. Применим ассоциативность суммы: а плюс бэ, плюс цэ, равно а плюс, бэ плюс цэ.", "L": [["sub", "(a ⊕ b) ⊕ c  =  a ⊕ (b ⊕ c)<span class='tag'>Ассоциативность ⊕</span>"]]},
+
+{"say": "Второй шаг. Используем гипотезу: бэ плюс цэ равно цэ. Выделим и подставим.", "L": [["sub", "(a ⊕ b) ⊕ c  =  a ⊕ (<mark>b ⊕ c</mark>)"], ["txt", "Гипотеза:  <mark>b ⊕ c</mark> = c"], ["sub", "(a ⊕ b) ⊕ c  =  a ⊕ c<span class='tag'>Гипотеза: b ⊕ c = c</span>"]]},
+
+{"say": "Третий шаг. Используем гипотезу: а плюс цэ равно цэ.", "L": [["res", "(a ⊕ b) ⊕ c  =  c<span class='tag'>Гипотеза: a ⊕ c = c</span>"]]},
+
+{"say": "По определению это равенство означает, что а плюс бэ меньше или равно цэ. Поскольку цэ была произвольной верхней границей, а плюс бэ — наименьшая из всех. Следовательно, а плюс бэ — супремум а и бэ. Для множеств объединение — наименьшее множество, содержащее А и Бэ. На этом вторая часть закончена.", "L": [["res", "(a ⊕ b) ⊕ c = c   ⟹   a ⊕ b ≤ c"], ["res", "a ⊕ b = sup{a, b}   ∎"], ["txt", "Для множеств:  A ∪ B = sup{A, B}"]]},
+
+{"title": "Часть 3: ⊙ — инфимум", "clear": 1, "say": "Переходим к третьей части. Инфимум двух элементов — это наибольшая из нижних границ. Нужно доказать, что а умножить на бэ — нижняя граница для а и бэ, и что она наибольшая из всех нижних границ. Для множеств: пересечение А и Бэ содержится в А и в Бэ, и это наибольшее такое множество.", "L": [["goal", "(i)  a ⊙ b — нижняя граница:  a ⊙ b ≤ a   и   a ⊙ b ≤ b"], ["goal", "(ii)  Она наибольшая: если c ≤ a и c ≤ b, то c ≤ a ⊙ b"], ["txt", "Для множеств:  A ∩ B ⊆ A,   A ∩ B ⊆ B,   и это наибольшее множество, содержащееся в A и в B"]]},
+
+{"say": "Мы используем два базовых результата о решётках. Первый: а умножить на бэ меньше или равно а, и меньше или равно бэ. Значит, а умножить на бэ — нижняя граница для а и бэ. Второй — равносильная характеристика порядка: икс меньше или равен игрек тогда и только тогда, когда икс умножить на игрек равно икс. Для множеств: А содержится в Бэ тогда и только тогда, когда А пересечение Бэ равно А. Мы также используем ассоциативность произведения: икс умножить на, игрек умножить на зэт, равно, икс умножить на игрек, умножить на зэт. Запишем всё это слева.", "L": [["txt", "Для множеств:  A ∩ B ⊆ A,   A ∩ B ⊆ B"], ["txt", "Для множеств:  A ⊆ B  ⇔  A ∩ B = A"]], "pin": ["(Ниж. гр.) a ⊙ b ≤ a,   a ⊙ b ≤ b", "(Хар) x ≤ y ⇔ x ⊙ y = x", "(Асс ⊙) x ⊙ (y ⊙ z) = (x ⊙ y) ⊙ z"]},
+
+{"say": "Максимальность. Пусть цэ — элемент Бэ, который является нижней границей для а и бэ. Это означает, что цэ меньше или равно а, и цэ меньше или равно бэ. Это гипотеза данной части.", "L": [["txt", "Пусть c ∈ B"], ["hyp", "c ≤ a   и   c ≤ b<span class='tag'>Гипотеза: c — нижняя граница</span>"]]},
+
+{"say": "По характеристике порядка через произведение это равносильно тому, что цэ умножить на а равно цэ, и цэ умножить на бэ равно цэ.", "L": [["hyp", "c ⊙ a = c<span class='tag'>Гипотеза (c ≤ a), по (Хар)</span>"], ["hyp", "c ⊙ b = c<span class='tag'>Гипотеза (c ≤ b), по (Хар)</span>"]]},
+
+{"say": "Мы хотим доказать, что цэ меньше или равно а умножить на бэ. Снова по характеристике это означает, что цэ умножить на, а умножить на бэ, равно цэ. Начнём с левой части.", "L": [["goal", "Нужно:  c ⊙ (a ⊙ b) = c<span class='tag'>Утверждение, по (Хар)</span>"], ["txt", "c ⊙ (a ⊙ b)"]]},
+
+{"say": "Первый шаг. Применим ассоциативность произведения: цэ умножить на, а умножить на бэ, равно, цэ умножить на а, умножить на бэ.", "L": [["sub", "c ⊙ (a ⊙ b)  =  (c ⊙ a) ⊙ b<span class='tag'>Ассоциативность ⊙</span>"]]},
+
+{"say": "Второй шаг. Используем гипотезу: цэ умножить на а равно цэ. Выделим и подставим.", "L": [["sub", "c ⊙ (a ⊙ b)  =  (<mark>c ⊙ a</mark>) ⊙ b"], ["txt", "Гипотеза:  <mark>c ⊙ a</mark> = c"], ["sub", "c ⊙ (a ⊙ b)  =  c ⊙ b<span class='tag'>Гипотеза: c ⊙ a = c</span>"]]},
+
+{"say": "Третий шаг. Используем гипотезу: цэ умножить на бэ равно цэ.", "L": [["res", "c ⊙ (a ⊙ b)  =  c<span class='tag'>Гипотеза: c ⊙ b = c</span>"]]},
+
+{"say": "По характеристике это равенство означает, что цэ меньше или равно а умножить на бэ. Поскольку цэ была произвольной нижней границей, а умножить на бэ — наибольшая из всех. Следовательно, а умножить на бэ — инфимум а и бэ. Для множеств пересечение — наибольшее множество, содержащееся в А и в Бэ. На этом третья часть закончена.", "L": [["res", "c ⊙ (a ⊙ b) = c   ⟹   c ≤ a ⊙ b"], ["res", "a ⊙ b = inf{a, b}   ∎"], ["txt", "Для множеств:  A ∩ B = inf{A, B}"]]},
+
+{"title": "Итоги", "clear": 1, "say": "Подведём итоги. Определив меньше или равно через сумму, мы доказали, что это отношение рефлексивно благодаря идемпотентности, антисимметрично благодаря коммутативности и транзитивно благодаря ассоциативности. Затем мы увидели, что а плюс бэ — верхняя граница, и притом наименьшая, потому что если а плюс цэ и бэ плюс цэ равны цэ, то, а плюс бэ, плюс цэ, тоже равно цэ. И аналогично, а умножить на бэ — нижняя граница, и притом наибольшая. Для множеств: по включению объединение — супремум, а пересечение — инфимум. Спасибо за внимание.", "L": [["res", "(1)  ≤ рефлексивно, антисимметрично и транзитивно"], ["res", "(2)  a ⊕ b = sup{a, b}"], ["res", "(3)  a ⊙ b = inf{a, b}"], ["txt", "Для множеств:  ∪ — супремум,  ∩ — инфимум  (по включению ⊆)"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' плюс ').replace(/⊙/g,' умножить на ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Повторить'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Продолжить'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Пауза';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Пауза';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Пауза';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ru/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/dmitry|pavel|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Порядок, супремум и инфимум";$('sub').textContent="Упражнение · Алгебраические решётки";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

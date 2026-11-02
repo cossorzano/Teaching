@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Order, supremum and infimum</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Remember</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Start</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Speed <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Recording mode (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"en-US",
+"meta":{"nivel": 2, "titulo": "Order, supremum and infimum", "enunciado": "Let (B, ⊕, ⊙) be a lattice, with the relation  a ≤ b ⇔ a ⊕ b = b.  Prove that ≤ is a partial order and that, for any a, b ∈ B:", "tesis": "a ⊕ b = sup{a, b},   a ⊙ b = inf{a, b}", "datos": ["(Comm ⊕)  x ⊕ y = y ⊕ x", "(Assoc ⊕)  x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(Idem ⊕)  x ⊕ x = x", "(Assoc ⊙)  x ⊙ (y ⊙ z) = (x ⊙ y) ⊙ z"]},
+"steps":[
+{"title": "Order, supremum and infimum", "sub": "Exercise · Algebraic lattices", "clear": 1, "say": "Hello. In this video we are going to solve an exercise about algebraic lattices. We will go very slowly, writing every equation and justifying every step.", "L": [["txt", "The sum is the supremum and the product is the infimum of an order"]]},
+
+{"say": "First, the data. B is a set with two operations, the lattice sum and the lattice product, and it is a lattice. That is, both operations are internal, commutative, associative, and satisfy the absorption laws.", "L": [["hyp", "(B, ⊕, ⊙) lattice<span class='tag'>Hypothesis</span>"]]},
+
+{"say": "We are going to use three properties of the sum. Commutativity: a plus b is b plus a. Associativity: a plus, b plus c, is a plus b, plus c. And idempotence, which is a theorem about lattices: a plus a is a. We pin them on the left.", "pin": ["(Comm ⊕) x ⊕ y = y ⊕ x", "(Assoc ⊕) x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(Idem ⊕) x ⊕ x = x"]},
+
+{"say": "Now the definition. On B we define a relation, less than or equal to, as follows: a is less than or equal to b if and only if a plus b equals b. With sets, it is the well-known property: A is contained in B if and only if A union B equals B.", "L": [["sub", "a ≤ b  ⇔  a ⊕ b = b<span class='tag'>Definition of ≤</span>"], ["txt", "With sets:  A ⊆ B  ⇔  A ∪ B = B"]]},
+
+{"say": "We write the definition on the left, below the previous properties, because it is the key to the exercise.", "pin": ["(Def) a ≤ b ⇔ a ⊕ b = b"]},
+
+{"say": "What we want to prove has three parts. One: that less than or equal to is a partial order relation. Two: that the sum of a and b is the supremum of the set formed by a and b. And three: that the product of a and b is the infimum of that set. With sets, the supremum is the union and the infimum is the intersection, with respect to inclusion.", "L": [["goal", "(1)  ≤ is a partial order relation on B"], ["goal", "(2)  a ⊕ b = sup{a, b}"], ["goal", "(3)  a ⊙ b = inf{a, b}<span class='tag'>Claim</span>"], ["txt", "With sets:  sup = ∪,   inf = ∩   (with respect to ⊆)"]]},
+
+{"title": "Part 1: ≤ is a partial order", "clear": 1, "say": "We start with the first part. A relation is a partial order if it satisfies three properties: reflexive, antisymmetric and transitive. We prove them one by one.", "L": [["goal", "Reflexive:  a ≤ a"], ["goal", "Antisymmetric:  a ≤ b  and  b ≤ a  ⇒  a = b"], ["goal", "Transitive:  a ≤ b  and  b ≤ c  ⇒  a ≤ c"]]},
+
+{"title": "Reflexivity", "clear": 1, "say": "Reflexivity. Let a be any element of B. We want to prove that a is less than or equal to a.", "L": [["txt", "Let a ∈ B  (arbitrary)"], ["goal", "We want:  a ≤ a<span class='tag'>Claim</span>"]]},
+
+{"say": "By the definition, with b equal to a, a is less than or equal to a if and only if a plus a equals a.", "L": [["sub", "a ≤ a  ⇔  a ⊕ a = a<span class='tag'>Definition with b = a</span>"]]},
+
+{"say": "And this equality is exactly the idempotence of the sum. Therefore, a is less than or equal to a.", "L": [["res", "a ⊕ a = a   ⟹   a ≤ a   ∎<span class='tag'>Idempotence of ⊕</span>"]]},
+
+{"title": "Antisymmetry", "clear": 1, "say": "Antisymmetry. Let a and b be two elements of B. We assume that a is less than or equal to b, and that b is less than or equal to a. This is a hypothesis.", "L": [["hyp", "a ≤ b   and   b ≤ a<span class='tag'>Hypothesis</span>"]]},
+
+{"say": "By the definition, the first inequality means that a plus b equals b. And the second one means that b plus a equals a.", "L": [["hyp", "a ⊕ b = b<span class='tag'>Hypothesis (a ≤ b)</span>"], ["hyp", "b ⊕ a = a<span class='tag'>Hypothesis (b ≤ a)</span>"]]},
+
+{"say": "We want to prove that a equals b. We start from the left-hand side, a.", "L": [["goal", "We want:  a = b<span class='tag'>Claim</span>"], ["txt", "a"]]},
+
+{"say": "First step. We use the second hypothesis, which says that b plus a equals a. We replace a with b plus a.", "L": [["sub", "a  =  b ⊕ a<span class='tag'>Hypothesis: b ⊕ a = a</span>"]]},
+
+{"say": "Second step. We apply commutativity of the sum: b plus a equals a plus b.", "L": [["sub", "a  =  a ⊕ b<span class='tag'>Commutativity of ⊕</span>"]]},
+
+{"say": "Third step. We use the first hypothesis, which says that a plus b equals b. We substitute.", "L": [["res", "a  =  b<span class='tag'>Hypothesis: a ⊕ b = b</span>"], ["res", "a ≤ b  and  b ≤ a   ⟹   a = b   ∎"]]},
+
+{"title": "Transitivity", "clear": 1, "say": "Transitivity. Let a, b and c be elements of B. We assume that a is less than or equal to b, and that b is less than or equal to c. This is a hypothesis.", "L": [["hyp", "a ≤ b   and   b ≤ c<span class='tag'>Hypothesis</span>"]]},
+
+{"say": "By the definition, this means that a plus b equals b, and that b plus c equals c.", "L": [["hyp", "a ⊕ b = b<span class='tag'>Hypothesis (a ≤ b)</span>"], ["hyp", "b ⊕ c = c<span class='tag'>Hypothesis (b ≤ c)</span>"]]},
+
+{"say": "We want to prove that a is less than or equal to c. By the definition, this means that a plus c equals c. We start from the left-hand side, a plus c.", "L": [["goal", "We want:  a ⊕ c = c<span class='tag'>Claim, by the definition of ≤</span>"], ["txt", "a ⊕ c"]]},
+
+{"say": "First step. We use the second hypothesis, b plus c equals c. We replace the c on the right with b plus c.", "L": [["sub", "a ⊕ c  =  a ⊕ (b ⊕ c)<span class='tag'>Hypothesis: b ⊕ c = c</span>"]]},
+
+{"say": "Second step. We apply associativity of the sum: a plus, b plus c, equals, a plus b, plus c.", "L": [["sub", "a ⊕ c  =  (a ⊕ b) ⊕ c<span class='tag'>Associativity of ⊕</span>"]]},
+
+{"say": "Third step. We use the first hypothesis: a plus b equals b. We highlight it and substitute.", "L": [["sub", "a ⊕ c  =  (<mark>a ⊕ b</mark>) ⊕ c"], ["txt", "Hypothesis:  <mark>a ⊕ b</mark> = b"], ["sub", "a ⊕ c  =  b ⊕ c<span class='tag'>Hypothesis: a ⊕ b = b</span>"]]},
+
+{"say": "Fourth step. We use the second hypothesis again: b plus c equals c.", "L": [["res", "a ⊕ c  =  c<span class='tag'>Hypothesis: b ⊕ c = c</span>"], ["res", "a ≤ b  and  b ≤ c   ⟹   a ≤ c   ∎"]]},
+
+{"say": "We have proved the three properties. Therefore, less than or equal to is a partial order relation on B. This ends the first part.", "L": [["res", "≤ is reflexive, antisymmetric and transitive"], ["res", "≤ is a partial order on B   ∎"]]},
+
+{"title": "Part 2: ⊕ is the supremum", "clear": 1, "say": "We move on to the second part. Let us recall what the supremum of two elements is. It is the least of the upper bounds. So we have to prove two things: that a plus b is an upper bound of a and b, and that it is the least of all upper bounds. With sets: the union of A and B contains A and B, and it is the smallest set that does so.", "L": [["goal", "(i)  a ⊕ b is an upper bound:  a ≤ a ⊕ b   and   b ≤ a ⊕ b"], ["goal", "(ii)  It is the least one: if a ≤ c and b ≤ c, then a ⊕ b ≤ c"], ["txt", "With sets:  A ⊆ A ∪ B,   B ⊆ A ∪ B,   and it is the smallest set containing A and B"]]},
+
+{"say": "The first property is a basic result about lattices: a is less than or equal to a plus b, and b is less than or equal to a plus b. So a plus b is an upper bound of a and b. We write it on the left, because we are going to use it. It remains to prove that it is the least one.", "pin": ["(Upper b.) a ≤ a ⊕ b,   b ≤ a ⊕ b"]},
+
+{"say": "Minimality. Let c be an element of B that is an upper bound of a and b. This means that a is less than or equal to c, and that b is less than or equal to c. This is the hypothesis of this part.", "L": [["txt", "Let c ∈ B"], ["hyp", "a ≤ c   and   b ≤ c<span class='tag'>Hypothesis: c is an upper bound</span>"]]},
+
+{"say": "By the definition of less than or equal to, this is equivalent to a plus c equal to c, and b plus c equal to c.", "L": [["hyp", "a ⊕ c = c<span class='tag'>Hypothesis (a ≤ c)</span>"], ["hyp", "b ⊕ c = c<span class='tag'>Hypothesis (b ≤ c)</span>"]]},
+
+{"say": "We want to prove that a plus b is less than or equal to c. By the definition, this means that a plus b, plus c, equals c. We start from the left-hand side.", "L": [["goal", "We want:  (a ⊕ b) ⊕ c = c<span class='tag'>Claim, by the definition of ≤</span>"], ["txt", "(a ⊕ b) ⊕ c"]]},
+
+{"say": "First step. We apply associativity of the sum: a plus b, plus c, equals a plus, b plus c.", "L": [["sub", "(a ⊕ b) ⊕ c  =  a ⊕ (b ⊕ c)<span class='tag'>Associativity of ⊕</span>"]]},
+
+{"say": "Second step. We use the hypothesis b plus c equals c. We highlight it and substitute.", "L": [["sub", "(a ⊕ b) ⊕ c  =  a ⊕ (<mark>b ⊕ c</mark>)"], ["txt", "Hypothesis:  <mark>b ⊕ c</mark> = c"], ["sub", "(a ⊕ b) ⊕ c  =  a ⊕ c<span class='tag'>Hypothesis: b ⊕ c = c</span>"]]},
+
+{"say": "Third step. We use the hypothesis a plus c equals c.", "L": [["res", "(a ⊕ b) ⊕ c  =  c<span class='tag'>Hypothesis: a ⊕ c = c</span>"]]},
+
+{"say": "By the definition, this equality means that a plus b is less than or equal to c. Since c was an arbitrary upper bound, a plus b is the least of all. Consequently, a plus b is the supremum of a and b. With sets, the union is the smallest set containing A and B. This ends the second part.", "L": [["res", "(a ⊕ b) ⊕ c = c   ⟹   a ⊕ b ≤ c"], ["res", "a ⊕ b = sup{a, b}   ∎"], ["txt", "With sets:  A ∪ B = sup{A, B}"]]},
+
+{"title": "Part 3: ⊙ is the infimum", "clear": 1, "say": "We move on to the third part. The infimum of two elements is the greatest of the lower bounds. We have to prove that a times b is a lower bound of a and b, and that it is the greatest of all lower bounds. With sets: the intersection of A and B is contained in A and in B, and it is the largest set that does so.", "L": [["goal", "(i)  a ⊙ b is a lower bound:  a ⊙ b ≤ a   and   a ⊙ b ≤ b"], ["goal", "(ii)  It is the greatest one: if c ≤ a and c ≤ b, then c ≤ a ⊙ b"], ["txt", "With sets:  A ∩ B ⊆ A,   A ∩ B ⊆ B,   and it is the largest set contained in A and in B"]]},
+
+{"say": "We are going to use two basic results about lattices. The first one: a times b is less than or equal to a, and less than or equal to b. So a times b is a lower bound of a and b. The second one is an equivalent characterization of the order: x is less than or equal to y if and only if x times y equals x. With sets: A is contained in B if and only if A intersection B is A. We will also use associativity of the product: x times, y times z, is x times y, times z. We write them on the left.", "L": [["txt", "With sets:  A ∩ B ⊆ A,   A ∩ B ⊆ B"], ["txt", "With sets:  A ⊆ B  ⇔  A ∩ B = A"]], "pin": ["(Lower b.) a ⊙ b ≤ a,   a ⊙ b ≤ b", "(Char) x ≤ y ⇔ x ⊙ y = x", "(Assoc ⊙) x ⊙ (y ⊙ z) = (x ⊙ y) ⊙ z"]},
+
+{"say": "Maximality. Let c be an element of B that is a lower bound of a and b. This means that c is less than or equal to a, and that c is less than or equal to b. This is the hypothesis of this part.", "L": [["txt", "Let c ∈ B"], ["hyp", "c ≤ a   and   c ≤ b<span class='tag'>Hypothesis: c is a lower bound</span>"]]},
+
+{"say": "By the characterization of the order with the product, this is equivalent to c times a equal to c, and c times b equal to c.", "L": [["hyp", "c ⊙ a = c<span class='tag'>Hypothesis (c ≤ a), by (Char)</span>"], ["hyp", "c ⊙ b = c<span class='tag'>Hypothesis (c ≤ b), by (Char)</span>"]]},
+
+{"say": "We want to prove that c is less than or equal to a times b. Again by the characterization, this means that c times, a times b, equals c. We start from the left-hand side.", "L": [["goal", "We want:  c ⊙ (a ⊙ b) = c<span class='tag'>Claim, by (Char)</span>"], ["txt", "c ⊙ (a ⊙ b)"]]},
+
+{"say": "First step. We apply associativity of the product: c times, a times b, equals, c times a, times b.", "L": [["sub", "c ⊙ (a ⊙ b)  =  (c ⊙ a) ⊙ b<span class='tag'>Associativity of ⊙</span>"]]},
+
+{"say": "Second step. We use the hypothesis c times a equals c. We highlight it and substitute.", "L": [["sub", "c ⊙ (a ⊙ b)  =  (<mark>c ⊙ a</mark>) ⊙ b"], ["txt", "Hypothesis:  <mark>c ⊙ a</mark> = c"], ["sub", "c ⊙ (a ⊙ b)  =  c ⊙ b<span class='tag'>Hypothesis: c ⊙ a = c</span>"]]},
+
+{"say": "Third step. We use the hypothesis c times b equals c.", "L": [["res", "c ⊙ (a ⊙ b)  =  c<span class='tag'>Hypothesis: c ⊙ b = c</span>"]]},
+
+{"say": "By the characterization, this equality means that c is less than or equal to a times b. Since c was an arbitrary lower bound, a times b is the greatest of all. Consequently, a times b is the infimum of a and b. With sets, the intersection is the largest set contained in A and in B. This ends the third part.", "L": [["res", "c ⊙ (a ⊙ b) = c   ⟹   c ≤ a ⊙ b"], ["res", "a ⊙ b = inf{a, b}   ∎"], ["txt", "With sets:  A ∩ B = inf{A, B}"]]},
+
+{"title": "Summary", "clear": 1, "say": "To sum up. With the definition of less than or equal to through the sum, we proved that it is reflexive by idempotence, antisymmetric by commutativity, and transitive by associativity. Then we saw that a plus b is an upper bound, and that it is the least one because, if a plus c and b plus c are c, then a plus b, plus c, is also c. And in the same way, that a times b is a lower bound and is the greatest one. With sets: the union is the supremum and the intersection is the infimum with respect to inclusion. Thanks for watching.", "L": [["res", "(1)  ≤ is reflexive, antisymmetric and transitive"], ["res", "(2)  a ⊕ b = sup{a, b}"], ["res", "(3)  a ⊙ b = inf{a, b}"], ["txt", "With sets:  ∪ is the supremum,  ∩ is the infimum  (with respect to ⊆)"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' plus ').replace(/⊙/g,' times ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Replay'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Resume'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pause';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/andrew|guy|brian|christopher|eric|david|mark|male|google us english$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Order, supremum and infimum";$('sub').textContent="Exercise · Algebraic lattices";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

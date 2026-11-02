@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>क्रम, सुप्रीमम और इन्फ़िमम</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>याद रखें</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ शुरू करें</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>गति <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">रिकॉर्डिंग मोड (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"hi-IN",
+"meta":{"nivel": 2, "titulo": "क्रम, सुप्रीमम और इन्फ़िमम", "enunciado": "मान लीजिए (B, ⊕, ⊙) एक जालक है, जिस पर संबंध  a ≤ b ⇔ a ⊕ b = b  है। सिद्ध कीजिए कि ≤ एक आंशिक क्रम है और किन्हीं भी a, b ∈ B के लिए:", "tesis": "a ⊕ b = sup{a, b},   a ⊙ b = inf{a, b}", "datos": ["(क्रम ⊕)  x ⊕ y = y ⊕ x", "(साह ⊕)  x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(वर्ग ⊕)  x ⊕ x = x", "(साह ⊙)  x ⊙ (y ⊙ z) = (x ⊙ y) ⊙ z"]},
+"steps":[
+{"title": "क्रम, सुप्रीमम और इन्फ़िमम", "sub": "अभ्यास · बीजीय जालक", "clear": 1, "say": "नमस्ते। इस वीडियो में हम बीजीय जालकों पर एक अभ्यास हल करेंगे। हम बहुत धीरे-धीरे चलेंगे, हर समीकरण लिखेंगे और हर कदम का कारण बताएँगे।", "L": [["txt", "योग एक क्रम का सुप्रीमम है और गुणन उसका इन्फ़िमम"]]},
+
+{"say": "पहले, दी गई बातें। B एक समुच्चय है जिस पर दो संक्रियाएँ हैं, जालक योग और जालक गुणन, और यह एक जालक है। यानी दोनों संक्रियाएँ आंतरिक, क्रमविनिमेय, साहचर्य हैं, और अवशोषण नियमों का पालन करती हैं।", "L": [["hyp", "(B, ⊕, ⊙) जालक<span class='tag'>परिकल्पना</span>"]]},
+
+{"say": "हम योग के तीन गुणों का उपयोग करेंगे। क्रमविनिमेयता: a प्लस b, b प्लस a है। साहचर्यता: a प्लस, b प्लस c, बराबर है a प्लस b, प्लस c के। और वर्गसमता, जो जालकों का एक प्रमेय है: a प्लस a, a है। इन्हें हम बाईं ओर लगा देते हैं।", "pin": ["(क्रम ⊕) x ⊕ y = y ⊕ x", "(साह ⊕) x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(वर्ग ⊕) x ⊕ x = x"]},
+
+{"say": "अब परिभाषा। B पर हम एक संबंध, छोटा या बराबर, इस प्रकार परिभाषित करते हैं: a, b से छोटा या बराबर है, यदि और केवल यदि a प्लस b बराबर है b के। समुच्चयों में यह जाना-पहचाना गुण है: A, B में समाहित है, यदि और केवल यदि A सम्मिलन B बराबर है B के।", "L": [["sub", "a ≤ b  ⇔  a ⊕ b = b<span class='tag'>≤ की परिभाषा</span>"], ["txt", "समुच्चयों के साथ:  A ⊆ B  ⇔  A ∪ B = B"]]},
+
+{"say": "परिभाषा को हम बाईं ओर, पिछले गुणों के नीचे लिख लेते हैं, क्योंकि यही इस अभ्यास की कुंजी है।", "pin": ["(परि) a ≤ b ⇔ a ⊕ b = b"]},
+
+{"say": "हमें जो सिद्ध करना है उसके तीन भाग हैं। एक: छोटा या बराबर एक आंशिक क्रम संबंध है। दो: a और b का योग, a और b से बने समुच्चय का सुप्रीमम है। और तीन: a और b का गुणनफल उस समुच्चय का इन्फ़िमम है। समुच्चयों में, समावेश के सापेक्ष, सुप्रीमम सम्मिलन है और इन्फ़िमम सर्वनिष्ठ है।", "L": [["goal", "(1)  ≤, B पर एक आंशिक क्रम संबंध है"], ["goal", "(2)  a ⊕ b = sup{a, b}"], ["goal", "(3)  a ⊙ b = inf{a, b}<span class='tag'>साध्य</span>"], ["txt", "समुच्चयों के साथ:  sup = ∪,   inf = ∩   (⊆ के सापेक्ष)"]]},
+
+{"title": "भाग 1: ≤ एक आंशिक क्रम है", "clear": 1, "say": "हम पहले भाग से शुरू करते हैं। कोई संबंध आंशिक क्रम है यदि वह तीन गुणों को पूरा करे: स्वतुल्य, प्रतिसममित और संक्रामक। हम इन्हें एक-एक करके सिद्ध करते हैं।", "L": [["goal", "स्वतुल्य:  a ≤ a"], ["goal", "प्रतिसममित:  a ≤ b  और  b ≤ a  ⇒  a = b"], ["goal", "संक्रामक:  a ≤ b  और  b ≤ c  ⇒  a ≤ c"]]},
+
+{"title": "स्वतुल्यता", "clear": 1, "say": "स्वतुल्यता। मान लीजिए a, B का कोई भी अवयव है। हमें सिद्ध करना है कि a, a से छोटा या बराबर है।", "L": [["txt", "मान लीजिए a ∈ B  (यादृच्छिक)"], ["goal", "हमें चाहिए:  a ≤ a<span class='tag'>साध्य</span>"]]},
+
+{"say": "परिभाषा से, b बराबर a लेकर, a, a से छोटा या बराबर है, यदि और केवल यदि a प्लस a बराबर है a के।", "L": [["sub", "a ≤ a  ⇔  a ⊕ a = a<span class='tag'>परिभाषा, b = a लेकर</span>"]]},
+
+{"say": "और यह समता ठीक योग की वर्गसमता है। इसलिए, a, a से छोटा या बराबर है।", "L": [["res", "a ⊕ a = a   ⟹   a ≤ a   ∎<span class='tag'>⊕ की वर्गसमता</span>"]]},
+
+{"title": "प्रतिसममिति", "clear": 1, "say": "प्रतिसममिति। मान लीजिए a और b, B के दो अवयव हैं। हम मान लेते हैं कि a, b से छोटा या बराबर है, और b, a से छोटा या बराबर है। यह एक परिकल्पना है।", "L": [["hyp", "a ≤ b   और   b ≤ a<span class='tag'>परिकल्पना</span>"]]},
+
+{"say": "परिभाषा से, पहली असमता का अर्थ है कि a प्लस b बराबर है b के। और दूसरी का अर्थ है कि b प्लस a बराबर है a के।", "L": [["hyp", "a ⊕ b = b<span class='tag'>परिकल्पना (a ≤ b)</span>"], ["hyp", "b ⊕ a = a<span class='tag'>परिकल्पना (b ≤ a)</span>"]]},
+
+{"say": "हमें सिद्ध करना है कि a बराबर है b के। हम बाएँ पक्ष, a, से शुरू करते हैं।", "L": [["goal", "हमें चाहिए:  a = b<span class='tag'>साध्य</span>"], ["txt", "a"]]},
+
+{"say": "पहला कदम। हम दूसरी परिकल्पना का उपयोग करते हैं, जो कहती है कि b प्लस a बराबर है a के। a को b प्लस a से बदलते हैं।", "L": [["sub", "a  =  b ⊕ a<span class='tag'>परिकल्पना: b ⊕ a = a</span>"]]},
+
+{"say": "दूसरा कदम। हम योग की क्रमविनिमेयता लगाते हैं: b प्लस a बराबर है a प्लस b के।", "L": [["sub", "a  =  a ⊕ b<span class='tag'>⊕ की क्रमविनिमेयता</span>"]]},
+
+{"say": "तीसरा कदम। हम पहली परिकल्पना का उपयोग करते हैं, जो कहती है कि a प्लस b बराबर है b के। प्रतिस्थापित करते हैं।", "L": [["res", "a  =  b<span class='tag'>परिकल्पना: a ⊕ b = b</span>"], ["res", "a ≤ b  और  b ≤ a   ⟹   a = b   ∎"]]},
+
+{"title": "संक्रामकता", "clear": 1, "say": "संक्रामकता। मान लीजिए a, b और c, B के अवयव हैं। हम मान लेते हैं कि a, b से छोटा या बराबर है, और b, c से छोटा या बराबर है। यह एक परिकल्पना है।", "L": [["hyp", "a ≤ b   और   b ≤ c<span class='tag'>परिकल्पना</span>"]]},
+
+{"say": "परिभाषा से, इसका अर्थ है कि a प्लस b बराबर है b के, और b प्लस c बराबर है c के।", "L": [["hyp", "a ⊕ b = b<span class='tag'>परिकल्पना (a ≤ b)</span>"], ["hyp", "b ⊕ c = c<span class='tag'>परिकल्पना (b ≤ c)</span>"]]},
+
+{"say": "हमें सिद्ध करना है कि a, c से छोटा या बराबर है। परिभाषा से, इसका अर्थ है कि a प्लस c बराबर है c के। हम बाएँ पक्ष, a प्लस c, से शुरू करते हैं।", "L": [["goal", "हमें चाहिए:  a ⊕ c = c<span class='tag'>साध्य, ≤ की परिभाषा से</span>"], ["txt", "a ⊕ c"]]},
+
+{"say": "पहला कदम। हम दूसरी परिकल्पना का उपयोग करते हैं, b प्लस c बराबर है c के। दाईं ओर के c को b प्लस c से बदलते हैं।", "L": [["sub", "a ⊕ c  =  a ⊕ (b ⊕ c)<span class='tag'>परिकल्पना: b ⊕ c = c</span>"]]},
+
+{"say": "दूसरा कदम। हम योग की साहचर्यता लगाते हैं: a प्लस, b प्लस c, बराबर है, a प्लस b, प्लस c के।", "L": [["sub", "a ⊕ c  =  (a ⊕ b) ⊕ c<span class='tag'>⊕ की साहचर्यता</span>"]]},
+
+{"say": "तीसरा कदम। हम पहली परिकल्पना का उपयोग करते हैं: a प्लस b बराबर है b के। इसे चिह्नित करके प्रतिस्थापित करते हैं।", "L": [["sub", "a ⊕ c  =  (<mark>a ⊕ b</mark>) ⊕ c"], ["txt", "परिकल्पना:  <mark>a ⊕ b</mark> = b"], ["sub", "a ⊕ c  =  b ⊕ c<span class='tag'>परिकल्पना: a ⊕ b = b</span>"]]},
+
+{"say": "चौथा कदम। हम फिर से दूसरी परिकल्पना का उपयोग करते हैं: b प्लस c बराबर है c के।", "L": [["res", "a ⊕ c  =  c<span class='tag'>परिकल्पना: b ⊕ c = c</span>"], ["res", "a ≤ b  और  b ≤ c   ⟹   a ≤ c   ∎"]]},
+
+{"say": "हमने तीनों गुण सिद्ध कर दिए। इसलिए, छोटा या बराबर, B पर एक आंशिक क्रम संबंध है। इसके साथ पहला भाग पूरा होता है।", "L": [["res", "≤ स्वतुल्य, प्रतिसममित और संक्रामक है"], ["res", "≤, B पर एक आंशिक क्रम है   ∎"]]},
+
+{"title": "भाग 2: ⊕ सुप्रीमम है", "clear": 1, "say": "अब दूसरे भाग पर चलते हैं। याद करें कि दो अवयवों का सुप्रीमम क्या है। यह ऊपरी सीमाओं में सबसे छोटी है। इसलिए हमें दो बातें सिद्ध करनी हैं: कि a प्लस b, a और b की एक ऊपरी सीमा है, और कि यह सभी ऊपरी सीमाओं में सबसे छोटी है। समुच्चयों में: A और B का सम्मिलन A और B को समाहित करता है, और ऐसा करने वाला सबसे छोटा समुच्चय है।", "L": [["goal", "(i)  a ⊕ b एक ऊपरी सीमा है:  a ≤ a ⊕ b   और   b ≤ a ⊕ b"], ["goal", "(ii)  यह सबसे छोटी है: यदि a ≤ c और b ≤ c, तो a ⊕ b ≤ c"], ["txt", "समुच्चयों के साथ:  A ⊆ A ∪ B,   B ⊆ A ∪ B,   और यह A तथा B को समाहित करने वाला सबसे छोटा समुच्चय है"]]},
+
+{"say": "पहला गुण जालकों का एक मूल परिणाम है: a, a प्लस b से छोटा या बराबर है, और b, a प्लस b से छोटा या बराबर है। इसलिए a प्लस b, a और b की एक ऊपरी सीमा है। इसे हम बाईं ओर लिख लेते हैं, क्योंकि इसका उपयोग करेंगे। अब सिद्ध करना बाकी है कि यह सबसे छोटी है।", "pin": ["(ऊपरी सीमा) a ≤ a ⊕ b,   b ≤ a ⊕ b"]},
+
+{"say": "न्यूनतमता। मान लीजिए c, B का एक अवयव है जो a और b की एक ऊपरी सीमा है। इसका अर्थ है कि a, c से छोटा या बराबर है, और b, c से छोटा या बराबर है। यह इस भाग की परिकल्पना है।", "L": [["txt", "मान लीजिए c ∈ B"], ["hyp", "a ≤ c   और   b ≤ c<span class='tag'>परिकल्पना: c एक ऊपरी सीमा है</span>"]]},
+
+{"say": "छोटा या बराबर की परिभाषा से, यह इसके तुल्य है कि a प्लस c बराबर है c के, और b प्लस c बराबर है c के।", "L": [["hyp", "a ⊕ c = c<span class='tag'>परिकल्पना (a ≤ c)</span>"], ["hyp", "b ⊕ c = c<span class='tag'>परिकल्पना (b ≤ c)</span>"]]},
+
+{"say": "हमें सिद्ध करना है कि a प्लस b, c से छोटा या बराबर है। परिभाषा से, इसका अर्थ है कि a प्लस b, प्लस c, बराबर है c के। हम बाएँ पक्ष से शुरू करते हैं।", "L": [["goal", "हमें चाहिए:  (a ⊕ b) ⊕ c = c<span class='tag'>साध्य, ≤ की परिभाषा से</span>"], ["txt", "(a ⊕ b) ⊕ c"]]},
+
+{"say": "पहला कदम। हम योग की साहचर्यता लगाते हैं: a प्लस b, प्लस c, बराबर है a प्लस, b प्लस c के।", "L": [["sub", "(a ⊕ b) ⊕ c  =  a ⊕ (b ⊕ c)<span class='tag'>⊕ की साहचर्यता</span>"]]},
+
+{"say": "दूसरा कदम। हम परिकल्पना b प्लस c बराबर c का उपयोग करते हैं। इसे चिह्नित करके प्रतिस्थापित करते हैं।", "L": [["sub", "(a ⊕ b) ⊕ c  =  a ⊕ (<mark>b ⊕ c</mark>)"], ["txt", "परिकल्पना:  <mark>b ⊕ c</mark> = c"], ["sub", "(a ⊕ b) ⊕ c  =  a ⊕ c<span class='tag'>परिकल्पना: b ⊕ c = c</span>"]]},
+
+{"say": "तीसरा कदम। हम परिकल्पना a प्लस c बराबर c का उपयोग करते हैं।", "L": [["res", "(a ⊕ b) ⊕ c  =  c<span class='tag'>परिकल्पना: a ⊕ c = c</span>"]]},
+
+{"say": "परिभाषा से, इस समता का अर्थ है कि a प्लस b, c से छोटा या बराबर है। चूँकि c कोई भी ऊपरी सीमा था, a प्लस b सबमें सबसे छोटी है। फलस्वरूप, a प्लस b, a और b का सुप्रीमम है। समुच्चयों में, सम्मिलन A और B को समाहित करने वाला सबसे छोटा समुच्चय है। इसके साथ दूसरा भाग पूरा होता है।", "L": [["res", "(a ⊕ b) ⊕ c = c   ⟹   a ⊕ b ≤ c"], ["res", "a ⊕ b = sup{a, b}   ∎"], ["txt", "समुच्चयों के साथ:  A ∪ B = sup{A, B}"]]},
+
+{"title": "भाग 3: ⊙ इन्फ़िमम है", "clear": 1, "say": "अब तीसरे भाग पर चलते हैं। दो अवयवों का इन्फ़िमम निचली सीमाओं में सबसे बड़ी है। हमें सिद्ध करना है कि a गुणा b, a और b की एक निचली सीमा है, और कि यह सभी निचली सीमाओं में सबसे बड़ी है। समुच्चयों में: A और B का सर्वनिष्ठ A में भी और B में भी समाहित है, और ऐसा सबसे बड़ा समुच्चय है।", "L": [["goal", "(i)  a ⊙ b एक निचली सीमा है:  a ⊙ b ≤ a   और   a ⊙ b ≤ b"], ["goal", "(ii)  यह सबसे बड़ी है: यदि c ≤ a और c ≤ b, तो c ≤ a ⊙ b"], ["txt", "समुच्चयों के साथ:  A ∩ B ⊆ A,   A ∩ B ⊆ B,   और यह A और B दोनों में समाहित सबसे बड़ा समुच्चय है"]]},
+
+{"say": "हम जालकों के दो मूल परिणामों का उपयोग करेंगे। पहला: a गुणा b, a से छोटा या बराबर है, और b से छोटा या बराबर है। इसलिए a गुणा b, a और b की एक निचली सीमा है। दूसरा क्रम का एक तुल्य लक्षण है: x, y से छोटा या बराबर है, यदि और केवल यदि x गुणा y बराबर है x के। समुच्चयों में: A, B में समाहित है, यदि और केवल यदि A सर्वनिष्ठ B, A है। और हम गुणन की साहचर्यता का भी उपयोग करेंगे: x गुणा, y गुणा z, बराबर है x गुणा y, गुणा z के। इन्हें हम बाईं ओर लिख लेते हैं।", "L": [["txt", "समुच्चयों के साथ:  A ∩ B ⊆ A,   A ∩ B ⊆ B"], ["txt", "समुच्चयों के साथ:  A ⊆ B  ⇔  A ∩ B = A"]], "pin": ["(निचली सीमा) a ⊙ b ≤ a,   a ⊙ b ≤ b", "(लक्षण) x ≤ y ⇔ x ⊙ y = x", "(साह ⊙) x ⊙ (y ⊙ z) = (x ⊙ y) ⊙ z"]},
+
+{"say": "अधिकतमता। मान लीजिए c, B का एक अवयव है जो a और b की एक निचली सीमा है। इसका अर्थ है कि c, a से छोटा या बराबर है, और c, b से छोटा या बराबर है। यह इस भाग की परिकल्पना है।", "L": [["txt", "मान लीजिए c ∈ B"], ["hyp", "c ≤ a   और   c ≤ b<span class='tag'>परिकल्पना: c एक निचली सीमा है</span>"]]},
+
+{"say": "गुणन वाले क्रम के लक्षण से, यह इसके तुल्य है कि c गुणा a बराबर है c के, और c गुणा b बराबर है c के।", "L": [["hyp", "c ⊙ a = c<span class='tag'>परिकल्पना (c ≤ a), (लक्षण) से</span>"], ["hyp", "c ⊙ b = c<span class='tag'>परिकल्पना (c ≤ b), (लक्षण) से</span>"]]},
+
+{"say": "हमें सिद्ध करना है कि c, a गुणा b से छोटा या बराबर है। फिर से लक्षण से, इसका अर्थ है कि c गुणा, a गुणा b, बराबर है c के। हम बाएँ पक्ष से शुरू करते हैं।", "L": [["goal", "हमें चाहिए:  c ⊙ (a ⊙ b) = c<span class='tag'>साध्य, (लक्षण) से</span>"], ["txt", "c ⊙ (a ⊙ b)"]]},
+
+{"say": "पहला कदम। हम गुणन की साहचर्यता लगाते हैं: c गुणा, a गुणा b, बराबर है, c गुणा a, गुणा b के।", "L": [["sub", "c ⊙ (a ⊙ b)  =  (c ⊙ a) ⊙ b<span class='tag'>⊙ की साहचर्यता</span>"]]},
+
+{"say": "दूसरा कदम। हम परिकल्पना c गुणा a बराबर c का उपयोग करते हैं। इसे चिह्नित करके प्रतिस्थापित करते हैं।", "L": [["sub", "c ⊙ (a ⊙ b)  =  (<mark>c ⊙ a</mark>) ⊙ b"], ["txt", "परिकल्पना:  <mark>c ⊙ a</mark> = c"], ["sub", "c ⊙ (a ⊙ b)  =  c ⊙ b<span class='tag'>परिकल्पना: c ⊙ a = c</span>"]]},
+
+{"say": "तीसरा कदम। हम परिकल्पना c गुणा b बराबर c का उपयोग करते हैं।", "L": [["res", "c ⊙ (a ⊙ b)  =  c<span class='tag'>परिकल्पना: c ⊙ b = c</span>"]]},
+
+{"say": "लक्षण से, इस समता का अर्थ है कि c, a गुणा b से छोटा या बराबर है। चूँकि c कोई भी निचली सीमा था, a गुणा b सबमें सबसे बड़ी है। फलस्वरूप, a गुणा b, a और b का इन्फ़िमम है। समुच्चयों में, सर्वनिष्ठ A और B दोनों में समाहित सबसे बड़ा समुच्चय है। इसके साथ तीसरा भाग पूरा होता है।", "L": [["res", "c ⊙ (a ⊙ b) = c   ⟹   c ≤ a ⊙ b"], ["res", "a ⊙ b = inf{a, b}   ∎"], ["txt", "समुच्चयों के साथ:  A ∩ B = inf{A, B}"]]},
+
+{"title": "सारांश", "clear": 1, "say": "सारांश में। योग के माध्यम से छोटा या बराबर की परिभाषा के साथ, हमने सिद्ध किया कि यह वर्गसमता से स्वतुल्य है, क्रमविनिमेयता से प्रतिसममित है, और साहचर्यता से संक्रामक है। फिर हमने देखा कि a प्लस b एक ऊपरी सीमा है, और सबसे छोटी है क्योंकि, यदि a प्लस c और b प्लस c दोनों c हैं, तो a प्लस b, प्लस c, भी c है। और इसी प्रकार, a गुणा b एक निचली सीमा है और सबसे बड़ी है। समुच्चयों में: समावेश के सापेक्ष सम्मिलन सुप्रीमम है और सर्वनिष्ठ इन्फ़िमम है। देखने के लिए धन्यवाद।", "L": [["res", "(1)  ≤ स्वतुल्य, प्रतिसममित और संक्रामक है"], ["res", "(2)  a ⊕ b = sup{a, b}"], ["res", "(3)  a ⊙ b = inf{a, b}"], ["txt", "समुच्चयों के साथ:  ∪ सुप्रीमम है,  ∩ इन्फ़िमम है  (⊆ के सापेक्ष)"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' प्लस ').replace(/⊙/g,' गुणा ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ फिर से चलाएँ'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ जारी रखें'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ रोकें';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^hi/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/madhur|hemant|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="क्रम, सुप्रीमम और इन्फ़िमम";$('sub').textContent="अभ्यास · बीजीय जालक";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

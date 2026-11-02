@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ক্রম, সুপ্রিমাম ও ইনফিমাম</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>মনে রাখুন</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ শুরু</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>গতি <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">রেকর্ডিং মোড (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"bn-BD",
+"meta":{"nivel": 2, "titulo": "ক্রম, সুপ্রিমাম ও ইনফিমাম", "enunciado": "ধরা যাক (B, ⊕, ⊙) একটি ল্যাটিস, যেখানে সম্পর্ক  a ≤ b ⇔ a ⊕ b = b।  প্রমাণ করুন যে ≤ একটি আংশিক ক্রম এবং যেকোনো a, b ∈ B এর জন্য:", "tesis": "a ⊕ b = sup{a, b},   a ⊙ b = inf{a, b}", "datos": ["(বিনি ⊕)  x ⊕ y = y ⊕ x", "(সংযো ⊕)  x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(স্বসম ⊕)  x ⊕ x = x", "(সংযো ⊙)  x ⊙ (y ⊙ z) = (x ⊙ y) ⊙ z"]},
+"steps":[
+{"title": "ক্রম, সুপ্রিমাম ও ইনফিমাম", "sub": "অনুশীলনী · বীজগাণিতিক ল্যাটিস", "clear": 1, "say": "নমস্কার। এই ভিডিওতে আমরা বীজগাণিতিক ল্যাটিস নিয়ে একটি অনুশীলনী সমাধান করব। আমরা খুব ধীরে এগোব, প্রতিটি সমীকরণ লিখব এবং প্রতিটি ধাপের যুক্তি দেব।", "L": [["txt", "যোগ হলো একটি ক্রমের সুপ্রিমাম এবং গুণ হলো তার ইনফিমাম"]]},
+
+{"say": "প্রথমে, প্রদত্ত তথ্য। B একটি সেট, যার উপর দুটি প্রক্রিয়া আছে, ল্যাটিস যোগ এবং ল্যাটিস গুণ, এবং এটি একটি ল্যাটিস। অর্থাৎ, দুটি প্রক্রিয়াই অভ্যন্তরীণ, বিনিময়যোগ্য, সংযোজনযোগ্য, এবং শোষণ বিধি মেনে চলে।", "L": [["hyp", "(B, ⊕, ⊙) ল্যাটিস<span class='tag'>অনুমান</span>"]]},
+
+{"say": "আমরা যোগের তিনটি ধর্ম ব্যবহার করব। বিনিময়: a প্লাস b হলো b প্লাস a। সংযোজন: a প্লাস, b প্লাস c, সমান a প্লাস b, প্লাস c। আর স্বসমতা, যা ল্যাটিসের একটি উপপাদ্য: a প্লাস a হলো a। এগুলো আমরা বাঁ দিকে আটকে রাখি।", "pin": ["(বিনি ⊕) x ⊕ y = y ⊕ x", "(সংযো ⊕) x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(স্বসম ⊕) x ⊕ x = x"]},
+
+{"say": "এবার সংজ্ঞা। B তে আমরা একটি সম্পর্ক, ছোট বা সমান, এভাবে সংজ্ঞায়িত করি: a, b এর চেয়ে ছোট বা সমান, যদি এবং কেবল যদি a প্লাস b সমান b হয়। সেটের ক্ষেত্রে এটি পরিচিত ধর্ম: A, B এর অন্তর্ভুক্ত, যদি এবং কেবল যদি A সংযোগ B সমান B হয়।", "L": [["sub", "a ≤ b  ⇔  a ⊕ b = b<span class='tag'>≤ এর সংজ্ঞা</span>"], ["txt", "সেটের ক্ষেত্রে:  A ⊆ B  ⇔  A ∪ B = B"]]},
+
+{"say": "সংজ্ঞাটি আমরা বাঁ দিকে, আগের ধর্মগুলোর নিচে লিখে রাখি, কারণ এটিই এই অনুশীলনীর মূল চাবি।", "pin": ["(সংজ্ঞা) a ≤ b ⇔ a ⊕ b = b"]},
+
+{"say": "আমরা যা প্রমাণ করতে চাই তার তিনটি অংশ। এক: ছোট বা সমান একটি আংশিক ক্রম সম্পর্ক। দুই: a ও b এর যোগফল, a ও b দিয়ে গঠিত সেটের সুপ্রিমাম। আর তিন: a ও b এর গুণফল ওই সেটের ইনফিমাম। সেটের ক্ষেত্রে, অন্তর্ভুক্তির সাপেক্ষে, সুপ্রিমাম হলো সংযোগ আর ইনফিমাম হলো ছেদ।", "L": [["goal", "(1)  ≤ হলো B তে একটি আংশিক ক্রম সম্পর্ক"], ["goal", "(2)  a ⊕ b = sup{a, b}"], ["goal", "(3)  a ⊙ b = inf{a, b}<span class='tag'>প্রামাণ্য</span>"], ["txt", "সেটের ক্ষেত্রে:  sup = ∪,   inf = ∩   (⊆ এর সাপেক্ষে)"]]},
+
+{"title": "প্রথম ভাগ: ≤ একটি আংশিক ক্রম", "clear": 1, "say": "আমরা প্রথম ভাগ দিয়ে শুরু করি। একটি সম্পর্ক আংশিক ক্রম হয় যদি তা তিনটি ধর্ম মেনে চলে: স্বসম্পর্কী, প্রতিসম-বিরোধী এবং সংক্রমণশীল। আমরা এগুলো একে একে প্রমাণ করি।", "L": [["goal", "স্বসম্পর্কী:  a ≤ a"], ["goal", "প্রতিসম-বিরোধী:  a ≤ b  এবং  b ≤ a  ⇒  a = b"], ["goal", "সংক্রমণশীল:  a ≤ b  এবং  b ≤ c  ⇒  a ≤ c"]]},
+
+{"title": "স্বসম্পর্কিতা", "clear": 1, "say": "স্বসম্পর্কিতা। ধরা যাক a, B এর যেকোনো একটি উপাদান। আমরা প্রমাণ করতে চাই যে a, a এর চেয়ে ছোট বা সমান।", "L": [["txt", "ধরা যাক a ∈ B  (যেকোনো)"], ["goal", "আমরা চাই:  a ≤ a<span class='tag'>প্রামাণ্য</span>"]]},
+
+{"say": "সংজ্ঞা অনুযায়ী, b সমান a নিয়ে, a, a এর চেয়ে ছোট বা সমান, যদি এবং কেবল যদি a প্লাস a সমান a হয়।", "L": [["sub", "a ≤ a  ⇔  a ⊕ a = a<span class='tag'>সংজ্ঞা, b = a নিয়ে</span>"]]},
+
+{"say": "আর এই সমতাটি ঠিক যোগের স্বসমতা। সুতরাং, a, a এর চেয়ে ছোট বা সমান।", "L": [["res", "a ⊕ a = a   ⟹   a ≤ a   ∎<span class='tag'>⊕ এর স্বসমতা</span>"]]},
+
+{"title": "প্রতিসম-বিরোধিতা", "clear": 1, "say": "প্রতিসম-বিরোধিতা। ধরা যাক a ও b, B এর দুটি উপাদান। ধরে নিই a, b এর চেয়ে ছোট বা সমান, এবং b, a এর চেয়ে ছোট বা সমান। এটি একটি অনুমান।", "L": [["hyp", "a ≤ b   এবং   b ≤ a<span class='tag'>অনুমান</span>"]]},
+
+{"say": "সংজ্ঞা অনুযায়ী, প্রথম অসমতার অর্থ a প্লাস b সমান b। আর দ্বিতীয়টির অর্থ b প্লাস a সমান a।", "L": [["hyp", "a ⊕ b = b<span class='tag'>অনুমান (a ≤ b)</span>"], ["hyp", "b ⊕ a = a<span class='tag'>অনুমান (b ≤ a)</span>"]]},
+
+{"say": "আমরা প্রমাণ করতে চাই যে a সমান b। বাম পক্ষ, a, থেকে শুরু করি।", "L": [["goal", "আমরা চাই:  a = b<span class='tag'>প্রামাণ্য</span>"], ["txt", "a"]]},
+
+{"say": "প্রথম ধাপ। আমরা দ্বিতীয় অনুমানটি ব্যবহার করি, যা বলে b প্লাস a সমান a। a কে b প্লাস a দিয়ে বদলাই।", "L": [["sub", "a  =  b ⊕ a<span class='tag'>অনুমান: b ⊕ a = a</span>"]]},
+
+{"say": "দ্বিতীয় ধাপ। আমরা যোগের বিনিময় ধর্ম প্রয়োগ করি: b প্লাস a সমান a প্লাস b।", "L": [["sub", "a  =  a ⊕ b<span class='tag'>⊕ এর বিনিময়</span>"]]},
+
+{"say": "তৃতীয় ধাপ। আমরা প্রথম অনুমানটি ব্যবহার করি, যা বলে a প্লাস b সমান b। প্রতিস্থাপন করি।", "L": [["res", "a  =  b<span class='tag'>অনুমান: a ⊕ b = b</span>"], ["res", "a ≤ b  এবং  b ≤ a   ⟹   a = b   ∎"]]},
+
+{"title": "সংক্রমণশীলতা", "clear": 1, "say": "সংক্রমণশীলতা। ধরা যাক a, b ও c, B এর উপাদান। ধরে নিই a, b এর চেয়ে ছোট বা সমান, এবং b, c এর চেয়ে ছোট বা সমান। এটি একটি অনুমান।", "L": [["hyp", "a ≤ b   এবং   b ≤ c<span class='tag'>অনুমান</span>"]]},
+
+{"say": "সংজ্ঞা অনুযায়ী, এর অর্থ a প্লাস b সমান b, এবং b প্লাস c সমান c।", "L": [["hyp", "a ⊕ b = b<span class='tag'>অনুমান (a ≤ b)</span>"], ["hyp", "b ⊕ c = c<span class='tag'>অনুমান (b ≤ c)</span>"]]},
+
+{"say": "আমরা প্রমাণ করতে চাই যে a, c এর চেয়ে ছোট বা সমান। সংজ্ঞা অনুযায়ী, এর অর্থ a প্লাস c সমান c। বাম পক্ষ, a প্লাস c, থেকে শুরু করি।", "L": [["goal", "আমরা চাই:  a ⊕ c = c<span class='tag'>প্রামাণ্য, ≤ এর সংজ্ঞা অনুযায়ী</span>"], ["txt", "a ⊕ c"]]},
+
+{"say": "প্রথম ধাপ। আমরা দ্বিতীয় অনুমানটি ব্যবহার করি, b প্লাস c সমান c। ডান দিকের c কে b প্লাস c দিয়ে বদলাই।", "L": [["sub", "a ⊕ c  =  a ⊕ (b ⊕ c)<span class='tag'>অনুমান: b ⊕ c = c</span>"]]},
+
+{"say": "দ্বিতীয় ধাপ। আমরা যোগের সংযোজন ধর্ম প্রয়োগ করি: a প্লাস, b প্লাস c, সমান, a প্লাস b, প্লাস c।", "L": [["sub", "a ⊕ c  =  (a ⊕ b) ⊕ c<span class='tag'>⊕ এর সংযোজন</span>"]]},
+
+{"say": "তৃতীয় ধাপ। আমরা প্রথম অনুমানটি ব্যবহার করি: a প্লাস b সমান b। এটি চিহ্নিত করে প্রতিস্থাপন করি।", "L": [["sub", "a ⊕ c  =  (<mark>a ⊕ b</mark>) ⊕ c"], ["txt", "অনুমান:  <mark>a ⊕ b</mark> = b"], ["sub", "a ⊕ c  =  b ⊕ c<span class='tag'>অনুমান: a ⊕ b = b</span>"]]},
+
+{"say": "চতুর্থ ধাপ। আবার দ্বিতীয় অনুমানটি ব্যবহার করি: b প্লাস c সমান c।", "L": [["res", "a ⊕ c  =  c<span class='tag'>অনুমান: b ⊕ c = c</span>"], ["res", "a ≤ b  এবং  b ≤ c   ⟹   a ≤ c   ∎"]]},
+
+{"say": "আমরা তিনটি ধর্মই প্রমাণ করেছি। সুতরাং, ছোট বা সমান হলো B তে একটি আংশিক ক্রম সম্পর্ক। এখানেই প্রথম ভাগ শেষ।", "L": [["res", "≤ স্বসম্পর্কী, প্রতিসম-বিরোধী ও সংক্রমণশীল"], ["res", "≤ হলো B তে একটি আংশিক ক্রম   ∎"]]},
+
+{"title": "দ্বিতীয় ভাগ: ⊕ হলো সুপ্রিমাম", "clear": 1, "say": "এবার দ্বিতীয় ভাগ। মনে করি দুটি উপাদানের সুপ্রিমাম কী। এটি ঊর্ধ্বসীমাগুলোর মধ্যে ক্ষুদ্রতম। তাই আমাদের দুটি জিনিস প্রমাণ করতে হবে: a প্লাস b হলো a ও b এর একটি ঊর্ধ্বসীমা, এবং এটি সব ঊর্ধ্বসীমার মধ্যে ক্ষুদ্রতম। সেটের ক্ষেত্রে: A ও B এর সংযোগ A ও B কে ধারণ করে, এবং এমন সেটগুলোর মধ্যে এটিই ক্ষুদ্রতম।", "L": [["goal", "(i)  a ⊕ b একটি ঊর্ধ্বসীমা:  a ≤ a ⊕ b   এবং   b ≤ a ⊕ b"], ["goal", "(ii)  এটিই ক্ষুদ্রতম: যদি a ≤ c এবং b ≤ c, তবে a ⊕ b ≤ c"], ["txt", "সেটের ক্ষেত্রে:  A ⊆ A ∪ B,   B ⊆ A ∪ B,   এবং এটি A ও B ধারণকারী ক্ষুদ্রতম সেট"]]},
+
+{"say": "প্রথম ধর্মটি ল্যাটিসের একটি মৌলিক ফল: a, a প্লাস b এর চেয়ে ছোট বা সমান, এবং b, a প্লাস b এর চেয়ে ছোট বা সমান। তাই a প্লাস b হলো a ও b এর একটি ঊর্ধ্বসীমা। এটি আমরা বাঁ দিকে লিখে রাখি, কারণ এটি কাজে লাগবে। বাকি আছে প্রমাণ করা যে এটি ক্ষুদ্রতম।", "pin": ["(ঊর্ধ্বসীমা) a ≤ a ⊕ b,   b ≤ a ⊕ b"]},
+
+{"say": "ক্ষুদ্রতমতা। ধরা যাক c, B এর একটি উপাদান যা a ও b এর একটি ঊর্ধ্বসীমা। এর অর্থ a, c এর চেয়ে ছোট বা সমান, এবং b, c এর চেয়ে ছোট বা সমান। এটিই এই ভাগের অনুমান।", "L": [["txt", "ধরা যাক c ∈ B"], ["hyp", "a ≤ c   এবং   b ≤ c<span class='tag'>অনুমান: c একটি ঊর্ধ্বসীমা</span>"]]},
+
+{"say": "ছোট বা সমান এর সংজ্ঞা অনুযায়ী, এটি সমতুল্য a প্লাস c সমান c, এবং b প্লাস c সমান c এর সাথে।", "L": [["hyp", "a ⊕ c = c<span class='tag'>অনুমান (a ≤ c)</span>"], ["hyp", "b ⊕ c = c<span class='tag'>অনুমান (b ≤ c)</span>"]]},
+
+{"say": "আমরা প্রমাণ করতে চাই যে a প্লাস b, c এর চেয়ে ছোট বা সমান। সংজ্ঞা অনুযায়ী, এর অর্থ a প্লাস b, প্লাস c, সমান c। বাম পক্ষ থেকে শুরু করি।", "L": [["goal", "আমরা চাই:  (a ⊕ b) ⊕ c = c<span class='tag'>প্রামাণ্য, ≤ এর সংজ্ঞা অনুযায়ী</span>"], ["txt", "(a ⊕ b) ⊕ c"]]},
+
+{"say": "প্রথম ধাপ। আমরা যোগের সংযোজন ধর্ম প্রয়োগ করি: a প্লাস b, প্লাস c, সমান a প্লাস, b প্লাস c।", "L": [["sub", "(a ⊕ b) ⊕ c  =  a ⊕ (b ⊕ c)<span class='tag'>⊕ এর সংযোজন</span>"]]},
+
+{"say": "দ্বিতীয় ধাপ। আমরা অনুমান b প্লাস c সমান c ব্যবহার করি। এটি চিহ্নিত করে প্রতিস্থাপন করি।", "L": [["sub", "(a ⊕ b) ⊕ c  =  a ⊕ (<mark>b ⊕ c</mark>)"], ["txt", "অনুমান:  <mark>b ⊕ c</mark> = c"], ["sub", "(a ⊕ b) ⊕ c  =  a ⊕ c<span class='tag'>অনুমান: b ⊕ c = c</span>"]]},
+
+{"say": "তৃতীয় ধাপ। আমরা অনুমান a প্লাস c সমান c ব্যবহার করি।", "L": [["res", "(a ⊕ b) ⊕ c  =  c<span class='tag'>অনুমান: a ⊕ c = c</span>"]]},
+
+{"say": "সংজ্ঞা অনুযায়ী, এই সমতার অর্থ a প্লাস b, c এর চেয়ে ছোট বা সমান। যেহেতু c যেকোনো একটি ঊর্ধ্বসীমা ছিল, a প্লাস b সবগুলোর মধ্যে ক্ষুদ্রতম। ফলে, a প্লাস b হলো a ও b এর সুপ্রিমাম। সেটের ক্ষেত্রে, সংযোগ হলো A ও B ধারণকারী ক্ষুদ্রতম সেট। এখানেই দ্বিতীয় ভাগ শেষ।", "L": [["res", "(a ⊕ b) ⊕ c = c   ⟹   a ⊕ b ≤ c"], ["res", "a ⊕ b = sup{a, b}   ∎"], ["txt", "সেটের ক্ষেত্রে:  A ∪ B = sup{A, B}"]]},
+
+{"title": "তৃতীয় ভাগ: ⊙ হলো ইনফিমাম", "clear": 1, "say": "এবার তৃতীয় ভাগ। দুটি উপাদানের ইনফিমাম হলো নিম্নসীমাগুলোর মধ্যে বৃহত্তম। আমাদের প্রমাণ করতে হবে যে a গুণ b হলো a ও b এর একটি নিম্নসীমা, এবং এটি সব নিম্নসীমার মধ্যে বৃহত্তম। সেটের ক্ষেত্রে: A ও B এর ছেদ A এবং B উভয়ের অন্তর্ভুক্ত, এবং এমন সেটগুলোর মধ্যে এটিই বৃহত্তম।", "L": [["goal", "(i)  a ⊙ b একটি নিম্নসীমা:  a ⊙ b ≤ a   এবং   a ⊙ b ≤ b"], ["goal", "(ii)  এটিই বৃহত্তম: যদি c ≤ a এবং c ≤ b, তবে c ≤ a ⊙ b"], ["txt", "সেটের ক্ষেত্রে:  A ∩ B ⊆ A,   A ∩ B ⊆ B,   এবং এটি A ও B উভয়ের অন্তর্ভুক্ত বৃহত্তম সেট"]]},
+
+{"say": "আমরা ল্যাটিসের দুটি মৌলিক ফল ব্যবহার করব। প্রথমটি: a গুণ b, a এর চেয়ে ছোট বা সমান, এবং b এর চেয়ে ছোট বা সমান। তাই a গুণ b হলো a ও b এর একটি নিম্নসীমা। দ্বিতীয়টি ক্রমের একটি সমতুল্য বৈশিষ্ট্য: x, y এর চেয়ে ছোট বা সমান, যদি এবং কেবল যদি x গুণ y সমান x হয়। সেটের ক্ষেত্রে: A, B এর অন্তর্ভুক্ত, যদি এবং কেবল যদি A ছেদ B সমান A হয়। আর আমরা গুণের সংযোজন ধর্মও ব্যবহার করব: x গুণ, y গুণ z, সমান x গুণ y, গুণ z। এগুলো আমরা বাঁ দিকে লিখে রাখি।", "L": [["txt", "সেটের ক্ষেত্রে:  A ∩ B ⊆ A,   A ∩ B ⊆ B"], ["txt", "সেটের ক্ষেত্রে:  A ⊆ B  ⇔  A ∩ B = A"]], "pin": ["(নিম্নসীমা) a ⊙ b ≤ a,   a ⊙ b ≤ b", "(বৈশিষ্ট্য) x ≤ y ⇔ x ⊙ y = x", "(সংযো ⊙) x ⊙ (y ⊙ z) = (x ⊙ y) ⊙ z"]},
+
+{"say": "বৃহত্তমতা। ধরা যাক c, B এর একটি উপাদান যা a ও b এর একটি নিম্নসীমা। এর অর্থ c, a এর চেয়ে ছোট বা সমান, এবং c, b এর চেয়ে ছোট বা সমান। এটিই এই ভাগের অনুমান।", "L": [["txt", "ধরা যাক c ∈ B"], ["hyp", "c ≤ a   এবং   c ≤ b<span class='tag'>অনুমান: c একটি নিম্নসীমা</span>"]]},
+
+{"say": "গুণের মাধ্যমে ক্রমের বৈশিষ্ট্য অনুযায়ী, এটি সমতুল্য c গুণ a সমান c, এবং c গুণ b সমান c এর সাথে।", "L": [["hyp", "c ⊙ a = c<span class='tag'>অনুমান (c ≤ a), (বৈশিষ্ট্য) অনুযায়ী</span>"], ["hyp", "c ⊙ b = c<span class='tag'>অনুমান (c ≤ b), (বৈশিষ্ট্য) অনুযায়ী</span>"]]},
+
+{"say": "আমরা প্রমাণ করতে চাই যে c, a গুণ b এর চেয়ে ছোট বা সমান। আবার বৈশিষ্ট্য অনুযায়ী, এর অর্থ c গুণ, a গুণ b, সমান c। বাম পক্ষ থেকে শুরু করি।", "L": [["goal", "আমরা চাই:  c ⊙ (a ⊙ b) = c<span class='tag'>প্রামাণ্য, (বৈশিষ্ট্য) অনুযায়ী</span>"], ["txt", "c ⊙ (a ⊙ b)"]]},
+
+{"say": "প্রথম ধাপ। আমরা গুণের সংযোজন ধর্ম প্রয়োগ করি: c গুণ, a গুণ b, সমান, c গুণ a, গুণ b।", "L": [["sub", "c ⊙ (a ⊙ b)  =  (c ⊙ a) ⊙ b<span class='tag'>⊙ এর সংযোজন</span>"]]},
+
+{"say": "দ্বিতীয় ধাপ। আমরা অনুমান c গুণ a সমান c ব্যবহার করি। এটি চিহ্নিত করে প্রতিস্থাপন করি।", "L": [["sub", "c ⊙ (a ⊙ b)  =  (<mark>c ⊙ a</mark>) ⊙ b"], ["txt", "অনুমান:  <mark>c ⊙ a</mark> = c"], ["sub", "c ⊙ (a ⊙ b)  =  c ⊙ b<span class='tag'>অনুমান: c ⊙ a = c</span>"]]},
+
+{"say": "তৃতীয় ধাপ। আমরা অনুমান c গুণ b সমান c ব্যবহার করি।", "L": [["res", "c ⊙ (a ⊙ b)  =  c<span class='tag'>অনুমান: c ⊙ b = c</span>"]]},
+
+{"say": "বৈশিষ্ট্য অনুযায়ী, এই সমতার অর্থ c, a গুণ b এর চেয়ে ছোট বা সমান। যেহেতু c যেকোনো একটি নিম্নসীমা ছিল, a গুণ b সবগুলোর মধ্যে বৃহত্তম। ফলে, a গুণ b হলো a ও b এর ইনফিমাম। সেটের ক্ষেত্রে, ছেদ হলো A ও B উভয়ের অন্তর্ভুক্ত বৃহত্তম সেট। এখানেই তৃতীয় ভাগ শেষ।", "L": [["res", "c ⊙ (a ⊙ b) = c   ⟹   c ≤ a ⊙ b"], ["res", "a ⊙ b = inf{a, b}   ∎"], ["txt", "সেটের ক্ষেত্রে:  A ∩ B = inf{A, B}"]]},
+
+{"title": "সারসংক্ষেপ", "clear": 1, "say": "সংক্ষেপে বলি। যোগের মাধ্যমে ছোট বা সমান এর সংজ্ঞা দিয়ে, আমরা প্রমাণ করেছি যে এটি স্বসমতার কারণে স্বসম্পর্কী, বিনিময়ের কারণে প্রতিসম-বিরোধী, এবং সংযোজনের কারণে সংক্রমণশীল। তারপর দেখেছি যে a প্লাস b একটি ঊর্ধ্বসীমা, এবং এটি ক্ষুদ্রতম কারণ, যদি a প্লাস c এবং b প্লাস c সমান c হয়, তবে a প্লাস b, প্লাস c, ও সমান c। একইভাবে, a গুণ b একটি নিম্নসীমা এবং এটি বৃহত্তম। সেটের ক্ষেত্রে: অন্তর্ভুক্তির সাপেক্ষে সংযোগ হলো সুপ্রিমাম আর ছেদ হলো ইনফিমাম। দেখার জন্য ধন্যবাদ।", "L": [["res", "(1)  ≤ স্বসম্পর্কী, প্রতিসম-বিরোধী ও সংক্রমণশীল"], ["res", "(2)  a ⊕ b = sup{a, b}"], ["res", "(3)  a ⊙ b = inf{a, b}"], ["txt", "সেটের ক্ষেত্রে:  ∪ হলো সুপ্রিমাম,  ∩ হলো ইনফিমাম  (⊆ এর সাপেক্ষে)"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' প্লাস ').replace(/⊙/g,' গুণ ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ আবার চালান'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ চালিয়ে যান'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ বিরতি';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^bn/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/pradeep|bashkar|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="ক্রম, সুপ্রিমাম ও ইনফিমাম";$('sub').textContent="অনুশীলনী · বীজগাণিতিক ল্যাটিস";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

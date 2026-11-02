@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>الترتيب والحد الأعلى الأصغر والحد الأدنى الأكبر</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-inline-end:2px dashed #3d5a50;padding-inline-end:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-inline-start:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+span[dir='ltr']{white-space:nowrap}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>تذكّر</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ ابدأ</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>السرعة <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">وضع التسجيل (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ar-SA",
+"meta":{"nivel": 2, "titulo": "الترتيب والحد الأعلى الأصغر والحد الأدنى الأكبر", "enunciado": "لتكن <span dir='ltr'>(B, ⊕, ⊙)</span> شبكة، مع العلاقة  <span dir='ltr'>a ≤ b ⇔ a ⊕ b = b.</span>  أثبت أن <span dir='ltr'>≤</span> ترتيب جزئي وأنه لكل <span dir='ltr'>a, b ∈ B:</span>", "tesis": "a ⊕ b = sup{a, b},   a ⊙ b = inf{a, b}", "datos": ["(إبدال الجمع)  <span dir='ltr'>x ⊕ y = y ⊕ x</span>", "(تجميع الجمع)  <span dir='ltr'>x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z</span>", "(تساوي القوى)  <span dir='ltr'>x ⊕ x = x</span>", "(تجميع الضرب)  <span dir='ltr'>x ⊙ (y ⊙ z) = (x ⊙ y) ⊙ z</span>"]},
+"steps":[
+{"title": "الترتيب والحد الأعلى الأصغر والحد الأدنى الأكبر", "sub": "تمرين · الشبكات الجبرية", "clear": 1, "say": "مرحبًا. في هذا الفيديو سنحل تمرينًا عن الشبكات الجبرية. سنتقدم ببطء شديد، فنكتب كل معادلة ونبرر كل خطوة.", "L": [["txt", "الجمع هو الحد الأعلى الأصغر والضرب هو الحد الأدنى الأكبر لترتيب"]]},
+
+{"say": "أولًا، المعطيات. B مجموعة معرّف عليها عمليتان، جمع الشبكة وضرب الشبكة، وهي شبكة. أي أن العمليتين داخليتان، إبداليتان، تجميعيتان، وتحققان قانوني الامتصاص.", "L": [["hyp", "<span dir='ltr'>(B, ⊕, ⊙)</span> شبكة<span class='tag'>فرضية</span>"]]},
+
+{"say": "سنستخدم ثلاث خواص للجمع. الإبدالية: a زائد b يساوي b زائد a. التجميعية: a زائد، b زائد c، يساوي a زائد b، زائد c. وتساوي القوى، وهو مبرهنة في الشبكات: a زائد a يساوي a. نثبّتها على الجانب.", "pin": ["(إبدال الجمع) <span dir='ltr'>x ⊕ y = y ⊕ x</span>", "(تجميع الجمع) <span dir='ltr'>x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z</span>", "(تساوي القوى) <span dir='ltr'>x ⊕ x = x</span>"]},
+
+{"say": "والآن التعريف. نعرّف على B علاقة، أصغر من أو يساوي، على النحو التالي: a أصغر من أو يساوي b إذا وفقط إذا كان a زائد b يساوي b. وفي المجموعات هي الخاصية المعروفة: A محتواة في B إذا وفقط إذا كان A اتحاد B يساوي B.", "L": [["sub", "<span dir='ltr'>a ≤ b  ⇔  a ⊕ b = b</span><span class='tag'>تعريف <span dir='ltr'>≤</span></span>"], ["txt", "مع المجموعات:  <span dir='ltr'>A ⊆ B  ⇔  A ∪ B = B</span>"]]},
+
+{"say": "نسجل التعريف على الجانب، تحت الخواص السابقة، لأنه مفتاح التمرين.", "pin": ["(تعريف) <span dir='ltr'>a ≤ b ⇔ a ⊕ b = b</span>"]},
+
+{"say": "المطلوب إثباته ثلاثة أجزاء. أولًا: أن أصغر من أو يساوي علاقة ترتيب جزئي. ثانيًا: أن مجموع a و b هو الحد الأعلى الأصغر للمجموعة المكونة من a و b. وثالثًا: أن حاصل ضرب a و b هو الحد الأدنى الأكبر لهذه المجموعة. وفي المجموعات، بالنسبة إلى الاحتواء، الحد الأعلى الأصغر هو الاتحاد، والحد الأدنى الأكبر هو التقاطع.", "L": [["goal", "<span dir='ltr'>(1)</span>  العلاقة <span dir='ltr'>≤</span> ترتيب جزئي على <span dir='ltr'>B</span>"], ["goal", "<span dir='ltr'>(2)  a ⊕ b = sup{a, b}</span>"], ["goal", "<span dir='ltr'>(3)  a ⊙ b = inf{a, b}</span><span class='tag'>المطلوب</span>"], ["txt", "مع المجموعات:  <span dir='ltr'>sup = ∪,   inf = ∩</span>   (بالنسبة إلى الاحتواء)"]]},
+
+{"title": "الجزء الأول: علاقة ترتيب جزئي", "clear": 1, "say": "نبدأ بالجزء الأول. تكون العلاقة ترتيبًا جزئيًا إذا حققت ثلاث خواص: الانعكاسية، والتخالف، والتعدي. نثبتها واحدة تلو الأخرى.", "L": [["goal", "انعكاسية:  <span dir='ltr'>a ≤ a</span>"], ["goal", "تخالفية:  <span dir='ltr'>a ≤ b</span>  و  <span dir='ltr'>b ≤ a  ⇒  a = b</span>"], ["goal", "متعدية:  <span dir='ltr'>a ≤ b</span>  و  <span dir='ltr'>b ≤ c  ⇒  a ≤ c</span>"]]},
+
+{"title": "الانعكاسية", "clear": 1, "say": "الانعكاسية. ليكن a عنصرًا ما من B. نريد إثبات أن a أصغر من أو يساوي a.", "L": [["txt", "ليكن <span dir='ltr'>a ∈ B</span>  (اختياري)"], ["goal", "نريد:  <span dir='ltr'>a ≤ a</span><span class='tag'>المطلوب</span>"]]},
+
+{"say": "بحسب التعريف، مع b يساوي a، يكون a أصغر من أو يساوي a إذا وفقط إذا كان a زائد a يساوي a.", "L": [["sub", "<span dir='ltr'>a ≤ a  ⇔  a ⊕ a = a</span><span class='tag'>التعريف مع <span dir='ltr'>b = a</span></span>"]]},
+
+{"say": "وهذه المساواة هي تمامًا خاصية تساوي القوى للجمع. إذن، a أصغر من أو يساوي a.", "L": [["res", "<span dir='ltr'>a ⊕ a = a   ⟹   a ≤ a   ∎</span><span class='tag'>تساوي القوى للجمع</span>"]]},
+
+{"title": "التخالف", "clear": 1, "say": "التخالف. ليكن a و b عنصرين من B. نفترض أن a أصغر من أو يساوي b، وأن b أصغر من أو يساوي a. هذه فرضية.", "L": [["hyp", "<span dir='ltr'>a ≤ b</span>   و   <span dir='ltr'>b ≤ a</span><span class='tag'>فرضية</span>"]]},
+
+{"say": "بحسب التعريف، تعني المتباينة الأولى أن a زائد b يساوي b. وتعني الثانية أن b زائد a يساوي a.", "L": [["hyp", "<span dir='ltr'>a ⊕ b = b</span><span class='tag'>فرضية <span dir='ltr'>(a ≤ b)</span></span>"], ["hyp", "<span dir='ltr'>b ⊕ a = a</span><span class='tag'>فرضية <span dir='ltr'>(b ≤ a)</span></span>"]]},
+
+{"say": "نريد إثبات أن a يساوي b. ننطلق من الطرف الأيسر، a.", "L": [["goal", "نريد:  <span dir='ltr'>a = b</span><span class='tag'>المطلوب</span>"], ["txt", "<span dir='ltr'>a</span>"]]},
+
+{"say": "الخطوة الأولى. نستخدم الفرضية الثانية، التي تقول إن b زائد a يساوي a. نستبدل a بـ b زائد a.", "L": [["sub", "<span dir='ltr'>a  =  b ⊕ a</span><span class='tag'>فرضية: <span dir='ltr'>b ⊕ a = a</span></span>"]]},
+
+{"say": "الخطوة الثانية. نطبق إبدالية الجمع: b زائد a يساوي a زائد b.", "L": [["sub", "<span dir='ltr'>a  =  a ⊕ b</span><span class='tag'>إبدالية الجمع</span>"]]},
+
+{"say": "الخطوة الثالثة. نستخدم الفرضية الأولى، التي تقول إن a زائد b يساوي b. نعوّض.", "L": [["res", "<span dir='ltr'>a  =  b</span><span class='tag'>فرضية: <span dir='ltr'>a ⊕ b = b</span></span>"], ["res", "<span dir='ltr'>a ≤ b</span>  و  <span dir='ltr'>b ≤ a   ⟹   a = b   ∎</span>"]]},
+
+{"title": "التعدي", "clear": 1, "say": "التعدي. لتكن a و b و c عناصر من B. نفترض أن a أصغر من أو يساوي b، وأن b أصغر من أو يساوي c. هذه فرضية.", "L": [["hyp", "<span dir='ltr'>a ≤ b</span>   و   <span dir='ltr'>b ≤ c</span><span class='tag'>فرضية</span>"]]},
+
+{"say": "بحسب التعريف، يعني هذا أن a زائد b يساوي b، وأن b زائد c يساوي c.", "L": [["hyp", "<span dir='ltr'>a ⊕ b = b</span><span class='tag'>فرضية <span dir='ltr'>(a ≤ b)</span></span>"], ["hyp", "<span dir='ltr'>b ⊕ c = c</span><span class='tag'>فرضية <span dir='ltr'>(b ≤ c)</span></span>"]]},
+
+{"say": "نريد إثبات أن a أصغر من أو يساوي c. وبحسب التعريف، يعني هذا أن a زائد c يساوي c. ننطلق من الطرف الأيسر، a زائد c.", "L": [["goal", "نريد:  <span dir='ltr'>a ⊕ c = c</span><span class='tag'>المطلوب، بحسب تعريف <span dir='ltr'>≤</span></span>"], ["txt", "<span dir='ltr'>a ⊕ c</span>"]]},
+
+{"say": "الخطوة الأولى. نستخدم الفرضية الثانية، b زائد c يساوي c. نستبدل c التي على اليمين بـ b زائد c.", "L": [["sub", "<span dir='ltr'>a ⊕ c  =  a ⊕ (b ⊕ c)</span><span class='tag'>فرضية: <span dir='ltr'>b ⊕ c = c</span></span>"]]},
+
+{"say": "الخطوة الثانية. نطبق تجميعية الجمع: a زائد، b زائد c، يساوي، a زائد b، زائد c.", "L": [["sub", "<span dir='ltr'>a ⊕ c  =  (a ⊕ b) ⊕ c</span><span class='tag'>تجميعية الجمع</span>"]]},
+
+{"say": "الخطوة الثالثة. نستخدم الفرضية الأولى: a زائد b يساوي b. نميّزها ونعوّض.", "L": [["sub", "<span dir='ltr'>a ⊕ c  =  (<mark>a ⊕ b</mark>) ⊕ c</span>"], ["txt", "فرضية:  <span dir='ltr'><mark>a ⊕ b</mark> = b</span>"], ["sub", "<span dir='ltr'>a ⊕ c  =  b ⊕ c</span><span class='tag'>فرضية: <span dir='ltr'>a ⊕ b = b</span></span>"]]},
+
+{"say": "الخطوة الرابعة. نستخدم الفرضية الثانية مرة أخرى: b زائد c يساوي c.", "L": [["res", "<span dir='ltr'>a ⊕ c  =  c</span><span class='tag'>فرضية: <span dir='ltr'>b ⊕ c = c</span></span>"], ["res", "<span dir='ltr'>a ≤ b</span>  و  <span dir='ltr'>b ≤ c   ⟹   a ≤ c   ∎</span>"]]},
+
+{"say": "لقد أثبتنا الخواص الثلاث. إذن، أصغر من أو يساوي علاقة ترتيب جزئي على B. وبهذا ينتهي الجزء الأول.", "L": [["res", "العلاقة <span dir='ltr'>≤</span> انعكاسية وتخالفية ومتعدية"], ["res", "العلاقة <span dir='ltr'>≤</span> ترتيب جزئي على <span dir='ltr'>B   ∎</span>"]]},
+
+{"title": "الجزء الثاني: الجمع هو الحد الأعلى الأصغر", "clear": 1, "say": "ننتقل إلى الجزء الثاني. لنتذكر ما هو الحد الأعلى الأصغر لعنصرين. إنه أصغر الحدود العليا. لذلك علينا إثبات أمرين: أن a زائد b حد أعلى لـ a و b، وأنه أصغر جميع الحدود العليا. وفي المجموعات: اتحاد A و B يحوي A و B، وهو أصغر مجموعة تحقق ذلك.", "L": [["goal", "<span dir='ltr'>(i)  a ⊕ b</span> حد أعلى:  <span dir='ltr'>a ≤ a ⊕ b</span>   و   <span dir='ltr'>b ≤ a ⊕ b</span>"], ["goal", "<span dir='ltr'>(ii)</span>  هو الأصغر: إذا كان <span dir='ltr'>a ≤ c</span> و <span dir='ltr'>b ≤ c</span> فإن <span dir='ltr'>a ⊕ b ≤ c</span>"], ["txt", "مع المجموعات:  <span dir='ltr'>A ⊆ A ∪ B,   B ⊆ A ∪ B,</span>   وهي أصغر مجموعة تحوي <span dir='ltr'>A</span> و <span dir='ltr'>B</span>"]]},
+
+{"say": "الخاصية الأولى نتيجة أساسية في الشبكات: a أصغر من أو يساوي a زائد b، و b أصغر من أو يساوي a زائد b. إذن a زائد b حد أعلى لـ a و b. نسجلها على الجانب لأننا سنستخدمها. يبقى أن نثبت أنه الأصغر.", "pin": ["(حد أعلى) <span dir='ltr'>a ≤ a ⊕ b,   b ≤ a ⊕ b</span>"]},
+
+{"say": "الأصغرية. ليكن c عنصرًا من B وهو حد أعلى لـ a و b. أي أن a أصغر من أو يساوي c، و b أصغر من أو يساوي c. هذه فرضية هذا الجزء.", "L": [["txt", "ليكن <span dir='ltr'>c ∈ B</span>"], ["hyp", "<span dir='ltr'>a ≤ c</span>   و   <span dir='ltr'>b ≤ c</span><span class='tag'>فرضية: <span dir='ltr'>c</span> حد أعلى</span>"]]},
+
+{"say": "بحسب تعريف أصغر من أو يساوي، هذا يكافئ أن a زائد c يساوي c، وأن b زائد c يساوي c.", "L": [["hyp", "<span dir='ltr'>a ⊕ c = c</span><span class='tag'>فرضية <span dir='ltr'>(a ≤ c)</span></span>"], ["hyp", "<span dir='ltr'>b ⊕ c = c</span><span class='tag'>فرضية <span dir='ltr'>(b ≤ c)</span></span>"]]},
+
+{"say": "نريد إثبات أن a زائد b أصغر من أو يساوي c. وبحسب التعريف، يعني هذا أن، a زائد b، زائد c، يساوي c. ننطلق من الطرف الأيسر.", "L": [["goal", "نريد:  <span dir='ltr'>(a ⊕ b) ⊕ c = c</span><span class='tag'>المطلوب، بحسب تعريف <span dir='ltr'>≤</span></span>"], ["txt", "<span dir='ltr'>(a ⊕ b) ⊕ c</span>"]]},
+
+{"say": "الخطوة الأولى. نطبق تجميعية الجمع: a زائد b، زائد c، يساوي a زائد، b زائد c.", "L": [["sub", "<span dir='ltr'>(a ⊕ b) ⊕ c  =  a ⊕ (b ⊕ c)</span><span class='tag'>تجميعية الجمع</span>"]]},
+
+{"say": "الخطوة الثانية. نستخدم الفرضية b زائد c يساوي c. نميّزها ونعوّض.", "L": [["sub", "<span dir='ltr'>(a ⊕ b) ⊕ c  =  a ⊕ (<mark>b ⊕ c</mark>)</span>"], ["txt", "فرضية:  <span dir='ltr'><mark>b ⊕ c</mark> = c</span>"], ["sub", "<span dir='ltr'>(a ⊕ b) ⊕ c  =  a ⊕ c</span><span class='tag'>فرضية: <span dir='ltr'>b ⊕ c = c</span></span>"]]},
+
+{"say": "الخطوة الثالثة. نستخدم الفرضية a زائد c يساوي c.", "L": [["res", "<span dir='ltr'>(a ⊕ b) ⊕ c  =  c</span><span class='tag'>فرضية: <span dir='ltr'>a ⊕ c = c</span></span>"]]},
+
+{"say": "بحسب التعريف، تعني هذه المساواة أن a زائد b أصغر من أو يساوي c. وبما أن c كان حدًا أعلى ما، فإن a زائد b هو أصغرها جميعًا. وبالتالي، a زائد b هو الحد الأعلى الأصغر لـ a و b. وفي المجموعات، الاتحاد هو أصغر مجموعة تحوي A و B. وبهذا ينتهي الجزء الثاني.", "L": [["res", "<span dir='ltr'>(a ⊕ b) ⊕ c = c   ⟹   a ⊕ b ≤ c</span>"], ["res", "<span dir='ltr'>a ⊕ b = sup{a, b}   ∎</span>"], ["txt", "مع المجموعات:  <span dir='ltr'>A ∪ B = sup{A, B}</span>"]]},
+
+{"title": "الجزء الثالث: الضرب هو الحد الأدنى الأكبر", "clear": 1, "say": "ننتقل إلى الجزء الثالث. الحد الأدنى الأكبر لعنصرين هو أكبر الحدود الدنيا. علينا إثبات أن a ضرب b حد أدنى لـ a و b، وأنه أكبر جميع الحدود الدنيا. وفي المجموعات: تقاطع A و B محتوى في A وفي B، وهو أكبر مجموعة تحقق ذلك.", "L": [["goal", "<span dir='ltr'>(i)  a ⊙ b</span> حد أدنى:  <span dir='ltr'>a ⊙ b ≤ a</span>   و   <span dir='ltr'>a ⊙ b ≤ b</span>"], ["goal", "<span dir='ltr'>(ii)</span>  هو الأكبر: إذا كان <span dir='ltr'>c ≤ a</span> و <span dir='ltr'>c ≤ b</span> فإن <span dir='ltr'>c ≤ a ⊙ b</span>"], ["txt", "مع المجموعات:  <span dir='ltr'>A ∩ B ⊆ A,   A ∩ B ⊆ B,</span>   وهي أكبر مجموعة محتواة في <span dir='ltr'>A</span> وفي <span dir='ltr'>B</span>"]]},
+
+{"say": "سنستخدم نتيجتين أساسيتين في الشبكات. الأولى: a ضرب b أصغر من أو يساوي a، وأصغر من أو يساوي b. إذن a ضرب b حد أدنى لـ a و b. والثانية توصيف مكافئ للترتيب: x أصغر من أو يساوي y إذا وفقط إذا كان x ضرب y يساوي x. وفي المجموعات: A محتواة في B إذا وفقط إذا كان A تقاطع B يساوي A. وسنستخدم أيضًا تجميعية الضرب: x ضرب، y ضرب z، يساوي x ضرب y، ضرب z. نسجلها على الجانب.", "L": [["txt", "مع المجموعات:  <span dir='ltr'>A ∩ B ⊆ A,   A ∩ B ⊆ B</span>"], ["txt", "مع المجموعات:  <span dir='ltr'>A ⊆ B  ⇔  A ∩ B = A</span>"]], "pin": ["(حد أدنى) <span dir='ltr'>a ⊙ b ≤ a,   a ⊙ b ≤ b</span>", "(توصيف) <span dir='ltr'>x ≤ y ⇔ x ⊙ y = x</span>", "(تجميع الضرب) <span dir='ltr'>x ⊙ (y ⊙ z) = (x ⊙ y) ⊙ z</span>"]},
+
+{"say": "الأكبرية. ليكن c عنصرًا من B وهو حد أدنى لـ a و b. أي أن c أصغر من أو يساوي a، و c أصغر من أو يساوي b. هذه فرضية هذا الجزء.", "L": [["txt", "ليكن <span dir='ltr'>c ∈ B</span>"], ["hyp", "<span dir='ltr'>c ≤ a</span>   و   <span dir='ltr'>c ≤ b</span><span class='tag'>فرضية: <span dir='ltr'>c</span> حد أدنى</span>"]]},
+
+{"say": "بحسب توصيف الترتيب بالضرب، هذا يكافئ أن c ضرب a يساوي c، وأن c ضرب b يساوي c.", "L": [["hyp", "<span dir='ltr'>c ⊙ a = c</span><span class='tag'>فرضية <span dir='ltr'>(c ≤ a)</span>، بحسب (توصيف)</span>"], ["hyp", "<span dir='ltr'>c ⊙ b = c</span><span class='tag'>فرضية <span dir='ltr'>(c ≤ b)</span>، بحسب (توصيف)</span>"]]},
+
+{"say": "نريد إثبات أن c أصغر من أو يساوي a ضرب b. ومرة أخرى بحسب التوصيف، يعني هذا أن c ضرب، a ضرب b، يساوي c. ننطلق من الطرف الأيسر.", "L": [["goal", "نريد:  <span dir='ltr'>c ⊙ (a ⊙ b) = c</span><span class='tag'>المطلوب، بحسب (توصيف)</span>"], ["txt", "<span dir='ltr'>c ⊙ (a ⊙ b)</span>"]]},
+
+{"say": "الخطوة الأولى. نطبق تجميعية الضرب: c ضرب، a ضرب b، يساوي، c ضرب a، ضرب b.", "L": [["sub", "<span dir='ltr'>c ⊙ (a ⊙ b)  =  (c ⊙ a) ⊙ b</span><span class='tag'>تجميعية الضرب</span>"]]},
+
+{"say": "الخطوة الثانية. نستخدم الفرضية c ضرب a يساوي c. نميّزها ونعوّض.", "L": [["sub", "<span dir='ltr'>c ⊙ (a ⊙ b)  =  (<mark>c ⊙ a</mark>) ⊙ b</span>"], ["txt", "فرضية:  <span dir='ltr'><mark>c ⊙ a</mark> = c</span>"], ["sub", "<span dir='ltr'>c ⊙ (a ⊙ b)  =  c ⊙ b</span><span class='tag'>فرضية: <span dir='ltr'>c ⊙ a = c</span></span>"]]},
+
+{"say": "الخطوة الثالثة. نستخدم الفرضية c ضرب b يساوي c.", "L": [["res", "<span dir='ltr'>c ⊙ (a ⊙ b)  =  c</span><span class='tag'>فرضية: <span dir='ltr'>c ⊙ b = c</span></span>"]]},
+
+{"say": "بحسب التوصيف، تعني هذه المساواة أن c أصغر من أو يساوي a ضرب b. وبما أن c كان حدًا أدنى ما، فإن a ضرب b هو أكبرها جميعًا. وبالتالي، a ضرب b هو الحد الأدنى الأكبر لـ a و b. وفي المجموعات، التقاطع هو أكبر مجموعة محتواة في A وفي B. وبهذا ينتهي الجزء الثالث.", "L": [["res", "<span dir='ltr'>c ⊙ (a ⊙ b) = c   ⟹   c ≤ a ⊙ b</span>"], ["res", "<span dir='ltr'>a ⊙ b = inf{a, b}   ∎</span>"], ["txt", "مع المجموعات:  <span dir='ltr'>A ∩ B = inf{A, B}</span>"]]},
+
+{"title": "الخلاصة", "clear": 1, "say": "نلخص. بتعريف أصغر من أو يساوي عن طريق الجمع، أثبتنا أنها انعكاسية بفضل تساوي القوى، وتخالفية بفضل الإبدالية، ومتعدية بفضل التجميعية. ثم رأينا أن a زائد b حد أعلى، وأنه الأصغر لأنه إذا كان a زائد c و b زائد c يساويان c، فإن a زائد b، زائد c، يساوي c أيضًا. وبالمثل، a ضرب b حد أدنى وهو الأكبر. وفي المجموعات: بالنسبة إلى الاحتواء، الاتحاد هو الحد الأعلى الأصغر والتقاطع هو الحد الأدنى الأكبر. شكرًا على المشاهدة.", "L": [["res", "<span dir='ltr'>(1)</span>  العلاقة <span dir='ltr'>≤</span> انعكاسية وتخالفية ومتعدية"], ["res", "<span dir='ltr'>(2)  a ⊕ b = sup{a, b}</span>"], ["res", "<span dir='ltr'>(3)  a ⊙ b = inf{a, b}</span>"], ["txt", "مع المجموعات:  الاتحاد هو الحد الأعلى الأصغر،  والتقاطع هو الحد الأدنى الأكبر"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' زائد ').replace(/⊙/g,' ضرب ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ إعادة'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ متابعة'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ إيقاف مؤقت';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ إيقاف مؤقت';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ إيقاف مؤقت';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ar/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/hamed|shakir|naayf|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="الترتيب والحد الأعلى الأصغر والحد الأدنى الأكبر";$('sub').textContent="تمرين · الشبكات الجبرية";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>序、上确界与下确界</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>备忘</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ 开始</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>语速 <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">录制模式 (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"zh-CN",
+"meta":{"nivel": 2, "titulo": "序、上确界与下确界", "enunciado": "设 (B, ⊕, ⊙) 是一个格，关系定义为  a ≤ b ⇔ a ⊕ b = b。证明 ≤ 是偏序，并且对任意 a, b ∈ B，", "tesis": "a ⊕ b = sup{a, b},   a ⊙ b = inf{a, b}", "datos": ["(交换 ⊕)  x ⊕ y = y ⊕ x", "(结合 ⊕)  x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(幂等 ⊕)  x ⊕ x = x", "(结合 ⊙)  x ⊙ (y ⊙ z) = (x ⊙ y) ⊙ z"]},
+"steps":[
+{"title": "序、上确界与下确界", "sub": "练习 · 代数格", "clear": 1, "say": "你好。在这个视频里，我们来解一道关于代数格的练习。我们会讲得很慢，写出每一个等式，并说明每一步的理由。", "L": [["txt", "加法是一个序的上确界，乘法是它的下确界"]]},
+
+{"say": "首先是已知条件。B 是一个带有两种运算的集合，即格的加法和格的乘法，并且它是一个格。也就是说，这两种运算都是封闭的、可交换的、可结合的，并且满足吸收律。", "L": [["hyp", "(B, ⊕, ⊙) 是格<span class='tag'>假设</span>"]]},
+
+{"say": "我们要用到加法的三个性质。交换律：a 加 b 等于 b 加 a。结合律：a 加上 b 加 c 的和，等于 a 加 b 的和再加 c。还有幂等律，这是格的一个定理：a 加 a 等于 a。我们把它们固定在左边。", "pin": ["(交换 ⊕) x ⊕ y = y ⊕ x", "(结合 ⊕) x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(幂等 ⊕) x ⊕ x = x"]},
+
+{"say": "现在是定义。在 B 上我们这样定义一个关系，叫做小于或等于：a 小于或等于 b，当且仅当 a 加 b 等于 b。对集合来说，这就是我们熟悉的性质：A 包含于 B，当且仅当 A 并 B 等于 B。", "L": [["sub", "a ≤ b  ⇔  a ⊕ b = b<span class='tag'>≤ 的定义</span>"], ["txt", "对集合：  A ⊆ B  ⇔  A ∪ B = B"]]},
+
+{"say": "我们把这个定义记在左边，放在前面那些性质的下面，因为它是这道题的关键。", "pin": ["(定义) a ≤ b ⇔ a ⊕ b = b"]},
+
+{"say": "我们要证明的内容有三部分。第一：小于或等于是一个偏序关系。第二：a 与 b 的和是由 a 和 b 组成的集合的上确界。第三：a 与 b 的积是这个集合的下确界。对集合来说，关于包含关系，上确界就是并集，下确界就是交集。", "L": [["goal", "(1)  ≤ 是 B 上的偏序关系"], ["goal", "(2)  a ⊕ b = sup{a, b}"], ["goal", "(3)  a ⊙ b = inf{a, b}<span class='tag'>结论</span>"], ["txt", "对集合：  sup = ∪，  inf = ∩  （关于 ⊆）"]]},
+
+{"title": "第一部分：≤ 是偏序", "clear": 1, "say": "我们从第一部分开始。一个关系是偏序，如果它满足三个性质：自反性、反对称性和传递性。我们逐一证明。", "L": [["goal", "自反性：  a ≤ a"], ["goal", "反对称性：  a ≤ b  且  b ≤ a  ⇒  a = b"], ["goal", "传递性：  a ≤ b  且  b ≤ c  ⇒  a ≤ c"]]},
+
+{"title": "自反性", "clear": 1, "say": "自反性。设 a 是 B 中任意一个元素。我们要证明 a 小于或等于 a。", "L": [["txt", "设 a ∈ B  （任意）"], ["goal", "要证：  a ≤ a<span class='tag'>结论</span>"]]},
+
+{"say": "根据定义，取 b 等于 a，a 小于或等于 a，当且仅当 a 加 a 等于 a。", "L": [["sub", "a ≤ a  ⇔  a ⊕ a = a<span class='tag'>定义，取 b = a</span>"]]},
+
+{"say": "而这个等式正是加法的幂等律。所以，a 小于或等于 a。", "L": [["res", "a ⊕ a = a   ⟹   a ≤ a   ∎<span class='tag'>⊕ 的幂等律</span>"]]},
+
+{"title": "反对称性", "clear": 1, "say": "反对称性。设 a 和 b 是 B 中的两个元素。假设 a 小于或等于 b，并且 b 小于或等于 a。这是假设。", "L": [["hyp", "a ≤ b   且   b ≤ a<span class='tag'>假设</span>"]]},
+
+{"say": "根据定义，第一个不等式的意思是 a 加 b 等于 b。第二个的意思是 b 加 a 等于 a。", "L": [["hyp", "a ⊕ b = b<span class='tag'>假设 (a ≤ b)</span>"], ["hyp", "b ⊕ a = a<span class='tag'>假设 (b ≤ a)</span>"]]},
+
+{"say": "我们要证明 a 等于 b。我们从左边 a 出发。", "L": [["goal", "要证：  a = b<span class='tag'>结论</span>"], ["txt", "a"]]},
+
+{"say": "第一步。我们使用第二个假设，它说 b 加 a 等于 a。把 a 换成 b 加 a。", "L": [["sub", "a  =  b ⊕ a<span class='tag'>假设： b ⊕ a = a</span>"]]},
+
+{"say": "第二步。应用加法交换律：b 加 a 等于 a 加 b。", "L": [["sub", "a  =  a ⊕ b<span class='tag'>⊕ 的交换律</span>"]]},
+
+{"say": "第三步。我们使用第一个假设，它说 a 加 b 等于 b。代入。", "L": [["res", "a  =  b<span class='tag'>假设： a ⊕ b = b</span>"], ["res", "a ≤ b  且  b ≤ a   ⟹   a = b   ∎"]]},
+
+{"title": "传递性", "clear": 1, "say": "传递性。设 a、b 和 c 是 B 中的元素。假设 a 小于或等于 b，并且 b 小于或等于 c。这是假设。", "L": [["hyp", "a ≤ b   且   b ≤ c<span class='tag'>假设</span>"]]},
+
+{"say": "根据定义，这意味着 a 加 b 等于 b，并且 b 加 c 等于 c。", "L": [["hyp", "a ⊕ b = b<span class='tag'>假设 (a ≤ b)</span>"], ["hyp", "b ⊕ c = c<span class='tag'>假设 (b ≤ c)</span>"]]},
+
+{"say": "我们要证明 a 小于或等于 c。根据定义，这意味着 a 加 c 等于 c。我们从左边 a 加 c 出发。", "L": [["goal", "要证：  a ⊕ c = c<span class='tag'>结论，由 ≤ 的定义</span>"], ["txt", "a ⊕ c"]]},
+
+{"say": "第一步。我们使用第二个假设，b 加 c 等于 c。把右边的 c 换成 b 加 c。", "L": [["sub", "a ⊕ c  =  a ⊕ (b ⊕ c)<span class='tag'>假设： b ⊕ c = c</span>"]]},
+
+{"say": "第二步。应用加法结合律：a 加上 b 加 c 的和，等于 a 加 b 的和再加 c。", "L": [["sub", "a ⊕ c  =  (a ⊕ b) ⊕ c<span class='tag'>⊕ 的结合律</span>"]]},
+
+{"say": "第三步。我们使用第一个假设：a 加 b 等于 b。把它标出来并代入。", "L": [["sub", "a ⊕ c  =  (<mark>a ⊕ b</mark>) ⊕ c"], ["txt", "假设：  <mark>a ⊕ b</mark> = b"], ["sub", "a ⊕ c  =  b ⊕ c<span class='tag'>假设： a ⊕ b = b</span>"]]},
+
+{"say": "第四步。再次使用第二个假设：b 加 c 等于 c。", "L": [["res", "a ⊕ c  =  c<span class='tag'>假设： b ⊕ c = c</span>"], ["res", "a ≤ b  且  b ≤ c   ⟹   a ≤ c   ∎"]]},
+
+{"say": "三个性质都证明了。所以，小于或等于是 B 上的偏序关系。第一部分到此结束。", "L": [["res", "≤ 是自反的、反对称的、传递的"], ["res", "≤ 是 B 上的偏序   ∎"]]},
+
+{"title": "第二部分：⊕ 是上确界", "clear": 1, "say": "下面是第二部分。我们回忆一下两个元素的上确界是什么。它是所有上界中最小的那个。所以我们要证明两件事：a 加 b 是 a 和 b 的上界，并且它是所有上界中最小的。对集合来说：A 与 B 的并集包含 A 和 B，并且它是满足这一点的最小集合。", "L": [["goal", "(i)  a ⊕ b 是上界：  a ≤ a ⊕ b   且   b ≤ a ⊕ b"], ["goal", "(ii)  它是最小的：若 a ≤ c 且 b ≤ c，则 a ⊕ b ≤ c"], ["txt", "对集合：  A ⊆ A ∪ B，  B ⊆ A ∪ B，  并且它是包含 A 和 B 的最小集合"]]},
+
+{"say": "第一个性质是格的一个基本结论：a 小于或等于 a 加 b，b 也小于或等于 a 加 b。所以 a 加 b 是 a 和 b 的上界。我们把它记在左边，因为后面要用。还需要证明它是最小的。", "pin": ["(上界) a ≤ a ⊕ b,   b ≤ a ⊕ b"]},
+
+{"say": "最小性。设 c 是 B 中的一个元素，并且是 a 和 b 的上界。这意味着 a 小于或等于 c，b 也小于或等于 c。这是这一部分的假设。", "L": [["txt", "设 c ∈ B"], ["hyp", "a ≤ c   且   b ≤ c<span class='tag'>假设： c 是上界</span>"]]},
+
+{"say": "根据小于或等于的定义，这等价于 a 加 c 等于 c，并且 b 加 c 等于 c。", "L": [["hyp", "a ⊕ c = c<span class='tag'>假设 (a ≤ c)</span>"], ["hyp", "b ⊕ c = c<span class='tag'>假设 (b ≤ c)</span>"]]},
+
+{"say": "我们要证明 a 加 b 小于或等于 c。根据定义，这意味着 a 加 b 的和再加 c，等于 c。我们从左边出发。", "L": [["goal", "要证：  (a ⊕ b) ⊕ c = c<span class='tag'>结论，由 ≤ 的定义</span>"], ["txt", "(a ⊕ b) ⊕ c"]]},
+
+{"say": "第一步。应用加法结合律：a 加 b 的和再加 c，等于 a 加上 b 加 c 的和。", "L": [["sub", "(a ⊕ b) ⊕ c  =  a ⊕ (b ⊕ c)<span class='tag'>⊕ 的结合律</span>"]]},
+
+{"say": "第二步。使用假设 b 加 c 等于 c。把它标出来并代入。", "L": [["sub", "(a ⊕ b) ⊕ c  =  a ⊕ (<mark>b ⊕ c</mark>)"], ["txt", "假设：  <mark>b ⊕ c</mark> = c"], ["sub", "(a ⊕ b) ⊕ c  =  a ⊕ c<span class='tag'>假设： b ⊕ c = c</span>"]]},
+
+{"say": "第三步。使用假设 a 加 c 等于 c。", "L": [["res", "(a ⊕ b) ⊕ c  =  c<span class='tag'>假设： a ⊕ c = c</span>"]]},
+
+{"say": "根据定义，这个等式意味着 a 加 b 小于或等于 c。因为 c 是任意一个上界，所以 a 加 b 是所有上界中最小的。因此，a 加 b 是 a 和 b 的上确界。对集合来说，并集是包含 A 和 B 的最小集合。第二部分到此结束。", "L": [["res", "(a ⊕ b) ⊕ c = c   ⟹   a ⊕ b ≤ c"], ["res", "a ⊕ b = sup{a, b}   ∎"], ["txt", "对集合：  A ∪ B = sup{A, B}"]]},
+
+{"title": "第三部分：⊙ 是下确界", "clear": 1, "say": "下面是第三部分。两个元素的下确界是所有下界中最大的那个。我们要证明 a 乘 b 是 a 和 b 的下界，并且它是所有下界中最大的。对集合来说：A 与 B 的交集包含于 A，也包含于 B，并且它是满足这一点的最大集合。", "L": [["goal", "(i)  a ⊙ b 是下界：  a ⊙ b ≤ a   且   a ⊙ b ≤ b"], ["goal", "(ii)  它是最大的：若 c ≤ a 且 c ≤ b，则 c ≤ a ⊙ b"], ["txt", "对集合：  A ∩ B ⊆ A，  A ∩ B ⊆ B，  并且它是同时包含于 A 和 B 的最大集合"]]},
+
+{"say": "我们要用到格的两个基本结论。第一个：a 乘 b 小于或等于 a，也小于或等于 b。所以 a 乘 b 是 a 和 b 的下界。第二个是序的一个等价刻画：x 小于或等于 y，当且仅当 x 乘 y 等于 x。对集合来说：A 包含于 B，当且仅当 A 交 B 等于 A。我们还会用到乘法结合律：x 乘以 y 乘 z 的积，等于 x 乘 y 的积再乘 z。我们把它们记在左边。", "L": [["txt", "对集合：  A ∩ B ⊆ A,   A ∩ B ⊆ B"], ["txt", "对集合：  A ⊆ B  ⇔  A ∩ B = A"]], "pin": ["(下界) a ⊙ b ≤ a,   a ⊙ b ≤ b", "(刻画) x ≤ y ⇔ x ⊙ y = x", "(结合 ⊙) x ⊙ (y ⊙ z) = (x ⊙ y) ⊙ z"]},
+
+{"say": "最大性。设 c 是 B 中的一个元素，并且是 a 和 b 的下界。这意味着 c 小于或等于 a，c 也小于或等于 b。这是这一部分的假设。", "L": [["txt", "设 c ∈ B"], ["hyp", "c ≤ a   且   c ≤ b<span class='tag'>假设： c 是下界</span>"]]},
+
+{"say": "根据用乘法给出的序的刻画，这等价于 c 乘 a 等于 c，并且 c 乘 b 等于 c。", "L": [["hyp", "c ⊙ a = c<span class='tag'>假设 (c ≤ a)，由 (刻画)</span>"], ["hyp", "c ⊙ b = c<span class='tag'>假设 (c ≤ b)，由 (刻画)</span>"]]},
+
+{"say": "我们要证明 c 小于或等于 a 乘 b。再次根据这个刻画，这意味着 c 乘以 a 乘 b 的积，等于 c。我们从左边出发。", "L": [["goal", "要证：  c ⊙ (a ⊙ b) = c<span class='tag'>结论，由 (刻画)</span>"], ["txt", "c ⊙ (a ⊙ b)"]]},
+
+{"say": "第一步。应用乘法结合律：c 乘以 a 乘 b 的积，等于 c 乘 a 的积再乘 b。", "L": [["sub", "c ⊙ (a ⊙ b)  =  (c ⊙ a) ⊙ b<span class='tag'>⊙ 的结合律</span>"]]},
+
+{"say": "第二步。使用假设 c 乘 a 等于 c。把它标出来并代入。", "L": [["sub", "c ⊙ (a ⊙ b)  =  (<mark>c ⊙ a</mark>) ⊙ b"], ["txt", "假设：  <mark>c ⊙ a</mark> = c"], ["sub", "c ⊙ (a ⊙ b)  =  c ⊙ b<span class='tag'>假设： c ⊙ a = c</span>"]]},
+
+{"say": "第三步。使用假设 c 乘 b 等于 c。", "L": [["res", "c ⊙ (a ⊙ b)  =  c<span class='tag'>假设： c ⊙ b = c</span>"]]},
+
+{"say": "根据这个刻画，这个等式意味着 c 小于或等于 a 乘 b。因为 c 是任意一个下界，所以 a 乘 b 是所有下界中最大的。因此，a 乘 b 是 a 和 b 的下确界。对集合来说，交集是同时包含于 A 和 B 的最大集合。第三部分到此结束。", "L": [["res", "c ⊙ (a ⊙ b) = c   ⟹   c ≤ a ⊙ b"], ["res", "a ⊙ b = inf{a, b}   ∎"], ["txt", "对集合：  A ∩ B = inf{A, B}"]]},
+
+{"title": "总结", "clear": 1, "say": "总结一下。用加法定义小于或等于，我们证明了它由幂等律得到自反性，由交换律得到反对称性，由结合律得到传递性。然后我们看到 a 加 b 是上界，而且是最小的，因为如果 a 加 c 和 b 加 c 都等于 c，那么 a 加 b 的和再加 c 也等于 c。同样地，a 乘 b 是下界，而且是最大的。对集合来说：关于包含关系，并集是上确界，交集是下确界。谢谢观看。", "L": [["res", "(1)  ≤ 是自反的、反对称的、传递的"], ["res", "(2)  a ⊕ b = sup{a, b}"], ["res", "(3)  a ⊙ b = inf{a, b}"], ["txt", "对集合：  ∪ 是上确界，  ∩ 是下确界  （关于 ⊆）"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' 加 ').replace(/⊙/g,' 乘 ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ 重播'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ 继续'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ 暂停';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^zh/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/yunyang|yunxi|yunjian|kangkang|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="序、上确界与下确界";$('sub').textContent="练习 · 代数格";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

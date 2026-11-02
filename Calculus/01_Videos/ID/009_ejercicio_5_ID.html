@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Urutan, supremum, dan infimum</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Ingat</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Mulai</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Kecepatan <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Mode rekam (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"id-ID",
+"meta":{"nivel": 2, "titulo": "Urutan, supremum, dan infimum", "enunciado": "Misalkan (B, ⊕, ⊙) sebuah latis, dengan relasi  a ≤ b ⇔ a ⊕ b = b.  Buktikan bahwa ≤ adalah urutan parsial dan bahwa, untuk sebarang a, b ∈ B:", "tesis": "a ⊕ b = sup{a, b},   a ⊙ b = inf{a, b}", "datos": ["(Kom ⊕)  x ⊕ y = y ⊕ x", "(Asos ⊕)  x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(Idem ⊕)  x ⊕ x = x", "(Asos ⊙)  x ⊙ (y ⊙ z) = (x ⊙ y) ⊙ z"]},
+"steps":[
+{"title": "Urutan, supremum, dan infimum", "sub": "Latihan · Latis aljabar", "clear": 1, "say": "Halo. Dalam video ini kita akan menyelesaikan sebuah soal tentang latis aljabar. Kita akan berjalan sangat perlahan, menuliskan setiap persamaan dan memberikan alasan untuk setiap langkah.", "L": [["txt", "Penjumlahan adalah supremum dan perkalian adalah infimum dari sebuah urutan"]]},
+
+{"say": "Pertama, data yang diketahui. B adalah himpunan dengan dua operasi, jumlah latis dan hasil kali latis, dan B adalah latis. Artinya, kedua operasi tertutup, komutatif, asosiatif, dan memenuhi hukum absorpsi.", "L": [["hyp", "(B, ⊕, ⊙) latis<span class='tag'>Hipotesis</span>"]]},
+
+{"say": "Kita akan memakai tiga sifat penjumlahan. Sifat komutatif: a tambah b adalah b tambah a. Sifat asosiatif: a tambah, b tambah c, sama dengan a tambah b, tambah c. Dan sifat idempoten, yang merupakan teorema pada latis: a tambah a adalah a. Kita tempelkan di sebelah kiri.", "pin": ["(Kom ⊕) x ⊕ y = y ⊕ x", "(Asos ⊕) x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(Idem ⊕) x ⊕ x = x"]},
+
+{"say": "Sekarang definisinya. Pada B kita definisikan sebuah relasi, kurang dari atau sama dengan, sebagai berikut: a kurang dari atau sama dengan b jika dan hanya jika a tambah b sama dengan b. Pada himpunan, ini adalah sifat yang sudah dikenal: A termuat di dalam B jika dan hanya jika A gabung B sama dengan B.", "L": [["sub", "a ≤ b  ⇔  a ⊕ b = b<span class='tag'>Definisi ≤</span>"], ["txt", "Pada himpunan:  A ⊆ B  ⇔  A ∪ B = B"]]},
+
+{"say": "Kita catat definisi ini di sebelah kiri, di bawah sifat-sifat sebelumnya, karena inilah kunci soal ini.", "pin": ["(Def) a ≤ b ⇔ a ⊕ b = b"]},
+
+{"say": "Yang ingin kita buktikan terdiri dari tiga bagian. Satu: kurang dari atau sama dengan adalah relasi urutan parsial. Dua: jumlah a dan b adalah supremum dari himpunan yang dibentuk oleh a dan b. Dan tiga: hasil kali a dan b adalah infimum dari himpunan itu. Pada himpunan, terhadap relasi termuat, supremumnya adalah gabungan dan infimumnya adalah irisan.", "L": [["goal", "(1)  ≤ adalah relasi urutan parsial pada B"], ["goal", "(2)  a ⊕ b = sup{a, b}"], ["goal", "(3)  a ⊙ b = inf{a, b}<span class='tag'>Yang dibuktikan</span>"], ["txt", "Pada himpunan:  sup = ∪,   inf = ∩   (terhadap ⊆)"]]},
+
+{"title": "Bagian 1: ≤ adalah urutan parsial", "clear": 1, "say": "Kita mulai dengan bagian pertama. Sebuah relasi adalah urutan parsial jika memenuhi tiga sifat: refleksif, antisimetris, dan transitif. Kita buktikan satu per satu.", "L": [["goal", "Refleksif:  a ≤ a"], ["goal", "Antisimetris:  a ≤ b  dan  b ≤ a  ⇒  a = b"], ["goal", "Transitif:  a ≤ b  dan  b ≤ c  ⇒  a ≤ c"]]},
+
+{"title": "Refleksif", "clear": 1, "say": "Sifat refleksif. Misalkan a sebarang anggota B. Kita ingin membuktikan bahwa a kurang dari atau sama dengan a.", "L": [["txt", "Misalkan a ∈ B  (sebarang)"], ["goal", "Kita ingin:  a ≤ a<span class='tag'>Yang dibuktikan</span>"]]},
+
+{"say": "Menurut definisi, dengan b sama dengan a, a kurang dari atau sama dengan a jika dan hanya jika a tambah a sama dengan a.", "L": [["sub", "a ≤ a  ⇔  a ⊕ a = a<span class='tag'>Definisi dengan b = a</span>"]]},
+
+{"say": "Dan kesamaan ini tepat sifat idempoten penjumlahan. Jadi, a kurang dari atau sama dengan a.", "L": [["res", "a ⊕ a = a   ⟹   a ≤ a   ∎<span class='tag'>Idempoten ⊕</span>"]]},
+
+{"title": "Antisimetris", "clear": 1, "say": "Sifat antisimetris. Misalkan a dan b dua anggota B. Kita andaikan a kurang dari atau sama dengan b, dan b kurang dari atau sama dengan a. Ini adalah hipotesis.", "L": [["hyp", "a ≤ b   dan   b ≤ a<span class='tag'>Hipotesis</span>"]]},
+
+{"say": "Menurut definisi, ketaksamaan pertama berarti a tambah b sama dengan b. Dan yang kedua berarti b tambah a sama dengan a.", "L": [["hyp", "a ⊕ b = b<span class='tag'>Hipotesis (a ≤ b)</span>"], ["hyp", "b ⊕ a = a<span class='tag'>Hipotesis (b ≤ a)</span>"]]},
+
+{"say": "Kita ingin membuktikan bahwa a sama dengan b. Kita mulai dari ruas kiri, a.", "L": [["goal", "Kita ingin:  a = b<span class='tag'>Yang dibuktikan</span>"], ["txt", "a"]]},
+
+{"say": "Langkah pertama. Kita gunakan hipotesis kedua, yang menyatakan b tambah a sama dengan a. Kita ganti a dengan b tambah a.", "L": [["sub", "a  =  b ⊕ a<span class='tag'>Hipotesis: b ⊕ a = a</span>"]]},
+
+{"say": "Langkah kedua. Kita terapkan sifat komutatif penjumlahan: b tambah a sama dengan a tambah b.", "L": [["sub", "a  =  a ⊕ b<span class='tag'>Komutatif ⊕</span>"]]},
+
+{"say": "Langkah ketiga. Kita gunakan hipotesis pertama, yang menyatakan a tambah b sama dengan b. Kita substitusikan.", "L": [["res", "a  =  b<span class='tag'>Hipotesis: a ⊕ b = b</span>"], ["res", "a ≤ b  dan  b ≤ a   ⟹   a = b   ∎"]]},
+
+{"title": "Transitif", "clear": 1, "say": "Sifat transitif. Misalkan a, b, dan c anggota B. Kita andaikan a kurang dari atau sama dengan b, dan b kurang dari atau sama dengan c. Ini adalah hipotesis.", "L": [["hyp", "a ≤ b   dan   b ≤ c<span class='tag'>Hipotesis</span>"]]},
+
+{"say": "Menurut definisi, ini berarti a tambah b sama dengan b, dan b tambah c sama dengan c.", "L": [["hyp", "a ⊕ b = b<span class='tag'>Hipotesis (a ≤ b)</span>"], ["hyp", "b ⊕ c = c<span class='tag'>Hipotesis (b ≤ c)</span>"]]},
+
+{"say": "Kita ingin membuktikan bahwa a kurang dari atau sama dengan c. Menurut definisi, artinya a tambah c sama dengan c. Kita mulai dari ruas kiri, a tambah c.", "L": [["goal", "Kita ingin:  a ⊕ c = c<span class='tag'>Yang dibuktikan, menurut definisi ≤</span>"], ["txt", "a ⊕ c"]]},
+
+{"say": "Langkah pertama. Kita gunakan hipotesis kedua, b tambah c sama dengan c. Kita ganti c di sebelah kanan dengan b tambah c.", "L": [["sub", "a ⊕ c  =  a ⊕ (b ⊕ c)<span class='tag'>Hipotesis: b ⊕ c = c</span>"]]},
+
+{"say": "Langkah kedua. Kita terapkan sifat asosiatif penjumlahan: a tambah, b tambah c, sama dengan, a tambah b, tambah c.", "L": [["sub", "a ⊕ c  =  (a ⊕ b) ⊕ c<span class='tag'>Asosiatif ⊕</span>"]]},
+
+{"say": "Langkah ketiga. Kita gunakan hipotesis pertama: a tambah b sama dengan b. Kita tandai lalu kita substitusikan.", "L": [["sub", "a ⊕ c  =  (<mark>a ⊕ b</mark>) ⊕ c"], ["txt", "Hipotesis:  <mark>a ⊕ b</mark> = b"], ["sub", "a ⊕ c  =  b ⊕ c<span class='tag'>Hipotesis: a ⊕ b = b</span>"]]},
+
+{"say": "Langkah keempat. Kita gunakan lagi hipotesis kedua: b tambah c sama dengan c.", "L": [["res", "a ⊕ c  =  c<span class='tag'>Hipotesis: b ⊕ c = c</span>"], ["res", "a ≤ b  dan  b ≤ c   ⟹   a ≤ c   ∎"]]},
+
+{"say": "Kita sudah membuktikan ketiga sifat. Jadi, kurang dari atau sama dengan adalah relasi urutan parsial pada B. Dengan ini bagian pertama selesai.", "L": [["res", "≤ refleksif, antisimetris, dan transitif"], ["res", "≤ adalah urutan parsial pada B   ∎"]]},
+
+{"title": "Bagian 2: ⊕ adalah supremum", "clear": 1, "say": "Sekarang bagian kedua. Mari kita ingat apa itu supremum dari dua anggota. Supremum adalah batas atas yang terkecil. Jadi kita harus membuktikan dua hal: bahwa a tambah b adalah batas atas dari a dan b, dan bahwa ia yang terkecil di antara semua batas atas. Pada himpunan: gabungan A dan B memuat A dan B, dan merupakan himpunan terkecil yang demikian.", "L": [["goal", "(i)  a ⊕ b adalah batas atas:  a ≤ a ⊕ b   dan   b ≤ a ⊕ b"], ["goal", "(ii)  Ia yang terkecil: jika a ≤ c dan b ≤ c, maka a ⊕ b ≤ c"], ["txt", "Pada himpunan:  A ⊆ A ∪ B,   B ⊆ A ∪ B,   dan merupakan himpunan terkecil yang memuat A dan B"]]},
+
+{"say": "Sifat pertama adalah hasil dasar pada latis: a kurang dari atau sama dengan a tambah b, dan b kurang dari atau sama dengan a tambah b. Jadi a tambah b adalah batas atas dari a dan b. Kita catat di sebelah kiri, karena akan kita gunakan. Tinggal membuktikan bahwa ia yang terkecil.", "pin": ["(Batas atas) a ≤ a ⊕ b,   b ≤ a ⊕ b"]},
+
+{"say": "Sifat minimal. Misalkan c anggota B yang merupakan batas atas dari a dan b. Artinya a kurang dari atau sama dengan c, dan b kurang dari atau sama dengan c. Inilah hipotesis bagian ini.", "L": [["txt", "Misalkan c ∈ B"], ["hyp", "a ≤ c   dan   b ≤ c<span class='tag'>Hipotesis: c batas atas</span>"]]},
+
+{"say": "Menurut definisi kurang dari atau sama dengan, ini setara dengan a tambah c sama dengan c, dan b tambah c sama dengan c.", "L": [["hyp", "a ⊕ c = c<span class='tag'>Hipotesis (a ≤ c)</span>"], ["hyp", "b ⊕ c = c<span class='tag'>Hipotesis (b ≤ c)</span>"]]},
+
+{"say": "Kita ingin membuktikan bahwa a tambah b kurang dari atau sama dengan c. Menurut definisi, artinya a tambah b, tambah c, sama dengan c. Kita mulai dari ruas kiri.", "L": [["goal", "Kita ingin:  (a ⊕ b) ⊕ c = c<span class='tag'>Yang dibuktikan, menurut definisi ≤</span>"], ["txt", "(a ⊕ b) ⊕ c"]]},
+
+{"say": "Langkah pertama. Kita terapkan sifat asosiatif penjumlahan: a tambah b, tambah c, sama dengan a tambah, b tambah c.", "L": [["sub", "(a ⊕ b) ⊕ c  =  a ⊕ (b ⊕ c)<span class='tag'>Asosiatif ⊕</span>"]]},
+
+{"say": "Langkah kedua. Kita gunakan hipotesis b tambah c sama dengan c. Kita tandai lalu kita substitusikan.", "L": [["sub", "(a ⊕ b) ⊕ c  =  a ⊕ (<mark>b ⊕ c</mark>)"], ["txt", "Hipotesis:  <mark>b ⊕ c</mark> = c"], ["sub", "(a ⊕ b) ⊕ c  =  a ⊕ c<span class='tag'>Hipotesis: b ⊕ c = c</span>"]]},
+
+{"say": "Langkah ketiga. Kita gunakan hipotesis a tambah c sama dengan c.", "L": [["res", "(a ⊕ b) ⊕ c  =  c<span class='tag'>Hipotesis: a ⊕ c = c</span>"]]},
+
+{"say": "Menurut definisi, kesamaan ini berarti a tambah b kurang dari atau sama dengan c. Karena c adalah batas atas sebarang, a tambah b adalah yang terkecil dari semuanya. Akibatnya, a tambah b adalah supremum dari a dan b. Pada himpunan, gabungan adalah himpunan terkecil yang memuat A dan B. Dengan ini bagian kedua selesai.", "L": [["res", "(a ⊕ b) ⊕ c = c   ⟹   a ⊕ b ≤ c"], ["res", "a ⊕ b = sup{a, b}   ∎"], ["txt", "Pada himpunan:  A ∪ B = sup{A, B}"]]},
+
+{"title": "Bagian 3: ⊙ adalah infimum", "clear": 1, "say": "Sekarang bagian ketiga. Infimum dari dua anggota adalah batas bawah yang terbesar. Kita harus membuktikan bahwa a kali b adalah batas bawah dari a dan b, dan bahwa ia yang terbesar di antara semua batas bawah. Pada himpunan: irisan A dan B termuat di A dan di B, dan merupakan himpunan terbesar yang demikian.", "L": [["goal", "(i)  a ⊙ b adalah batas bawah:  a ⊙ b ≤ a   dan   a ⊙ b ≤ b"], ["goal", "(ii)  Ia yang terbesar: jika c ≤ a dan c ≤ b, maka c ≤ a ⊙ b"], ["txt", "Pada himpunan:  A ∩ B ⊆ A,   A ∩ B ⊆ B,   dan merupakan himpunan terbesar yang termuat di A dan di B"]]},
+
+{"say": "Kita akan memakai dua hasil dasar pada latis. Yang pertama: a kali b kurang dari atau sama dengan a, dan kurang dari atau sama dengan b. Jadi a kali b adalah batas bawah dari a dan b. Yang kedua adalah karakterisasi setara dari urutan: x kurang dari atau sama dengan y jika dan hanya jika x kali y sama dengan x. Pada himpunan: A termuat di B jika dan hanya jika A irisan B sama dengan A. Kita juga akan memakai sifat asosiatif perkalian: x kali, y kali z, sama dengan x kali y, kali z. Kita catat semuanya di sebelah kiri.", "L": [["txt", "Pada himpunan:  A ∩ B ⊆ A,   A ∩ B ⊆ B"], ["txt", "Pada himpunan:  A ⊆ B  ⇔  A ∩ B = A"]], "pin": ["(Batas bawah) a ⊙ b ≤ a,   a ⊙ b ≤ b", "(Karak) x ≤ y ⇔ x ⊙ y = x", "(Asos ⊙) x ⊙ (y ⊙ z) = (x ⊙ y) ⊙ z"]},
+
+{"say": "Sifat maksimal. Misalkan c anggota B yang merupakan batas bawah dari a dan b. Artinya c kurang dari atau sama dengan a, dan c kurang dari atau sama dengan b. Inilah hipotesis bagian ini.", "L": [["txt", "Misalkan c ∈ B"], ["hyp", "c ≤ a   dan   c ≤ b<span class='tag'>Hipotesis: c batas bawah</span>"]]},
+
+{"say": "Menurut karakterisasi urutan dengan perkalian, ini setara dengan c kali a sama dengan c, dan c kali b sama dengan c.", "L": [["hyp", "c ⊙ a = c<span class='tag'>Hipotesis (c ≤ a), menurut (Karak)</span>"], ["hyp", "c ⊙ b = c<span class='tag'>Hipotesis (c ≤ b), menurut (Karak)</span>"]]},
+
+{"say": "Kita ingin membuktikan bahwa c kurang dari atau sama dengan a kali b. Sekali lagi menurut karakterisasi, artinya c kali, a kali b, sama dengan c. Kita mulai dari ruas kiri.", "L": [["goal", "Kita ingin:  c ⊙ (a ⊙ b) = c<span class='tag'>Yang dibuktikan, menurut (Karak)</span>"], ["txt", "c ⊙ (a ⊙ b)"]]},
+
+{"say": "Langkah pertama. Kita terapkan sifat asosiatif perkalian: c kali, a kali b, sama dengan, c kali a, kali b.", "L": [["sub", "c ⊙ (a ⊙ b)  =  (c ⊙ a) ⊙ b<span class='tag'>Asosiatif ⊙</span>"]]},
+
+{"say": "Langkah kedua. Kita gunakan hipotesis c kali a sama dengan c. Kita tandai lalu kita substitusikan.", "L": [["sub", "c ⊙ (a ⊙ b)  =  (<mark>c ⊙ a</mark>) ⊙ b"], ["txt", "Hipotesis:  <mark>c ⊙ a</mark> = c"], ["sub", "c ⊙ (a ⊙ b)  =  c ⊙ b<span class='tag'>Hipotesis: c ⊙ a = c</span>"]]},
+
+{"say": "Langkah ketiga. Kita gunakan hipotesis c kali b sama dengan c.", "L": [["res", "c ⊙ (a ⊙ b)  =  c<span class='tag'>Hipotesis: c ⊙ b = c</span>"]]},
+
+{"say": "Menurut karakterisasi, kesamaan ini berarti c kurang dari atau sama dengan a kali b. Karena c adalah batas bawah sebarang, a kali b adalah yang terbesar dari semuanya. Akibatnya, a kali b adalah infimum dari a dan b. Pada himpunan, irisan adalah himpunan terbesar yang termuat di A dan di B. Dengan ini bagian ketiga selesai.", "L": [["res", "c ⊙ (a ⊙ b) = c   ⟹   c ≤ a ⊙ b"], ["res", "a ⊙ b = inf{a, b}   ∎"], ["txt", "Pada himpunan:  A ∩ B = inf{A, B}"]]},
+
+{"title": "Ringkasan", "clear": 1, "say": "Ringkasnya. Dengan definisi kurang dari atau sama dengan melalui penjumlahan, kita membuktikan bahwa relasi ini refleksif karena sifat idempoten, antisimetris karena sifat komutatif, dan transitif karena sifat asosiatif. Lalu kita melihat bahwa a tambah b adalah batas atas, dan yang terkecil karena, jika a tambah c dan b tambah c sama dengan c, maka a tambah b, tambah c, juga sama dengan c. Dengan cara serupa, a kali b adalah batas bawah dan yang terbesar. Pada himpunan: terhadap relasi termuat, gabungan adalah supremum dan irisan adalah infimum. Terima kasih sudah menonton.", "L": [["res", "(1)  ≤ refleksif, antisimetris, dan transitif"], ["res", "(2)  a ⊕ b = sup{a, b}"], ["res", "(3)  a ⊙ b = inf{a, b}"], ["txt", "Pada himpunan:  ∪ adalah supremum,  ∩ adalah infimum  (terhadap ⊆)"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' tambah ').replace(/⊙/g,' kali ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Ulangi'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Lanjutkan'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Jeda';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Jeda';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Jeda';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^id/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/ardi|andika|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Urutan, supremum, dan infimum";$('sub').textContent="Latihan · Latis aljabar";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

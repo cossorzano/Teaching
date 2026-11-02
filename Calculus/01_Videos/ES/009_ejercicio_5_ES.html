@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Orden, supremo e ínfimo</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Recuerda</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Empezar</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Velocidad <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Modo grabación (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"es-ES",
+"meta":{"nivel": 2, "titulo": "Orden, supremo e ínfimo", "enunciado": "Sea (B, ⊕, ⊙) un retículo, con la relación  a ≤ b ⇔ a ⊕ b = b.  Probar que ≤ es un orden parcial y que, para cualesquiera a, b ∈ B:", "tesis": "a ⊕ b = sup{a, b},   a ⊙ b = inf{a, b}", "datos": ["(Conm ⊕)  x ⊕ y = y ⊕ x", "(Asoc ⊕)  x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(Idem ⊕)  x ⊕ x = x", "(Asoc ⊙)  x ⊙ (y ⊙ z) = (x ⊙ y) ⊙ z"]},
+"steps":[
+{"title":"Orden, supremo e ínfimo","sub":"Ejercicio · Retículos algebraicos","clear":1,
+"say":"Hola. En este vídeo vamos a resolver un ejercicio sobre retículos algebraicos. Vamos a ir muy despacio, escribiendo cada ecuación y justificando cada paso.",
+"L":[["txt","La suma es el supremo y el producto es el ínfimo de un orden"]]},
+
+{"say":"Primero, los datos. B es un conjunto con dos operaciones, la suma reticular y el producto reticular, y es un retículo. Es decir, ambas operaciones son internas, conmutativas, asociativas, y cumplen las leyes de absorción.",
+"L":[["hyp","(B, ⊕, ⊙) retículo<span class='tag'>Hipótesis</span>"]]},
+
+{"say":"Vamos a usar tres propiedades de la suma. La conmutatividad: a más b es b más a. La asociatividad: a más, b más c, es a más b, más c. Y la idempotencia, que es un teorema de los retículos: a más a es a. Las dejamos fijadas a la izquierda.",
+"pin":["(Conm ⊕) x ⊕ y = y ⊕ x","(Asoc ⊕) x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z","(Idem ⊕) x ⊕ x = x"]},
+
+{"say":"Ahora la definición. En B definimos una relación, menor o igual, de la siguiente forma: a es menor o igual que b si y solo si a más b es igual a b. Con conjuntos, es la propiedad conocida: A está contenido en B si y solo si A unión B es igual a B.",
+"L":[["sub","a ≤ b  ⇔  a ⊕ b = b<span class='tag'>Definición de ≤</span>"],["txt","Con conjuntos:  A ⊆ B  ⇔  A ∪ B = B"]]},
+
+{"say":"Anotamos la definición a la izquierda, debajo de las propiedades anteriores, porque es la clave del ejercicio.",
+"pin":["(Def) a ≤ b ⇔ a ⊕ b = b"]},
+
+{"say":"Lo que queremos demostrar tiene tres partes. Uno: que menor o igual es una relación de orden parcial. Dos: que la suma de a y b es el supremo del conjunto formado por a y b. Y tres: que el producto de a y b es el ínfimo de ese conjunto. Con conjuntos, el supremo es la unión y el ínfimo es la intersección, con respecto a la inclusión.",
+"L":[["goal","(1)  ≤ es una relación de orden parcial en B"],["goal","(2)  a ⊕ b = sup{a, b}"],["goal","(3)  a ⊙ b = inf{a, b}<span class='tag'>Tesis</span>"],["txt","Con conjuntos:  sup = ∪,   inf = ∩   (respecto de ⊆)"]]},
+
+{"title":"Parte 1: ≤ es un orden parcial","clear":1,
+"say":"Empezamos con la primera parte. Una relación es un orden parcial si cumple tres propiedades: reflexiva, antisimétrica y transitiva. Las demostramos una a una.",
+"L":[["goal","Reflexiva:  a ≤ a"],["goal","Antisimétrica:  a ≤ b  y  b ≤ a  ⇒  a = b"],["goal","Transitiva:  a ≤ b  y  b ≤ c  ⇒  a ≤ c"]]},
+
+{"title":"Reflexividad","clear":1,
+"say":"Reflexividad. Sea a un elemento cualquiera de B. Queremos probar que a es menor o igual que a.",
+"L":[["txt","Sea a ∈ B  (arbitrario)"],["goal","Queremos:  a ≤ a<span class='tag'>Tesis</span>"]]},
+
+{"say":"Por la definición, con b igual a a, a es menor o igual que a si y solo si a más a es igual a a.",
+"L":[["sub","a ≤ a  ⇔  a ⊕ a = a<span class='tag'>Definición con b = a</span>"]]},
+
+{"say":"Y esta igualdad es exactamente la idempotencia de la suma. Por tanto, a es menor o igual que a.",
+"L":[["res","a ⊕ a = a   ⟹   a ≤ a   ∎<span class='tag'>Idempotencia de ⊕</span>"]]},
+
+{"title":"Antisimetría","clear":1,
+"say":"Antisimetría. Sean a y b dos elementos de B. Suponemos que a es menor o igual que b, y que b es menor o igual que a. Esto es una hipótesis.",
+"L":[["hyp","a ≤ b   y   b ≤ a<span class='tag'>Hipótesis</span>"]]},
+
+{"say":"Por la definición, la primera desigualdad significa que a más b es igual a b. Y la segunda significa que b más a es igual a a.",
+"L":[["hyp","a ⊕ b = b<span class='tag'>Hipótesis (a ≤ b)</span>"],["hyp","b ⊕ a = a<span class='tag'>Hipótesis (b ≤ a)</span>"]]},
+
+{"say":"Queremos probar que a es igual a b. Partimos del lado izquierdo, a.",
+"L":[["goal","Queremos:  a = b<span class='tag'>Tesis</span>"],["txt","a"]]},
+
+{"say":"Primer paso. Usamos la segunda hipótesis, que dice que b más a es igual a a. Sustituimos a por b más a.",
+"L":[["sub","a  =  b ⊕ a<span class='tag'>Hipótesis: b ⊕ a = a</span>"]]},
+
+{"say":"Segundo paso. Aplicamos la conmutatividad de la suma: b más a es igual a a más b.",
+"L":[["sub","a  =  a ⊕ b<span class='tag'>Conmutatividad de ⊕</span>"]]},
+
+{"say":"Tercer paso. Usamos la primera hipótesis, que dice que a más b es igual a b. Sustituimos.",
+"L":[["res","a  =  b<span class='tag'>Hipótesis: a ⊕ b = b</span>"],["res","a ≤ b  y  b ≤ a   ⟹   a = b   ∎"]]},
+
+{"title":"Transitividad","clear":1,
+"say":"Transitividad. Sean a, b y c elementos de B. Suponemos que a es menor o igual que b, y que b es menor o igual que c. Esto es una hipótesis.",
+"L":[["hyp","a ≤ b   y   b ≤ c<span class='tag'>Hipótesis</span>"]]},
+
+{"say":"Por la definición, esto significa que a más b es igual a b, y que b más c es igual a c.",
+"L":[["hyp","a ⊕ b = b<span class='tag'>Hipótesis (a ≤ b)</span>"],["hyp","b ⊕ c = c<span class='tag'>Hipótesis (b ≤ c)</span>"]]},
+
+{"say":"Queremos probar que a es menor o igual que c. Por la definición, esto significa que a más c es igual a c. Partimos del lado izquierdo, a más c.",
+"L":[["goal","Queremos:  a ⊕ c = c<span class='tag'>Tesis, por la definición de ≤</span>"],["txt","a ⊕ c"]]},
+
+{"say":"Primer paso. Usamos la segunda hipótesis, b más c es igual a c. Sustituimos la c de la derecha por b más c.",
+"L":[["sub","a ⊕ c  =  a ⊕ (b ⊕ c)<span class='tag'>Hipótesis: b ⊕ c = c</span>"]]},
+
+{"say":"Segundo paso. Aplicamos la asociatividad de la suma: a más, b más c, es igual a, a más b, más c.",
+"L":[["sub","a ⊕ c  =  (a ⊕ b) ⊕ c<span class='tag'>Asociatividad de ⊕</span>"]]},
+
+{"say":"Tercer paso. Usamos la primera hipótesis: a más b es igual a b. Lo marcamos y sustituimos.",
+"L":[["sub","a ⊕ c  =  (<mark>a ⊕ b</mark>) ⊕ c"],["txt","Hipótesis:  <mark>a ⊕ b</mark> = b"],["sub","a ⊕ c  =  b ⊕ c<span class='tag'>Hipótesis: a ⊕ b = b</span>"]]},
+
+{"say":"Cuarto paso. Usamos otra vez la segunda hipótesis: b más c es igual a c.",
+"L":[["res","a ⊕ c  =  c<span class='tag'>Hipótesis: b ⊕ c = c</span>"],["res","a ≤ b  y  b ≤ c   ⟹   a ≤ c   ∎"]]},
+
+{"say":"Hemos probado las tres propiedades. Por tanto, menor o igual es una relación de orden parcial en B. Con esto termina la primera parte.",
+"L":[["res","≤ es reflexiva, antisimétrica y transitiva"],["res","≤ es un orden parcial en B   ∎"]]},
+
+{"title":"Parte 2: ⊕ es el supremo","clear":1,
+"say":"Pasamos a la segunda parte. Recordemos qué es el supremo de dos elementos. Es la menor de las cotas superiores. Por tanto, tenemos que probar dos cosas: que a más b es una cota superior de a y de b, y que es la menor de todas las cotas superiores. Con conjuntos: la unión de A y B contiene a A y a B, y es el menor conjunto que lo hace.",
+"L":[["goal","(i)  a ⊕ b es cota superior:  a ≤ a ⊕ b   y   b ≤ a ⊕ b"],["goal","(ii)  Es la menor: si a ≤ c y b ≤ c, entonces a ⊕ b ≤ c"],["txt","Con conjuntos:  A ⊆ A ∪ B,   B ⊆ A ∪ B,   y es el menor conjunto que contiene a A y a B"]]},
+
+{"say":"La primera propiedad es un resultado básico de los retículos: a es menor o igual que a más b, y b es menor o igual que a más b. Así que a más b es una cota superior de a y de b. La anotamos a la izquierda, porque la vamos a usar. Nos falta probar que es la menor.",
+"pin":["(Cota sup) a ≤ a ⊕ b,   b ≤ a ⊕ b"]},
+
+{"say":"Minimalidad. Sea c un elemento de B que es una cota superior de a y de b. Esto significa que a es menor o igual que c, y que b es menor o igual que c. Es la hipótesis de esta parte.",
+"L":[["txt","Sea c ∈ B"],["hyp","a ≤ c   y   b ≤ c<span class='tag'>Hipótesis: c es cota superior</span>"]]},
+
+{"say":"Por la definición de menor o igual, esto equivale a que a más c es igual a c, y que b más c es igual a c.",
+"L":[["hyp","a ⊕ c = c<span class='tag'>Hipótesis (a ≤ c)</span>"],["hyp","b ⊕ c = c<span class='tag'>Hipótesis (b ≤ c)</span>"]]},
+
+{"say":"Queremos probar que a más b es menor o igual que c. Por la definición, esto significa que a más b, más c, es igual a c. Partimos del lado izquierdo.",
+"L":[["goal","Queremos:  (a ⊕ b) ⊕ c = c<span class='tag'>Tesis, por la definición de ≤</span>"],["txt","(a ⊕ b) ⊕ c"]]},
+
+{"say":"Primer paso. Aplicamos la asociatividad de la suma: a más b, más c, es igual a a más, b más c.",
+"L":[["sub","(a ⊕ b) ⊕ c  =  a ⊕ (b ⊕ c)<span class='tag'>Asociatividad de ⊕</span>"]]},
+
+{"say":"Segundo paso. Usamos la hipótesis b más c es igual a c. Lo marcamos y sustituimos.",
+"L":[["sub","(a ⊕ b) ⊕ c  =  a ⊕ (<mark>b ⊕ c</mark>)"],["txt","Hipótesis:  <mark>b ⊕ c</mark> = c"],["sub","(a ⊕ b) ⊕ c  =  a ⊕ c<span class='tag'>Hipótesis: b ⊕ c = c</span>"]]},
+
+{"say":"Tercer paso. Usamos la hipótesis a más c es igual a c.",
+"L":[["res","(a ⊕ b) ⊕ c  =  c<span class='tag'>Hipótesis: a ⊕ c = c</span>"]]},
+
+{"say":"Esta igualdad significa, por la definición, que a más b es menor o igual que c. Como c era una cota superior cualquiera, a más b es la menor de todas. En consecuencia, a más b es el supremo de a y b. Con conjuntos, la unión es el menor conjunto que contiene a A y a B. Con esto termina la segunda parte.",
+"L":[["res","(a ⊕ b) ⊕ c = c   ⟹   a ⊕ b ≤ c"],["res","a ⊕ b = sup{a, b}   ∎"],["txt","Con conjuntos:  A ∪ B = sup{A, B}"]]},
+
+{"title":"Parte 3: ⊙ es el ínfimo","clear":1,
+"say":"Pasamos a la tercera parte. El ínfimo de dos elementos es la mayor de las cotas inferiores. Tenemos que probar que a por b es una cota inferior de a y de b, y que es la mayor de todas las cotas inferiores. Con conjuntos: la intersección de A y B está contenida en A y en B, y es el mayor conjunto que lo cumple.",
+"L":[["goal","(i)  a ⊙ b es cota inferior:  a ⊙ b ≤ a   y   a ⊙ b ≤ b"],["goal","(ii)  Es la mayor: si c ≤ a y c ≤ b, entonces c ≤ a ⊙ b"],["txt","Con conjuntos:  A ∩ B ⊆ A,   A ∩ B ⊆ B,   y es el mayor conjunto contenido en A y en B"]]},
+
+{"say":"Vamos a usar dos resultados básicos de los retículos. El primero: a por b es menor o igual que a, y menor o igual que b. Así que a por b es una cota inferior de a y de b. El segundo es una caracterización equivalente del orden: x es menor o igual que y si y solo si x por y es igual a x. Con conjuntos: A está contenido en B si y solo si A intersección B es A. Y usaremos también la asociatividad del producto: x por, y por z, es x por y, por z. Los anotamos a la izquierda.",
+"L":[["txt","Con conjuntos:  A ∩ B ⊆ A,   A ∩ B ⊆ B"],["txt","Con conjuntos:  A ⊆ B  ⇔  A ∩ B = A"]],
+"pin":["(Cota inf) a ⊙ b ≤ a,   a ⊙ b ≤ b","(Carac) x ≤ y ⇔ x ⊙ y = x","(Asoc ⊙) x ⊙ (y ⊙ z) = (x ⊙ y) ⊙ z"]},
+
+{"say":"Maximalidad. Sea c un elemento de B que es una cota inferior de a y de b. Esto significa que c es menor o igual que a, y que c es menor o igual que b. Es la hipótesis de esta parte.",
+"L":[["txt","Sea c ∈ B"],["hyp","c ≤ a   y   c ≤ b<span class='tag'>Hipótesis: c es cota inferior</span>"]]},
+
+{"say":"Por la caracterización del orden con el producto, esto equivale a que c por a es igual a c, y que c por b es igual a c.",
+"L":[["hyp","c ⊙ a = c<span class='tag'>Hipótesis (c ≤ a), por (Carac)</span>"],["hyp","c ⊙ b = c<span class='tag'>Hipótesis (c ≤ b), por (Carac)</span>"]]},
+
+{"say":"Queremos probar que c es menor o igual que a por b. De nuevo por la caracterización, esto significa que c por, a por b, es igual a c. Partimos del lado izquierdo.",
+"L":[["goal","Queremos:  c ⊙ (a ⊙ b) = c<span class='tag'>Tesis, por (Carac)</span>"],["txt","c ⊙ (a ⊙ b)"]]},
+
+{"say":"Primer paso. Aplicamos la asociatividad del producto: c por, a por b, es igual a, c por a, por b.",
+"L":[["sub","c ⊙ (a ⊙ b)  =  (c ⊙ a) ⊙ b<span class='tag'>Asociatividad de ⊙</span>"]]},
+
+{"say":"Segundo paso. Usamos la hipótesis c por a es igual a c. Lo marcamos y sustituimos.",
+"L":[["sub","c ⊙ (a ⊙ b)  =  (<mark>c ⊙ a</mark>) ⊙ b"],["txt","Hipótesis:  <mark>c ⊙ a</mark> = c"],["sub","c ⊙ (a ⊙ b)  =  c ⊙ b<span class='tag'>Hipótesis: c ⊙ a = c</span>"]]},
+
+{"say":"Tercer paso. Usamos la hipótesis c por b es igual a c.",
+"L":[["res","c ⊙ (a ⊙ b)  =  c<span class='tag'>Hipótesis: c ⊙ b = c</span>"]]},
+
+{"say":"Esta igualdad significa, por la caracterización, que c es menor o igual que a por b. Como c era una cota inferior cualquiera, a por b es la mayor de todas. En consecuencia, a por b es el ínfimo de a y b. Con conjuntos, la intersección es el mayor conjunto contenido en A y en B. Con esto termina la tercera parte.",
+"L":[["res","c ⊙ (a ⊙ b) = c   ⟹   c ≤ a ⊙ b"],["res","a ⊙ b = inf{a, b}   ∎"],["txt","Con conjuntos:  A ∩ B = inf{A, B}"]]},
+
+{"title":"Resumen","clear":1,
+"say":"Resumiendo. Con la definición de menor o igual a través de la suma, probamos que es reflexiva por la idempotencia, antisimétrica por la conmutatividad, y transitiva por la asociatividad. Después vimos que a más b es cota superior, y que es la menor porque, si a más c y b más c son c, entonces a más b, más c, también es c. Y de forma análoga, que a por b es cota inferior y es la mayor. Con conjuntos: la unión es el supremo y la intersección es el ínfimo respecto de la inclusión. Gracias por ver el vídeo.",
+"L":[["res","(1)  ≤ es reflexiva, antisimétrica y transitiva"],["res","(2)  a ⊕ b = sup{a, b}"],["res","(3)  a ⊙ b = inf{a, b}"],["txt","Con conjuntos:  ∪ es el supremo,  ∩ es el ínfimo  (respecto de ⊆)"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' más ').replace(/⊙/g,' por ').replace(/≤/g,' menor o igual que ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Repetir'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Continuar'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pausa';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^es/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/pablo|jorge|diego|enrique|miguel|alvaro|álvaro|male|google español$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent='Orden, supremo e ínfimo';$('sub').textContent='Ejercicio · Retículos algebraicos';
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
