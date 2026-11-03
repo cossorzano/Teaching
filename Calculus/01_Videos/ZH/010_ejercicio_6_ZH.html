@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>用上确界与下确界证明幂等律</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>备忘</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ 开始</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>语速 <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">录制模式 (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"zh-CN",
+"meta":{"nivel": 2, "titulo": "用上确界与下确界证明幂等律", "enunciado": "设 (B, ≤) 是一个有序集，并且是一个格，其中 a ⊕ b = sup{a, b}，a ⊙ b = inf{a, b}。证明：对任意 a ∈ B，", "tesis": "a ⊕ a = a,   a ⊙ a = a", "datos": ["(自反)  a ≤ a", "(上确界)  s = sup S：上界且最小", "(下确界)  i = inf S：下界且最大"]},
+"steps":[
+{"title": "用上确界与下确界证明幂等律", "sub": "练习 · 代数格", "clear": 1, "say": "你好。在这个视频里，我们来解一道关于代数格的练习。我们会讲得很慢，写出每一个等式，并说明每一步的理由。", "L": [["txt", "证明格的加法和乘法都是幂等的"]]},
+
+{"say": "首先是已知条件。B 是一个带有序的集合，也就是说，有一个小于或等于的关系，它是自反的、反对称的、传递的。并且 B 是一个格。按定义，对 B 中任意的 a 和 b，它们的上确界和下确界都存在。a 与 b 的和是由 a 和 b 组成的集合的上确界，积是它的下确界。对集合来说：关于包含关系，并集是上确界，交集是下确界。", "L": [["hyp", "(B, ≤) 有序，  (B, ⊕, ⊙) 是格<span class='tag'>假设</span>"], ["hyp", "a ⊕ b = sup{a, b}<span class='tag'>假设：上确界存在</span>"], ["hyp", "a ⊙ b = inf{a, b}<span class='tag'>假设：下确界存在</span>"], ["txt", "对集合：  A ∪ B = sup{A, B},   A ∩ B = inf{A, B}"]]},
+
+{"say": "我们要用到的序的性质，写在左边。自反性：每个元素 a 都小于或等于 a。还有上确界和下确界的定义，我们现在来回顾。", "pin": ["(自反) a ≤ a"]},
+
+{"say": "集合 S 的上确界是它的最小上界。也就是说，s 是 S 的上确界，如果它满足两个条件。第一：s 是一个上界，即 S 中每个元素 x 都小于或等于 s。第二：s 是最小的，即如果 c 是 S 的另一个上界，那么 s 小于或等于 c。", "L": [["sub", "s = sup S  ⇔  (i) ∀ x ∈ S:  x ≤ s<span class='tag'>上界</span>"], ["sub", "(ii)  若 ∀ x ∈ S: x ≤ c,  则  s ≤ c<span class='tag'>它是最小的</span>"]]},
+
+{"say": "而 S 的下确界是它的最大下界。也就是说，i 是 S 的下确界，如果它满足两个条件。第一：i 是一个下界，即 i 小于或等于 S 中每个元素 x。第二：i 是最大的，即如果 c 是 S 的另一个下界，那么 c 小于或等于 i。", "L": [["sub", "i = inf S  ⇔  (i) ∀ x ∈ S:  i ≤ x<span class='tag'>下界</span>"], ["sub", "(ii)  若 ∀ x ∈ S: c ≤ x,  则  c ≤ i<span class='tag'>它是最大的</span>"]]},
+
+{"say": "我们把这两个定义记在左边，放在自反性的下面，因为它们是这道题的关键。", "pin": ["(上确界) s = sup S ⇔ (i) x ≤ s ∀x∈S;  (ii) c 是上界 ⇒ s ≤ c", "(下确界) i = inf S ⇔ (i) i ≤ x ∀x∈S;  (ii) c 是下界 ⇒ c ≤ i"]},
+
+{"say": "我们要证明的是：对 B 中每个元素 a，a 加 a 等于 a，a 乘 a 等于 a。对集合来说：A 并 A 等于 A，A 交 A 等于 A。", "L": [["goal", "∀ a ∈ B:   a ⊕ a = a   且   a ⊙ a = a<span class='tag'>结论</span>"], ["txt", "对集合：  A ∪ A = A,   A ∩ A = A"]]},
+
+{"title": "第一部分：a ⊕ a = a", "clear": 1, "say": "我们从加法开始。设 a 是 B 中任意一个元素。我们要证明 a 加 a 等于 a。", "L": [["txt", "设 a ∈ B  （任意）"], ["goal", "要证：  a ⊕ a = a<span class='tag'>这一部分的结论</span>"]]},
+
+{"say": "第一步。应用假设：a 加 b 是由 a 和 b 组成的集合的上确界，取 b 等于 a。得到 a 加 a 是由 a 和 a 组成的集合的上确界。对集合来说：A 并 A 是 A 与 A 的上确界。", "L": [["sub", "a ⊕ a  =  sup{a, a}<span class='tag'>假设，取 b = a</span>"], ["txt", "对集合：  A ∪ A = sup{A, A}"]]},
+
+{"say": "第二步。集合中的元素不重复，所以由 a 和 a 组成的集合，等于只含 a 的集合。这是一个只有一个元素的集合。", "L": [["sub", "{a, a}  =  {a}<span class='tag'>集合中的元素不重复</span>"], ["res", "a ⊕ a  =  sup{a}"]]},
+
+{"say": "还需要证明只含 a 的集合的上确界就是 a。我们用上确界的定义，检验两个条件。也就是说，我们要证明 a 是只含 a 的集合的上确界。", "L": [["goal", "要证：  sup{a} = a<span class='tag'>辅助结论</span>"]]},
+
+{"say": "条件一：a 是上界。只含 a 的集合中每个元素 x 都小于或等于 a。而唯一的元素就是 a，由自反性，a 小于或等于 a。", "L": [["sub", "(i)  x ∈ {a}  ⇒  x = a  ⇒  x ≤ a<span class='tag'>自反性： a ≤ a</span>"], ["res", "a 是 {a} 的上界"]]},
+
+{"say": "条件二：a 是最小上界。设 c 是只含 a 的集合的另一个上界。这是一个假设：集合中每个元素 x 都小于或等于 c。", "L": [["txt", "设 c ∈ B"], ["hyp", "∀ x ∈ {a}:  x ≤ c<span class='tag'>假设：c 是 {a} 的上界</span>"]]},
+
+{"say": "因为 a 属于只含 a 的集合，我们取 x 等于 a 来应用这个假设。得到 a 小于或等于 c。这正是我们要证明的。", "L": [["sub", "a ∈ {a}  ⇒  a ≤ c<span class='tag'>假设，取 x = a</span>"], ["res", "(ii)  c 是 {a} 的上界  ⇒  a ≤ c"]]},
+
+{"say": "两个条件都检验了。所以，a 是只含 a 的集合的上确界。而 a 加 a 就是这个上确界，所以 a 加 a 等于 a。对集合来说：A 并 A 等于 A。第一部分到此结束。", "L": [["res", "sup{a} = a   ⟹   a ⊕ a = a   ∎"], ["txt", "对集合：  A ∪ A = A"]]},
+
+{"title": "第二部分：a ⊙ a = a", "clear": 1, "say": "下面是第二部分，关于乘法。证明是类似的，只要把上确界换成下确界，把上界换成下界。设 a 是 B 中任意一个元素。我们要证明 a 乘 a 等于 a。", "L": [["txt", "设 a ∈ B  （任意）"], ["goal", "要证：  a ⊙ a = a<span class='tag'>这一部分的结论</span>"]]},
+
+{"say": "第一步。应用假设：a 乘 b 是由 a 和 b 组成的集合的下确界，取 b 等于 a。又因为由 a 和 a 组成的集合就是只含 a 的集合，得到 a 乘 a 是只含 a 的集合的下确界。对集合来说：A 交 A 是 A 与 A 的下确界。", "L": [["sub", "a ⊙ a  =  inf{a, a}<span class='tag'>假设，取 b = a</span>"], ["txt", "对集合：  A ∩ A = inf{A, A}"], ["res", "a ⊙ a  =  inf{a}<span class='tag'>{a, a} = {a}</span>"]]},
+
+{"say": "还需要证明只含 a 的集合的下确界就是 a。我们用下确界的定义，检验两个条件。", "L": [["goal", "要证：  inf{a} = a<span class='tag'>辅助结论</span>"]]},
+
+{"say": "条件一：a 是下界。只含 a 的集合中每个元素 x 都满足 a 小于或等于 x。而唯一的元素就是 a，由自反性，a 小于或等于 a。", "L": [["sub", "(i)  x ∈ {a}  ⇒  x = a  ⇒  a ≤ x<span class='tag'>自反性： a ≤ a</span>"], ["res", "a 是 {a} 的下界"]]},
+
+{"say": "条件二：a 是最大下界。设 c 是只含 a 的集合的另一个下界。这是一个假设：c 小于或等于集合中每个元素 x。", "L": [["txt", "设 c ∈ B"], ["hyp", "∀ x ∈ {a}:  c ≤ x<span class='tag'>假设：c 是 {a} 的下界</span>"]]},
+
+{"say": "因为 a 属于只含 a 的集合，我们取 x 等于 a 来应用这个假设。得到 c 小于或等于 a。这正是我们要证明的。", "L": [["sub", "a ∈ {a}  ⇒  c ≤ a<span class='tag'>假设，取 x = a</span>"], ["res", "(ii)  c 是 {a} 的下界  ⇒  c ≤ a"]]},
+
+{"say": "两个条件都检验了。所以，a 是只含 a 的集合的下确界。而 a 乘 a 就是这个下确界，所以 a 乘 a 等于 a。对集合来说：A 交 A 等于 A。第二部分到此结束。", "L": [["res", "inf{a} = a   ⟹   a ⊙ a = a   ∎"], ["txt", "对集合：  A ∩ A = A"]]},
+
+{"title": "结论", "clear": 1, "say": "我们对任意元素 a 证明了这两个等式。所以，在任何格中，加法和乘法都是幂等的。对集合来说：A 并 A 等于 A，A 交 A 等于 A。谢谢观看。", "L": [["res", "∀ a ∈ B:   a ⊕ a = a"], ["res", "∀ a ∈ B:   a ⊙ a = a"], ["txt", "对集合：  A ∪ A = A,   A ∩ A = A"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' 加 ').replace(/⊙/g,' 乘 ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ 重播'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ 继续'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ 暂停';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^zh/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/yunyang|yunxi|yunjian|kangkang|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="用上确界与下确界证明幂等律";$('sub').textContent="练习 · 代数格";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

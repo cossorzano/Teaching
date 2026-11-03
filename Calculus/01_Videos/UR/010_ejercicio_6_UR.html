@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>کم ترین بالائی حد اور بیش ترین زیریں حد سے یکسانیت</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-inline-end:2px dashed #3d5a50;padding-inline-end:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-inline-start:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+span[dir='ltr']{white-space:nowrap}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>یاد رکھیں</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ شروع کریں</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>رفتار <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">ریکارڈنگ موڈ (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ur-PK",
+"meta":{"nivel": 2, "titulo": "کم ترین بالائی حد اور بیش ترین زیریں حد سے یکسانیت", "enunciado": "فرض کریں <span dir='ltr'>(B, ≤)</span> ایک ترتیب دار سیٹ ہے جو لیٹس ہے، جہاں <span dir='ltr'>a ⊕ b = sup{a, b}</span> اور <span dir='ltr'>a ⊙ b = inf{a, b}</span>۔  ثابت کریں کہ ہر <span dir='ltr'>a ∈ B</span> کے لیے:", "tesis": "a ⊕ a = a,   a ⊙ a = a", "datos": ["(انعکاس)  <span dir='ltr'>a ≤ a</span>", "<span dir='ltr'>(Sup)  s = sup S</span>: بالائی حد، اور سب سے چھوٹی", "<span dir='ltr'>(Inf)  i = inf S</span>: زیریں حد، اور سب سے بڑی"]},
+"steps":[
+{"title": "کم ترین بالائی حد اور بیش ترین زیریں حد سے یکسانیت", "sub": "مشق · الجبری لیٹس", "clear": 1, "say": "السلام علیکم۔ اس ویڈیو میں ہم الجبری لیٹس پر ایک مشق حل کریں گے۔ ہم بہت آہستہ چلیں گے، ہر مساوات لکھیں گے اور ہر قدم کی وجہ بتائیں گے۔", "L": [["txt", "ثابت کریں کہ لیٹس کی جمع اور ضرب یکساں ہیں"]]},
+
+{"say": "پہلے، دی گئی معلومات۔ B ایک ترتیب والا سیٹ ہے، یعنی اس پر ایک رشتہ، چھوٹا یا برابر، ہے جو انعکاسی، ضد متشاکل اور متعدی ہے۔ اور یہ ایک لیٹس ہے۔ تعریف کے مطابق، B کے کسی بھی a اور b کے لیے ان کی کم ترین بالائی حد اور بیش ترین زیریں حد موجود ہیں۔ a اور b کا مجموعہ، a اور b سے بنے سیٹ کی کم ترین بالائی حد ہے، اور حاصل ضرب بیش ترین زیریں حد ہے۔ سیٹ میں: شمولیت کے لحاظ سے اتصال کم ترین بالائی حد ہے اور تقاطع بیش ترین زیریں حد ہے۔", "L": [["hyp", "<span dir='ltr'>(B, ≤)</span> ترتیب دار،  <span dir='ltr'>(B, ⊕, ⊙)</span> لیٹس<span class='tag'>مفروضہ</span>"], ["hyp", "<span dir='ltr'>a ⊕ b = sup{a, b}</span><span class='tag'>مفروضہ: کم ترین بالائی حد موجود ہے</span>"], ["hyp", "<span dir='ltr'>a ⊙ b = inf{a, b}</span><span class='tag'>مفروضہ: بیش ترین زیریں حد موجود ہے</span>"], ["txt", "سیٹ کے ساتھ:  <span dir='ltr'>A ∪ B = sup{A, B},   A ∩ B = inf{A, B}</span>"]]},
+
+{"say": "ترتیب کی وہ خصوصیت جو ہم استعمال کریں گے، ایک طرف۔ انعکاسیت: ہر رکن a، a سے چھوٹا یا برابر ہے۔ اور کم ترین بالائی حد اور بیش ترین زیریں حد کی تعریفیں، جو اب ہم یاد کرتے ہیں۔", "pin": ["(انعکاس) <span dir='ltr'>a ≤ a</span>"]},
+
+{"say": "کسی سیٹ S کی کم ترین بالائی حد اس کی سب سے چھوٹی بالائی حد ہے۔ یعنی s، S کی کم ترین بالائی حد ہے اگر وہ دو شرطیں پوری کرے۔ ایک: s ایک بالائی حد ہے، یعنی S کا ہر رکن x، s سے چھوٹا یا برابر ہے۔ دو: s سب سے چھوٹی ہے، یعنی اگر c، S کی کوئی دوسری بالائی حد ہو، تو s، c سے چھوٹا یا برابر ہے۔", "L": [["sub", "<span dir='ltr'>s = sup S  ⇔  (i) ∀ x ∈ S:  x ≤ s</span><span class='tag'>بالائی حد</span>"], ["sub", "<span dir='ltr'>(ii)</span>  اگر <span dir='ltr'>∀ x ∈ S: x ≤ c</span>,  تو  <span dir='ltr'>s ≤ c</span><span class='tag'>یہ سب سے چھوٹی ہے</span>"]]},
+
+{"say": "اور S کی بیش ترین زیریں حد اس کی سب سے بڑی زیریں حد ہے۔ یعنی i، S کی بیش ترین زیریں حد ہے اگر وہ دو شرطیں پوری کرے۔ ایک: i ایک زیریں حد ہے، یعنی i، S کے ہر رکن x سے چھوٹا یا برابر ہے۔ دو: i سب سے بڑی ہے، یعنی اگر c، S کی کوئی دوسری زیریں حد ہو، تو c، i سے چھوٹا یا برابر ہے۔", "L": [["sub", "<span dir='ltr'>i = inf S  ⇔  (i) ∀ x ∈ S:  i ≤ x</span><span class='tag'>زیریں حد</span>"], ["sub", "<span dir='ltr'>(ii)</span>  اگر <span dir='ltr'>∀ x ∈ S: c ≤ x</span>,  تو  <span dir='ltr'>c ≤ i</span><span class='tag'>یہ سب سے بڑی ہے</span>"]]},
+
+{"say": "دونوں تعریفیں ہم ایک طرف، انعکاسیت کے نیچے لکھ لیتے ہیں، کیونکہ یہی اس مشق کی کنجی ہیں۔", "pin": ["<span dir='ltr'>(Sup) s = sup S</span>: بالائی حد، سب سے چھوٹی", "<span dir='ltr'>(Inf) i = inf S</span>: زیریں حد، سب سے بڑی"]},
+
+{"say": "ہمیں کیا ثابت کرنا ہے۔ B کے ہر رکن a کے لیے، a جمع a برابر ہے a کے، اور a ضرب a برابر ہے a کے۔ سیٹ میں: A اتصال A، A ہے، اور A تقاطع A، A ہے۔", "L": [["goal", "<span dir='ltr'>∀ a ∈ B:   a ⊕ a = a</span>   اور   <span dir='ltr'>a ⊙ a = a</span><span class='tag'>مطلوب</span>"], ["txt", "سیٹ کے ساتھ:  <span dir='ltr'>A ∪ A = A,   A ∩ A = A</span>"]]},
+
+{"title": "پہلا حصہ: a ⊕ a = a", "clear": 1, "say": "ہم جمع سے شروع کرتے ہیں۔ فرض کریں a، B کا کوئی بھی رکن ہے۔ ہمیں ثابت کرنا ہے کہ a جمع a برابر ہے a کے۔", "L": [["txt", "فرض کریں <span dir='ltr'>a ∈ B</span>  (کوئی بھی)"], ["goal", "ہمیں چاہیے:  <span dir='ltr'>a ⊕ a = a</span><span class='tag'>اس حصے کا مطلوب</span>"]]},
+
+{"say": "پہلا قدم۔ ہم مفروضہ لگاتے ہیں، جو کہتا ہے کہ a جمع b، a اور b سے بنے سیٹ کی کم ترین بالائی حد ہے، b برابر a لے کر۔ ہمیں ملتا ہے کہ a جمع a، a اور a سے بنے سیٹ کی کم ترین بالائی حد ہے۔ سیٹ میں: A اتصال A، A اور A کی کم ترین بالائی حد ہے۔", "L": [["sub", "<span dir='ltr'>a ⊕ a  =  sup{a, a}</span><span class='tag'>مفروضہ، <span dir='ltr'>b = a</span> لے کر</span>"], ["txt", "سیٹ کے ساتھ:  <span dir='ltr'>A ∪ A = sup{A, A}</span>"]]},
+
+{"say": "دوسرا قدم۔ سیٹ میں ارکان دہرائے نہیں جاتے، اس لیے a اور a سے بنا سیٹ، صرف a سے بنے سیٹ کے برابر ہے۔ یہ ایک ہی رکن والا سیٹ ہے۔", "L": [["sub", "<span dir='ltr'>{a, a}  =  {a}</span><span class='tag'>سیٹ میں ارکان دہرائے نہیں جاتے</span>"], ["res", "<span dir='ltr'>a ⊕ a  =  sup{a}</span>"]]},
+
+{"say": "اب ثابت کرنا باقی ہے کہ صرف a سے بنے سیٹ کی کم ترین بالائی حد a ہے۔ ہم یہ کم ترین بالائی حد کی تعریف سے کرتے ہیں، دونوں شرطیں جانچ کر۔ یعنی ہمیں ثابت کرنا ہے کہ a، a سے بنے سیٹ کی کم ترین بالائی حد ہے۔", "L": [["goal", "ہمیں چاہیے:  <span dir='ltr'>sup{a} = a</span><span class='tag'>معاون مطلوب</span>"]]},
+
+{"say": "شرط ایک: a ایک بالائی حد ہے۔ a سے بنے سیٹ کا ہر رکن x، a سے چھوٹا یا برابر ہے۔ لیکن واحد رکن a ہے، اور انعکاسیت سے a، a سے چھوٹا یا برابر ہے۔", "L": [["sub", "<span dir='ltr'>(i)  x ∈ {a}  ⇒  x = a  ⇒  x ≤ a</span><span class='tag'>انعکاسیت: <span dir='ltr'>a ≤ a</span></span>"], ["res", "<span dir='ltr'>a</span>، <span dir='ltr'>{a}</span> کی بالائی حد ہے"]]},
+
+{"say": "شرط دو: a سب سے چھوٹی بالائی حد ہے۔ فرض کریں c، a سے بنے سیٹ کی کوئی دوسری بالائی حد ہے۔ یہ ایک مفروضہ ہے: سیٹ کا ہر رکن x، c سے چھوٹا یا برابر ہے۔", "L": [["txt", "فرض کریں <span dir='ltr'>c ∈ B</span>"], ["hyp", "<span dir='ltr'>∀ x ∈ {a}:  x ≤ c</span><span class='tag'>مفروضہ: <span dir='ltr'>c</span>، <span dir='ltr'>{a}</span> کی بالائی حد ہے</span>"]]},
+
+{"say": "چونکہ a، a سے بنے سیٹ میں شامل ہے، ہم مفروضہ x برابر a لے کر لگاتے ہیں۔ ہمیں ملتا ہے کہ a، c سے چھوٹا یا برابر ہے۔ اور یہی ہمیں ثابت کرنا تھا۔", "L": [["sub", "<span dir='ltr'>a ∈ {a}  ⇒  a ≤ c</span><span class='tag'>مفروضہ، <span dir='ltr'>x = a</span> لے کر</span>"], ["res", "<span dir='ltr'>(ii)  c</span>، <span dir='ltr'>{a}</span> کی بالائی حد  <span dir='ltr'>⇒  a ≤ c</span>"]]},
+
+{"say": "ہم نے دونوں شرطیں جانچ لیں۔ اس لیے، a، a سے بنے سیٹ کی کم ترین بالائی حد ہے۔ اور چونکہ a جمع a وہی حد ہے، ہم نتیجہ نکالتے ہیں کہ a جمع a برابر ہے a کے۔ سیٹ میں: A اتصال A، A ہے۔ اس کے ساتھ پہلا حصہ مکمل ہوتا ہے۔", "L": [["res", "<span dir='ltr'>sup{a} = a   ⟹   a ⊕ a = a   ∎</span>"], ["txt", "سیٹ کے ساتھ:  <span dir='ltr'>A ∪ A = A</span>"]]},
+
+{"title": "دوسرا حصہ: a ⊙ a = a", "clear": 1, "say": "اب دوسرے حصے کی طرف چلتے ہیں، ضرب کے ساتھ۔ یہ اسی طرح ہے، کم ترین بالائی حد کی جگہ بیش ترین زیریں حد، اور بالائی حدوں کی جگہ زیریں حدیں لے کر۔ فرض کریں a، B کا کوئی بھی رکن ہے۔ ہمیں ثابت کرنا ہے کہ a ضرب a برابر ہے a کے۔", "L": [["txt", "فرض کریں <span dir='ltr'>a ∈ B</span>  (کوئی بھی)"], ["goal", "ہمیں چاہیے:  <span dir='ltr'>a ⊙ a = a</span><span class='tag'>اس حصے کا مطلوب</span>"]]},
+
+{"say": "پہلا قدم۔ ہم مفروضہ لگاتے ہیں، جو کہتا ہے کہ a ضرب b، a اور b سے بنے سیٹ کی بیش ترین زیریں حد ہے، b برابر a لے کر۔ اور چونکہ a اور a سے بنا سیٹ، صرف a سے بنا سیٹ ہے، ہمیں ملتا ہے کہ a ضرب a، a سے بنے سیٹ کی بیش ترین زیریں حد ہے۔ سیٹ میں: A تقاطع A، A اور A کی بیش ترین زیریں حد ہے۔", "L": [["sub", "<span dir='ltr'>a ⊙ a  =  inf{a, a}</span><span class='tag'>مفروضہ، <span dir='ltr'>b = a</span> لے کر</span>"], ["txt", "سیٹ کے ساتھ:  <span dir='ltr'>A ∩ A = inf{A, A}</span>"], ["res", "<span dir='ltr'>a ⊙ a  =  inf{a}</span><span class='tag'><span dir='ltr'>{a, a} = {a}</span></span>"]]},
+
+{"say": "اب ثابت کرنا باقی ہے کہ صرف a سے بنے سیٹ کی بیش ترین زیریں حد a ہے۔ ہم یہ بیش ترین زیریں حد کی تعریف سے کرتے ہیں، دونوں شرطیں جانچ کر۔", "L": [["goal", "ہمیں چاہیے:  <span dir='ltr'>inf{a} = a</span><span class='tag'>معاون مطلوب</span>"]]},
+
+{"say": "شرط ایک: a ایک زیریں حد ہے۔ a سے بنے سیٹ کا ہر رکن x ایسا ہے کہ a، x سے چھوٹا یا برابر ہے۔ لیکن واحد رکن a ہے، اور انعکاسیت سے a، a سے چھوٹا یا برابر ہے۔", "L": [["sub", "<span dir='ltr'>(i)  x ∈ {a}  ⇒  x = a  ⇒  a ≤ x</span><span class='tag'>انعکاسیت: <span dir='ltr'>a ≤ a</span></span>"], ["res", "<span dir='ltr'>a</span>، <span dir='ltr'>{a}</span> کی زیریں حد ہے"]]},
+
+{"say": "شرط دو: a سب سے بڑی زیریں حد ہے۔ فرض کریں c، a سے بنے سیٹ کی کوئی دوسری زیریں حد ہے۔ یہ ایک مفروضہ ہے: c، سیٹ کے ہر رکن x سے چھوٹا یا برابر ہے۔", "L": [["txt", "فرض کریں <span dir='ltr'>c ∈ B</span>"], ["hyp", "<span dir='ltr'>∀ x ∈ {a}:  c ≤ x</span><span class='tag'>مفروضہ: <span dir='ltr'>c</span>، <span dir='ltr'>{a}</span> کی زیریں حد ہے</span>"]]},
+
+{"say": "چونکہ a، a سے بنے سیٹ میں شامل ہے، ہم مفروضہ x برابر a لے کر لگاتے ہیں۔ ہمیں ملتا ہے کہ c، a سے چھوٹا یا برابر ہے۔ اور یہی ہمیں ثابت کرنا تھا۔", "L": [["sub", "<span dir='ltr'>a ∈ {a}  ⇒  c ≤ a</span><span class='tag'>مفروضہ، <span dir='ltr'>x = a</span> لے کر</span>"], ["res", "<span dir='ltr'>(ii)  c</span>، <span dir='ltr'>{a}</span> کی زیریں حد  <span dir='ltr'>⇒  c ≤ a</span>"]]},
+
+{"say": "ہم نے دونوں شرطیں جانچ لیں۔ اس لیے، a، a سے بنے سیٹ کی بیش ترین زیریں حد ہے۔ اور چونکہ a ضرب a وہی حد ہے، ہم نتیجہ نکالتے ہیں کہ a ضرب a برابر ہے a کے۔ سیٹ میں: A تقاطع A، A ہے۔ اس کے ساتھ دوسرا حصہ مکمل ہوتا ہے۔", "L": [["res", "<span dir='ltr'>inf{a} = a   ⟹   a ⊙ a = a   ∎</span>"], ["txt", "سیٹ کے ساتھ:  <span dir='ltr'>A ∩ A = A</span>"]]},
+
+{"title": "نتیجہ", "clear": 1, "say": "ہم نے کسی بھی رکن a کے لیے دونوں مساواتیں ثابت کر دیں۔ اس لیے، کسی بھی لیٹس میں جمع اور ضرب یکساں ہیں۔ سیٹ میں: A اتصال A، A ہے، اور A تقاطع A، A ہے۔ دیکھنے کا شکریہ۔", "L": [["res", "<span dir='ltr'>∀ a ∈ B:   a ⊕ a = a</span>"], ["res", "<span dir='ltr'>∀ a ∈ B:   a ⊙ a = a</span>"], ["txt", "سیٹ کے ساتھ:  <span dir='ltr'>A ∪ A = A,   A ∩ A = A</span>"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' جمع ').replace(/⊙/g,' ضرب ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ دوبارہ چلائیں'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ جاری رکھیں'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ وقفہ';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ وقفہ';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ وقفہ';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ur/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/asad|salman|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="کم ترین بالائی حد اور بیش ترین زیریں حد سے یکسانیت";$('sub').textContent="مشق · الجبری لیٹس";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

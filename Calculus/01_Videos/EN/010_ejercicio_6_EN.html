@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Idempotence with supremum and infimum</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Remember</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Start</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Speed <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Recording mode (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"en-US",
+"meta":{"nivel": 2, "titulo": "Idempotence with supremum and infimum", "enunciado": "Let (B, ≤) be an ordered set that is a lattice, with a ⊕ b = sup{a, b} and a ⊙ b = inf{a, b}.  Prove that, for every a ∈ B:", "tesis": "a ⊕ a = a,   a ⊙ a = a", "datos": ["(Refl)  a ≤ a", "(Sup)  s = sup S: upper bound and the least one", "(Inf)  i = inf S: lower bound and the greatest one"]},
+"steps":[
+{"title": "Idempotence with supremum and infimum", "sub": "Exercise · Algebraic lattices", "clear": 1, "say": "Hello. In this video we are going to solve an exercise about algebraic lattices. We will go very slowly, writing every equation and justifying every step.", "L": [["txt", "Prove that the lattice sum and product are idempotent"]]},
+
+{"say": "First, the data. B is a set with an order, that is, a relation less than or equal to that is reflexive, antisymmetric and transitive. And it is a lattice. By definition, for any a and b in B, their supremum and their infimum exist. The sum of a and b is the supremum of the set formed by a and b, and the product is the infimum. With sets: the union is the supremum and the intersection is the infimum, with respect to inclusion.", "L": [["hyp", "(B, ≤) ordered,  (B, ⊕, ⊙) lattice<span class='tag'>Hypothesis</span>"], ["hyp", "a ⊕ b = sup{a, b}<span class='tag'>Hypothesis: the supremum exists</span>"], ["hyp", "a ⊙ b = inf{a, b}<span class='tag'>Hypothesis: the infimum exists</span>"], ["txt", "With sets:  A ∪ B = sup{A, B},   A ∩ B = inf{A, B}"]]},
+
+{"say": "The property of the order that we are going to use, on the left. Reflexivity: every element a is less than or equal to a. And the definitions of supremum and infimum, which we recall now.", "pin": ["(Refl) a ≤ a"]},
+
+{"say": "The supremum of a set S is its least upper bound. That is, s is the supremum of S if it satisfies two conditions. One: s is an upper bound, that is, every element x of S is less than or equal to s. Two: s is the least one, that is, if c is another upper bound of S, then s is less than or equal to c.", "L": [["sub", "s = sup S  ⇔  (i) ∀ x ∈ S:  x ≤ s<span class='tag'>Upper bound</span>"], ["sub", "(ii)  if ∀ x ∈ S: x ≤ c,  then  s ≤ c<span class='tag'>It is the least</span>"]]},
+
+{"say": "And the infimum of S is its greatest lower bound. That is, i is the infimum of S if it satisfies two conditions. One: i is a lower bound, that is, i is less than or equal to every element x of S. Two: i is the greatest one, that is, if c is another lower bound of S, then c is less than or equal to i.", "L": [["sub", "i = inf S  ⇔  (i) ∀ x ∈ S:  i ≤ x<span class='tag'>Lower bound</span>"], ["sub", "(ii)  if ∀ x ∈ S: c ≤ x,  then  c ≤ i<span class='tag'>It is the greatest</span>"]]},
+
+{"say": "We write both definitions on the left, below reflexivity, because they are the key to the exercise.", "pin": ["(Sup) s = sup S ⇔ (i) x ≤ s ∀x∈S;  (ii) c upper b. ⇒ s ≤ c", "(Inf) i = inf S ⇔ (i) i ≤ x ∀x∈S;  (ii) c lower b. ⇒ c ≤ i"]},
+
+{"say": "What we want to prove. For every element a of B, a plus a equals a, and a times a equals a. With sets: A union A is A, and A intersection A is A.", "L": [["goal", "∀ a ∈ B:   a ⊕ a = a   and   a ⊙ a = a<span class='tag'>Claim</span>"], ["txt", "With sets:  A ∪ A = A,   A ∩ A = A"]]},
+
+{"title": "Part 1: a ⊕ a = a", "clear": 1, "say": "We start with the sum. Let a be any element of B. We want to prove that a plus a equals a.", "L": [["txt", "Let a ∈ B  (arbitrary)"], ["goal", "We want:  a ⊕ a = a<span class='tag'>Claim of this part</span>"]]},
+
+{"say": "First step. We apply the hypothesis, which says that a plus b is the supremum of the set formed by a and b, with b equal to a. We get that a plus a is the supremum of the set formed by a and a. With sets: A union A is the supremum of A and A.", "L": [["sub", "a ⊕ a  =  sup{a, a}<span class='tag'>Hypothesis with b = a</span>"], ["txt", "With sets:  A ∪ A = sup{A, A}"]]},
+
+{"say": "Second step. A set does not repeat its elements, so the set formed by a and a is equal to the set formed by a alone. It is a set with a single element.", "L": [["sub", "{a, a}  =  {a}<span class='tag'>A set does not repeat elements</span>"], ["res", "a ⊕ a  =  sup{a}"]]},
+
+{"say": "It remains to prove that the supremum of the set formed by a alone is a. We do it with the definition of supremum, checking the two conditions. That is, we want to prove that a is the supremum of the set formed by a.", "L": [["goal", "We want:  sup{a} = a<span class='tag'>Auxiliary claim</span>"]]},
+
+{"say": "Condition one: a is an upper bound. Every element x of the set formed by a is less than or equal to a. But the only element is a, and a is less than or equal to a by reflexivity.", "L": [["sub", "(i)  x ∈ {a}  ⇒  x = a  ⇒  x ≤ a<span class='tag'>Reflexivity: a ≤ a</span>"], ["res", "a is an upper bound of {a}"]]},
+
+{"say": "Condition two: a is the least upper bound. Let c be another upper bound of the set formed by a. This is a hypothesis: every element x of the set is less than or equal to c.", "L": [["txt", "Let c ∈ B"], ["hyp", "∀ x ∈ {a}:  x ≤ c<span class='tag'>Hypothesis: c is an upper bound of {a}</span>"]]},
+
+{"say": "Since a belongs to the set formed by a, we apply the hypothesis with x equal to a. We get that a is less than or equal to c. And this is exactly what we wanted to prove.", "L": [["sub", "a ∈ {a}  ⇒  a ≤ c<span class='tag'>Hypothesis with x = a</span>"], ["res", "(ii)  c upper bound of {a}  ⇒  a ≤ c"]]},
+
+{"say": "We have checked the two conditions. Therefore, a is the supremum of the set formed by a. And since a plus a is that supremum, we conclude that a plus a equals a. With sets: A union A is A. This ends the first part.", "L": [["res", "sup{a} = a   ⟹   a ⊕ a = a   ∎"], ["txt", "With sets:  A ∪ A = A"]]},
+
+{"title": "Part 2: a ⊙ a = a", "clear": 1, "say": "We move on to the second part, with the product. It is analogous, swapping supremum for infimum, and upper bounds for lower bounds. Let a be any element of B. We want to prove that a times a equals a.", "L": [["txt", "Let a ∈ B  (arbitrary)"], ["goal", "We want:  a ⊙ a = a<span class='tag'>Claim of this part</span>"]]},
+
+{"say": "First step. We apply the hypothesis, which says that a times b is the infimum of the set formed by a and b, with b equal to a. And since the set formed by a and a is the set formed by a alone, we get that a times a is the infimum of the set formed by a. With sets: A intersection A is the infimum of A and A.", "L": [["sub", "a ⊙ a  =  inf{a, a}<span class='tag'>Hypothesis with b = a</span>"], ["txt", "With sets:  A ∩ A = inf{A, A}"], ["res", "a ⊙ a  =  inf{a}<span class='tag'>{a, a} = {a}</span>"]]},
+
+{"say": "It remains to prove that the infimum of the set formed by a alone is a. We do it with the definition of infimum, checking the two conditions.", "L": [["goal", "We want:  inf{a} = a<span class='tag'>Auxiliary claim</span>"]]},
+
+{"say": "Condition one: a is a lower bound. Every element x of the set formed by a satisfies that a is less than or equal to x. But the only element is a, and a is less than or equal to a by reflexivity.", "L": [["sub", "(i)  x ∈ {a}  ⇒  x = a  ⇒  a ≤ x<span class='tag'>Reflexivity: a ≤ a</span>"], ["res", "a is a lower bound of {a}"]]},
+
+{"say": "Condition two: a is the greatest lower bound. Let c be another lower bound of the set formed by a. This is a hypothesis: c is less than or equal to every element x of the set.", "L": [["txt", "Let c ∈ B"], ["hyp", "∀ x ∈ {a}:  c ≤ x<span class='tag'>Hypothesis: c is a lower bound of {a}</span>"]]},
+
+{"say": "Since a belongs to the set formed by a, we apply the hypothesis with x equal to a. We get that c is less than or equal to a. And this is exactly what we wanted to prove.", "L": [["sub", "a ∈ {a}  ⇒  c ≤ a<span class='tag'>Hypothesis with x = a</span>"], ["res", "(ii)  c lower bound of {a}  ⇒  c ≤ a"]]},
+
+{"say": "We have checked the two conditions. Therefore, a is the infimum of the set formed by a. And since a times a is that infimum, we conclude that a times a equals a. With sets: A intersection A is A. This ends the second part.", "L": [["res", "inf{a} = a   ⟹   a ⊙ a = a   ∎"], ["txt", "With sets:  A ∩ A = A"]]},
+
+{"title": "Conclusion", "clear": 1, "say": "We have proved both equalities for an arbitrary element a. Therefore, in any lattice, the sum and the product are idempotent. With sets: A union A is A, and A intersection A is A. Thanks for watching.", "L": [["res", "∀ a ∈ B:   a ⊕ a = a"], ["res", "∀ a ∈ B:   a ⊙ a = a"], ["txt", "With sets:  A ∪ A = A,   A ∩ A = A"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' plus ').replace(/⊙/g,' times ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Replay'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Resume'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pause';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/andrew|guy|brian|christopher|eric|david|mark|male|google us english$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Idempotence with supremum and infimum";$('sub').textContent="Exercise · Algebraic lattices";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

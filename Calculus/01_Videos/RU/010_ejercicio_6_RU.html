@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Идемпотентность через супремум и инфимум</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Запомним</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Начать</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Скорость <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Режим записи (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ru-RU",
+"meta":{"nivel": 2, "titulo": "Идемпотентность через супремум и инфимум", "enunciado": "Пусть (B, ≤) — упорядоченное множество, являющееся решёткой, где a ⊕ b = sup{a, b} и a ⊙ b = inf{a, b}.  Доказать, что для любого a ∈ B:", "tesis": "a ⊕ a = a,   a ⊙ a = a", "datos": ["(Рефл)  a ≤ a", "(Sup)  s = sup S: верхняя граница и наименьшая", "(Inf)  i = inf S: нижняя граница и наибольшая"]},
+"steps":[
+{"title": "Идемпотентность через супремум и инфимум", "sub": "Упражнение · Алгебраические решётки", "clear": 1, "say": "Здравствуйте. В этом видео мы решим упражнение об алгебраических решётках. Мы будем двигаться очень медленно, записывая каждое равенство и обосновывая каждый шаг.", "L": [["txt", "Доказать, что решёточные сумма и произведение идемпотентны"]]},
+
+{"say": "Сначала данные. Бэ — множество с порядком, то есть с отношением меньше или равно, которое рефлексивно, антисимметрично и транзитивно. И это решётка. По определению, для любых а и бэ из Бэ существуют их супремум и инфимум. Сумма а и бэ — это супремум множества, образованного а и бэ, а произведение — инфимум. Для множеств: по включению объединение — супремум, а пересечение — инфимум.", "L": [["hyp", "(B, ≤) упорядочено,  (B, ⊕, ⊙) — решётка<span class='tag'>Гипотеза</span>"], ["hyp", "a ⊕ b = sup{a, b}<span class='tag'>Гипотеза: супремум существует</span>"], ["hyp", "a ⊙ b = inf{a, b}<span class='tag'>Гипотеза: инфимум существует</span>"], ["txt", "Для множеств:  A ∪ B = sup{A, B},   A ∩ B = inf{A, B}"]]},
+
+{"say": "Свойство порядка, которым мы воспользуемся, слева. Рефлексивность: каждый элемент а меньше или равен а. И определения супремума и инфимума, которые мы сейчас вспомним.", "pin": ["(Рефл) a ≤ a"]},
+
+{"say": "Супремум множества эс — это его наименьшая верхняя граница. То есть эс является супремумом множества эс, если выполнены два условия. Первое: эс — верхняя граница, то есть каждый элемент икс из эс меньше или равен эс. Второе: эс наименьшая, то есть если цэ — другая верхняя граница эс, то эс меньше или равно цэ.", "L": [["sub", "s = sup S  ⇔  (i) ∀ x ∈ S:  x ≤ s<span class='tag'>Верхняя граница</span>"], ["sub", "(ii)  если ∀ x ∈ S: x ≤ c,  то  s ≤ c<span class='tag'>Она наименьшая</span>"]]},
+
+{"say": "А инфимум эс — это его наибольшая нижняя граница. То есть элемент и является инфимумом эс, если выполнены два условия. Первое: элемент и — нижняя граница, то есть он меньше или равно каждого элемента икс из эс. Второе: он наибольший, то есть если цэ — другая нижняя граница эс, то цэ меньше или равно и.", "L": [["sub", "i = inf S  ⇔  (i) ∀ x ∈ S:  i ≤ x<span class='tag'>Нижняя граница</span>"], ["sub", "(ii)  если ∀ x ∈ S: c ≤ x,  то  c ≤ i<span class='tag'>Она наибольшая</span>"]]},
+
+{"say": "Запишем оба определения слева, под рефлексивностью, потому что они — ключ к упражнению.", "pin": ["(Sup) s = sup S ⇔ (i) x ≤ s ∀x∈S;  (ii) c верх. гр. ⇒ s ≤ c", "(Inf) i = inf S ⇔ (i) i ≤ x ∀x∈S;  (ii) c ниж. гр. ⇒ c ≤ i"]},
+
+{"say": "Что нужно доказать. Для каждого элемента а из Бэ, а плюс а равно а, и а умножить на а равно а. Для множеств: А объединение А равно А, и А пересечение А равно А.", "L": [["goal", "∀ a ∈ B:   a ⊕ a = a   и   a ⊙ a = a<span class='tag'>Утверждение</span>"], ["txt", "Для множеств:  A ∪ A = A,   A ∩ A = A"]]},
+
+{"title": "Часть 1: a ⊕ a = a", "clear": 1, "say": "Начнём с суммы. Пусть а — произвольный элемент Бэ. Мы хотим доказать, что а плюс а равно а.", "L": [["txt", "Пусть a ∈ B  (произвольный)"], ["goal", "Нужно:  a ⊕ a = a<span class='tag'>Утверждение этой части</span>"]]},
+
+{"say": "Первый шаг. Применим гипотезу: а плюс бэ — супремум множества, образованного а и бэ, при бэ, равном а. Получаем, что а плюс а — супремум множества, образованного а и а. Для множеств: А объединение А — супремум А и А.", "L": [["sub", "a ⊕ a  =  sup{a, a}<span class='tag'>Гипотеза при b = a</span>"], ["txt", "Для множеств:  A ∪ A = sup{A, A}"]]},
+
+{"say": "Второй шаг. Элементы множества не повторяются, поэтому множество, образованное а и а, равно множеству, состоящему только из а. Это множество из одного элемента.", "L": [["sub", "{a, a}  =  {a}<span class='tag'>Элементы множества не повторяются</span>"], ["res", "a ⊕ a  =  sup{a}"]]},
+
+{"say": "Осталось доказать, что супремум множества, состоящего только из а, равен а. Сделаем это по определению супремума, проверив оба условия. То есть мы хотим доказать, что а — супремум множества, состоящего из а.", "L": [["goal", "Нужно:  sup{a} = a<span class='tag'>Вспомогательное утверждение</span>"]]},
+
+{"say": "Условие первое: а — верхняя граница. Каждый элемент икс множества, состоящего из а, меньше или равен а. Но единственный элемент — это а, а а меньше или равно а по рефлексивности.", "L": [["sub", "(i)  x ∈ {a}  ⇒  x = a  ⇒  x ≤ a<span class='tag'>Рефлексивность: a ≤ a</span>"], ["res", "a — верхняя граница {a}"]]},
+
+{"say": "Условие второе: а — наименьшая верхняя граница. Пусть цэ — другая верхняя граница множества, состоящего из а. Это гипотеза: каждый элемент икс множества меньше или равен цэ.", "L": [["txt", "Пусть c ∈ B"], ["hyp", "∀ x ∈ {a}:  x ≤ c<span class='tag'>Гипотеза: c — верхняя граница {a}</span>"]]},
+
+{"say": "Поскольку а принадлежит множеству, состоящему из а, применим гипотезу при икс, равном а. Получаем, что а меньше или равно цэ. Это именно то, что мы хотели доказать.", "L": [["sub", "a ∈ {a}  ⇒  a ≤ c<span class='tag'>Гипотеза при x = a</span>"], ["res", "(ii)  c — верхняя граница {a}  ⇒  a ≤ c"]]},
+
+{"say": "Мы проверили оба условия. Следовательно, а — супремум множества, состоящего из а. И поскольку а плюс а и есть этот супремум, заключаем, что а плюс а равно а. Для множеств: А объединение А равно А. На этом первая часть закончена.", "L": [["res", "sup{a} = a   ⟹   a ⊕ a = a   ∎"], ["txt", "Для множеств:  A ∪ A = A"]]},
+
+{"title": "Часть 2: a ⊙ a = a", "clear": 1, "say": "Переходим ко второй части, с произведением. Она аналогична: меняем супремум на инфимум, а верхние границы на нижние. Пусть а — произвольный элемент Бэ. Мы хотим доказать, что а умножить на а равно а.", "L": [["txt", "Пусть a ∈ B  (произвольный)"], ["goal", "Нужно:  a ⊙ a = a<span class='tag'>Утверждение этой части</span>"]]},
+
+{"say": "Первый шаг. Применим гипотезу: а умножить на бэ — инфимум множества, образованного а и бэ, при бэ, равном а. И поскольку множество, образованное а и а, — это множество, состоящее только из а, получаем, что а умножить на а — инфимум множества, состоящего из а. Для множеств: А пересечение А — инфимум А и А.", "L": [["sub", "a ⊙ a  =  inf{a, a}<span class='tag'>Гипотеза при b = a</span>"], ["txt", "Для множеств:  A ∩ A = inf{A, A}"], ["res", "a ⊙ a  =  inf{a}<span class='tag'>{a, a} = {a}</span>"]]},
+
+{"say": "Осталось доказать, что инфимум множества, состоящего только из а, равен а. Сделаем это по определению инфимума, проверив оба условия.", "L": [["goal", "Нужно:  inf{a} = a<span class='tag'>Вспомогательное утверждение</span>"]]},
+
+{"say": "Условие первое: а — нижняя граница. Для каждого элемента икс множества, состоящего из а, а меньше или равно икс. Но единственный элемент — это а, а а меньше или равно а по рефлексивности.", "L": [["sub", "(i)  x ∈ {a}  ⇒  x = a  ⇒  a ≤ x<span class='tag'>Рефлексивность: a ≤ a</span>"], ["res", "a — нижняя граница {a}"]]},
+
+{"say": "Условие второе: а — наибольшая нижняя граница. Пусть цэ — другая нижняя граница множества, состоящего из а. Это гипотеза: цэ меньше или равно каждого элемента икс множества.", "L": [["txt", "Пусть c ∈ B"], ["hyp", "∀ x ∈ {a}:  c ≤ x<span class='tag'>Гипотеза: c — нижняя граница {a}</span>"]]},
+
+{"say": "Поскольку а принадлежит множеству, состоящему из а, применим гипотезу при икс, равном а. Получаем, что цэ меньше или равно а. Это именно то, что мы хотели доказать.", "L": [["sub", "a ∈ {a}  ⇒  c ≤ a<span class='tag'>Гипотеза при x = a</span>"], ["res", "(ii)  c — нижняя граница {a}  ⇒  c ≤ a"]]},
+
+{"say": "Мы проверили оба условия. Следовательно, а — инфимум множества, состоящего из а. И поскольку а умножить на а и есть этот инфимум, заключаем, что а умножить на а равно а. Для множеств: А пересечение А равно А. На этом вторая часть закончена.", "L": [["res", "inf{a} = a   ⟹   a ⊙ a = a   ∎"], ["txt", "Для множеств:  A ∩ A = A"]]},
+
+{"title": "Вывод", "clear": 1, "say": "Мы доказали оба равенства для произвольного элемента а. Следовательно, в любой решётке сумма и произведение идемпотентны. Для множеств: А объединение А равно А, и А пересечение А равно А. Спасибо за внимание.", "L": [["res", "∀ a ∈ B:   a ⊕ a = a"], ["res", "∀ a ∈ B:   a ⊙ a = a"], ["txt", "Для множеств:  A ∪ A = A,   A ∩ A = A"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' плюс ').replace(/⊙/g,' умножить на ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Повторить'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Продолжить'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Пауза';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Пауза';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Пауза';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ru/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/dmitry|pavel|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Идемпотентность через супремум и инфимум";$('sub').textContent="Упражнение · Алгебраические решётки";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

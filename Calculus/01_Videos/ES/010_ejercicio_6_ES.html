@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Idempotencia con supremo e ínfimo</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Recuerda</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Empezar</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Velocidad <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Modo grabación (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"es-ES",
+"meta":{"nivel": 2, "titulo": "Idempotencia con supremo e ínfimo", "enunciado": "Sea (B, ≤) un conjunto ordenado que es un retículo, con a ⊕ b = sup{a, b} y a ⊙ b = inf{a, b}.  Probar que, para todo a ∈ B:", "tesis": "a ⊕ a = a,   a ⊙ a = a", "datos": ["(Refl)  a ≤ a", "(Sup)  s = sup S: cota superior y la menor", "(Inf)  i = inf S: cota inferior y la mayor"]},
+"steps":[
+{"title":"Idempotencia con supremo e ínfimo","sub":"Ejercicio · Retículos algebraicos","clear":1,
+"say":"Hola. En este vídeo vamos a resolver un ejercicio sobre retículos algebraicos. Vamos a ir muy despacio, escribiendo cada ecuación y justificando cada paso.",
+"L":[["txt","Demostrar que la suma y el producto reticulares son idempotentes"]]},
+
+{"say":"Primero, los datos. B es un conjunto con un orden, es decir, una relación menor o igual que es reflexiva, antisimétrica y transitiva. Y es un retículo. Por definición, para cualesquiera a y b de B existen su supremo y su ínfimo. La suma de a y b es el supremo del conjunto formado por a y b, y el producto es el ínfimo. Con conjuntos: la unión es el supremo y la intersección es el ínfimo, respecto de la inclusión.",
+"L":[["hyp","(B, ≤) ordenado,  (B, ⊕, ⊙) retículo<span class='tag'>Hipótesis</span>"],["hyp","a ⊕ b = sup{a, b}<span class='tag'>Hipótesis: existe el supremo</span>"],["hyp","a ⊙ b = inf{a, b}<span class='tag'>Hipótesis: existe el ínfimo</span>"],["txt","Con conjuntos:  A ∪ B = sup{A, B},   A ∩ B = inf{A, B}"]]},
+
+{"say":"Las propiedades del orden que vamos a usar a la izquierda. La reflexividad: todo elemento a es menor o igual que a. Y las definiciones de supremo e ínfimo, que recordamos ahora.",
+"pin":["(Refl) a ≤ a"]},
+
+{"say":"El supremo de un conjunto S es su menor cota superior. Es decir, s es el supremo de S si cumple dos condiciones. Uno: s es una cota superior, es decir, todo elemento x de S es menor o igual que s. Dos: s es la menor, es decir, si c es otra cota superior de S, entonces s es menor o igual que c.",
+"L":[["sub","s = sup S  ⇔  (i) ∀ x ∈ S:  x ≤ s<span class='tag'>Cota superior</span>"],["sub","(ii)  si ∀ x ∈ S: x ≤ c,  entonces  s ≤ c<span class='tag'>Es la menor</span>"]]},
+
+{"say":"Y el ínfimo de S es su mayor cota inferior. Es decir, i es el ínfimo de S si cumple dos condiciones. Uno: i es una cota inferior, es decir, i es menor o igual que todo elemento x de S. Dos: i es la mayor, es decir, si c es otra cota inferior de S, entonces c es menor o igual que i.",
+"L":[["sub","i = inf S  ⇔  (i) ∀ x ∈ S:  i ≤ x<span class='tag'>Cota inferior</span>"],["sub","(ii)  si ∀ x ∈ S: c ≤ x,  entonces  c ≤ i<span class='tag'>Es la mayor</span>"]]},
+
+{"say":"Anotamos las dos definiciones a la izquierda, debajo de la reflexividad, porque son la clave del ejercicio.",
+"pin":["(Sup) s = sup S ⇔ (i) x ≤ s ∀x∈S;  (ii) c cota sup ⇒ s ≤ c","(Inf) i = inf S ⇔ (i) i ≤ x ∀x∈S;  (ii) c cota inf ⇒ c ≤ i"]},
+
+{"say":"Lo que queremos demostrar. Para todo elemento a de B, a más a es igual a a, y a por a es igual a a. Con conjuntos: A unión A es A, y A intersección A es A.",
+"L":[["goal","∀ a ∈ B:   a ⊕ a = a   y   a ⊙ a = a<span class='tag'>Tesis</span>"],["txt","Con conjuntos:  A ∪ A = A,   A ∩ A = A"]]},
+
+{"title":"Parte 1: a ⊕ a = a","clear":1,
+"say":"Empezamos con la suma. Sea a un elemento cualquiera de B. Queremos probar que a más a es igual a a.",
+"L":[["txt","Sea a ∈ B  (arbitrario)"],["goal","Queremos:  a ⊕ a = a<span class='tag'>Tesis de esta parte</span>"]]},
+
+{"say":"Primer paso. Aplicamos la hipótesis, que dice que a más b es el supremo del conjunto formado por a y b, con b igual a a. Obtenemos que a más a es el supremo del conjunto formado por a y a. Con conjuntos: A unión A es el supremo de A y A.",
+"L":[["sub","a ⊕ a  =  sup{a, a}<span class='tag'>Hipótesis con b = a</span>"],["txt","Con conjuntos:  A ∪ A = sup{A, A}"]]},
+
+{"say":"Segundo paso. En un conjunto no se repiten los elementos, así que el conjunto formado por a y a es igual al conjunto formado solo por a. Es un conjunto con un único elemento.",
+"L":[["sub","{a, a}  =  {a}<span class='tag'>Un conjunto no repite elementos</span>"],["res","a ⊕ a  =  sup{a}"]]},
+
+{"say":"Nos queda probar que el supremo del conjunto formado solo por a es a. Lo hacemos con la definición de supremo, comprobando las dos condiciones. Es decir, queremos probar que a es el supremo del conjunto formado por a.",
+"L":[["goal","Queremos:  sup{a} = a<span class='tag'>Tesis auxiliar</span>"]]},
+
+{"say":"Condición uno: a es cota superior. Todo elemento x del conjunto formado por a es menor o igual que a. Pero el único elemento es a, y a es menor o igual que a por la reflexividad.",
+"L":[["sub","(i)  x ∈ {a}  ⇒  x = a  ⇒  x ≤ a<span class='tag'>Reflexividad: a ≤ a</span>"],["res","a es cota superior de {a}"]]},
+
+{"say":"Condición dos: a es la menor cota superior. Sea c otra cota superior del conjunto formado por a. Esto es una hipótesis: todo elemento x del conjunto es menor o igual que c.",
+"L":[["txt","Sea c ∈ B"],["hyp","∀ x ∈ {a}:  x ≤ c<span class='tag'>Hipótesis: c es cota superior de {a}</span>"]]},
+
+{"say":"Como a pertenece al conjunto formado por a, aplicamos la hipótesis con x igual a a. Obtenemos que a es menor o igual que c. Y esto es exactamente lo que queríamos probar.",
+"L":[["sub","a ∈ {a}  ⇒  a ≤ c<span class='tag'>Hipótesis con x = a</span>"],["res","(ii)  c cota superior de {a}  ⇒  a ≤ c"]]},
+
+{"say":"Hemos comprobado las dos condiciones. Por tanto, a es el supremo del conjunto formado por a. Y como a más a es ese supremo, concluimos que a más a es igual a a. Con conjuntos: A unión A es A. Con esto termina la primera parte.",
+"L":[["res","sup{a} = a   ⟹   a ⊕ a = a   ∎"],["txt","Con conjuntos:  A ∪ A = A"]]},
+
+{"title":"Parte 2: a ⊙ a = a","clear":1,
+"say":"Pasamos a la segunda parte, con el producto. Es análoga, intercambiando supremo por ínfimo, y cotas superiores por cotas inferiores. Sea a un elemento cualquiera de B. Queremos probar que a por a es igual a a.",
+"L":[["txt","Sea a ∈ B  (arbitrario)"],["goal","Queremos:  a ⊙ a = a<span class='tag'>Tesis de esta parte</span>"]]},
+
+{"say":"Primer paso. Aplicamos la hipótesis, que dice que a por b es el ínfimo del conjunto formado por a y b, con b igual a a. Y como el conjunto formado por a y a es el conjunto formado solo por a, obtenemos que a por a es el ínfimo del conjunto formado por a. Con conjuntos: A intersección A es el ínfimo de A y A.",
+"L":[["sub","a ⊙ a  =  inf{a, a}<span class='tag'>Hipótesis con b = a</span>"],["txt","Con conjuntos:  A ∩ A = inf{A, A}"],["res","a ⊙ a  =  inf{a}<span class='tag'>{a, a} = {a}</span>"]]},
+
+{"say":"Nos queda probar que el ínfimo del conjunto formado solo por a es a. Lo hacemos con la definición de ínfimo, comprobando las dos condiciones.",
+"L":[["goal","Queremos:  inf{a} = a<span class='tag'>Tesis auxiliar</span>"]]},
+
+{"say":"Condición uno: a es cota inferior. Todo elemento x del conjunto formado por a cumple que a es menor o igual que x. Pero el único elemento es a, y a es menor o igual que a por la reflexividad.",
+"L":[["sub","(i)  x ∈ {a}  ⇒  x = a  ⇒  a ≤ x<span class='tag'>Reflexividad: a ≤ a</span>"],["res","a es cota inferior de {a}"]]},
+
+{"say":"Condición dos: a es la mayor cota inferior. Sea c otra cota inferior del conjunto formado por a. Esto es una hipótesis: c es menor o igual que todo elemento x del conjunto.",
+"L":[["txt","Sea c ∈ B"],["hyp","∀ x ∈ {a}:  c ≤ x<span class='tag'>Hipótesis: c es cota inferior de {a}</span>"]]},
+
+{"say":"Como a pertenece al conjunto formado por a, aplicamos la hipótesis con x igual a a. Obtenemos que c es menor o igual que a. Y esto es exactamente lo que queríamos probar.",
+"L":[["sub","a ∈ {a}  ⇒  c ≤ a<span class='tag'>Hipótesis con x = a</span>"],["res","(ii)  c cota inferior de {a}  ⇒  c ≤ a"]]},
+
+{"say":"Hemos comprobado las dos condiciones. Por tanto, a es el ínfimo del conjunto formado por a. Y como a por a es ese ínfimo, concluimos que a por a es igual a a. Con conjuntos: A intersección A es A. Con esto termina la segunda parte.",
+"L":[["res","inf{a} = a   ⟹   a ⊙ a = a   ∎"],["txt","Con conjuntos:  A ∩ A = A"]]},
+
+{"title":"Conclusión","clear":1,
+"say":"Hemos probado las dos igualdades para un elemento a cualquiera. Por tanto, en cualquier retículo, la suma y el producto son idempotentes. Con conjuntos: A unión A es A, y A intersección A es A. Gracias por ver el vídeo.",
+"L":[["res","∀ a ∈ B:   a ⊕ a = a"],["res","∀ a ∈ B:   a ⊙ a = a"],["txt","Con conjuntos:  A ∪ A = A,   A ∩ A = A"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' más ').replace(/⊙/g,' por ').replace(/≤/g,' menor o igual que ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Repetir'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Continuar'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pausa';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^es/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/pablo|jorge|diego|enrique|miguel|alvaro|álvaro|male|google español$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent='Idempotencia con supremo e ínfimo';$('sub').textContent='Ejercicio · Retículos algebraicos';
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>सुप्रीमम और इन्फ़िमम से वर्गसमता</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>याद रखें</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ शुरू करें</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>गति <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">रिकॉर्डिंग मोड (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"hi-IN",
+"meta":{"nivel": 2, "titulo": "सुप्रीमम और इन्फ़िमम से वर्गसमता", "enunciado": "मान लीजिए (B, ≤) एक क्रमित समुच्चय है जो एक जालक है, जहाँ a ⊕ b = sup{a, b} और a ⊙ b = inf{a, b}।  सिद्ध कीजिए कि हर a ∈ B के लिए:", "tesis": "a ⊕ a = a,   a ⊙ a = a", "datos": ["(स्वतुल्य)  a ≤ a", "(सुप्रीमम)  s = sup S: ऊपरी सीमा और सबसे छोटी", "(इन्फ़िमम)  i = inf S: निचली सीमा और सबसे बड़ी"]},
+"steps":[
+{"title": "सुप्रीमम और इन्फ़िमम से वर्गसमता", "sub": "अभ्यास · बीजीय जालक", "clear": 1, "say": "नमस्ते। इस वीडियो में हम बीजीय जालकों पर एक अभ्यास हल करेंगे। हम बहुत धीरे-धीरे चलेंगे, हर समीकरण लिखेंगे और हर कदम का कारण बताएँगे।", "L": [["txt", "सिद्ध कीजिए कि जालक का योग और गुणन वर्गसम हैं"]]},
+
+{"say": "पहले, दी गई बातें। B एक क्रम वाला समुच्चय है, यानी उस पर एक संबंध, छोटा या बराबर, है जो स्वतुल्य, प्रतिसममित और संक्रामक है। और यह एक जालक है। परिभाषा से, B के किन्हीं भी a और b के लिए उनका सुप्रीमम और इन्फ़िमम मौजूद है। a और b का योग, a और b से बने समुच्चय का सुप्रीमम है, और गुणनफल इन्फ़िमम है। समुच्चयों में: समावेश के सापेक्ष, सम्मिलन सुप्रीमम है और सर्वनिष्ठ इन्फ़िमम है।", "L": [["hyp", "(B, ≤) क्रमित,  (B, ⊕, ⊙) जालक<span class='tag'>परिकल्पना</span>"], ["hyp", "a ⊕ b = sup{a, b}<span class='tag'>परिकल्पना: सुप्रीमम का अस्तित्व है</span>"], ["hyp", "a ⊙ b = inf{a, b}<span class='tag'>परिकल्पना: इन्फ़िमम का अस्तित्व है</span>"], ["txt", "समुच्चयों के साथ:  A ∪ B = sup{A, B},   A ∩ B = inf{A, B}"]]},
+
+{"say": "क्रम का वह गुण जिसका हम उपयोग करेंगे, बाईं ओर। स्वतुल्यता: हर अवयव a, a से छोटा या बराबर है। और सुप्रीमम तथा इन्फ़िमम की परिभाषाएँ, जिन्हें अब हम याद करते हैं।", "pin": ["(स्वतुल्य) a ≤ a"]},
+
+{"say": "किसी समुच्चय S का सुप्रीमम उसकी सबसे छोटी ऊपरी सीमा है। यानी s, S का सुप्रीमम है यदि वह दो शर्तें पूरी करे। एक: s एक ऊपरी सीमा है, यानी S का हर अवयव x, s से छोटा या बराबर है। दो: s सबसे छोटी है, यानी यदि c, S की कोई दूसरी ऊपरी सीमा है, तो s, c से छोटा या बराबर है।", "L": [["sub", "s = sup S  ⇔  (i) ∀ x ∈ S:  x ≤ s<span class='tag'>ऊपरी सीमा</span>"], ["sub", "(ii)  यदि ∀ x ∈ S: x ≤ c,  तो  s ≤ c<span class='tag'>यह सबसे छोटी है</span>"]]},
+
+{"say": "और S का इन्फ़िमम उसकी सबसे बड़ी निचली सीमा है। यानी i, S का इन्फ़िमम है यदि वह दो शर्तें पूरी करे। एक: i एक निचली सीमा है, यानी i, S के हर अवयव x से छोटा या बराबर है। दो: i सबसे बड़ी है, यानी यदि c, S की कोई दूसरी निचली सीमा है, तो c, i से छोटा या बराबर है।", "L": [["sub", "i = inf S  ⇔  (i) ∀ x ∈ S:  i ≤ x<span class='tag'>निचली सीमा</span>"], ["sub", "(ii)  यदि ∀ x ∈ S: c ≤ x,  तो  c ≤ i<span class='tag'>यह सबसे बड़ी है</span>"]]},
+
+{"say": "दोनों परिभाषाएँ हम बाईं ओर, स्वतुल्यता के नीचे लिख लेते हैं, क्योंकि यही इस अभ्यास की कुंजी हैं।", "pin": ["(सुप्रीमम) s = sup S ⇔ (i) x ≤ s ∀x∈S;  (ii) c ऊपरी सीमा ⇒ s ≤ c", "(इन्फ़िमम) i = inf S ⇔ (i) i ≤ x ∀x∈S;  (ii) c निचली सीमा ⇒ c ≤ i"]},
+
+{"say": "हमें क्या सिद्ध करना है। B के हर अवयव a के लिए, a प्लस a बराबर है a के, और a गुणा a बराबर है a के। समुच्चयों में: A सम्मिलन A, A है, और A सर्वनिष्ठ A, A है।", "L": [["goal", "∀ a ∈ B:   a ⊕ a = a   और   a ⊙ a = a<span class='tag'>साध्य</span>"], ["txt", "समुच्चयों के साथ:  A ∪ A = A,   A ∩ A = A"]]},
+
+{"title": "भाग 1: a ⊕ a = a", "clear": 1, "say": "हम योग से शुरू करते हैं। मान लीजिए a, B का कोई भी अवयव है। हमें सिद्ध करना है कि a प्लस a बराबर है a के।", "L": [["txt", "मान लीजिए a ∈ B  (यादृच्छिक)"], ["goal", "हमें चाहिए:  a ⊕ a = a<span class='tag'>इस भाग का साध्य</span>"]]},
+
+{"say": "पहला कदम। हम परिकल्पना लगाते हैं, जो कहती है कि a प्लस b, a और b से बने समुच्चय का सुप्रीमम है, b बराबर a लेकर। हमें मिलता है कि a प्लस a, a और a से बने समुच्चय का सुप्रीमम है। समुच्चयों में: A सम्मिलन A, A और A का सुप्रीमम है।", "L": [["sub", "a ⊕ a  =  sup{a, a}<span class='tag'>परिकल्पना, b = a लेकर</span>"], ["txt", "समुच्चयों के साथ:  A ∪ A = sup{A, A}"]]},
+
+{"say": "दूसरा कदम। समुच्चय में अवयव दोहराए नहीं जाते, इसलिए a और a से बना समुच्चय, केवल a से बने समुच्चय के बराबर है। यह एक ही अवयव वाला समुच्चय है।", "L": [["sub", "{a, a}  =  {a}<span class='tag'>समुच्चय में अवयव दोहराए नहीं जाते</span>"], ["res", "a ⊕ a  =  sup{a}"]]},
+
+{"say": "अब सिद्ध करना बाकी है कि केवल a से बने समुच्चय का सुप्रीमम a है। हम यह सुप्रीमम की परिभाषा से करते हैं, दोनों शर्तें जाँचकर। यानी हमें सिद्ध करना है कि a, a से बने समुच्चय का सुप्रीमम है।", "L": [["goal", "हमें चाहिए:  sup{a} = a<span class='tag'>सहायक साध्य</span>"]]},
+
+{"say": "शर्त एक: a एक ऊपरी सीमा है। a से बने समुच्चय का हर अवयव x, a से छोटा या बराबर है। पर एकमात्र अवयव a है, और स्वतुल्यता से a, a से छोटा या बराबर है।", "L": [["sub", "(i)  x ∈ {a}  ⇒  x = a  ⇒  x ≤ a<span class='tag'>स्वतुल्यता: a ≤ a</span>"], ["res", "a, {a} की ऊपरी सीमा है"]]},
+
+{"say": "शर्त दो: a सबसे छोटी ऊपरी सीमा है। मान लीजिए c, a से बने समुच्चय की कोई दूसरी ऊपरी सीमा है। यह एक परिकल्पना है: समुच्चय का हर अवयव x, c से छोटा या बराबर है।", "L": [["txt", "मान लीजिए c ∈ B"], ["hyp", "∀ x ∈ {a}:  x ≤ c<span class='tag'>परिकल्पना: c, {a} की ऊपरी सीमा है</span>"]]},
+
+{"say": "चूँकि a, a से बने समुच्चय में है, हम परिकल्पना को x बराबर a लेकर लगाते हैं। हमें मिलता है कि a, c से छोटा या बराबर है। और यही हमें सिद्ध करना था।", "L": [["sub", "a ∈ {a}  ⇒  a ≤ c<span class='tag'>परिकल्पना, x = a लेकर</span>"], ["res", "(ii)  c, {a} की ऊपरी सीमा  ⇒  a ≤ c"]]},
+
+{"say": "हमने दोनों शर्तें जाँच लीं। इसलिए, a, a से बने समुच्चय का सुप्रीमम है। और चूँकि a प्लस a वही सुप्रीमम है, हम निष्कर्ष निकालते हैं कि a प्लस a बराबर है a के। समुच्चयों में: A सम्मिलन A, A है। इसके साथ पहला भाग पूरा होता है।", "L": [["res", "sup{a} = a   ⟹   a ⊕ a = a   ∎"], ["txt", "समुच्चयों के साथ:  A ∪ A = A"]]},
+
+{"title": "भाग 2: a ⊙ a = a", "clear": 1, "say": "अब दूसरे भाग पर चलते हैं, गुणन के साथ। यह इसी तरह है, सुप्रीमम की जगह इन्फ़िमम, और ऊपरी सीमाओं की जगह निचली सीमाएँ लेकर। मान लीजिए a, B का कोई भी अवयव है। हमें सिद्ध करना है कि a गुणा a बराबर है a के।", "L": [["txt", "मान लीजिए a ∈ B  (यादृच्छिक)"], ["goal", "हमें चाहिए:  a ⊙ a = a<span class='tag'>इस भाग का साध्य</span>"]]},
+
+{"say": "पहला कदम। हम परिकल्पना लगाते हैं, जो कहती है कि a गुणा b, a और b से बने समुच्चय का इन्फ़िमम है, b बराबर a लेकर। और चूँकि a और a से बना समुच्चय, केवल a से बना समुच्चय है, हमें मिलता है कि a गुणा a, a से बने समुच्चय का इन्फ़िमम है। समुच्चयों में: A सर्वनिष्ठ A, A और A का इन्फ़िमम है।", "L": [["sub", "a ⊙ a  =  inf{a, a}<span class='tag'>परिकल्पना, b = a लेकर</span>"], ["txt", "समुच्चयों के साथ:  A ∩ A = inf{A, A}"], ["res", "a ⊙ a  =  inf{a}<span class='tag'>{a, a} = {a}</span>"]]},
+
+{"say": "अब सिद्ध करना बाकी है कि केवल a से बने समुच्चय का इन्फ़िमम a है। हम यह इन्फ़िमम की परिभाषा से करते हैं, दोनों शर्तें जाँचकर।", "L": [["goal", "हमें चाहिए:  inf{a} = a<span class='tag'>सहायक साध्य</span>"]]},
+
+{"say": "शर्त एक: a एक निचली सीमा है। a से बने समुच्चय का हर अवयव x ऐसा है कि a, x से छोटा या बराबर है। पर एकमात्र अवयव a है, और स्वतुल्यता से a, a से छोटा या बराबर है।", "L": [["sub", "(i)  x ∈ {a}  ⇒  x = a  ⇒  a ≤ x<span class='tag'>स्वतुल्यता: a ≤ a</span>"], ["res", "a, {a} की निचली सीमा है"]]},
+
+{"say": "शर्त दो: a सबसे बड़ी निचली सीमा है। मान लीजिए c, a से बने समुच्चय की कोई दूसरी निचली सीमा है। यह एक परिकल्पना है: c, समुच्चय के हर अवयव x से छोटा या बराबर है।", "L": [["txt", "मान लीजिए c ∈ B"], ["hyp", "∀ x ∈ {a}:  c ≤ x<span class='tag'>परिकल्पना: c, {a} की निचली सीमा है</span>"]]},
+
+{"say": "चूँकि a, a से बने समुच्चय में है, हम परिकल्पना को x बराबर a लेकर लगाते हैं। हमें मिलता है कि c, a से छोटा या बराबर है। और यही हमें सिद्ध करना था।", "L": [["sub", "a ∈ {a}  ⇒  c ≤ a<span class='tag'>परिकल्पना, x = a लेकर</span>"], ["res", "(ii)  c, {a} की निचली सीमा  ⇒  c ≤ a"]]},
+
+{"say": "हमने दोनों शर्तें जाँच लीं। इसलिए, a, a से बने समुच्चय का इन्फ़िमम है। और चूँकि a गुणा a वही इन्फ़िमम है, हम निष्कर्ष निकालते हैं कि a गुणा a बराबर है a के। समुच्चयों में: A सर्वनिष्ठ A, A है। इसके साथ दूसरा भाग पूरा होता है।", "L": [["res", "inf{a} = a   ⟹   a ⊙ a = a   ∎"], ["txt", "समुच्चयों के साथ:  A ∩ A = A"]]},
+
+{"title": "निष्कर्ष", "clear": 1, "say": "हमने किसी भी अवयव a के लिए दोनों समताएँ सिद्ध कर दीं। इसलिए, किसी भी जालक में योग और गुणन वर्गसम हैं। समुच्चयों में: A सम्मिलन A, A है, और A सर्वनिष्ठ A, A है। देखने के लिए धन्यवाद।", "L": [["res", "∀ a ∈ B:   a ⊕ a = a"], ["res", "∀ a ∈ B:   a ⊙ a = a"], ["txt", "समुच्चयों के साथ:  A ∪ A = A,   A ∩ A = A"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' प्लस ').replace(/⊙/g,' गुणा ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ फिर से चलाएँ'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ जारी रखें'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ रोकें';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^hi/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/madhur|hemant|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="सुप्रीमम और इन्फ़िमम से वर्गसमता";$('sub').textContent="अभ्यास · बीजीय जालक";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
