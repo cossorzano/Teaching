@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Закон инволюции</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Запомним</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Начать</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Скорость <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Режим записи (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ru-RU",
+"meta":{"nivel": 2, "titulo": "Закон инволюции", "enunciado": "Пусть (B, ⊕, ⊙, ∼) — булева алгебра.  Доказать, что для любого a ∈ B выполняется закон инволюции:", "tesis": "∼(∼a) = a", "datos": ["(Комм ⊕)  x ⊕ y = y ⊕ x", "(Комм ⊙)  x ⊙ y = y ⊙ x", "(Доп)  x ⊕ ∼x = 1,   x ⊙ ∼x = 0", "(Единств)  x ⊕ y = 1 и x ⊙ y = 0 ⇒ y = ∼x"]},
+"steps":[
+{"title": "Закон инволюции", "sub": "Упражнение · Булева алгебра", "clear": 1, "say": "Здравствуйте. В этом видео мы решим упражнение о булевых алгебрах. Мы будем двигаться очень медленно, записывая каждое равенство и обосновывая каждый шаг.", "L": [["txt", "Дополнение дополнения a равно a"]]},
+
+{"say": "Сначала данные. Бэ — множество с двумя операциями, суммой и произведением, и операцией дополнения, которую мы обозначаем тильдой. Это булева алгебра: дистрибутивная решётка с наименьшим элементом ноль, наибольшим элементом один и дополнением для каждого элемента. Типичный пример — множество всех подмножеств множества У, с объединением, пересечением и дополнением.", "L": [["hyp", "(B, ⊕, ⊙, ∼) — булева алгебра<span class='tag'>Гипотеза</span>"], ["txt", "Для множеств:  (𝒫(U), ∪, ∩, дополнение)"]]},
+
+{"say": "Вспомним определение дополнения. Дополнение икс — это элемент, который удовлетворяет сразу двум условиям: икс плюс его дополнение равно единице, и икс умножить на его дополнение равно нулю. Для множеств: А объединение его дополнение равно У, а А пересечение его дополнение — пустое множество.", "L": [["sub", "x ⊕ ∼x = 1<span class='tag'>Определение дополнения</span>"], ["sub", "x ⊙ ∼x = 0<span class='tag'>Определение дополнения</span>"], ["txt", "Для множеств:  A ∪ A<sup>c</sup> = U,   A ∩ A<sup>c</sup> = ∅"]]},
+
+{"say": "Базовый результат о булевых алгебрах: дополнение каждого элемента единственно. Это значит, что если элемент игрек удовлетворяет обоим условиям относительно икс, то есть икс плюс игрек равно единице, и икс умножить на игрек равно нулю, то игрек — дополнение икс. Для множеств: единственное множество, которое в объединении с А даёт У, а в пересечении с А даёт пустое множество, — это дополнение А.", "L": [["sub", "x ⊕ y = 1   и   x ⊙ y = 0   ⟹   y = ∼x<span class='tag'>Единственность дополнения</span>"], ["txt", "Для множеств:  A ∪ Y = U  и  A ∩ Y = ∅  ⟹  Y = A<sup>c</sup>"]]},
+
+{"say": "Запишем слева то, чем будем пользоваться: коммутативность суммы, коммутативность произведения, определение дополнения и единственность.", "pin": ["(Комм ⊕) x ⊕ y = y ⊕ x", "(Комм ⊙) x ⊙ y = y ⊙ x", "(Доп) x ⊕ ∼x = 1,   x ⊙ ∼x = 0", "(Единств) x ⊕ y = 1 и x ⊙ y = 0 ⇒ y = ∼x"]},
+
+{"say": "Что нужно доказать. Для каждого элемента а из Бэ дополнение дополнения а равно а. Это закон инволюции. Для множеств: дополнение дополнения А равно А.", "L": [["goal", "∀ a ∈ B:   ∼(∼a) = a<span class='tag'>Утверждение: закон инволюции</span>"], ["txt", "Для множеств:  (A<sup>c</sup>)<sup>c</sup> = A"]]},
+
+{"title": "Идея доказательства", "clear": 1, "say": "Пусть а — произвольный элемент Бэ. По определению дополнения у нас есть две гипотезы: а плюс его дополнение равно единице, и а умножить на его дополнение равно нулю.", "L": [["txt", "Пусть a ∈ B  (произвольный)"], ["hyp", "a ⊕ ∼a = 1<span class='tag'>Гипотеза: определение ∼a</span>"], ["hyp", "a ⊙ ∼a = 0<span class='tag'>Гипотеза: определение ∼a</span>"]]},
+
+{"say": "Идея такая. По единственности, чтобы доказать, что дополнение дополнения а равно а, достаточно проверить, что а удовлетворяет двум условиям дополнения относительно дополнения а. То есть применяем единственность при икс, равном дополнению а, и игрек, равном а.", "L": [["sub", "x = ∼a,   y = a<span class='tag'>Выбор в (Единств)</span>"], ["goal", "Достаточно доказать:  ∼a ⊕ a = 1   и   ∼a ⊙ a = 0<span class='tag'>Новое утверждение</span>"]]},
+
+{"title": "Первое условие", "clear": 1, "say": "Первое условие. Мы хотим доказать, что дополнение а, плюс а, равно единице. Начнём с левой части.", "L": [["goal", "Нужно:  ∼a ⊕ a = 1<span class='tag'>Утверждение этой части</span>"], ["txt", "∼a ⊕ a"]]},
+
+{"say": "Первый шаг. Применим коммутативность суммы при икс, равном дополнению а, и игрек, равном а. Переходим от, дополнение а плюс а, к а плюс дополнение а.", "L": [["sub", "∼a ⊕ a  =  a ⊕ ∼a<span class='tag'>Коммутативность ⊕</span>"]]},
+
+{"say": "Второй шаг. Теперь у нас в точности первая гипотеза: а плюс его дополнение равно единице. Выделим и подставим.", "L": [["sub", "∼a ⊕ a  =  <mark>a ⊕ ∼a</mark>"], ["txt", "Гипотеза:  <mark>a ⊕ ∼a</mark> = 1"], ["res", "∼a ⊕ a  =  1<span class='tag'>Определение дополнения</span>"]]},
+
+{"title": "Второе условие", "clear": 1, "say": "Второе условие. Мы хотим доказать, что дополнение а, умножить на а, равно нулю. Начнём с левой части.", "L": [["goal", "Нужно:  ∼a ⊙ a = 0<span class='tag'>Утверждение этой части</span>"], ["txt", "∼a ⊙ a"]]},
+
+{"say": "Первый шаг. Применим коммутативность произведения. Переходим от, дополнение а умножить на а, к а умножить на дополнение а.", "L": [["sub", "∼a ⊙ a  =  a ⊙ ∼a<span class='tag'>Коммутативность ⊙</span>"]]},
+
+{"say": "Второй шаг. Теперь у нас в точности вторая гипотеза: а умножить на его дополнение равно нулю. Выделим и подставим.", "L": [["sub", "∼a ⊙ a  =  <mark>a ⊙ ∼a</mark>"], ["txt", "Гипотеза:  <mark>a ⊙ ∼a</mark> = 0"], ["res", "∼a ⊙ a  =  0<span class='tag'>Определение дополнения</span>"]]},
+
+{"title": "Вывод", "clear": 1, "say": "Мы проверили оба условия. То есть для а выполняется: дополнение а, плюс а, равно единице, и дополнение а, умножить на а, равно нулю. Следовательно, а — дополнение к дополнению а.", "L": [["res", "∼a ⊕ a = 1   и   ∼a ⊙ a = 0<span class='tag'>Оба условия</span>"], ["txt", "a — дополнение к ∼a"]]},
+
+{"say": "Теперь применим единственность дополнения при икс, равном дополнению а, и игрек, равном а. Поскольку а удовлетворяет обоим условиям, а и есть дополнение дополнения а. Для множеств: дополнение дополнения А равно А. Это доказывает закон инволюции.", "L": [["sub", "(Единств) при x = ∼a, y = a"], ["res", "a = ∼(∼a)   ∎<span class='tag'>Закон инволюции</span>"], ["txt", "Для множеств:  (A<sup>c</sup>)<sup>c</sup> = A"]]},
+
+{"title": "Итоги", "clear": 1, "say": "Подведём итоги. Чтобы доказать, что дополнение дополнения а равно а, его не нужно вычислять: достаточно увидеть с помощью коммутативности, что а удовлетворяет двум условиям дополнения относительно дополнения а, и применить единственность. Мы заключаем, что операция дополнения является инволюцией. Для множеств: дополнение дополнения А равно А. Спасибо за внимание.", "L": [["res", "a ⊕ ∼a = 1  ⟹  ∼a ⊕ a = 1   (Комм ⊕)"], ["res", "a ⊙ ∼a = 0  ⟹  ∼a ⊙ a = 0   (Комм ⊙)"], ["res", "Единственность  ⟹  ∼(∼a) = a"], ["txt", "Для множеств:  (A<sup>c</sup>)<sup>c</sup> = A"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' плюс ').replace(/⊙/g,' умножить на ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Повторить'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Продолжить'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Пауза';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Пауза';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Пауза';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ru/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/dmitry|pavel|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Закон инволюции";$('sub').textContent="Упражнение · Булева алгебра";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

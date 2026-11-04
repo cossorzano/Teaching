@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hukum involusi</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Ingat</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Mulai</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Kecepatan <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Mode rekam (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"id-ID",
+"meta":{"nivel": 2, "titulo": "Hukum involusi", "enunciado": "Misalkan (B, ⊕, ⊙, ∼) sebuah aljabar Boole.  Buktikan bahwa untuk setiap a ∈ B berlaku hukum involusi:", "tesis": "∼(∼a) = a", "datos": ["(Kom ⊕)  x ⊕ y = y ⊕ x", "(Kom ⊙)  x ⊙ y = y ⊙ x", "(Komp)  x ⊕ ∼x = 1,   x ⊙ ∼x = 0", "(Tunggal)  x ⊕ y = 1 dan x ⊙ y = 0 ⇒ y = ∼x"]},
+"steps":[
+{"title": "Hukum involusi", "sub": "Latihan · Aljabar Boole", "clear": 1, "say": "Halo. Dalam video ini kita akan menyelesaikan sebuah soal tentang aljabar Boole. Kita akan berjalan sangat perlahan, menuliskan setiap persamaan dan memberikan alasan untuk setiap langkah.", "L": [["txt", "Komplemen dari komplemen a adalah a"]]},
+
+{"say": "Pertama, data yang diketahui. B adalah himpunan dengan dua operasi, penjumlahan dan perkalian, serta operasi komplemen, yang kita tulis dengan tanda tilde. B adalah aljabar Boole: latis distributif dengan unsur terkecil nol, unsur terbesar satu, dan komplemen untuk setiap anggota. Contoh khasnya adalah himpunan kuasa dari himpunan U, dengan gabungan, irisan, dan komplemen himpunan.", "L": [["hyp", "(B, ⊕, ⊙, ∼) aljabar Boole<span class='tag'>Hipotesis</span>"], ["txt", "Pada himpunan:  (𝒫(U), ∪, ∩, komplemen)"]]},
+
+{"say": "Kita ingat definisi komplemen. Komplemen dari x adalah anggota yang memenuhi dua syarat sekaligus: x tambah komplemennya sama dengan satu, dan x kali komplemennya sama dengan nol. Pada himpunan: A gabung komplemennya adalah U, dan A irisan komplemennya adalah himpunan kosong.", "L": [["sub", "x ⊕ ∼x = 1<span class='tag'>Definisi komplemen</span>"], ["sub", "x ⊙ ∼x = 0<span class='tag'>Definisi komplemen</span>"], ["txt", "Pada himpunan:  A ∪ A<sup>c</sup> = U,   A ∩ A<sup>c</sup> = ∅"]]},
+
+{"say": "Hasil dasar pada aljabar Boole adalah bahwa komplemen setiap anggota itu tunggal. Artinya, jika suatu anggota y memenuhi kedua syarat terhadap x, yaitu x tambah y sama dengan satu, dan x kali y sama dengan nol, maka y adalah komplemen dari x. Pada himpunan: satu-satunya himpunan yang digabung dengan A menghasilkan U, dan diiriskan dengan A menghasilkan himpunan kosong, adalah komplemen A.", "L": [["sub", "x ⊕ y = 1   dan   x ⊙ y = 0   ⟹   y = ∼x<span class='tag'>Ketunggalan komplemen</span>"], ["txt", "Pada himpunan:  A ∪ Y = U  dan  A ∩ Y = ∅  ⟹  Y = A<sup>c</sup>"]]},
+
+{"say": "Kita catat di sebelah kiri apa yang akan kita gunakan: sifat komutatif penjumlahan, sifat komutatif perkalian, definisi komplemen, dan ketunggalan.", "pin": ["(Kom ⊕) x ⊕ y = y ⊕ x", "(Kom ⊙) x ⊙ y = y ⊙ x", "(Komp) x ⊕ ∼x = 1,   x ⊙ ∼x = 0", "(Tunggal) x ⊕ y = 1 dan x ⊙ y = 0 ⇒ y = ∼x"]},
+
+{"say": "Yang ingin kita buktikan. Untuk setiap anggota a dari B, komplemen dari komplemen a sama dengan a. Inilah hukum involusi. Pada himpunan: komplemen dari komplemen A adalah A.", "L": [["goal", "∀ a ∈ B:   ∼(∼a) = a<span class='tag'>Yang dibuktikan: hukum involusi</span>"], ["txt", "Pada himpunan:  (A<sup>c</sup>)<sup>c</sup> = A"]]},
+
+{"title": "Rencana", "clear": 1, "say": "Misalkan a sebarang anggota B. Menurut definisi komplemen, kita punya dua hipotesis: a tambah komplemennya sama dengan satu, dan a kali komplemennya sama dengan nol.", "L": [["txt", "Misalkan a ∈ B  (sebarang)"], ["hyp", "a ⊕ ∼a = 1<span class='tag'>Hipotesis: definisi ∼a</span>"], ["hyp", "a ⊙ ∼a = 0<span class='tag'>Hipotesis: definisi ∼a</span>"]]},
+
+{"say": "Idenya sebagai berikut. Menurut ketunggalan, untuk membuktikan bahwa komplemen dari komplemen a adalah a, cukup diperiksa bahwa a memenuhi kedua syarat komplemen terhadap komplemen a. Artinya, kita terapkan ketunggalan dengan x sama dengan komplemen a, dan y sama dengan a.", "L": [["sub", "x = ∼a,   y = a<span class='tag'>Pilihan pada (Tunggal)</span>"], ["goal", "Cukup dibuktikan:  ∼a ⊕ a = 1   dan   ∼a ⊙ a = 0<span class='tag'>Yang dibuktikan, baru</span>"]]},
+
+{"title": "Syarat pertama", "clear": 1, "say": "Syarat pertama. Kita ingin membuktikan bahwa komplemen a, tambah a, sama dengan satu. Kita mulai dari ruas kiri.", "L": [["goal", "Kita ingin:  ∼a ⊕ a = 1<span class='tag'>Yang dibuktikan di bagian ini</span>"], ["txt", "∼a ⊕ a"]]},
+
+{"say": "Langkah pertama. Kita terapkan sifat komutatif penjumlahan, dengan x sama dengan komplemen a, dan y sama dengan a. Dari komplemen a, tambah a, kita peroleh a tambah komplemen a.", "L": [["sub", "∼a ⊕ a  =  a ⊕ ∼a<span class='tag'>Komutatif ⊕</span>"]]},
+
+{"say": "Langkah kedua. Sekarang kita mendapatkan tepat hipotesis pertama: a tambah komplemennya sama dengan satu. Kita tandai lalu kita substitusikan.", "L": [["sub", "∼a ⊕ a  =  <mark>a ⊕ ∼a</mark>"], ["txt", "Hipotesis:  <mark>a ⊕ ∼a</mark> = 1"], ["res", "∼a ⊕ a  =  1<span class='tag'>Definisi komplemen</span>"]]},
+
+{"title": "Syarat kedua", "clear": 1, "say": "Syarat kedua. Kita ingin membuktikan bahwa komplemen a, kali a, sama dengan nol. Kita mulai dari ruas kiri.", "L": [["goal", "Kita ingin:  ∼a ⊙ a = 0<span class='tag'>Yang dibuktikan di bagian ini</span>"], ["txt", "∼a ⊙ a"]]},
+
+{"say": "Langkah pertama. Kita terapkan sifat komutatif perkalian. Dari komplemen a, kali a, kita peroleh a kali komplemen a.", "L": [["sub", "∼a ⊙ a  =  a ⊙ ∼a<span class='tag'>Komutatif ⊙</span>"]]},
+
+{"say": "Langkah kedua. Sekarang kita mendapatkan tepat hipotesis kedua: a kali komplemennya sama dengan nol. Kita tandai lalu kita substitusikan.", "L": [["sub", "∼a ⊙ a  =  <mark>a ⊙ ∼a</mark>"], ["txt", "Hipotesis:  <mark>a ⊙ ∼a</mark> = 0"], ["res", "∼a ⊙ a  =  0<span class='tag'>Definisi komplemen</span>"]]},
+
+{"title": "Kesimpulan", "clear": 1, "say": "Kita sudah memeriksa kedua syarat. Artinya, a memenuhi bahwa komplemen a, tambah a, sama dengan satu, dan komplemen a, kali a, sama dengan nol. Jadi, a adalah komplemen dari komplemen a.", "L": [["res", "∼a ⊕ a = 1   dan   ∼a ⊙ a = 0<span class='tag'>Kedua syarat</span>"], ["txt", "a adalah komplemen dari ∼a"]]},
+
+{"say": "Sekarang kita terapkan ketunggalan komplemen, dengan x sama dengan komplemen a, dan y sama dengan a. Karena a memenuhi kedua syarat, a adalah komplemen dari komplemen a. Pada himpunan: komplemen dari komplemen A adalah A. Dan ini membuktikan hukum involusi.", "L": [["sub", "(Tunggal) dengan x = ∼a, y = a"], ["res", "a = ∼(∼a)   ∎<span class='tag'>Hukum involusi</span>"], ["txt", "Pada himpunan:  (A<sup>c</sup>)<sup>c</sup> = A"]]},
+
+{"title": "Ringkasan", "clear": 1, "say": "Ringkasnya. Untuk membuktikan bahwa komplemen dari komplemen a adalah a, kita tidak perlu menghitungnya: cukup melihat bahwa a memenuhi kedua syarat komplemen terhadap komplemen a, dengan memakai sifat komutatif, lalu menerapkan ketunggalan. Kita simpulkan bahwa operasi komplemen bersifat involutif. Pada himpunan: komplemen dari komplemen A adalah A. Terima kasih sudah menonton.", "L": [["res", "a ⊕ ∼a = 1  ⟹  ∼a ⊕ a = 1   (Kom ⊕)"], ["res", "a ⊙ ∼a = 0  ⟹  ∼a ⊙ a = 0   (Kom ⊙)"], ["res", "Ketunggalan  ⟹  ∼(∼a) = a"], ["txt", "Pada himpunan:  (A<sup>c</sup>)<sup>c</sup> = A"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' tambah ').replace(/⊙/g,' kali ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Ulangi'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Lanjutkan'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Jeda';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Jeda';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Jeda';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^id/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/ardi|andika|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Hukum involusi";$('sub').textContent="Latihan · Aljabar Boole";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

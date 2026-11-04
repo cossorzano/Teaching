@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ley de involución</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Recuerda</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Empezar</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Velocidad <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Modo grabación (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"es-ES",
+"meta":{"nivel": 2, "titulo": "Ley de involución", "enunciado": "Sea (B, ⊕, ⊙, ∼) un álgebra de Boole.  Probar que, para todo a ∈ B, se cumple la ley de involución:", "tesis": "∼(∼a) = a", "datos": ["(Conm ⊕)  x ⊕ y = y ⊕ x", "(Conm ⊙)  x ⊙ y = y ⊙ x", "(Compl)  x ⊕ ∼x = 1,   x ⊙ ∼x = 0", "(Unic)  x ⊕ y = 1 y x ⊙ y = 0 ⇒ y = ∼x"]},
+"steps":[
+{"title": "Ley de involución", "sub": "Ejercicio · Álgebra de Boole", "clear": 1, "say": "Hola. En este vídeo vamos a resolver un ejercicio sobre álgebras de Boole. Vamos a ir muy despacio, escribiendo cada ecuación y justificando cada paso.", "L": [["txt", "El complementario del complementario de a es a"]]},
+
+{"say": "Primero, los datos. B es un conjunto con dos operaciones, la suma y el producto, y una operación complemento, que escribimos con una tilde. Es un álgebra de Boole: un retículo distributivo con elemento mínimo cero, elemento máximo uno, y un complementario para cada elemento. El ejemplo típico son las partes de un conjunto U, con la unión, la intersección y el complementario de conjuntos.", "L": [["hyp", "(B, ⊕, ⊙, ∼) álgebra de Boole<span class='tag'>Hipótesis</span>"], ["txt", "Con conjuntos:  (𝒫(U), ∪, ∩, complementario)"]]},
+
+{"say": "Recordamos la definición de complementario. El complementario de x es un elemento que cumple dos condiciones a la vez: x más su complementario es uno, y x por su complementario es cero. Con conjuntos: A unión su complementario es U, y A intersección su complementario es el conjunto vacío.", "L": [["sub", "x ⊕ ∼x = 1<span class='tag'>Definición de complementario</span>"], ["sub", "x ⊙ ∼x = 0<span class='tag'>Definición de complementario</span>"], ["txt", "Con conjuntos:  A ∪ A<sup>c</sup> = U,   A ∩ A<sup>c</sup> = ∅"]]},
+
+{"say": "Un resultado básico de las álgebras de Boole es que el complementario de cada elemento es único. Esto significa que, si un elemento y cumple las dos condiciones respecto de x, es decir, x más y es uno, y x por y es cero, entonces y es el complementario de x. Con conjuntos: el único conjunto que unido a A da U, e intersecado con A da el vacío, es el complementario de A.", "L": [["sub", "x ⊕ y = 1   y   x ⊙ y = 0   ⟹   y = ∼x<span class='tag'>Unicidad del complementario</span>"], ["txt", "Con conjuntos:  A ∪ Y = U  y  A ∩ Y = ∅  ⟹  Y = A<sup>c</sup>"]]},
+
+{"say": "Anotamos a la izquierda lo que vamos a usar: la conmutatividad de la suma, la del producto, la definición de complementario y la unicidad.", "pin": ["(Conm ⊕) x ⊕ y = y ⊕ x", "(Conm ⊙) x ⊙ y = y ⊙ x", "(Compl) x ⊕ ∼x = 1,   x ⊙ ∼x = 0", "(Unic) x ⊕ y = 1 y x ⊙ y = 0 ⇒ y = ∼x"]},
+
+{"say": "Lo que queremos demostrar. Para todo elemento a de B, el complementario del complementario de a es igual a a. Es la ley de involución. Con conjuntos: el complementario del complementario de A es A.", "L": [["goal", "∀ a ∈ B:   ∼(∼a) = a<span class='tag'>Tesis: ley de involución</span>"], ["txt", "Con conjuntos:  (A<sup>c</sup>)<sup>c</sup> = A"]]},
+
+{"title": "Planteamiento", "clear": 1, "say": "Sea a un elemento cualquiera de B. Por la definición de complementario, tenemos dos hipótesis: a más su complementario es uno, y a por su complementario es cero.", "L": [["txt", "Sea a ∈ B  (arbitrario)"], ["hyp", "a ⊕ ∼a = 1<span class='tag'>Hipótesis: definición de ∼a</span>"], ["hyp", "a ⊙ ∼a = 0<span class='tag'>Hipótesis: definición de ∼a</span>"]]},
+
+{"say": "La idea es la siguiente. Por la unicidad, para probar que el complementario de ∼a es a, basta comprobar que a cumple las dos condiciones del complementario respecto de ∼a. Es decir, aplicamos la unicidad con x igual al complementario de a, e y igual a a.", "L": [["sub", "x = ∼a,   y = a<span class='tag'>Elección en (Unic)</span>"], ["goal", "Basta probar:  ∼a ⊕ a = 1   y   ∼a ⊙ a = 0<span class='tag'>Nueva tesis</span>"]]},
+
+{"title": "Primera condición", "clear": 1, "say": "Primera condición. Queremos probar que el complementario de a, más a, es igual a uno. Partimos del lado izquierdo.", "L": [["goal", "Queremos:  ∼a ⊕ a = 1<span class='tag'>Tesis de esta parte</span>"], ["txt", "∼a ⊕ a"]]},
+
+{"say": "Primer paso. Aplicamos la conmutatividad de la suma, con x igual al complementario de a, e y igual a a. Pasamos del complementario de a, más a, a a más el complementario de a.", "L": [["sub", "∼a ⊕ a  =  a ⊕ ∼a<span class='tag'>Conmutatividad de ⊕</span>"]]},
+
+{"say": "Segundo paso. Ahora tenemos exactamente la primera hipótesis: a más su complementario es uno. Lo marcamos y sustituimos.", "L": [["sub", "∼a ⊕ a  =  <mark>a ⊕ ∼a</mark>"], ["txt", "Hipótesis:  <mark>a ⊕ ∼a</mark> = 1"], ["res", "∼a ⊕ a  =  1<span class='tag'>Definición de complementario</span>"]]},
+
+{"title": "Segunda condición", "clear": 1, "say": "Segunda condición. Queremos probar que el complementario de a, por a, es igual a cero. Partimos del lado izquierdo.", "L": [["goal", "Queremos:  ∼a ⊙ a = 0<span class='tag'>Tesis de esta parte</span>"], ["txt", "∼a ⊙ a"]]},
+
+{"say": "Primer paso. Aplicamos la conmutatividad del producto. Pasamos del complementario de a, por a, a a por el complementario de a.", "L": [["sub", "∼a ⊙ a  =  a ⊙ ∼a<span class='tag'>Conmutatividad de ⊙</span>"]]},
+
+{"say": "Segundo paso. Ahora tenemos exactamente la segunda hipótesis: a por su complementario es cero. Lo marcamos y sustituimos.", "L": [["sub", "∼a ⊙ a  =  <mark>a ⊙ ∼a</mark>"], ["txt", "Hipótesis:  <mark>a ⊙ ∼a</mark> = 0"], ["res", "∼a ⊙ a  =  0<span class='tag'>Definición de complementario</span>"]]},
+
+{"title": "Conclusión", "clear": 1, "say": "Hemos comprobado las dos condiciones. Es decir, a cumple que el complementario de a, más a, es uno, y que el complementario de a, por a, es cero. Por tanto, a es un complementario del complementario de a.", "L": [["res", "∼a ⊕ a = 1   y   ∼a ⊙ a = 0<span class='tag'>Las dos condiciones</span>"], ["txt", "a es un complementario de ∼a"]]},
+
+{"say": "Ahora aplicamos la unicidad del complementario, con x igual al complementario de a, e y igual a a. Como a cumple las dos condiciones, a es el complementario del complementario de a. Con conjuntos: el complementario del complementario de A es A. Y esto demuestra la ley de involución.", "L": [["sub", "(Unic) con x = ∼a, y = a"], ["res", "a = ∼(∼a)   ∎<span class='tag'>Ley de involución</span>"], ["txt", "Con conjuntos:  (A<sup>c</sup>)<sup>c</sup> = A"]]},
+
+{"title": "Resumen", "clear": 1, "say": "Resumiendo. Para probar que el complementario del complementario de a es a, no hace falta calcularlo: basta ver que a cumple las dos condiciones del complementario respecto del complementario de a, usando la conmutatividad, y aplicar la unicidad. Concluimos que el operador complemento es involutivo. Con conjuntos: el complementario del complementario de A es A. Gracias por ver el vídeo.", "L": [["res", "a ⊕ ∼a = 1  ⟹  ∼a ⊕ a = 1   (Conm ⊕)"], ["res", "a ⊙ ∼a = 0  ⟹  ∼a ⊙ a = 0   (Conm ⊙)"], ["res", "Unicidad  ⟹  ∼(∼a) = a"], ["txt", "Con conjuntos:  (A<sup>c</sup>)<sup>c</sup> = A"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' más ').replace(/⊙/g,' por ').replace(/∼/g,' complementario de ').replace(/≤/g,' menor o igual que ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Repetir'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Continuar'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pausa';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^es/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/pablo|jorge|diego|enrique|miguel|alvaro|álvaro|male|google español$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent='Ley de involución';$('sub').textContent='Ejercicio · Álgebra de Boole';
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

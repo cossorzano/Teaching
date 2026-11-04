@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>अंतर्वलन नियम</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>याद रखें</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ शुरू करें</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>गति <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">रिकॉर्डिंग मोड (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"hi-IN",
+"meta":{"nivel": 2, "titulo": "अंतर्वलन नियम", "enunciado": "मान लीजिए (B, ⊕, ⊙, ∼) एक बूलीय बीजगणित है।  सिद्ध कीजिए कि हर a ∈ B के लिए अंतर्वलन नियम लागू होता है:", "tesis": "∼(∼a) = a", "datos": ["(क्रम ⊕)  x ⊕ y = y ⊕ x", "(क्रम ⊙)  x ⊙ y = y ⊙ x", "(पूरक)  x ⊕ ∼x = 1,   x ⊙ ∼x = 0", "(अद्वितीय)  x ⊕ y = 1 और x ⊙ y = 0 ⇒ y = ∼x"]},
+"steps":[
+{"title": "अंतर्वलन नियम", "sub": "अभ्यास · बूलीय बीजगणित", "clear": 1, "say": "नमस्ते। इस वीडियो में हम बूलीय बीजगणित पर एक अभ्यास हल करेंगे। हम बहुत धीरे-धीरे चलेंगे, हर समीकरण लिखेंगे और हर कदम का कारण बताएँगे।", "L": [["txt", "a के पूरक का पूरक a है"]]},
+
+{"say": "पहले, दी गई बातें। B एक समुच्चय है जिस पर दो संक्रियाएँ हैं, योग और गुणन, और एक पूरक संक्रिया, जिसे हम टिल्ड से लिखते हैं। यह एक बूलीय बीजगणित है: एक वितरणशील जालक, जिसमें न्यूनतम अवयव शून्य, अधिकतम अवयव एक, और हर अवयव का एक पूरक है। सामान्य उदाहरण किसी समुच्चय U का घात समुच्चय है, सम्मिलन, सर्वनिष्ठ और पूरक के साथ।", "L": [["hyp", "(B, ⊕, ⊙, ∼) बूलीय बीजगणित<span class='tag'>परिकल्पना</span>"], ["txt", "समुच्चयों के साथ:  (𝒫(U), ∪, ∩, पूरक)"]]},
+
+{"say": "पूरक की परिभाषा याद करते हैं। x का पूरक एक ऐसा अवयव है जो एक साथ दो शर्तें पूरी करता है: x प्लस उसका पूरक एक है, और x गुणा उसका पूरक शून्य है। समुच्चयों में: A सम्मिलन उसका पूरक U है, और A सर्वनिष्ठ उसका पूरक रिक्त समुच्चय है।", "L": [["sub", "x ⊕ ∼x = 1<span class='tag'>पूरक की परिभाषा</span>"], ["sub", "x ⊙ ∼x = 0<span class='tag'>पूरक की परिभाषा</span>"], ["txt", "समुच्चयों के साथ:  A ∪ A<sup>c</sup> = U,   A ∩ A<sup>c</sup> = ∅"]]},
+
+{"say": "बूलीय बीजगणित का एक मूल परिणाम यह है कि हर अवयव का पूरक अद्वितीय होता है। इसका अर्थ है कि यदि कोई अवयव y, x के सापेक्ष दोनों शर्तें पूरी करे, यानी x प्लस y एक हो, और x गुणा y शून्य हो, तो y, x का पूरक है। समुच्चयों में: A के साथ सम्मिलन से U और सर्वनिष्ठ से रिक्त देने वाला एकमात्र समुच्चय A का पूरक है।", "L": [["sub", "x ⊕ y = 1   और   x ⊙ y = 0   ⟹   y = ∼x<span class='tag'>पूरक की अद्वितीयता</span>"], ["txt", "समुच्चयों के साथ:  A ∪ Y = U  और  A ∩ Y = ∅  ⟹  Y = A<sup>c</sup>"]]},
+
+{"say": "हम बाईं ओर वह लिख लेते हैं जिसका उपयोग करेंगे: योग की क्रमविनिमेयता, गुणन की क्रमविनिमेयता, पूरक की परिभाषा, और अद्वितीयता।", "pin": ["(क्रम ⊕) x ⊕ y = y ⊕ x", "(क्रम ⊙) x ⊙ y = y ⊙ x", "(पूरक) x ⊕ ∼x = 1,   x ⊙ ∼x = 0", "(अद्वितीय) x ⊕ y = 1 और x ⊙ y = 0 ⇒ y = ∼x"]},
+
+{"say": "हमें क्या सिद्ध करना है। B के हर अवयव a के लिए, a के पूरक का पूरक a के बराबर है। यह अंतर्वलन नियम है। समुच्चयों में: A के पूरक का पूरक A है।", "L": [["goal", "∀ a ∈ B:   ∼(∼a) = a<span class='tag'>साध्य: अंतर्वलन नियम</span>"], ["txt", "समुच्चयों के साथ:  (A<sup>c</sup>)<sup>c</sup> = A"]]},
+
+{"title": "योजना", "clear": 1, "say": "मान लीजिए a, B का कोई भी अवयव है। पूरक की परिभाषा से हमारे पास दो परिकल्पनाएँ हैं: a प्लस उसका पूरक एक है, और a गुणा उसका पूरक शून्य है।", "L": [["txt", "मान लीजिए a ∈ B  (यादृच्छिक)"], ["hyp", "a ⊕ ∼a = 1<span class='tag'>परिकल्पना: ∼a की परिभाषा</span>"], ["hyp", "a ⊙ ∼a = 0<span class='tag'>परिकल्पना: ∼a की परिभाषा</span>"]]},
+
+{"say": "विचार यह है। अद्वितीयता से, यह सिद्ध करने के लिए कि a के पूरक का पूरक a है, यह जाँचना पर्याप्त है कि a, a के पूरक के सापेक्ष पूरक की दोनों शर्तें पूरी करता है। यानी हम अद्वितीयता को x बराबर a का पूरक, और y बराबर a लेकर लगाते हैं।", "L": [["sub", "x = ∼a,   y = a<span class='tag'>(अद्वितीय) में चुनाव</span>"], ["goal", "सिद्ध करना पर्याप्त है:  ∼a ⊕ a = 1   और   ∼a ⊙ a = 0<span class='tag'>नया साध्य</span>"]]},
+
+{"title": "पहली शर्त", "clear": 1, "say": "पहली शर्त। हमें सिद्ध करना है कि a का पूरक, प्लस a, बराबर है एक के। हम बाएँ पक्ष से शुरू करते हैं।", "L": [["goal", "हमें चाहिए:  ∼a ⊕ a = 1<span class='tag'>इस भाग का साध्य</span>"], ["txt", "∼a ⊕ a"]]},
+
+{"say": "पहला कदम। हम योग की क्रमविनिमेयता लगाते हैं, x बराबर a का पूरक, और y बराबर a लेकर। a के पूरक, प्लस a, से हम a प्लस a के पूरक पर पहुँचते हैं।", "L": [["sub", "∼a ⊕ a  =  a ⊕ ∼a<span class='tag'>⊕ की क्रमविनिमेयता</span>"]]},
+
+{"say": "दूसरा कदम। अब हमारे पास ठीक पहली परिकल्पना है: a प्लस उसका पूरक एक है। इसे चिह्नित करके प्रतिस्थापित करते हैं।", "L": [["sub", "∼a ⊕ a  =  <mark>a ⊕ ∼a</mark>"], ["txt", "परिकल्पना:  <mark>a ⊕ ∼a</mark> = 1"], ["res", "∼a ⊕ a  =  1<span class='tag'>पूरक की परिभाषा</span>"]]},
+
+{"title": "दूसरी शर्त", "clear": 1, "say": "दूसरी शर्त। हमें सिद्ध करना है कि a का पूरक, गुणा a, बराबर है शून्य के। हम बाएँ पक्ष से शुरू करते हैं।", "L": [["goal", "हमें चाहिए:  ∼a ⊙ a = 0<span class='tag'>इस भाग का साध्य</span>"], ["txt", "∼a ⊙ a"]]},
+
+{"say": "पहला कदम। हम गुणन की क्रमविनिमेयता लगाते हैं। a के पूरक, गुणा a, से हम a गुणा a के पूरक पर पहुँचते हैं।", "L": [["sub", "∼a ⊙ a  =  a ⊙ ∼a<span class='tag'>⊙ की क्रमविनिमेयता</span>"]]},
+
+{"say": "दूसरा कदम। अब हमारे पास ठीक दूसरी परिकल्पना है: a गुणा उसका पूरक शून्य है। इसे चिह्नित करके प्रतिस्थापित करते हैं।", "L": [["sub", "∼a ⊙ a  =  <mark>a ⊙ ∼a</mark>"], ["txt", "परिकल्पना:  <mark>a ⊙ ∼a</mark> = 0"], ["res", "∼a ⊙ a  =  0<span class='tag'>पूरक की परिभाषा</span>"]]},
+
+{"title": "निष्कर्ष", "clear": 1, "say": "हमने दोनों शर्तें जाँच लीं। यानी a ऐसा है कि a का पूरक, प्लस a, एक है, और a का पूरक, गुणा a, शून्य है। इसलिए, a, a के पूरक का एक पूरक है।", "L": [["res", "∼a ⊕ a = 1   और   ∼a ⊙ a = 0<span class='tag'>दोनों शर्तें</span>"], ["txt", "a, ∼a का एक पूरक है"]]},
+
+{"say": "अब हम पूरक की अद्वितीयता लगाते हैं, x बराबर a का पूरक, और y बराबर a लेकर। चूँकि a दोनों शर्तें पूरी करता है, a ही a के पूरक का पूरक है। समुच्चयों में: A के पूरक का पूरक A है। और इससे अंतर्वलन नियम सिद्ध होता है।", "L": [["sub", "(अद्वितीय) लेकर x = ∼a, y = a"], ["res", "a = ∼(∼a)   ∎<span class='tag'>अंतर्वलन नियम</span>"], ["txt", "समुच्चयों के साथ:  (A<sup>c</sup>)<sup>c</sup> = A"]]},
+
+{"title": "सारांश", "clear": 1, "say": "सारांश में। यह सिद्ध करने के लिए कि a के पूरक का पूरक a है, उसे गणना करने की ज़रूरत नहीं: क्रमविनिमेयता से यह देखना पर्याप्त है कि a, a के पूरक के सापेक्ष पूरक की दोनों शर्तें पूरी करता है, और फिर अद्वितीयता लगाना। हम निष्कर्ष निकालते हैं कि पूरक संक्रिया अंतर्वलनी है। समुच्चयों में: A के पूरक का पूरक A है। देखने के लिए धन्यवाद।", "L": [["res", "a ⊕ ∼a = 1  ⟹  ∼a ⊕ a = 1   (क्रम ⊕)"], ["res", "a ⊙ ∼a = 0  ⟹  ∼a ⊙ a = 0   (क्रम ⊙)"], ["res", "अद्वितीयता  ⟹  ∼(∼a) = a"], ["txt", "समुच्चयों के साथ:  (A<sup>c</sup>)<sup>c</sup> = A"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' प्लस ').replace(/⊙/g,' गुणा ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ फिर से चलाएँ'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ जारी रखें'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ रोकें';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^hi/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/madhur|hemant|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="अंतर्वलन नियम";$('sub').textContent="अभ्यास · बूलीय बीजगणित";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
