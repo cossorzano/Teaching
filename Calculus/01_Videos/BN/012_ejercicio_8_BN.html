@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>আধিপত্য বিধি</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>মনে রাখুন</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ শুরু</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>গতি <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">রেকর্ডিং মোড (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"bn-BD",
+"meta":{"nivel": 2, "titulo": "আধিপত্য বিধি", "enunciado": "ধরা যাক (B, ⊕, ⊙, ∼) একটি বুলীয় বীজগণিত।  প্রমাণ করুন যে প্রতিটি a ∈ B এর জন্য আধিপত্য বিধি খাটে:", "tesis": "a ⊕ 1 = 1,   a ⊙ 0 = 0", "datos": ["(সংযো ⊕)  x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(সংযো ⊙)  x ⊙ (y ⊙ z) = (x ⊙ y) ⊙ z", "(স্বসম)  x ⊕ x = x,   x ⊙ x = x", "(পূরক)  x ⊕ ∼x = 1,   x ⊙ ∼x = 0"]},
+"steps":[
+{"title": "আধিপত্য বিধি", "sub": "অনুশীলনী · বুলীয় বীজগণিত", "clear": 1, "say": "নমস্কার। এই ভিডিওতে আমরা বুলীয় বীজগণিত নিয়ে একটি অনুশীলনী সমাধান করব। আমরা খুব ধীরে এগোব, প্রতিটি সমীকরণ লিখব এবং প্রতিটি ধাপের যুক্তি দেব।", "L": [["txt", "এক যোগ করলে এক হয়, আর শূন্য দিয়ে গুণ করলে শূন্য"]]},
+
+{"say": "প্রথমে, প্রদত্ত তথ্য। B একটি সেট, যার উপর দুটি প্রক্রিয়া আছে, যোগ ও গুণ, আর একটি পূরক প্রক্রিয়া, যা আমরা টিল্ড চিহ্ন দিয়ে লিখি। এটি একটি বুলীয় বীজগণিত: একটি বণ্টনশীল ল্যাটিস, যার ক্ষুদ্রতম উপাদান শূন্য, বৃহত্তম উপাদান এক, এবং প্রতিটি উপাদানের একটি পূরক আছে। সাধারণ উদাহরণ হলো একটি সেট U এর ঘাত সেট, সংযোগ, ছেদ ও পূরক নিয়ে।", "L": [["hyp", "(B, ⊕, ⊙, ∼) বুলীয় বীজগণিত<span class='tag'>অনুমান</span>"], ["txt", "সেটের ক্ষেত্রে:  (𝒫(U), ∪, ∩, পূরক),   0 = ∅,   1 = U"]]},
+
+{"say": "পূরকের সংজ্ঞা মনে করি। a এর পূরক একসাথে দুটি শর্ত পূরণ করে: a প্লাস তার পূরক সমান এক, এবং a গুণ তার পূরক সমান শূন্য। সেটের ক্ষেত্রে: A সংযোগ তার পূরক হলো U, এবং A ছেদ তার পূরক হলো ফাঁকা সেট।", "L": [["sub", "a ⊕ ∼a = 1<span class='tag'>পূরকের সংজ্ঞা</span>"], ["sub", "a ⊙ ∼a = 0<span class='tag'>পূরকের সংজ্ঞা</span>"], ["txt", "সেটের ক্ষেত্রে:  A ∪ A<sup>c</sup> = U,   A ∩ A<sup>c</sup> = ∅"]]},
+
+{"say": "এছাড়া আমরা যোগ ও গুণের সংযোজন ধর্ম, আর দুটি প্রক্রিয়ার স্বসমতা ব্যবহার করব: a প্লাস a হলো a, এবং a গুণ a হলো a। এগুলো আমরা পূরকের সংজ্ঞার সাথে বাঁ দিকে লিখে রাখি।", "pin": ["(সংযো ⊕) x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(সংযো ⊙) x ⊙ (y ⊙ z) = (x ⊙ y) ⊙ z", "(স্বসম ⊕) x ⊕ x = x", "(স্বসম ⊙) x ⊙ x = x", "(পূরক) x ⊕ ∼x = 1,   x ⊙ ∼x = 0"]},
+
+{"say": "আমরা যা প্রমাণ করতে চাই। B এর প্রতিটি উপাদান a এর জন্য, a প্লাস এক হলো এক, এবং a গুণ শূন্য হলো শূন্য। এগুলোই আধিপত্য বিধি: এক যোগের উপর আধিপত্য করে, আর শূন্য গুণের উপর। সেটের ক্ষেত্রে: A সংযোগ U হলো U, এবং A ছেদ ফাঁকা সেট হলো ফাঁকা সেট।", "L": [["goal", "∀ a ∈ B:   a ⊕ 1 = 1   এবং   a ⊙ 0 = 0<span class='tag'>প্রামাণ্য: আধিপত্য বিধি</span>"], ["txt", "সেটের ক্ষেত্রে:  A ∪ U = U,   A ∩ ∅ = ∅"]]},
+
+{"title": "প্রথম ভাগ: a ⊕ 1 = 1", "clear": 1, "say": "আমরা প্রথমটি দিয়ে শুরু করি। ধরা যাক a, B এর যেকোনো একটি উপাদান। আমরা প্রমাণ করতে চাই যে a প্লাস এক সমান এক। বাম পক্ষ থেকে শুরু করি।", "L": [["txt", "ধরা যাক a ∈ B  (যেকোনো)"], ["goal", "আমরা চাই:  a ⊕ 1 = 1<span class='tag'>এই ভাগের প্রামাণ্য</span>"], ["txt", "a ⊕ 1"]]},
+
+{"say": "প্রথম ধাপ। পূরকের সংজ্ঞা অনুযায়ী, a প্লাস তার পূরক সমান এক। এটিই অনুমান। তাই এককে a প্লাস a এর পূরক দিয়ে বদলাতে পারি। বাঁ দিকের a যেমন আছে তেমনই রাখি।", "L": [["sub", "a ⊕ 1  =  a ⊕ (a ⊕ ∼a)<span class='tag'>প্রতিস্থাপন: 1 = a ⊕ ∼a  (পূরকের সংজ্ঞা)</span>"]]},
+
+{"say": "দ্বিতীয় ধাপ। আমরা যোগের সংযোজন ধর্ম প্রয়োগ করি, x সমান a, y সমান a, আর z সমান a এর পূরক নিয়ে। a প্লাস, a প্লাস a এর পূরক, থেকে যাই, a প্লাস a, প্লাস a এর পূরক এ।", "L": [["sub", "a ⊕ 1  =  (a ⊕ a) ⊕ ∼a<span class='tag'>⊕ এর সংযোজন</span>"]]},
+
+{"say": "তৃতীয় ধাপ। বন্ধনীর ভেতরে আছে a প্লাস a। যোগের স্বসমতা অনুযায়ী, a প্লাস a সমান a। এটি চিহ্নিত করে প্রতিস্থাপন করি।", "L": [["sub", "a ⊕ 1  =  (<mark>a ⊕ a</mark>) ⊕ ∼a"], ["txt", "(স্বসম ⊕) অনুযায়ী:  <mark>a ⊕ a</mark> = a"], ["sub", "a ⊕ 1  =  a ⊕ ∼a<span class='tag'>⊕ এর স্বসমতা</span>"]]},
+
+{"say": "চতুর্থ ধাপ। এখন আমাদের কাছে a প্লাস a এর পূরক, যা পূরকের সংজ্ঞা অনুযায়ী এক।", "L": [["res", "a ⊕ 1  =  1<span class='tag'>পূরকের সংজ্ঞা</span>"]]},
+
+{"say": "আমরা প্রথম আধিপত্য বিধি প্রমাণ করেছি। সেটের ক্ষেত্রে: A সংযোগ U হলো U। এখানেই প্রথম ভাগ শেষ।", "L": [["res", "a ⊕ 1 = 1   ∎"], ["txt", "সেটের ক্ষেত্রে:  A ∪ U = U"]]},
+
+{"title": "দ্বিতীয় ভাগ: a ⊙ 0 = 0", "clear": 1, "say": "এবার দ্বিতীয় ভাগ। এটি একই রকম, যোগের জায়গায় গুণ, আর একের জায়গায় শূন্য নিয়ে। ধরা যাক a, B এর যেকোনো একটি উপাদান। আমরা প্রমাণ করতে চাই যে a গুণ শূন্য সমান শূন্য। বাম পক্ষ থেকে শুরু করি।", "L": [["txt", "ধরা যাক a ∈ B  (যেকোনো)"], ["goal", "আমরা চাই:  a ⊙ 0 = 0<span class='tag'>এই ভাগের প্রামাণ্য</span>"], ["txt", "a ⊙ 0"]]},
+
+{"say": "প্রথম ধাপ। পূরকের সংজ্ঞা অনুযায়ী, a গুণ তার পূরক সমান শূন্য। এটিই অনুমান। তাই শূন্যকে a গুণ a এর পূরক দিয়ে বদলাই। বাঁ দিকের a যেমন আছে তেমনই রাখি।", "L": [["sub", "a ⊙ 0  =  a ⊙ (a ⊙ ∼a)<span class='tag'>প্রতিস্থাপন: 0 = a ⊙ ∼a  (পূরকের সংজ্ঞা)</span>"]]},
+
+{"say": "দ্বিতীয় ধাপ। আমরা গুণের সংযোজন ধর্ম প্রয়োগ করি। a গুণ, a গুণ a এর পূরক, থেকে যাই, a গুণ a, গুণ a এর পূরক এ।", "L": [["sub", "a ⊙ 0  =  (a ⊙ a) ⊙ ∼a<span class='tag'>⊙ এর সংযোজন</span>"]]},
+
+{"say": "তৃতীয় ধাপ। বন্ধনীর ভেতরে আছে a গুণ a। গুণের স্বসমতা অনুযায়ী, a গুণ a সমান a। এটি চিহ্নিত করে প্রতিস্থাপন করি।", "L": [["sub", "a ⊙ 0  =  (<mark>a ⊙ a</mark>) ⊙ ∼a"], ["txt", "(স্বসম ⊙) অনুযায়ী:  <mark>a ⊙ a</mark> = a"], ["sub", "a ⊙ 0  =  a ⊙ ∼a<span class='tag'>⊙ এর স্বসমতা</span>"]]},
+
+{"say": "চতুর্থ ধাপ। এখন আমাদের কাছে a গুণ a এর পূরক, যা পূরকের সংজ্ঞা অনুযায়ী শূন্য।", "L": [["res", "a ⊙ 0  =  0<span class='tag'>পূরকের সংজ্ঞা</span>"]]},
+
+{"say": "আমরা দ্বিতীয় আধিপত্য বিধি প্রমাণ করেছি। সেটের ক্ষেত্রে: A ছেদ ফাঁকা সেট হলো ফাঁকা সেট। এখানেই দ্বিতীয় ভাগ শেষ।", "L": [["res", "a ⊙ 0 = 0   ∎"], ["txt", "সেটের ক্ষেত্রে:  A ∩ ∅ = ∅"]]},
+
+{"title": "সারসংক্ষেপ", "clear": 1, "say": "সংক্ষেপে বলি। আমরা এককে a প্লাস a এর পূরক হিসেবে লিখি, সংযোজন প্রয়োগ করি, স্বসমতা প্রয়োগ করি, এবং পূরকের সংজ্ঞায় ফিরে যাই। আর গুণের ক্ষেত্রে, শূন্য নিয়ে একই কাজ। আমরা সিদ্ধান্তে আসি যে প্রতিটি বুলীয় বীজগণিতে আধিপত্য বিধি খাটে। সেটের ক্ষেত্রে: A সংযোগ U হলো U, এবং A ছেদ ফাঁকা সেট হলো ফাঁকা সেট। দেখার জন্য ধন্যবাদ।", "L": [["res", "a ⊕ 1 = 1   (প্রতিস্থাপন + সংযোজন + স্বসমতা + পূরক)"], ["res", "a ⊙ 0 = 0   (প্রতিস্থাপন + সংযোজন + স্বসমতা + পূরক)"], ["txt", "সেটের ক্ষেত্রে:  A ∪ U = U,   A ∩ ∅ = ∅"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' প্লাস ').replace(/⊙/g,' গুণ ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ আবার চালান'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ চালিয়ে যান'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ বিরতি';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^bn/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/pradeep|bashkar|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="আধিপত্য বিধি";$('sub').textContent="অনুশীলনী · বুলীয় বীজগণিত";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

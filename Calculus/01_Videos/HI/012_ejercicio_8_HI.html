@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>प्रभुत्व नियम</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(15px,1.9vw,24px)}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>याद रखें</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ शुरू करें</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>गति <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">रिकॉर्डिंग मोड (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"hi-IN",
+"meta":{"nivel": 2, "titulo": "प्रभुत्व नियम", "enunciado": "मान लीजिए (B, ⊕, ⊙, ∼) एक बूलीय बीजगणित है।  सिद्ध कीजिए कि हर a ∈ B के लिए प्रभुत्व नियम लागू होते हैं:", "tesis": "a ⊕ 1 = 1,   a ⊙ 0 = 0", "datos": ["(साह ⊕)  x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(साह ⊙)  x ⊙ (y ⊙ z) = (x ⊙ y) ⊙ z", "(वर्ग)  x ⊕ x = x,   x ⊙ x = x", "(पूरक)  x ⊕ ∼x = 1,   x ⊙ ∼x = 0"]},
+"steps":[
+{"title": "प्रभुत्व नियम", "sub": "अभ्यास · बूलीय बीजगणित", "clear": 1, "say": "नमस्ते। इस वीडियो में हम बूलीय बीजगणित पर एक अभ्यास हल करेंगे। हम बहुत धीरे-धीरे चलेंगे, हर समीकरण लिखेंगे और हर कदम का कारण बताएँगे।", "L": [["txt", "एक जोड़ने से एक मिलता है, और शून्य से गुणा करने पर शून्य"]]},
+
+{"say": "पहले, दी गई बातें। B एक समुच्चय है जिस पर दो संक्रियाएँ हैं, योग और गुणन, और एक पूरक संक्रिया, जिसे हम टिल्ड से लिखते हैं। यह एक बूलीय बीजगणित है: एक वितरणशील जालक, जिसमें न्यूनतम अवयव शून्य, अधिकतम अवयव एक, और हर अवयव का एक पूरक है। सामान्य उदाहरण किसी समुच्चय U का घात समुच्चय है, सम्मिलन, सर्वनिष्ठ और पूरक के साथ।", "L": [["hyp", "(B, ⊕, ⊙, ∼) बूलीय बीजगणित<span class='tag'>परिकल्पना</span>"], ["txt", "समुच्चयों के साथ:  (𝒫(U), ∪, ∩, पूरक),   0 = ∅,   1 = U"]]},
+
+{"say": "पूरक की परिभाषा याद करते हैं। a का पूरक एक साथ दो शर्तें पूरी करता है: a प्लस उसका पूरक एक है, और a गुणा उसका पूरक शून्य है। समुच्चयों में: A सम्मिलन उसका पूरक U है, और A सर्वनिष्ठ उसका पूरक रिक्त समुच्चय है।", "L": [["sub", "a ⊕ ∼a = 1<span class='tag'>पूरक की परिभाषा</span>"], ["sub", "a ⊙ ∼a = 0<span class='tag'>पूरक की परिभाषा</span>"], ["txt", "समुच्चयों के साथ:  A ∪ A<sup>c</sup> = U,   A ∩ A<sup>c</sup> = ∅"]]},
+
+{"say": "इसके अलावा हम योग और गुणन की साहचर्यता, और दोनों संक्रियाओं की वर्गसमता का उपयोग करेंगे: a प्लस a, a है, और a गुणा a, a है। इन्हें हम पूरक की परिभाषा के साथ बाईं ओर लिख लेते हैं।", "pin": ["(साह ⊕) x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(साह ⊙) x ⊙ (y ⊙ z) = (x ⊙ y) ⊙ z", "(वर्ग ⊕) x ⊕ x = x", "(वर्ग ⊙) x ⊙ x = x", "(पूरक) x ⊕ ∼x = 1,   x ⊙ ∼x = 0"]},
+
+{"say": "हमें क्या सिद्ध करना है। B के हर अवयव a के लिए, a प्लस एक, एक है, और a गुणा शून्य, शून्य है। ये प्रभुत्व नियम हैं: एक योग पर हावी है, और शून्य गुणन पर हावी है। समुच्चयों में: A सम्मिलन U, U है, और A सर्वनिष्ठ रिक्त समुच्चय, रिक्त है।", "L": [["goal", "∀ a ∈ B:   a ⊕ 1 = 1   और   a ⊙ 0 = 0<span class='tag'>साध्य: प्रभुत्व नियम</span>"], ["txt", "समुच्चयों के साथ:  A ∪ U = U,   A ∩ ∅ = ∅"]]},
+
+{"title": "भाग 1: a ⊕ 1 = 1", "clear": 1, "say": "हम पहले से शुरू करते हैं। मान लीजिए a, B का कोई भी अवयव है। हमें सिद्ध करना है कि a प्लस एक, एक के बराबर है। हम बाएँ पक्ष से शुरू करते हैं।", "L": [["txt", "मान लीजिए a ∈ B  (यादृच्छिक)"], ["goal", "हमें चाहिए:  a ⊕ 1 = 1<span class='tag'>इस भाग का साध्य</span>"], ["txt", "a ⊕ 1"]]},
+
+{"say": "पहला कदम। पूरक की परिभाषा से, a प्लस उसका पूरक एक है। यही परिकल्पना है। इसलिए हम एक को a प्लस a के पूरक से बदल सकते हैं। बाईं ओर के a को वैसा ही रहने देते हैं।", "L": [["sub", "a ⊕ 1  =  a ⊕ (a ⊕ ∼a)<span class='tag'>प्रतिस्थापन: 1 = a ⊕ ∼a  (पूरक की परिभाषा)</span>"]]},
+
+{"say": "दूसरा कदम। हम योग की साहचर्यता लगाते हैं, x बराबर a, y बराबर a, और z बराबर a का पूरक लेकर। a प्लस, a प्लस a का पूरक, से हम, a प्लस a, प्लस a के पूरक पर पहुँचते हैं।", "L": [["sub", "a ⊕ 1  =  (a ⊕ a) ⊕ ∼a<span class='tag'>⊕ की साहचर्यता</span>"]]},
+
+{"say": "तीसरा कदम। कोष्ठक के अंदर a प्लस a है। योग की वर्गसमता से, a प्लस a बराबर है a के। इसे चिह्नित करके प्रतिस्थापित करते हैं।", "L": [["sub", "a ⊕ 1  =  (<mark>a ⊕ a</mark>) ⊕ ∼a"], ["txt", "(वर्ग ⊕) से:  <mark>a ⊕ a</mark> = a"], ["sub", "a ⊕ 1  =  a ⊕ ∼a<span class='tag'>⊕ की वर्गसमता</span>"]]},
+
+{"say": "चौथा कदम। अब हमारे पास a प्लस a का पूरक है, जो पूरक की परिभाषा से एक है।", "L": [["res", "a ⊕ 1  =  1<span class='tag'>पूरक की परिभाषा</span>"]]},
+
+{"say": "हमने पहला प्रभुत्व नियम सिद्ध कर दिया। समुच्चयों में: A सम्मिलन U, U है। इसके साथ पहला भाग पूरा होता है।", "L": [["res", "a ⊕ 1 = 1   ∎"], ["txt", "समुच्चयों के साथ:  A ∪ U = U"]]},
+
+{"title": "भाग 2: a ⊙ 0 = 0", "clear": 1, "say": "अब दूसरे भाग पर चलते हैं। यह इसी तरह है, योग की जगह गुणन, और एक की जगह शून्य लेकर। मान लीजिए a, B का कोई भी अवयव है। हमें सिद्ध करना है कि a गुणा शून्य, शून्य के बराबर है। हम बाएँ पक्ष से शुरू करते हैं।", "L": [["txt", "मान लीजिए a ∈ B  (यादृच्छिक)"], ["goal", "हमें चाहिए:  a ⊙ 0 = 0<span class='tag'>इस भाग का साध्य</span>"], ["txt", "a ⊙ 0"]]},
+
+{"say": "पहला कदम। पूरक की परिभाषा से, a गुणा उसका पूरक शून्य है। यही परिकल्पना है। इसलिए हम शून्य को a गुणा a के पूरक से बदलते हैं। बाईं ओर के a को वैसा ही रहने देते हैं।", "L": [["sub", "a ⊙ 0  =  a ⊙ (a ⊙ ∼a)<span class='tag'>प्रतिस्थापन: 0 = a ⊙ ∼a  (पूरक की परिभाषा)</span>"]]},
+
+{"say": "दूसरा कदम। हम गुणन की साहचर्यता लगाते हैं। a गुणा, a गुणा a का पूरक, से हम, a गुणा a, गुणा a के पूरक पर पहुँचते हैं।", "L": [["sub", "a ⊙ 0  =  (a ⊙ a) ⊙ ∼a<span class='tag'>⊙ की साहचर्यता</span>"]]},
+
+{"say": "तीसरा कदम। कोष्ठक के अंदर a गुणा a है। गुणन की वर्गसमता से, a गुणा a बराबर है a के। इसे चिह्नित करके प्रतिस्थापित करते हैं।", "L": [["sub", "a ⊙ 0  =  (<mark>a ⊙ a</mark>) ⊙ ∼a"], ["txt", "(वर्ग ⊙) से:  <mark>a ⊙ a</mark> = a"], ["sub", "a ⊙ 0  =  a ⊙ ∼a<span class='tag'>⊙ की वर्गसमता</span>"]]},
+
+{"say": "चौथा कदम। अब हमारे पास a गुणा a का पूरक है, जो पूरक की परिभाषा से शून्य है।", "L": [["res", "a ⊙ 0  =  0<span class='tag'>पूरक की परिभाषा</span>"]]},
+
+{"say": "हमने दूसरा प्रभुत्व नियम सिद्ध कर दिया। समुच्चयों में: A सर्वनिष्ठ रिक्त समुच्चय, रिक्त है। इसके साथ दूसरा भाग पूरा होता है।", "L": [["res", "a ⊙ 0 = 0   ∎"], ["txt", "समुच्चयों के साथ:  A ∩ ∅ = ∅"]]},
+
+{"title": "सारांश", "clear": 1, "say": "सारांश में। हम एक को a प्लस a के पूरक के रूप में लिखते हैं, साहचर्यता लगाते हैं, वर्गसमता लगाते हैं, और फिर पूरक की परिभाषा पर लौटते हैं। और गुणन के साथ, शून्य के लिए यही करते हैं। हम निष्कर्ष निकालते हैं कि हर बूलीय बीजगणित में प्रभुत्व नियम लागू होते हैं। समुच्चयों में: A सम्मिलन U, U है, और A सर्वनिष्ठ रिक्त समुच्चय, रिक्त है। देखने के लिए धन्यवाद।", "L": [["res", "a ⊕ 1 = 1   (प्रतिस्थापन + साहचर्यता + वर्गसमता + पूरक)"], ["res", "a ⊙ 0 = 0   (प्रतिस्थापन + साहचर्यता + वर्गसमता + पूरक)"], ["txt", "समुच्चयों के साथ:  A ∪ U = U,   A ∩ ∅ = ∅"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' प्लस ').replace(/⊙/g,' गुणा ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ फिर से चलाएँ'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ जारी रखें'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ रोकें';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^hi/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/madhur|hemant|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="प्रभुत्व नियम";$('sub').textContent="अभ्यास · बूलीय बीजगणित";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
