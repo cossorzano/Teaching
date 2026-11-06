@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>डी मॉर्गन के नियम</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>याद रखें</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ शुरू करें</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>गति <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">रिकॉर्डिंग मोड (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"hi-IN",
+"meta":{"nivel": 3, "titulo": "डी मॉर्गन के नियम", "enunciado": "मान लीजिए (B, ⊕, ⊙, ∼) एक बूलीय बीजगणित है।  सिद्ध कीजिए कि किन्हीं भी a, b ∈ B के लिए डी मॉर्गन के नियम लागू होते हैं:", "tesis": "∼(a ⊕ b) = ∼a ⊙ ∼b,   ∼(a ⊙ b) = ∼a ⊕ ∼b", "datos": ["(वितरण)  x ⊕ (y ⊙ z) = (x ⊕ y) ⊙ (x ⊕ z),   x ⊙ (y ⊕ z) = (x ⊙ y) ⊕ (x ⊙ z)", "(पूरक)  x ⊕ ∼x = 1,   x ⊙ ∼x = 0", "(प्रभुत्व)  x ⊕ 1 = 1,   x ⊙ 0 = 0", "(अद्वितीय)  x ⊕ y = 1 और x ⊙ y = 0 ⇒ y = ∼x"]},
+"steps":[
+{"title": "डी मॉर्गन के नियम", "sub": "अभ्यास · बूलीय बीजगणित", "clear": 1, "say": "नमस्ते। इस वीडियो में हम बूलीय बीजगणित पर एक अभ्यास हल करेंगे। हम बहुत धीरे-धीरे चलेंगे, हर समीकरण लिखेंगे और हर कदम का कारण बताएँगे।", "L": [["txt", "डी मॉर्गन के नियम"]]},
+
+{"say": "पहले, दी गई बातें। B एक समुच्चय है जिस पर दो संक्रियाएँ हैं, योग और गुणन, और एक पूरक संक्रिया, जिसे हम टिल्ड से लिखते हैं। यह एक बूलीय बीजगणित है: एक वितरणशील जालक, जिसमें न्यूनतम अवयव शून्य, अधिकतम अवयव एक, और हर अवयव का एक पूरक है। सामान्य उदाहरण किसी समुच्चय U का घात समुच्चय है, सम्मिलन, सर्वनिष्ठ और पूरक के साथ।", "L": [["hyp", "(B, ⊕, ⊙, ∼) बूलीय बीजगणित<span class='tag'>परिकल्पना</span>"], ["txt", "समुच्चयों के साथ:  (𝒫(U), ∪, ∩, पूरक),   0 = ∅,   1 = U"]]},
+
+{"say": "हम बहुत से गुणों का उपयोग करेंगे, इसलिए उन सबको बाईं ओर लिख लेते हैं। पहले, योग और गुणन की क्रमविनिमेयता और साहचर्यता।", "pin": ["(क्रम ⊕) x ⊕ y = y ⊕ x", "(क्रम ⊙) x ⊙ y = y ⊙ x", "(साह ⊕) x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(साह ⊙) x ⊙ (y ⊙ z) = (x ⊙ y) ⊙ z"]},
+
+{"say": "दूसरा, वितरणशीलता। एक वितरणशील जालक में हर संक्रिया दूसरी पर वितरित होती है। पहले दो सूत्र परिभाषा वाले हैं। बाकी दो वही हैं, गुणनखंडों का क्रम बदलकर, और ये क्रमविनिमेयता से मिलते हैं।", "pin": ["(वितरण 1) x ⊕ (y ⊙ z) = (x ⊕ y) ⊙ (x ⊕ z)", "(वितरण 2) x ⊙ (y ⊕ z) = (x ⊙ y) ⊕ (x ⊙ z)", "(वितरण 3) (x ⊕ y) ⊙ z = (x ⊙ z) ⊕ (y ⊙ z)", "(वितरण 4) (x ⊙ y) ⊕ z = (x ⊕ z) ⊙ (y ⊕ z)"]},
+
+{"say": "तीसरा, तत्समक अवयव और पूरक। शून्य योग का तत्समक है, और एक गुणन का तत्समक है। और पूरक की परिभाषा: x प्लस उसका पूरक एक है, और x गुणा उसका पूरक शून्य है। पद बदलकर लिखी समताएँ क्रमविनिमेयता से मिलती हैं।", "pin": ["(तत्समक ⊕) x ⊕ 0 = x = 0 ⊕ x", "(तत्समक ⊙) x ⊙ 1 = x = 1 ⊙ x", "(पूरक) x ⊕ ∼x = 1,   x ⊙ ∼x = 0"]},
+
+{"say": "और चौथा, बूलीय बीजगणित के दो ज्ञात प्रमेय। प्रभुत्व नियम: x प्लस एक, एक है, और x गुणा शून्य, शून्य है, पद बदलकर भी। और पूरक की अद्वितीयता: यदि x प्लस y एक हो, और x गुणा y शून्य हो, तो y, x का पूरक है।", "pin": ["(प्रभुत्व) x ⊕ 1 = 1 = 1 ⊕ x", "(प्रभुत्व) x ⊙ 0 = 0 = 0 ⊙ x", "(अद्वितीय) x ⊕ y = 1 और x ⊙ y = 0 ⇒ y = ∼x"]},
+
+{"say": "हमें क्या सिद्ध करना है। B के किन्हीं भी a और b के लिए, a प्लस b का पूरक बराबर है, a के पूरक गुणा b के पूरक के। और a गुणा b का पूरक बराबर है, a के पूरक प्लस b के पूरक के। ये डी मॉर्गन के नियम हैं। समुच्चयों में: A सम्मिलन B का पूरक, A के पूरक सर्वनिष्ठ B के पूरक के बराबर है। और A सर्वनिष्ठ B का पूरक, A के पूरक सम्मिलन B के पूरक के बराबर है।", "L": [["goal", "∀ a, b ∈ B:   ∼(a ⊕ b) = ∼a ⊙ ∼b<span class='tag'>साध्य (1)</span>"], ["goal", "∼(a ⊙ b) = ∼a ⊕ ∼b<span class='tag'>साध्य (2)</span>"], ["txt", "समुच्चयों के साथ:  (A ∪ B)<sup>c</sup> = A<sup>c</sup> ∩ B<sup>c</sup>"], ["txt", "समुच्चयों के साथ:  (A ∩ B)<sup>c</sup> = A<sup>c</sup> ∪ B<sup>c</sup>"]]},
+
+{"title": "भाग 1: ∼(a ⊕ b) = ∼a ⊙ ∼b", "clear": 1, "say": "हम पहले नियम से शुरू करते हैं। मान लीजिए a और b, B के कोई भी दो अवयव हैं। यह सिद्ध करना पर्याप्त है कि a का पूरक गुणा b का पूरक, a प्लस b का पूरक है। पूरक की अद्वितीयता से, इसका अर्थ है दो शर्तें जाँचना।", "L": [["txt", "मान लीजिए a, b ∈ B  (यादृच्छिक)"], ["sub", "x = a ⊕ b,   y = ∼a ⊙ ∼b<span class='tag'>(अद्वितीय) में चुनाव</span>"]]},
+
+{"say": "यानी दो समताएँ सिद्ध करना पर्याप्त है। पहली: a प्लस b, प्लस, a का पूरक गुणा b का पूरक, बराबर है एक के। दूसरी: a प्लस b, गुणा, a का पूरक गुणा b का पूरक, बराबर है शून्य के।", "L": [["goal", "(i)   (a ⊕ b) ⊕ (∼a ⊙ ∼b) = 1"], ["goal", "(ii)  (a ⊕ b) ⊙ (∼a ⊙ ∼b) = 0<span class='tag'>नया साध्य</span>"]]},
+
+{"title": "शर्त (i)", "clear": 1, "say": "पहली शर्त। हमें सिद्ध करना है कि a प्लस b, प्लस, a का पूरक गुणा b का पूरक, एक के बराबर है। हम बाएँ पक्ष से शुरू करके कदम दर कदम बदलते हैं।", "L": [["goal", "हमें चाहिए:  (a ⊕ b) ⊕ (∼a ⊙ ∼b) = 1"], ["txt", "(a ⊕ b) ⊕ (∼a ⊙ ∼b)"]]},
+
+{"say": "पहला कदम। हम योग की गुणन पर वितरणशीलता लगाते हैं, x बराबर a प्लस b, y बराबर a का पूरक, और z बराबर b का पूरक लेकर। हमें दो गुणनखंडों का गुणनफल मिलता है: a प्लस b, प्लस a का पूरक, गुणा, a प्लस b, प्लस b का पूरक।", "L": [["sub", "= ((a ⊕ b) ⊕ ∼a) ⊙ ((a ⊕ b) ⊕ ∼b)<span class='tag'>वितरणशीलता: x ⊕ (y ⊙ z) = (x ⊕ y) ⊙ (x ⊕ z)</span>"]]},
+
+{"say": "दूसरा कदम। हम योग की साहचर्यता और क्रमविनिमेयता से हर गुणनखंड को पुनर्व्यवस्थित करते हैं, ताकि हर अवयव अपने पूरक के साथ आ जाए। पहले गुणनखंड में, a प्लस b, प्लस a का पूरक, बन जाता है a प्लस उसका पूरक, प्लस b। दूसरे गुणनखंड में, a प्लस b, प्लस b का पूरक, बन जाता है a प्लस, b प्लस उसका पूरक।", "L": [["sub", "= ((a ⊕ ∼a) ⊕ b) ⊙ (a ⊕ (b ⊕ ∼b))<span class='tag'>⊕ की साहचर्यता और क्रमविनिमेयता</span>"]]},
+
+{"say": "तीसरा कदम। पूरक की परिभाषा से, a प्लस उसका पूरक एक है, और b प्लस उसका पूरक एक है।", "L": [["sub", "= (1 ⊕ b) ⊙ (a ⊕ 1)<span class='tag'>पूरक: a ⊕ ∼a = 1,  b ⊕ ∼b = 1</span>"]]},
+
+{"say": "चौथा कदम। प्रभुत्व नियम से, एक प्लस b, एक है, और a प्लस एक, एक है।", "L": [["sub", "= 1 ⊙ 1<span class='tag'>प्रभुत्व: 1 ⊕ b = 1,  a ⊕ 1 = 1</span>"]]},
+
+{"say": "पाँचवाँ कदम। एक गुणन का तत्समक है, इसलिए एक गुणा एक, एक है। इसके साथ पहली शर्त पूरी होती है।", "L": [["res", "= 1   ∎<span class='tag'>⊙ का तत्समक</span>"]]},
+
+{"title": "शर्त (ii)", "clear": 1, "say": "दूसरी शर्त। हमें सिद्ध करना है कि a प्लस b, गुणा, a का पूरक गुणा b का पूरक, शून्य के बराबर है। हम बाएँ पक्ष से शुरू करते हैं।", "L": [["goal", "हमें चाहिए:  (a ⊕ b) ⊙ (∼a ⊙ ∼b) = 0"], ["txt", "(a ⊕ b) ⊙ (∼a ⊙ ∼b)"]]},
+
+{"say": "पहला कदम। गुणन की साहचर्यता, x बराबर a प्लस b, y बराबर a का पूरक, और z बराबर b का पूरक लेकर।", "L": [["sub", "= ((a ⊕ b) ⊙ ∼a) ⊙ ∼b<span class='tag'>⊙ की साहचर्यता</span>"]]},
+
+{"say": "दूसरा कदम। अंदर के कोष्ठक में गुणन की योग पर वितरणशीलता, x बराबर a, y बराबर b, और z बराबर a का पूरक लेकर। a प्लस b, गुणा a का पूरक, बन जाता है a गुणा उसका पूरक, प्लस, b गुणा a का पूरक।", "L": [["sub", "= ((a ⊙ ∼a) ⊕ (b ⊙ ∼a)) ⊙ ∼b<span class='tag'>वितरणशीलता: (x ⊕ y) ⊙ z = (x ⊙ z) ⊕ (y ⊙ z)</span>"]]},
+
+{"say": "तीसरा कदम। पूरक की परिभाषा से, a गुणा उसका पूरक शून्य है।", "L": [["sub", "= (0 ⊕ (b ⊙ ∼a)) ⊙ ∼b<span class='tag'>पूरक: a ⊙ ∼a = 0</span>"]]},
+
+{"say": "चौथा कदम। शून्य योग का तत्समक है: शून्य प्लस x, x है। इसलिए शून्य प्लस, b गुणा a का पूरक, b गुणा a का पूरक है।", "L": [["sub", "= (b ⊙ ∼a) ⊙ ∼b<span class='tag'>⊕ का तत्समक: 0 ⊕ x = x</span>"]]},
+
+{"say": "पाँचवाँ कदम। हम गुणन की साहचर्यता और क्रमविनिमेयता का उपयोग करते हैं। हम b गुणा a का पूरक, यह सब गुणा b का पूरक, से शुरू करते हैं। गुणनखंडों को इस तरह क्रम में रखते हैं कि b अपने पूरक के साथ आ जाए, और हमें मिलता है b गुणा, b का पूरक गुणा a का पूरक।", "L": [["sub", "= b ⊙ (∼b ⊙ ∼a)<span class='tag'>⊙ की क्रमविनिमेयता और साहचर्यता</span>"]]},
+
+{"say": "छठा कदम। गुणन की साहचर्यता, x बराबर b, y बराबर b का पूरक, और z बराबर a का पूरक लेकर। b गुणा, b का पूरक गुणा a का पूरक, से हम, b गुणा उसका पूरक, यह सब गुणा a का पूरक, पर पहुँचते हैं।", "L": [["sub", "= (b ⊙ ∼b) ⊙ ∼a<span class='tag'>⊙ की साहचर्यता</span>"]]},
+
+{"say": "सातवाँ कदम। पूरक की परिभाषा से, b गुणा उसका पूरक शून्य है।", "L": [["sub", "= 0 ⊙ ∼a<span class='tag'>पूरक: b ⊙ ∼b = 0</span>"]]},
+
+{"say": "आठवाँ कदम। प्रभुत्व नियम से, शून्य गुणा x, शून्य है। इसके साथ दूसरी शर्त पूरी होती है।", "L": [["res", "= 0   ∎<span class='tag'>प्रभुत्व: 0 ⊙ x = 0</span>"]]},
+
+{"title": "भाग 1 का निष्कर्ष", "clear": 1, "say": "चूँकि a का पूरक गुणा b का पूरक दोनों शर्तें पूरी करता है, यह a प्लस b का पूरक है। और वितरणशील जालक में पूरक की अद्वितीयता से, हमें डी मॉर्गन का पहला नियम मिलता है। समुच्चयों में: A सम्मिलन B का पूरक, A के पूरक सर्वनिष्ठ B के पूरक के बराबर है।", "L": [["res", "∼a ⊙ ∼b, a ⊕ b का पूरक है"], ["res", "∼(a ⊕ b) = ∼a ⊙ ∼b   ∎<span class='tag'>पूरक की अद्वितीयता</span>"], ["txt", "समुच्चयों के साथ:  (A ∪ B)<sup>c</sup> = A<sup>c</sup> ∩ B<sup>c</sup>"]]},
+
+{"title": "भाग 2: ∼(a ⊙ b) = ∼a ⊕ ∼b", "clear": 1, "say": "अब दूसरे नियम पर चलते हैं। मान लीजिए a और b, B के कोई भी दो अवयव हैं। फिर से, यह सिद्ध करना पर्याप्त है कि a का पूरक प्लस b का पूरक, a गुणा b का पूरक है। पूरक की अद्वितीयता से, इसका अर्थ है दो शर्तें जाँचना।", "L": [["txt", "मान लीजिए a, b ∈ B  (यादृच्छिक)"], ["sub", "x = a ⊙ b,   y = ∼a ⊕ ∼b<span class='tag'>(अद्वितीय) में चुनाव</span>"]]},
+
+{"say": "यानी दो समताएँ सिद्ध करना पर्याप्त है। पहली: a गुणा b, प्लस, a का पूरक प्लस b का पूरक, बराबर है एक के। दूसरी: a गुणा b, गुणा, a का पूरक प्लस b का पूरक, बराबर है शून्य के।", "L": [["goal", "(i)   (a ⊙ b) ⊕ (∼a ⊕ ∼b) = 1"], ["goal", "(ii)  (a ⊙ b) ⊙ (∼a ⊕ ∼b) = 0<span class='tag'>नया साध्य</span>"]]},
+
+{"title": "शर्त (i)", "clear": 1, "say": "पहली शर्त। हमें सिद्ध करना है कि a गुणा b, प्लस, a का पूरक प्लस b का पूरक, एक के बराबर है। हम बाएँ पक्ष से शुरू करते हैं।", "L": [["goal", "हमें चाहिए:  (a ⊙ b) ⊕ (∼a ⊕ ∼b) = 1"], ["txt", "(a ⊙ b) ⊕ (∼a ⊕ ∼b)"]]},
+
+{"say": "पहला कदम। योग की साहचर्यता, x बराबर a गुणा b, y बराबर a का पूरक, और z बराबर b का पूरक लेकर।", "L": [["sub", "= ((a ⊙ b) ⊕ ∼a) ⊕ ∼b<span class='tag'>⊕ की साहचर्यता</span>"]]},
+
+{"say": "दूसरा कदम। अंदर के कोष्ठक में योग की गुणन पर वितरणशीलता, x बराबर a, y बराबर b, और z बराबर a का पूरक लेकर। a गुणा b, प्लस a का पूरक, बन जाता है a प्लस उसका पूरक, गुणा, b प्लस a का पूरक।", "L": [["sub", "= ((a ⊕ ∼a) ⊙ (b ⊕ ∼a)) ⊕ ∼b<span class='tag'>वितरणशीलता: (x ⊙ y) ⊕ z = (x ⊕ z) ⊙ (y ⊕ z)</span>"]]},
+
+{"say": "तीसरा कदम। पूरक की परिभाषा से, a प्लस उसका पूरक एक है।", "L": [["sub", "= (1 ⊙ (b ⊕ ∼a)) ⊕ ∼b<span class='tag'>पूरक: a ⊕ ∼a = 1</span>"]]},
+
+{"say": "चौथा कदम। एक गुणन का तत्समक है: एक गुणा x, x है। इसलिए एक गुणा, b प्लस a का पूरक, b प्लस a का पूरक है।", "L": [["sub", "= (b ⊕ ∼a) ⊕ ∼b<span class='tag'>⊙ का तत्समक: 1 ⊙ x = x</span>"]]},
+
+{"say": "पाँचवाँ कदम। योग की क्रमविनिमेयता और साहचर्यता से, हम b को उसके पूरक के साथ लाते हैं। पहले b और a के पूरक का क्रम बदलते हैं, और फिर साहचर्यता लगाते हैं। परिणाम है a का पूरक प्लस, b प्लस उसका पूरक।", "L": [["sub", "= ∼a ⊕ (b ⊕ ∼b)<span class='tag'>⊕ की क्रमविनिमेयता और साहचर्यता</span>"]]},
+
+{"say": "छठा कदम। पूरक की परिभाषा से, b प्लस उसका पूरक एक है।", "L": [["sub", "= ∼a ⊕ 1<span class='tag'>पूरक: b ⊕ ∼b = 1</span>"]]},
+
+{"say": "सातवाँ कदम। प्रभुत्व नियम से, x प्लस एक, एक है। इसके साथ पहली शर्त पूरी होती है।", "L": [["res", "= 1   ∎<span class='tag'>प्रभुत्व: x ⊕ 1 = 1</span>"]]},
+
+{"title": "शर्त (ii)", "clear": 1, "say": "दूसरी शर्त। हमें सिद्ध करना है कि a गुणा b, गुणा, a का पूरक प्लस b का पूरक, शून्य के बराबर है। हम बाएँ पक्ष से शुरू करते हैं।", "L": [["goal", "हमें चाहिए:  (a ⊙ b) ⊙ (∼a ⊕ ∼b) = 0"], ["txt", "(a ⊙ b) ⊙ (∼a ⊕ ∼b)"]]},
+
+{"say": "पहला कदम। गुणन की योग पर वितरणशीलता, x बराबर a गुणा b, y बराबर a का पूरक, और z बराबर b का पूरक लेकर। हमें दो पदों का योग मिलता है: a गुणा b, गुणा a का पूरक, प्लस, a गुणा b, गुणा b का पूरक।", "L": [["sub", "= ((a ⊙ b) ⊙ ∼a) ⊕ ((a ⊙ b) ⊙ ∼b)<span class='tag'>वितरणशीलता: x ⊙ (y ⊕ z) = (x ⊙ y) ⊕ (x ⊙ z)</span>"]]},
+
+{"say": "दूसरा कदम। हम गुणन की साहचर्यता और क्रमविनिमेयता से हर पद को पुनर्व्यवस्थित करते हैं, ताकि हर अवयव अपने पूरक के साथ आ जाए। पहले पद में, a गुणा b, गुणा a का पूरक, बन जाता है a गुणा उसका पूरक, गुणा b। दूसरे में, a गुणा b, गुणा b का पूरक, बन जाता है a गुणा, b गुणा उसका पूरक।", "L": [["sub", "= ((a ⊙ ∼a) ⊙ b) ⊕ (a ⊙ (b ⊙ ∼b))<span class='tag'>⊙ की साहचर्यता और क्रमविनिमेयता</span>"]]},
+
+{"say": "तीसरा कदम। पूरक की परिभाषा से, a गुणा उसका पूरक शून्य है, और b गुणा उसका पूरक शून्य है।", "L": [["sub", "= (0 ⊙ b) ⊕ (a ⊙ 0)<span class='tag'>पूरक: a ⊙ ∼a = 0,  b ⊙ ∼b = 0</span>"]]},
+
+{"say": "चौथा कदम। प्रभुत्व नियम से, शून्य गुणा b, शून्य है, और a गुणा शून्य, शून्य है।", "L": [["sub", "= 0 ⊕ 0<span class='tag'>प्रभुत्व: 0 ⊙ b = 0,  a ⊙ 0 = 0</span>"]]},
+
+{"say": "पाँचवाँ कदम। शून्य योग का तत्समक है, और इसे योग की वर्गसमता के रूप में भी देख सकते हैं: शून्य प्लस शून्य, शून्य है। इसके साथ दूसरी शर्त पूरी होती है।", "L": [["res", "= 0   ∎<span class='tag'>⊕ की वर्गसमता / तत्समक</span>"]]},
+
+{"title": "भाग 2 का निष्कर्ष", "clear": 1, "say": "चूँकि a का पूरक प्लस b का पूरक दोनों शर्तें पूरी करता है, यह a गुणा b का पूरक है। और पूरक की अद्वितीयता से, हमें डी मॉर्गन का दूसरा नियम मिलता है। समुच्चयों में: A सर्वनिष्ठ B का पूरक, A के पूरक सम्मिलन B के पूरक के बराबर है।", "L": [["res", "∼a ⊕ ∼b, a ⊙ b का पूरक है"], ["res", "∼(a ⊙ b) = ∼a ⊕ ∼b   ∎<span class='tag'>पूरक की अद्वितीयता</span>"], ["txt", "समुच्चयों के साथ:  (A ∩ B)<sup>c</sup> = A<sup>c</sup> ∪ B<sup>c</sup>"]]},
+
+{"title": "सारांश", "clear": 1, "say": "सारांश में। दोनों नियमों में, पूरक की अद्वितीयता हमें पूरक को सीधे गणना करने के बजाय दो शर्तें जाँचने देती है। हर एक में हम वितरणशीलता लगाते हैं, हर अवयव को उसके पूरक के साथ रखते हैं, और तत्समक तथा प्रभुत्व लगाते हैं। समुच्चयों में: सम्मिलन का पूरक पूरकों का सर्वनिष्ठ है, और सर्वनिष्ठ का पूरक पूरकों का सम्मिलन है। देखने के लिए धन्यवाद।", "L": [["res", "∼(a ⊕ b) = ∼a ⊙ ∼b"], ["res", "∼(a ⊙ b) = ∼a ⊕ ∼b"], ["txt", "समुच्चयों के साथ:  (A ∪ B)<sup>c</sup> = A<sup>c</sup> ∩ B<sup>c</sup>,   (A ∩ B)<sup>c</sup> = A<sup>c</sup> ∪ B<sup>c</sup>"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' प्लस ').replace(/⊙/g,' गुणा ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ फिर से चलाएँ'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ जारी रखें'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ रोकें';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^hi/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/madhur|hemant|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="डी मॉर्गन के नियम";$('sub').textContent="अभ्यास · बूलीय बीजगणित";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

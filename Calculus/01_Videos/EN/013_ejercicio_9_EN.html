@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>De Morgan's laws</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Remember</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Start</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Speed <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Recording mode (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"en-US",
+"meta":{"nivel": 3, "titulo": "De Morgan's laws", "enunciado": "Let (B, ⊕, ⊙, ∼) be a Boolean algebra.  Prove that, for any a, b ∈ B, De Morgan's laws hold:", "tesis": "∼(a ⊕ b) = ∼a ⊙ ∼b,   ∼(a ⊙ b) = ∼a ⊕ ∼b", "datos": ["(Dist)  x ⊕ (y ⊙ z) = (x ⊕ y) ⊙ (x ⊕ z),   x ⊙ (y ⊕ z) = (x ⊙ y) ⊕ (x ⊙ z)", "(Compl)  x ⊕ ∼x = 1,   x ⊙ ∼x = 0", "(Dom)  x ⊕ 1 = 1,   x ⊙ 0 = 0", "(Uniq)  x ⊕ y = 1 and x ⊙ y = 0 ⇒ y = ∼x"]},
+"steps":[
+{"title": "De Morgan's laws", "sub": "Exercise · Boolean algebra", "clear": 1, "say": "Hello. In this video we are going to solve an exercise about Boolean algebras. We will go very slowly, writing every equation and justifying every step.", "L": [["txt", "De Morgan's laws"]]},
+
+{"say": "First, the data. B is a set with two operations, the sum and the product, and a complement operation, which we write with a tilde. It is a Boolean algebra: a distributive lattice with a least element zero, a greatest element one, and a complement for each element. The typical example is the power set of a set U, with union, intersection and set complement.", "L": [["hyp", "(B, ⊕, ⊙, ∼) Boolean algebra<span class='tag'>Hypothesis</span>"], ["txt", "With sets:  (𝒫(U), ∪, ∩, complement),   0 = ∅,   1 = U"]]},
+
+{"say": "We are going to use many properties, so we write them all on the left. First, commutativity and associativity of the sum and of the product.", "pin": ["(Comm ⊕) x ⊕ y = y ⊕ x", "(Comm ⊙) x ⊙ y = y ⊙ x", "(Assoc ⊕) x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(Assoc ⊙) x ⊙ (y ⊙ z) = (x ⊙ y) ⊙ z"]},
+
+{"say": "Second, distributivity. A distributive lattice satisfies that each operation distributes over the other. The first two formulas are those of the definition. The other two are the same with the factors swapped, and they follow from commutativity.", "pin": ["(Dist 1) x ⊕ (y ⊙ z) = (x ⊕ y) ⊙ (x ⊕ z)", "(Dist 2) x ⊙ (y ⊕ z) = (x ⊙ y) ⊕ (x ⊙ z)", "(Dist 3) (x ⊕ y) ⊙ z = (x ⊙ z) ⊕ (y ⊙ z)", "(Dist 4) (x ⊙ y) ⊕ z = (x ⊕ z) ⊙ (y ⊕ z)"]},
+
+{"say": "Third, the neutral elements and the complements. Zero is neutral for the sum, and one is neutral for the product. And the definition of complement: x plus its complement is one, and x times its complement is zero. The equalities with the terms swapped follow from commutativity.", "pin": ["(Neutral ⊕) x ⊕ 0 = x = 0 ⊕ x", "(Neutral ⊙) x ⊙ 1 = x = 1 ⊙ x", "(Compl) x ⊕ ∼x = 1,   x ⊙ ∼x = 0"]},
+
+{"say": "And fourth, two known theorems of Boolean algebras. The domination laws: x plus one is one, and x times zero is zero, also with the terms swapped. And the uniqueness of the complement: if x plus y is one, and x times y is zero, then y is the complement of x.", "pin": ["(Dom) x ⊕ 1 = 1 = 1 ⊕ x", "(Dom) x ⊙ 0 = 0 = 0 ⊙ x", "(Uniq) x ⊕ y = 1 and x ⊙ y = 0 ⇒ y = ∼x"]},
+
+{"say": "What we want to prove. For any a and b in B, the complement of a plus b equals the complement of a, times the complement of b. And the complement of a times b equals the complement of a, plus the complement of b. These are De Morgan's laws. With sets: the complement of A union B is the complement of A intersection the complement of B. And the complement of A intersection B is the complement of A union the complement of B.", "L": [["goal", "∀ a, b ∈ B:   ∼(a ⊕ b) = ∼a ⊙ ∼b<span class='tag'>Claim (1)</span>"], ["goal", "∼(a ⊙ b) = ∼a ⊕ ∼b<span class='tag'>Claim (2)</span>"], ["txt", "With sets:  (A ∪ B)<sup>c</sup> = A<sup>c</sup> ∩ B<sup>c</sup>"], ["txt", "With sets:  (A ∩ B)<sup>c</sup> = A<sup>c</sup> ∪ B<sup>c</sup>"]]},
+
+{"title": "Part 1: ∼(a ⊕ b) = ∼a ⊙ ∼b", "clear": 1, "say": "We start with the first law. Let a and b be any two elements of B. It suffices to prove that the complement of a times the complement of b is the complement of a plus b. By uniqueness of the complement, this means checking two conditions.", "L": [["txt", "Let a, b ∈ B  (arbitrary)"], ["sub", "x = a ⊕ b,   y = ∼a ⊙ ∼b<span class='tag'>Choice in (Uniq)</span>"]]},
+
+{"say": "That is, it suffices to prove two equalities. First: a plus b, plus, the complement of a times the complement of b, equals one. Second: a plus b, times, the complement of a times the complement of b, equals zero.", "L": [["goal", "(i)   (a ⊕ b) ⊕ (∼a ⊙ ∼b) = 1"], ["goal", "(ii)  (a ⊕ b) ⊙ (∼a ⊙ ∼b) = 0<span class='tag'>New claim</span>"]]},
+
+{"title": "Condition (i)", "clear": 1, "say": "First condition. We want to prove that a plus b, plus, the complement of a times the complement of b, equals one. We start from the left-hand side and transform it step by step.", "L": [["goal", "We want:  (a ⊕ b) ⊕ (∼a ⊙ ∼b) = 1"], ["txt", "(a ⊕ b) ⊕ (∼a ⊙ ∼b)"]]},
+
+{"say": "First step. We apply distributivity of the sum over the product, with x equal to a plus b, y equal to the complement of a, and z equal to the complement of b. We get a product of two factors: a plus b, plus the complement of a, times, a plus b, plus the complement of b.", "L": [["sub", "= ((a ⊕ b) ⊕ ∼a) ⊙ ((a ⊕ b) ⊕ ∼b)<span class='tag'>Distributivity: x ⊕ (y ⊙ z) = (x ⊕ y) ⊙ (x ⊕ z)</span>"]]},
+
+{"say": "Second step. We rearrange each factor with associativity and commutativity of the sum, so that each element sits next to its complement. In the first factor, a plus b, plus the complement of a, becomes a plus its complement, plus b. In the second factor, a plus b, plus the complement of b, becomes a plus, b plus its complement.", "L": [["sub", "= ((a ⊕ ∼a) ⊕ b) ⊙ (a ⊕ (b ⊕ ∼b))<span class='tag'>Associativity and commutativity of ⊕</span>"]]},
+
+{"say": "Third step. By the definition of complement, a plus its complement is one, and b plus its complement is one.", "L": [["sub", "= (1 ⊕ b) ⊙ (a ⊕ 1)<span class='tag'>Complement: a ⊕ ∼a = 1,  b ⊕ ∼b = 1</span>"]]},
+
+{"say": "Fourth step. By the domination law, one plus b is one, and a plus one is one.", "L": [["sub", "= 1 ⊙ 1<span class='tag'>Domination: 1 ⊕ b = 1,  a ⊕ 1 = 1</span>"]]},
+
+{"say": "Fifth step. One is the neutral element of the product, so one times one is one. This ends the first condition.", "L": [["res", "= 1   ∎<span class='tag'>Neutral of ⊙</span>"]]},
+
+{"title": "Condition (ii)", "clear": 1, "say": "Second condition. We want to prove that a plus b, times, the complement of a times the complement of b, equals zero. We start from the left-hand side.", "L": [["goal", "We want:  (a ⊕ b) ⊙ (∼a ⊙ ∼b) = 0"], ["txt", "(a ⊕ b) ⊙ (∼a ⊙ ∼b)"]]},
+
+{"say": "First step. Associativity of the product, with x equal to a plus b, y equal to the complement of a, and z equal to the complement of b.", "L": [["sub", "= ((a ⊕ b) ⊙ ∼a) ⊙ ∼b<span class='tag'>Associativity of ⊙</span>"]]},
+
+{"say": "Second step. Distributivity of the product over the sum, in the inner parentheses, with x equal to a, y equal to b, and z equal to the complement of a. A plus b, times the complement of a, becomes a times its complement, plus, b times the complement of a.", "L": [["sub", "= ((a ⊙ ∼a) ⊕ (b ⊙ ∼a)) ⊙ ∼b<span class='tag'>Distributivity: (x ⊕ y) ⊙ z = (x ⊙ z) ⊕ (y ⊙ z)</span>"]]},
+
+{"say": "Third step. By the definition of complement, a times its complement is zero.", "L": [["sub", "= (0 ⊕ (b ⊙ ∼a)) ⊙ ∼b<span class='tag'>Complement: a ⊙ ∼a = 0</span>"]]},
+
+{"say": "Fourth step. Zero is the neutral element of the sum: zero plus x is x. Therefore, zero plus, b times the complement of a, is b times the complement of a.", "L": [["sub", "= (b ⊙ ∼a) ⊙ ∼b<span class='tag'>Neutral of ⊕: 0 ⊕ x = x</span>"]]},
+
+{"say": "Fifth step. We use associativity and commutativity of the product. We start from b times the complement of a, all times the complement of b. We reorder the factors so that b sits next to its complement, and we get b times, the complement of b times the complement of a.", "L": [["sub", "= b ⊙ (∼b ⊙ ∼a)<span class='tag'>Commutativity and associativity of ⊙</span>"]]},
+
+{"say": "Sixth step. Associativity of the product, with x equal to b, y equal to the complement of b, and z equal to the complement of a. We go from b times, the complement of b times the complement of a, to, b times its complement, all times the complement of a.", "L": [["sub", "= (b ⊙ ∼b) ⊙ ∼a<span class='tag'>Associativity of ⊙</span>"]]},
+
+{"say": "Seventh step. By the definition of complement, b times its complement is zero.", "L": [["sub", "= 0 ⊙ ∼a<span class='tag'>Complement: b ⊙ ∼b = 0</span>"]]},
+
+{"say": "Eighth step. By the domination law, zero times x is zero. This ends the second condition.", "L": [["res", "= 0   ∎<span class='tag'>Domination: 0 ⊙ x = 0</span>"]]},
+
+{"title": "Conclusion of part 1", "clear": 1, "say": "Since the complement of a times the complement of b satisfies both conditions, it is the complement of a plus b. And by uniqueness of the complement in a distributive lattice, we conclude the first De Morgan law. With sets: the complement of A union B is the complement of A intersection the complement of B.", "L": [["res", "∼a ⊙ ∼b is the complement of a ⊕ b"], ["res", "∼(a ⊕ b) = ∼a ⊙ ∼b   ∎<span class='tag'>Uniqueness of the complement</span>"], ["txt", "With sets:  (A ∪ B)<sup>c</sup> = A<sup>c</sup> ∩ B<sup>c</sup>"]]},
+
+{"title": "Part 2: ∼(a ⊙ b) = ∼a ⊕ ∼b", "clear": 1, "say": "We move on to the second law. Let a and b be any two elements of B. Again, it suffices to prove that the complement of a plus the complement of b is the complement of a times b. By uniqueness of the complement, this means checking two conditions.", "L": [["txt", "Let a, b ∈ B  (arbitrary)"], ["sub", "x = a ⊙ b,   y = ∼a ⊕ ∼b<span class='tag'>Choice in (Uniq)</span>"]]},
+
+{"say": "That is, it suffices to prove two equalities. First: a times b, plus, the complement of a plus the complement of b, equals one. Second: a times b, times, the complement of a plus the complement of b, equals zero.", "L": [["goal", "(i)   (a ⊙ b) ⊕ (∼a ⊕ ∼b) = 1"], ["goal", "(ii)  (a ⊙ b) ⊙ (∼a ⊕ ∼b) = 0<span class='tag'>New claim</span>"]]},
+
+{"title": "Condition (i)", "clear": 1, "say": "First condition. We want to prove that a times b, plus, the complement of a plus the complement of b, equals one. We start from the left-hand side.", "L": [["goal", "We want:  (a ⊙ b) ⊕ (∼a ⊕ ∼b) = 1"], ["txt", "(a ⊙ b) ⊕ (∼a ⊕ ∼b)"]]},
+
+{"say": "First step. Associativity of the sum, with x equal to a times b, y equal to the complement of a, and z equal to the complement of b.", "L": [["sub", "= ((a ⊙ b) ⊕ ∼a) ⊕ ∼b<span class='tag'>Associativity of ⊕</span>"]]},
+
+{"say": "Second step. Distributivity of the sum over the product, in the inner parentheses, with x equal to a, y equal to b, and z equal to the complement of a. A times b, plus the complement of a, becomes a plus its complement, times, b plus the complement of a.", "L": [["sub", "= ((a ⊕ ∼a) ⊙ (b ⊕ ∼a)) ⊕ ∼b<span class='tag'>Distributivity: (x ⊙ y) ⊕ z = (x ⊕ z) ⊙ (y ⊕ z)</span>"]]},
+
+{"say": "Third step. By the definition of complement, a plus its complement is one.", "L": [["sub", "= (1 ⊙ (b ⊕ ∼a)) ⊕ ∼b<span class='tag'>Complement: a ⊕ ∼a = 1</span>"]]},
+
+{"say": "Fourth step. One is the neutral element of the product: one times x is x. Therefore, one times, b plus the complement of a, is b plus the complement of a.", "L": [["sub", "= (b ⊕ ∼a) ⊕ ∼b<span class='tag'>Neutral of ⊙: 1 ⊙ x = x</span>"]]},
+
+{"say": "Fifth step. With commutativity and associativity of the sum, we bring b together with its complement. First we commute b with the complement of a, and then we associate. The result is the complement of a plus, b plus its complement.", "L": [["sub", "= ∼a ⊕ (b ⊕ ∼b)<span class='tag'>Commutativity and associativity of ⊕</span>"]]},
+
+{"say": "Sixth step. By the definition of complement, b plus its complement is one.", "L": [["sub", "= ∼a ⊕ 1<span class='tag'>Complement: b ⊕ ∼b = 1</span>"]]},
+
+{"say": "Seventh step. By the domination law, x plus one is one. This ends the first condition.", "L": [["res", "= 1   ∎<span class='tag'>Domination: x ⊕ 1 = 1</span>"]]},
+
+{"title": "Condition (ii)", "clear": 1, "say": "Second condition. We want to prove that a times b, times, the complement of a plus the complement of b, equals zero. We start from the left-hand side.", "L": [["goal", "We want:  (a ⊙ b) ⊙ (∼a ⊕ ∼b) = 0"], ["txt", "(a ⊙ b) ⊙ (∼a ⊕ ∼b)"]]},
+
+{"say": "First step. Distributivity of the product over the sum, with x equal to a times b, y equal to the complement of a, and z equal to the complement of b. We get a sum of two terms: a times b, times the complement of a, plus, a times b, times the complement of b.", "L": [["sub", "= ((a ⊙ b) ⊙ ∼a) ⊕ ((a ⊙ b) ⊙ ∼b)<span class='tag'>Distributivity: x ⊙ (y ⊕ z) = (x ⊙ y) ⊕ (x ⊙ z)</span>"]]},
+
+{"say": "Second step. We rearrange each term with associativity and commutativity of the product, so that each element sits next to its complement. In the first term, a times b, times the complement of a, becomes a times its complement, times b. In the second, a times b, times the complement of b, becomes a times, b times its complement.", "L": [["sub", "= ((a ⊙ ∼a) ⊙ b) ⊕ (a ⊙ (b ⊙ ∼b))<span class='tag'>Associativity and commutativity of ⊙</span>"]]},
+
+{"say": "Third step. By the definition of complement, a times its complement is zero, and b times its complement is zero.", "L": [["sub", "= (0 ⊙ b) ⊕ (a ⊙ 0)<span class='tag'>Complement: a ⊙ ∼a = 0,  b ⊙ ∼b = 0</span>"]]},
+
+{"say": "Fourth step. By the domination law, zero times b is zero, and a times zero is zero.", "L": [["sub", "= 0 ⊕ 0<span class='tag'>Domination: 0 ⊙ b = 0,  a ⊙ 0 = 0</span>"]]},
+
+{"say": "Fifth step. Zero is the neutral element of the sum, and it can also be seen as idempotence of the sum: zero plus zero is zero. This ends the second condition.", "L": [["res", "= 0   ∎<span class='tag'>Idempotence / neutral of ⊕</span>"]]},
+
+{"title": "Conclusion of part 2", "clear": 1, "say": "Since the complement of a plus the complement of b satisfies both conditions, it is the complement of a times b. And by uniqueness of the complement, we conclude the second De Morgan law. With sets: the complement of A intersection B is the complement of A union the complement of B.", "L": [["res", "∼a ⊕ ∼b is the complement of a ⊙ b"], ["res", "∼(a ⊙ b) = ∼a ⊕ ∼b   ∎<span class='tag'>Uniqueness of the complement</span>"], ["txt", "With sets:  (A ∩ B)<sup>c</sup> = A<sup>c</sup> ∪ B<sup>c</sup>"]]},
+
+{"title": "Summary", "clear": 1, "say": "To sum up. In both laws, uniqueness of the complement allows us not to compute the complement directly, but to check the two conditions. In each one we use distributivity, we group each element with its complement, and we apply neutral elements and domination. With sets: the complement of the union is the intersection of the complements, and the complement of the intersection is the union of the complements. Thanks for watching.", "L": [["res", "∼(a ⊕ b) = ∼a ⊙ ∼b"], ["res", "∼(a ⊙ b) = ∼a ⊕ ∼b"], ["txt", "With sets:  (A ∪ B)<sup>c</sup> = A<sup>c</sup> ∩ B<sup>c</sup>,   (A ∩ B)<sup>c</sup> = A<sup>c</sup> ∪ B<sup>c</sup>"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' plus ').replace(/⊙/g,' times ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Replay'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Resume'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pause';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/andrew|guy|brian|christopher|eric|david|mark|male|google us english$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="De Morgan's laws";$('sub').textContent="Exercise · Boolean algebra";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

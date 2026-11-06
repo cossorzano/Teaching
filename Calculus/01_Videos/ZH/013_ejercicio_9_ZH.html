@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>德摩根律</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>备忘</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ 开始</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>语速 <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">录制模式 (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"zh-CN",
+"meta":{"nivel": 3, "titulo": "德摩根律", "enunciado": "设 (B, ⊕, ⊙, ∼) 是一个布尔代数。证明：对任意 a, b ∈ B，德摩根律成立：", "tesis": "∼(a ⊕ b) = ∼a ⊙ ∼b,   ∼(a ⊙ b) = ∼a ⊕ ∼b", "datos": ["(分配)  x ⊕ (y ⊙ z) = (x ⊕ y) ⊙ (x ⊕ z),   x ⊙ (y ⊕ z) = (x ⊙ y) ⊕ (x ⊙ z)", "(补元)  x ⊕ ∼x = 1,   x ⊙ ∼x = 0", "(支配)  x ⊕ 1 = 1,   x ⊙ 0 = 0", "(唯一)  x ⊕ y = 1 且 x ⊙ y = 0 ⇒ y = ∼x"]},
+"steps":[
+{"title": "德摩根律", "sub": "练习 · 布尔代数", "clear": 1, "say": "你好。在这个视频里，我们来解一道关于布尔代数的练习。我们会讲得很慢，写出每一个等式，并说明每一步的理由。", "L": [["txt", "德摩根律"]]},
+
+{"say": "首先是已知条件。B 是一个集合，带有两种运算，加法和乘法，还有一个补运算，我们用波浪号表示。它是一个布尔代数：一个分配格，有最小元零、最大元一，并且每个元素都有补元。典型的例子是集合 U 的幂集，配上并集、交集和补集。", "L": [["hyp", "(B, ⊕, ⊙, ∼) 是布尔代数<span class='tag'>假设</span>"], ["txt", "对集合：  (𝒫(U), ∪, ∩, 补集)，  0 = ∅，  1 = U"]]},
+
+{"say": "我们要用到很多性质，所以把它们全部记在左边。首先是加法和乘法的交换律与结合律。", "pin": ["(交换 ⊕) x ⊕ y = y ⊕ x", "(交换 ⊙) x ⊙ y = y ⊙ x", "(结合 ⊕) x ⊕ (y ⊕ z) = (x ⊕ y) ⊕ z", "(结合 ⊙) x ⊙ (y ⊙ z) = (x ⊙ y) ⊙ z"]},
+
+{"say": "其次是分配律。分配格满足每种运算对另一种运算都可以分配。前两个公式是定义中的公式。另外两个是交换了因子位置的同样公式，由交换律得到。", "pin": ["(分配 1) x ⊕ (y ⊙ z) = (x ⊕ y) ⊙ (x ⊕ z)", "(分配 2) x ⊙ (y ⊕ z) = (x ⊙ y) ⊕ (x ⊙ z)", "(分配 3) (x ⊕ y) ⊙ z = (x ⊙ z) ⊕ (y ⊙ z)", "(分配 4) (x ⊙ y) ⊕ z = (x ⊕ z) ⊙ (y ⊕ z)"]},
+
+{"say": "第三，单位元和补元。零是加法的单位元，一是乘法的单位元。还有补元的定义：x 加它的补元等于一，x 乘它的补元等于零。交换项的等式由交换律得到。", "pin": ["(单位 ⊕) x ⊕ 0 = x = 0 ⊕ x", "(单位 ⊙) x ⊙ 1 = x = 1 ⊙ x", "(补元) x ⊕ ∼x = 1,   x ⊙ ∼x = 0"]},
+
+{"say": "第四，布尔代数的两个已知定理。支配律：x 加一等于一，x 乘零等于零，交换项后同样成立。还有补元的唯一性：如果 x 加 y 等于一，x 乘 y 等于零，那么 y 就是 x 的补元。", "pin": ["(支配) x ⊕ 1 = 1 = 1 ⊕ x", "(支配) x ⊙ 0 = 0 = 0 ⊙ x", "(唯一) x ⊕ y = 1 且 x ⊙ y = 0 ⇒ y = ∼x"]},
+
+{"say": "我们要证明的是：对 B 中任意的 a 和 b，a 加 b 的补元，等于 a 的补元乘 b 的补元。而 a 乘 b 的补元，等于 a 的补元加 b 的补元。这就是德摩根律。对集合来说：A 并 B 的补集，等于 A 的补集交 B 的补集；A 交 B 的补集，等于 A 的补集并 B 的补集。", "L": [["goal", "∀ a, b ∈ B:   ∼(a ⊕ b) = ∼a ⊙ ∼b<span class='tag'>结论 (1)</span>"], ["goal", "∼(a ⊙ b) = ∼a ⊕ ∼b<span class='tag'>结论 (2)</span>"], ["txt", "对集合：  (A ∪ B)<sup>c</sup> = A<sup>c</sup> ∩ B<sup>c</sup>"], ["txt", "对集合：  (A ∩ B)<sup>c</sup> = A<sup>c</sup> ∪ B<sup>c</sup>"]]},
+
+{"title": "第一部分：∼(a ⊕ b) = ∼a ⊙ ∼b", "clear": 1, "say": "我们从第一条定律开始。设 a 和 b 是 B 中任意两个元素。只需证明 a 的补元乘 b 的补元，就是 a 加 b 的补元。根据补元的唯一性，这意味着要验证两个条件。", "L": [["txt", "设 a, b ∈ B  （任意）"], ["sub", "x = a ⊕ b,   y = ∼a ⊙ ∼b<span class='tag'>在 (唯一) 中取</span>"]]},
+
+{"say": "也就是说，只需证明两个等式。第一个：a 加 b 的和，加上 a 的补元乘 b 的补元，等于一。第二个：a 加 b 的和，乘以 a 的补元乘 b 的补元，等于零。", "L": [["goal", "(i)   (a ⊕ b) ⊕ (∼a ⊙ ∼b) = 1"], ["goal", "(ii)  (a ⊕ b) ⊙ (∼a ⊙ ∼b) = 0<span class='tag'>新的结论</span>"]]},
+
+{"title": "条件 (i)", "clear": 1, "say": "第一个条件。我们要证明 a 加 b 的和，加上 a 的补元乘 b 的补元，等于一。我们从左边出发，一步一步地变形。", "L": [["goal", "要证：  (a ⊕ b) ⊕ (∼a ⊙ ∼b) = 1"], ["txt", "(a ⊕ b) ⊕ (∼a ⊙ ∼b)"]]},
+
+{"say": "第一步。应用加法对乘法的分配律，取 x 等于 a 加 b，y 等于 a 的补元，z 等于 b 的补元。得到两个因子的乘积：a 加 b 再加 a 的补元，乘以 a 加 b 再加 b 的补元。", "L": [["sub", "= ((a ⊕ b) ⊕ ∼a) ⊙ ((a ⊕ b) ⊕ ∼b)<span class='tag'>分配律： x ⊕ (y ⊙ z) = (x ⊕ y) ⊙ (x ⊕ z)</span>"]]},
+
+{"say": "第二步。用加法的结合律和交换律整理每个因子，让每个元素都挨着它的补元。在第一个因子里，a 加 b 再加 a 的补元，变成 a 加它的补元，再加 b。在第二个因子里，a 加 b 再加 b 的补元，变成 a 加上 b 与它的补元的和。", "L": [["sub", "= ((a ⊕ ∼a) ⊕ b) ⊙ (a ⊕ (b ⊕ ∼b))<span class='tag'>⊕ 的结合律与交换律</span>"]]},
+
+{"say": "第三步。根据补元的定义，a 加它的补元等于一，b 加它的补元也等于一。", "L": [["sub", "= (1 ⊕ b) ⊙ (a ⊕ 1)<span class='tag'>补元： a ⊕ ∼a = 1,  b ⊕ ∼b = 1</span>"]]},
+
+{"say": "第四步。根据支配律，一加 b 等于一，a 加一等于一。", "L": [["sub", "= 1 ⊙ 1<span class='tag'>支配律： 1 ⊕ b = 1,  a ⊕ 1 = 1</span>"]]},
+
+{"say": "第五步。一是乘法的单位元，所以一乘一等于一。第一个条件到此证完。", "L": [["res", "= 1   ∎<span class='tag'>⊙ 的单位元</span>"]]},
+
+{"title": "条件 (ii)", "clear": 1, "say": "第二个条件。我们要证明 a 加 b 的和，乘以 a 的补元乘 b 的补元，等于零。从左边出发。", "L": [["goal", "要证：  (a ⊕ b) ⊙ (∼a ⊙ ∼b) = 0"], ["txt", "(a ⊕ b) ⊙ (∼a ⊙ ∼b)"]]},
+
+{"say": "第一步。乘法结合律，取 x 等于 a 加 b，y 等于 a 的补元，z 等于 b 的补元。", "L": [["sub", "= ((a ⊕ b) ⊙ ∼a) ⊙ ∼b<span class='tag'>⊙ 的结合律</span>"]]},
+
+{"say": "第二步。在里面的括号中应用乘法对加法的分配律，取 x 等于 a，y 等于 b，z 等于 a 的补元。a 加 b 的和乘 a 的补元，变成 a 乘它的补元，加上 b 乘 a 的补元。", "L": [["sub", "= ((a ⊙ ∼a) ⊕ (b ⊙ ∼a)) ⊙ ∼b<span class='tag'>分配律： (x ⊕ y) ⊙ z = (x ⊙ z) ⊕ (y ⊙ z)</span>"]]},
+
+{"say": "第三步。根据补元的定义，a 乘它的补元等于零。", "L": [["sub", "= (0 ⊕ (b ⊙ ∼a)) ⊙ ∼b<span class='tag'>补元： a ⊙ ∼a = 0</span>"]]},
+
+{"say": "第四步。零是加法的单位元：零加 x 等于 x。所以零加上 b 乘 a 的补元，就等于 b 乘 a 的补元。", "L": [["sub", "= (b ⊙ ∼a) ⊙ ∼b<span class='tag'>⊕ 的单位元： 0 ⊕ x = x</span>"]]},
+
+{"say": "第五步。我们用乘法的结合律和交换律。从 b 乘 a 的补元，整体再乘 b 的补元出发。重新排列因子，让 b 挨着它的补元，得到 b 乘以 b 的补元与 a 的补元的积。", "L": [["sub", "= b ⊙ (∼b ⊙ ∼a)<span class='tag'>⊙ 的交换律与结合律</span>"]]},
+
+{"say": "第六步。乘法结合律，取 x 等于 b，y 等于 b 的补元，z 等于 a 的补元。从 b 乘以 b 的补元与 a 的补元的积，变成 b 乘它的补元，整体再乘 a 的补元。", "L": [["sub", "= (b ⊙ ∼b) ⊙ ∼a<span class='tag'>⊙ 的结合律</span>"]]},
+
+{"say": "第七步。根据补元的定义，b 乘它的补元等于零。", "L": [["sub", "= 0 ⊙ ∼a<span class='tag'>补元： b ⊙ ∼b = 0</span>"]]},
+
+{"say": "第八步。根据支配律，零乘 x 等于零。第二个条件到此证完。", "L": [["res", "= 0   ∎<span class='tag'>支配律： 0 ⊙ x = 0</span>"]]},
+
+{"title": "第一部分的结论", "clear": 1, "say": "因为 a 的补元乘 b 的补元满足两个条件，所以它是 a 加 b 的补元。再根据分配格中补元的唯一性，我们得到第一条德摩根律。对集合来说：A 并 B 的补集，等于 A 的补集交 B 的补集。", "L": [["res", "∼a ⊙ ∼b 是 a ⊕ b 的补元"], ["res", "∼(a ⊕ b) = ∼a ⊙ ∼b   ∎<span class='tag'>补元的唯一性</span>"], ["txt", "对集合：  (A ∪ B)<sup>c</sup> = A<sup>c</sup> ∩ B<sup>c</sup>"]]},
+
+{"title": "第二部分：∼(a ⊙ b) = ∼a ⊕ ∼b", "clear": 1, "say": "下面是第二条定律。设 a 和 b 是 B 中任意两个元素。同样，只需证明 a 的补元加 b 的补元，就是 a 乘 b 的补元。根据补元的唯一性，这意味着要验证两个条件。", "L": [["txt", "设 a, b ∈ B  （任意）"], ["sub", "x = a ⊙ b,   y = ∼a ⊕ ∼b<span class='tag'>在 (唯一) 中取</span>"]]},
+
+{"say": "也就是说，只需证明两个等式。第一个：a 乘 b 的积，加上 a 的补元加 b 的补元，等于一。第二个：a 乘 b 的积，乘以 a 的补元加 b 的补元，等于零。", "L": [["goal", "(i)   (a ⊙ b) ⊕ (∼a ⊕ ∼b) = 1"], ["goal", "(ii)  (a ⊙ b) ⊙ (∼a ⊕ ∼b) = 0<span class='tag'>新的结论</span>"]]},
+
+{"title": "条件 (i)", "clear": 1, "say": "第一个条件。我们要证明 a 乘 b 的积，加上 a 的补元加 b 的补元，等于一。从左边出发。", "L": [["goal", "要证：  (a ⊙ b) ⊕ (∼a ⊕ ∼b) = 1"], ["txt", "(a ⊙ b) ⊕ (∼a ⊕ ∼b)"]]},
+
+{"say": "第一步。加法结合律，取 x 等于 a 乘 b，y 等于 a 的补元，z 等于 b 的补元。", "L": [["sub", "= ((a ⊙ b) ⊕ ∼a) ⊕ ∼b<span class='tag'>⊕ 的结合律</span>"]]},
+
+{"say": "第二步。在里面的括号中应用加法对乘法的分配律，取 x 等于 a，y 等于 b，z 等于 a 的补元。a 乘 b 的积加 a 的补元，变成 a 加它的补元，乘以 b 加 a 的补元。", "L": [["sub", "= ((a ⊕ ∼a) ⊙ (b ⊕ ∼a)) ⊕ ∼b<span class='tag'>分配律： (x ⊙ y) ⊕ z = (x ⊕ z) ⊙ (y ⊕ z)</span>"]]},
+
+{"say": "第三步。根据补元的定义，a 加它的补元等于一。", "L": [["sub", "= (1 ⊙ (b ⊕ ∼a)) ⊕ ∼b<span class='tag'>补元： a ⊕ ∼a = 1</span>"]]},
+
+{"say": "第四步。一是乘法的单位元：一乘 x 等于 x。所以一乘以 b 加 a 的补元，就等于 b 加 a 的补元。", "L": [["sub", "= (b ⊕ ∼a) ⊕ ∼b<span class='tag'>⊙ 的单位元： 1 ⊙ x = x</span>"]]},
+
+{"say": "第五步。用加法的交换律和结合律，把 b 和它的补元放在一起。先交换 b 和 a 的补元，再用结合律。结果是 a 的补元，加上 b 与它的补元的和。", "L": [["sub", "= ∼a ⊕ (b ⊕ ∼b)<span class='tag'>⊕ 的交换律与结合律</span>"]]},
+
+{"say": "第六步。根据补元的定义，b 加它的补元等于一。", "L": [["sub", "= ∼a ⊕ 1<span class='tag'>补元： b ⊕ ∼b = 1</span>"]]},
+
+{"say": "第七步。根据支配律，x 加一等于一。第一个条件到此证完。", "L": [["res", "= 1   ∎<span class='tag'>支配律： x ⊕ 1 = 1</span>"]]},
+
+{"title": "条件 (ii)", "clear": 1, "say": "第二个条件。我们要证明 a 乘 b 的积，乘以 a 的补元加 b 的补元，等于零。从左边出发。", "L": [["goal", "要证：  (a ⊙ b) ⊙ (∼a ⊕ ∼b) = 0"], ["txt", "(a ⊙ b) ⊙ (∼a ⊕ ∼b)"]]},
+
+{"say": "第一步。乘法对加法的分配律，取 x 等于 a 乘 b，y 等于 a 的补元，z 等于 b 的补元。得到两项之和：a 乘 b 再乘 a 的补元，加上 a 乘 b 再乘 b 的补元。", "L": [["sub", "= ((a ⊙ b) ⊙ ∼a) ⊕ ((a ⊙ b) ⊙ ∼b)<span class='tag'>分配律： x ⊙ (y ⊕ z) = (x ⊙ y) ⊕ (x ⊙ z)</span>"]]},
+
+{"say": "第二步。用乘法的结合律和交换律整理每一项，让每个元素都挨着它的补元。在第一项里，a 乘 b 再乘 a 的补元，变成 a 乘它的补元，再乘 b。在第二项里，a 乘 b 再乘 b 的补元，变成 a 乘以 b 与它的补元的积。", "L": [["sub", "= ((a ⊙ ∼a) ⊙ b) ⊕ (a ⊙ (b ⊙ ∼b))<span class='tag'>⊙ 的结合律与交换律</span>"]]},
+
+{"say": "第三步。根据补元的定义，a 乘它的补元等于零，b 乘它的补元也等于零。", "L": [["sub", "= (0 ⊙ b) ⊕ (a ⊙ 0)<span class='tag'>补元： a ⊙ ∼a = 0,  b ⊙ ∼b = 0</span>"]]},
+
+{"say": "第四步。根据支配律，零乘 b 等于零，a 乘零等于零。", "L": [["sub", "= 0 ⊕ 0<span class='tag'>支配律： 0 ⊙ b = 0,  a ⊙ 0 = 0</span>"]]},
+
+{"say": "第五步。零是加法的单位元，也可以看作加法的幂等律：零加零等于零。第二个条件到此证完。", "L": [["res", "= 0   ∎<span class='tag'>⊕ 的幂等律 / 单位元</span>"]]},
+
+{"title": "第二部分的结论", "clear": 1, "say": "因为 a 的补元加 b 的补元满足两个条件，所以它是 a 乘 b 的补元。再根据补元的唯一性，我们得到第二条德摩根律。对集合来说：A 交 B 的补集，等于 A 的补集并 B 的补集。", "L": [["res", "∼a ⊕ ∼b 是 a ⊙ b 的补元"], ["res", "∼(a ⊙ b) = ∼a ⊕ ∼b   ∎<span class='tag'>补元的唯一性</span>"], ["txt", "对集合：  (A ∩ B)<sup>c</sup> = A<sup>c</sup> ∪ B<sup>c</sup>"]]},
+
+{"title": "总结", "clear": 1, "say": "总结一下。在两条定律中，补元的唯一性让我们不必直接计算补元，只需验证两个条件。在每个条件中，我们用分配律，把每个元素和它的补元放在一起，再用单位元和支配律。对集合来说：并集的补集是补集的交集，交集的补集是补集的并集。谢谢观看。", "L": [["res", "∼(a ⊕ b) = ∼a ⊙ ∼b"], ["res", "∼(a ⊙ b) = ∼a ⊕ ∼b"], ["txt", "对集合：  (A ∪ B)<sup>c</sup> = A<sup>c</sup> ∩ B<sup>c</sup>,   (A ∩ B)<sup>c</sup> = A<sup>c</sup> ∪ B<sup>c</sup>"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' 加 ').replace(/⊙/g,' 乘 ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ 重播'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ 继续'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ 暂停';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^zh/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/yunyang|yunxi|yunjian|kangkang|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="德摩根律";$('sub').textContent="练习 · 布尔代数";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
