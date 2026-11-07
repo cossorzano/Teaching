@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Princípio de dualidade</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Lembre-se</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Começar</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Velocidade <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Modo gravação (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"pt-BR",
+"meta":{"nivel": 2, "titulo": "Princípio de dualidade", "enunciado": "Seja (B, ⊕, ⊙, ∼, 0, 1) uma álgebra de Boole.  Usando o princípio de dualidade, escrever e verificar as identidades duais de:", "tesis": "(a)  a ⊕ 1 = 1,   (b)  a ⊕ (a ⊙ b) = a", "datos": ["(Dualidade)  ⊕ ↔ ⊙,   0 ↔ 1", "(Dom)  a ⊕ 1 = 1,   a ⊙ 0 = 0", "(Abs)  a ⊕ (a ⊙ b) = a,   a ⊙ (a ⊕ b) = a"]},
+"steps":[
+{"title": "Princípio de dualidade", "sub": "Exercício · Álgebra de Boole", "clear": 1, "say": "Olá. Neste vídeo vamos resolver um exercício sobre álgebras de Boole. Vamos bem devagar, escrevendo cada equação e justificando cada passo.", "L": [["txt", "Usar o princípio de dualidade para obter novas identidades"]]},
+
+{"say": "Primeiro, os dados. B é um conjunto com duas operações, a soma e o produto, uma operação complementar, e dois elementos distinguidos, zero e um. É uma álgebra de Boole. O exemplo típico são as partes de um conjunto U, com a união, a interseção e o complementar de conjuntos, onde zero é o conjunto vazio e um é U.", "L": [["hyp", "(B, ⊕, ⊙, ∼, 0, 1) álgebra de Boole<span class='tag'>Hipótese</span>"], ["txt", "Com conjuntos:  (𝒫(U), ∪, ∩, complementar),   0 = ∅,   1 = U"]]},
+
+{"say": "Lembramos o princípio de dualidade. Qualquer identidade válida numa álgebra de Boole continua válida ao trocar simultaneamente a soma pelo produto, e o zero pelo um. Com conjuntos, isto significa trocar a união pela interseção, e o conjunto vazio por U.", "L": [["sub", "⊕ ↔ ⊙,      0 ↔ 1<span class='tag'>Princípio de dualidade: trocam-se ao mesmo tempo</span>"], ["txt", "Com conjuntos:  ∪ ↔ ∩,      ∅ ↔ U"]]},
+
+{"say": "Anotamos à esquerda, porque é o que vamos usar em todo o exercício.", "pin": ["(Dualidade) Toda identidade válida continua válida ao trocar ⊕ ↔ ⊙ e 0 ↔ 1"]},
+
+{"say": "O que queremos fazer. Alínea a: partindo da lei de dominação, a mais um é um, escrever a sua identidade dual e verificar que também é válida. Alínea b: partindo da lei de absorção, a mais, a vezes b, é a, escrever a sua identidade dual e verificar que também é válida.", "L": [["goal", "(a)  Dual de  a ⊕ 1 = 1  e verificar que é válida"], ["goal", "(b)  Dual de  a ⊕ (a ⊙ b) = a  e verificar que é válida<span class='tag'>Tese</span>"]]},
+
+{"title": "(a) Dual da lei de dominação", "clear": 1, "say": "Alínea a. A identidade original é a lei de dominação: a mais um é igual a um. Com conjuntos: A união U é U. Anotamos à esquerda, porque é uma identidade válida de partida.", "L": [["sub", "a ⊕ 1 = 1<span class='tag'>Identidade original: lei de dominação</span>"], ["txt", "Com conjuntos:  A ∪ U = U"]], "pin": ["(Dom) a ⊕ 1 = 1"]},
+
+{"say": "Aplicando o princípio de dualidade, trocamos a soma pelo produto, e o um pelo zero. Na identidade há uma soma e dois uns, então trocamos a soma por produto, e os dois uns por zeros.", "L": [["sub", "⊕ → ⊙,      1 → 0<span class='tag'>Troca dual</span>"], ["txt", "a ⊕ 1 = 1   passa a   a ⊙ 0 = 0"]]},
+
+{"say": "Obtemos a identidade dual: a vezes zero é igual a zero. Com conjuntos: A interseção o conjunto vazio é o vazio.", "L": [["res", "a ⊙ 0 = 0<span class='tag'>Identidade dual</span>"], ["txt", "Com conjuntos:  A ∩ ∅ = ∅"]]},
+
+{"say": "Agora verificamos que é válida. Esta igualdade é precisamente a segunda lei de dominação, já demonstrada. Anotamos à esquerda. Portanto, a identidade dual também é válida. Com isto termina a alínea a.", "L": [["res", "a ⊙ 0 = 0  é a segunda lei de dominação   ∎<span class='tag'>A identidade dual também é válida</span>"]], "pin": ["(Dom) a ⊙ 0 = 0"]},
+
+{"title": "(b) Dual da lei de absorção", "clear": 1, "say": "Alínea b. A identidade original é a lei de absorção: a mais, a vezes b, é igual a a. Com conjuntos: A união, A interseção B, é A. Anotamos à esquerda.", "L": [["sub", "a ⊕ (a ⊙ b) = a<span class='tag'>Identidade original: lei de absorção</span>"], ["txt", "Com conjuntos:  A ∪ (A ∩ B) = A"]], "pin": ["(Abs) a ⊕ (a ⊙ b) = a"]},
+
+{"say": "Aplicando o princípio de dualidade, trocamos a soma pelo produto, e vice-versa. Nesta identidade não aparecem nem o zero nem o um, então só trocamos a soma pelo produto, e o produto pela soma.", "L": [["sub", "⊕ ↔ ⊙<span class='tag'>Troca dual</span>"], ["txt", "a ⊕ (a ⊙ b) = a   passa a   a ⊙ (a ⊕ b) = a"]]},
+
+{"say": "Obtemos a identidade dual: a vezes, a mais b, é igual a a. Com conjuntos: A interseção, A união B, é A.", "L": [["res", "a ⊙ (a ⊕ b) = a<span class='tag'>Identidade dual</span>"], ["txt", "Com conjuntos:  A ∩ (A ∪ B) = A"]]},
+
+{"say": "Agora verificamos que é válida. Esta igualdade corresponde à segunda lei de absorção, válida em todo reticulado, e portanto também numa álgebra de Boole. Anotamos à esquerda. Com isto termina a alínea b.", "L": [["res", "a ⊙ (a ⊕ b) = a  é a segunda lei de absorção   ∎<span class='tag'>Válida em todo reticulado, e portanto numa álgebra de Boole</span>"]], "pin": ["(Abs) a ⊙ (a ⊕ b) = a"]},
+
+{"title": "Conclusão", "clear": 1, "say": "Concluímos que, uma vez demonstrada uma identidade, a sua identidade dual é automaticamente válida, sem necessidade de uma nova demonstração independente. Com conjuntos: se uma igualdade entre conjuntos é válida, também o é a que resulta de trocar a união pela interseção, e o conjunto vazio por U. Obrigado por assistir.", "L": [["res", "Identidade válida  ⟹  a sua dual também é válida"], ["res", "(a)  a ⊕ 1 = 1   ⟹   a ⊙ 0 = 0"], ["res", "(b)  a ⊕ (a ⊙ b) = a   ⟹   a ⊙ (a ⊕ b) = a"], ["txt", "Com conjuntos:  ∪ ↔ ∩,   ∅ ↔ U"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' mais ').replace(/⊙/g,' vezes ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Repetir'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Continuar'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pausa';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^pt/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/antonio|antônio|donato|fabio|duarte|male|google português$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Princípio de dualidade";$('sub').textContent="Exercício · Álgebra de Boole";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

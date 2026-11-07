@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prinsip dualitas</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Ingat</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Mulai</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Kecepatan <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Mode rekam (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"id-ID",
+"meta":{"nivel": 2, "titulo": "Prinsip dualitas", "enunciado": "Misalkan (B, ⊕, ⊙, ∼, 0, 1) sebuah aljabar Boole.  Dengan prinsip dualitas, tuliskan dan periksa identitas dual dari:", "tesis": "(a)  a ⊕ 1 = 1,   (b)  a ⊕ (a ⊙ b) = a", "datos": ["(Dualitas)  ⊕ ↔ ⊙,   0 ↔ 1", "(Dom)  a ⊕ 1 = 1,   a ⊙ 0 = 0", "(Abs)  a ⊕ (a ⊙ b) = a,   a ⊙ (a ⊕ b) = a"]},
+"steps":[
+{"title": "Prinsip dualitas", "sub": "Latihan · Aljabar Boole", "clear": 1, "say": "Halo. Dalam video ini kita akan menyelesaikan sebuah soal tentang aljabar Boole. Kita akan berjalan sangat perlahan, menuliskan setiap persamaan dan memberikan alasan untuk setiap langkah.", "L": [["txt", "Memakai prinsip dualitas untuk memperoleh identitas baru"]]},
+
+{"say": "Pertama, data yang diketahui. B adalah himpunan dengan dua operasi, penjumlahan dan perkalian, sebuah operasi komplemen, dan dua unsur khusus, nol dan satu. B adalah aljabar Boole. Contoh khasnya adalah himpunan kuasa dari himpunan U, dengan gabungan, irisan, dan komplemen himpunan, di mana nol adalah himpunan kosong dan satu adalah U.", "L": [["hyp", "(B, ⊕, ⊙, ∼, 0, 1) aljabar Boole<span class='tag'>Hipotesis</span>"], ["txt", "Pada himpunan:  (𝒫(U), ∪, ∩, komplemen),   0 = ∅,   1 = U"]]},
+
+{"say": "Kita ingat prinsip dualitas. Setiap identitas yang sah pada aljabar Boole tetap sah jika secara bersamaan kita menukar penjumlahan dengan perkalian, dan nol dengan satu. Pada himpunan, ini berarti menukar gabungan dengan irisan, dan himpunan kosong dengan U.", "L": [["sub", "⊕ ↔ ⊙,      0 ↔ 1<span class='tag'>Prinsip dualitas: ditukar bersamaan</span>"], ["txt", "Pada himpunan:  ∪ ↔ ∩,      ∅ ↔ U"]]},
+
+{"say": "Kita catat di sebelah kiri, karena inilah yang akan kita pakai di seluruh soal.", "pin": ["(Dualitas) Setiap identitas yang sah tetap sah bila ⊕ ↔ ⊙ dan 0 ↔ 1 ditukar"]},
+
+{"say": "Yang ingin kita lakukan. Bagian a: berangkat dari hukum dominasi, a tambah satu sama dengan satu, tuliskan identitas dualnya dan periksa bahwa ia juga sah. Bagian b: berangkat dari hukum absorpsi, a tambah, a kali b, sama dengan a, tuliskan identitas dualnya dan periksa bahwa ia juga sah.", "L": [["goal", "(a)  Dual dari  a ⊕ 1 = 1  dan periksa bahwa ia sah"], ["goal", "(b)  Dual dari  a ⊕ (a ⊙ b) = a  dan periksa bahwa ia sah<span class='tag'>Yang dibuktikan</span>"]]},
+
+{"title": "(a) Dual hukum dominasi", "clear": 1, "say": "Bagian a. Identitas awalnya adalah hukum dominasi: a tambah satu sama dengan satu. Pada himpunan: A gabung U adalah U. Kita catat di sebelah kiri, karena ini identitas awal yang sah.", "L": [["sub", "a ⊕ 1 = 1<span class='tag'>Identitas awal: hukum dominasi</span>"], ["txt", "Pada himpunan:  A ∪ U = U"]], "pin": ["(Dom) a ⊕ 1 = 1"]},
+
+{"say": "Dengan menerapkan prinsip dualitas, kita tukar penjumlahan dengan perkalian, dan satu dengan nol. Dalam identitas ini ada satu penjumlahan dan dua angka satu, jadi penjumlahan kita ubah menjadi perkalian, dan kedua angka satu menjadi nol.", "L": [["sub", "⊕ → ⊙,      1 → 0<span class='tag'>Penukaran dual</span>"], ["txt", "a ⊕ 1 = 1   menjadi   a ⊙ 0 = 0"]]},
+
+{"say": "Kita peroleh identitas dual: a kali nol sama dengan nol. Pada himpunan: A irisan himpunan kosong adalah himpunan kosong.", "L": [["res", "a ⊙ 0 = 0<span class='tag'>Identitas dual</span>"], ["txt", "Pada himpunan:  A ∩ ∅ = ∅"]]},
+
+{"say": "Sekarang kita periksa bahwa ia sah. Kesamaan ini tepat hukum dominasi kedua, yang sudah dibuktikan. Kita catat di sebelah kiri. Jadi, identitas dualnya juga sah. Dengan ini bagian a selesai.", "L": [["res", "a ⊙ 0 = 0  adalah hukum dominasi kedua   ∎<span class='tag'>Identitas dual juga sah</span>"]], "pin": ["(Dom) a ⊙ 0 = 0"]},
+
+{"title": "(b) Dual hukum absorpsi", "clear": 1, "say": "Bagian b. Identitas awalnya adalah hukum absorpsi: a tambah, a kali b, sama dengan a. Pada himpunan: A gabung, A irisan B, adalah A. Kita catat di sebelah kiri.", "L": [["sub", "a ⊕ (a ⊙ b) = a<span class='tag'>Identitas awal: hukum absorpsi</span>"], ["txt", "Pada himpunan:  A ∪ (A ∩ B) = A"]], "pin": ["(Abs) a ⊕ (a ⊙ b) = a"]},
+
+{"say": "Dengan menerapkan prinsip dualitas, kita tukar penjumlahan dengan perkalian, dan sebaliknya. Dalam identitas ini tidak ada nol maupun satu, jadi kita hanya mengubah penjumlahan menjadi perkalian, dan perkalian menjadi penjumlahan.", "L": [["sub", "⊕ ↔ ⊙<span class='tag'>Penukaran dual</span>"], ["txt", "a ⊕ (a ⊙ b) = a   menjadi   a ⊙ (a ⊕ b) = a"]]},
+
+{"say": "Kita peroleh identitas dual: a kali, a tambah b, sama dengan a. Pada himpunan: A irisan, A gabung B, adalah A.", "L": [["res", "a ⊙ (a ⊕ b) = a<span class='tag'>Identitas dual</span>"], ["txt", "Pada himpunan:  A ∩ (A ∪ B) = A"]]},
+
+{"say": "Sekarang kita periksa bahwa ia sah. Kesamaan ini adalah hukum absorpsi kedua, yang sah di setiap latis, dan karena itu juga di aljabar Boole. Kita catat di sebelah kiri. Dengan ini bagian b selesai.", "L": [["res", "a ⊙ (a ⊕ b) = a  adalah hukum absorpsi kedua   ∎<span class='tag'>Sah di setiap latis, jadi juga di aljabar Boole</span>"]], "pin": ["(Abs) a ⊙ (a ⊕ b) = a"]},
+
+{"title": "Kesimpulan", "clear": 1, "say": "Kita simpulkan bahwa, setelah sebuah identitas dibuktikan, identitas dualnya otomatis sah, tanpa perlu bukti baru yang terpisah. Pada himpunan: jika suatu kesamaan himpunan sah, maka kesamaan yang diperoleh dengan menukar gabungan dengan irisan, dan himpunan kosong dengan U, juga sah. Terima kasih sudah menonton.", "L": [["res", "Identitas sah  ⟹  dualnya juga sah"], ["res", "(a)  a ⊕ 1 = 1   ⟹   a ⊙ 0 = 0"], ["res", "(b)  a ⊕ (a ⊙ b) = a   ⟹   a ⊙ (a ⊕ b) = a"], ["txt", "Pada himpunan:  ∪ ↔ ∩,   ∅ ↔ U"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' tambah ').replace(/⊙/g,' kali ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Ulangi'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Lanjutkan'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Jeda';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Jeda';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Jeda';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^id/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/ardi|andika|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Prinsip dualitas";$('sub').textContent="Latihan · Aljabar Boole";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

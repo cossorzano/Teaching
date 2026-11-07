@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>对偶原理</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>备忘</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ 开始</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>语速 <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">录制模式 (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"zh-CN",
+"meta":{"nivel": 2, "titulo": "对偶原理", "enunciado": "设 (B, ⊕, ⊙, ∼, 0, 1) 是一个布尔代数。利用对偶原理，写出并验证下列恒等式的对偶式：", "tesis": "(a)  a ⊕ 1 = 1,   (b)  a ⊕ (a ⊙ b) = a", "datos": ["(对偶)  ⊕ ↔ ⊙,   0 ↔ 1", "(支配)  a ⊕ 1 = 1,   a ⊙ 0 = 0", "(吸收)  a ⊕ (a ⊙ b) = a,   a ⊙ (a ⊕ b) = a"]},
+"steps":[
+{"title": "对偶原理", "sub": "练习 · 布尔代数", "clear": 1, "say": "你好。在这个视频里，我们来解一道关于布尔代数的练习。我们会讲得很慢，写出每一个等式，并说明每一步的理由。", "L": [["txt", "利用对偶原理得到新的恒等式"]]},
+
+{"say": "首先是已知条件。B 是一个集合，带有两种运算，加法和乘法，一个补运算，以及两个特殊元素，零和一。它是一个布尔代数。典型的例子是集合 U 的幂集，配上并集、交集和补集，其中零是空集，一是 U。", "L": [["hyp", "(B, ⊕, ⊙, ∼, 0, 1) 是布尔代数<span class='tag'>假设</span>"], ["txt", "对集合：  (𝒫(U), ∪, ∩, 补集)，  0 = ∅，  1 = U"]]},
+
+{"say": "我们回顾对偶原理。在布尔代数中成立的任何恒等式，如果同时把加法换成乘法、把零换成一，仍然成立。对集合来说，就是把并集换成交集，把空集换成 U。", "L": [["sub", "⊕ ↔ ⊙,      0 ↔ 1<span class='tag'>对偶原理：同时互换</span>"], ["txt", "对集合：  ∪ ↔ ∩,      ∅ ↔ U"]]},
+
+{"say": "我们把它记在左边，因为整道题都要用到它。", "pin": ["(对偶) 任何成立的恒等式，在互换 ⊕ ↔ ⊙ 和 0 ↔ 1 后仍然成立"]},
+
+{"say": "我们要做的是：第一问，从支配律 a 加一等于一出发，写出它的对偶式，并验证它也成立。第二问，从吸收律 a 加上 a 乘 b 等于 a 出发，写出它的对偶式，并验证它也成立。", "L": [["goal", "(a)  写出  a ⊕ 1 = 1  的对偶式并验证它成立"], ["goal", "(b)  写出  a ⊕ (a ⊙ b) = a  的对偶式并验证它成立<span class='tag'>结论</span>"]]},
+
+{"title": "(a) 支配律的对偶式", "clear": 1, "say": "第一问。原恒等式是支配律：a 加一等于一。对集合来说：A 并 U 等于 U。我们把它记在左边，因为它是一个成立的出发恒等式。", "L": [["sub", "a ⊕ 1 = 1<span class='tag'>原恒等式：支配律</span>"], ["txt", "对集合：  A ∪ U = U"]], "pin": ["(支配) a ⊕ 1 = 1"]},
+
+{"say": "应用对偶原理，把加法换成乘法，把一换成零。恒等式中有一个加号和两个一，所以把加号换成乘号，把两个一都换成零。", "L": [["sub", "⊕ → ⊙,      1 → 0<span class='tag'>对偶互换</span>"], ["txt", "a ⊕ 1 = 1   变成   a ⊙ 0 = 0"]]},
+
+{"say": "得到对偶恒等式：a 乘零等于零。对集合来说：A 交空集等于空集。", "L": [["res", "a ⊙ 0 = 0<span class='tag'>对偶恒等式</span>"], ["txt", "对集合：  A ∩ ∅ = ∅"]]},
+
+{"say": "现在验证它成立。这个等式正是已经证明过的第二支配律。我们把它记在左边。所以对偶恒等式同样成立。第一问到此结束。", "L": [["res", "a ⊙ 0 = 0  就是第二支配律   ∎<span class='tag'>对偶恒等式同样成立</span>"]], "pin": ["(支配) a ⊙ 0 = 0"]},
+
+{"title": "(b) 吸收律的对偶式", "clear": 1, "say": "第二问。原恒等式是吸收律：a 加上 a 乘 b，等于 a。对集合来说：A 并上 A 交 B，等于 A。我们把它记在左边。", "L": [["sub", "a ⊕ (a ⊙ b) = a<span class='tag'>原恒等式：吸收律</span>"], ["txt", "对集合：  A ∪ (A ∩ B) = A"]], "pin": ["(吸收) a ⊕ (a ⊙ b) = a"]},
+
+{"say": "应用对偶原理，把加法换成乘法，乘法换成加法。这个恒等式里既没有零也没有一，所以只需把加号换成乘号，把乘号换成加号。", "L": [["sub", "⊕ ↔ ⊙<span class='tag'>对偶互换</span>"], ["txt", "a ⊕ (a ⊙ b) = a   变成   a ⊙ (a ⊕ b) = a"]]},
+
+{"say": "得到对偶恒等式：a 乘以 a 加 b 的和，等于 a。对集合来说：A 交上 A 并 B，等于 A。", "L": [["res", "a ⊙ (a ⊕ b) = a<span class='tag'>对偶恒等式</span>"], ["txt", "对集合：  A ∩ (A ∪ B) = A"]]},
+
+{"say": "现在验证它成立。这个等式对应第二吸收律，它在任何格中都成立，因此在布尔代数中也成立。我们把它记在左边。第二问到此结束。", "L": [["res", "a ⊙ (a ⊕ b) = a  就是第二吸收律   ∎<span class='tag'>在任何格中都成立，因此在布尔代数中也成立</span>"]], "pin": ["(吸收) a ⊙ (a ⊕ b) = a"]},
+
+{"title": "结论", "clear": 1, "say": "我们得出结论：一个恒等式一旦得到证明，它的对偶恒等式就自动成立，不需要另外独立证明。对集合来说：如果一个集合等式成立，那么把并集换成交集、把空集换成 U 得到的等式也成立。谢谢观看。", "L": [["res", "恒等式成立  ⟹  它的对偶式也成立"], ["res", "(a)  a ⊕ 1 = 1   ⟹   a ⊙ 0 = 0"], ["res", "(b)  a ⊕ (a ⊙ b) = a   ⟹   a ⊙ (a ⊕ b) = a"], ["txt", "对集合：  ∪ ↔ ∩,   ∅ ↔ U"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' 加 ').replace(/⊙/g,' 乘 ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ 重播'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ 继续'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ 暂停';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^zh/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/yunyang|yunxi|yunjian|kangkang|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="对偶原理";$('sub').textContent="练习 · 布尔代数";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
