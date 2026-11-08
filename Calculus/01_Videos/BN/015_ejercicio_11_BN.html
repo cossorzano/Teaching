@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>𝒫(U) একটি ল্যাটিস</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>মনে রাখুন</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ শুরু</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>গতি <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">রেকর্ডিং মোড (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"bn-BD",
+"meta":{"nivel": 2, "titulo": "𝒫(U) একটি ল্যাটিস", "enunciado": "প্রমাণ করুন যে (𝒫(U), ∪, ∩) একটি ল্যাটিস।", "tesis": "(𝒫(U), ∪, ∩) একটি ল্যাটিস", "datos": ["(ল্যাটিস)  ⊕, ⊙ অভ্যন্তরীণ;  বিনিময়, সংযোজন, শোষণ", "(∪ সংজ্ঞা)  x ∈ A ∪ B ⇔ x ∈ A অথবা x ∈ B", "(∩ সংজ্ঞা)  x ∈ A ∩ B ⇔ x ∈ A এবং x ∈ B"]},
+"steps":[
+{"title": "𝒫(U) একটি ল্যাটিস", "sub": "অনুশীলনী · বীজগাণিতিক ল্যাটিস", "clear": 1, "say": "নমস্কার। এই ভিডিওতে আমরা ল্যাটিস ও সেট নিয়ে একটি অনুশীলনী সমাধান করব। আমরা খুব ধীরে এগোব, প্রতিটি সমীকরণ লিখব এবং প্রতিটি ধাপের যুক্তি দেব।", "L": [["txt", "প্রমাণ করুন যে U এর ঘাত সেট, সংযোগ ও ছেদ নিয়ে, একটি ল্যাটিস"]]},
+
+{"say": "প্রথমে, মনে করি ল্যাটিস কী। একটি ল্যাটিসে, B এর উপর দুটি প্রক্রিয়া থাকে, যোগ ও গুণ, এবং দুটি প্রক্রিয়াকেই B তে অভ্যন্তরীণ হতে হবে, আর তিনটি ধর্ম মেনে চলতে হবে: বিনিময়, সংযোজন ও শোষণ।", "L": [["hyp", "(B, ⊕, ⊙) ল্যাটিস  ⇔  ⊕, ⊙ B তে অভ্যন্তরীণ  এবং  মেনে চলে:<span class='tag'>সংজ্ঞা</span>"], ["hyp", "বিনিময়,   সংযোজন,   শোষণ"]]},
+
+{"say": "আমাদের ক্ষেত্রে, B হলো U এর ঘাত সেট, যোগ হলো সংযোগ, আর গুণ হলো ছেদ। আমরা প্রমাণ করতে চাই যে এই শর্তগুলো পূরণ হয়।", "L": [["sub", "B = 𝒫(U),     ⊕ = ∪,     ⊙ = ∩<span class='tag'>আমাদের ক্ষেত্রে</span>"], ["goal", "প্রমাণ করতে হবে:  (𝒫(U), ∪, ∩) একটি ল্যাটিস<span class='tag'>প্রামাণ্য</span>"]]},
+
+{"title": "অভ্যন্তরীণ প্রক্রিয়া", "clear": 1, "say": "প্রথমে, প্রক্রিয়াগুলো অভ্যন্তরীণ। U এর দুটি উপসেট A ও B দেওয়া থাকলে, A ও B এর সংযোগও U এর একটি উপসেট, আর A ও B এর ছেদও U এর একটি উপসেট। অর্থাৎ, U এর ঘাত সেটের দুটি উপাদানের সংযোগ ও ছেদ, U এর ঘাত সেটের মধ্যেই থাকে।", "L": [["txt", "ধরা যাক A, B ⊆ U"], ["res", "A ∪ B ⊆ U<span class='tag'>∪ অভ্যন্তরীণ</span>"], ["res", "A ∩ B ⊆ U<span class='tag'>∩ অভ্যন্তরীণ</span>"]]},
+
+{"title": "পদ্ধতি: উপাদান দিয়ে যুক্তি", "clear": 1, "say": "এবার আমরা উপাদান দিয়ে যুক্তি করে ধর্মগুলো প্রমাণ করি। ধরা যাক A, B ও C হলো U এর উপসেট, আর x হলো U এর একটি উপাদান। মনে রাখি, দুটি সেট সমান হয় যদি এবং কেবল যদি তাদের উপাদান একই হয়। তাই, দুটি সেট সমান প্রমাণ করতে, আমরা দেখাব যে x একটিতে আছে যদি এবং কেবল যদি x অন্যটিতে আছে।", "L": [["txt", "ধরা যাক A, B, C ⊆ U  এবং  x ∈ U"], ["goal", "X = Y   ⇔   (x ∈ X ⇔ x ∈ Y)<span class='tag'>সেটের সমতা: একই উপাদান</span>"]]},
+
+{"say": "আর সংযোগ ও ছেদের সংজ্ঞা মনে করি। x, A ও B এর সংযোগে আছে যদি এবং কেবল যদি x, A তে আছে, অথবা x, B তে আছে। আর x, A ও B এর ছেদে আছে যদি এবং কেবল যদি x, A তে আছে, এবং x, B তে আছে। এগুলো আমরা বাঁ দিকে লিখে রাখি।", "L": [["sub", "x ∈ A ∪ B  ⇔  x ∈ A  অথবা  x ∈ B<span class='tag'>সংযোগের সংজ্ঞা</span>"], ["sub", "x ∈ A ∩ B  ⇔  x ∈ A  এবং  x ∈ B<span class='tag'>ছেদের সংজ্ঞা</span>"]], "pin": ["(∪ সংজ্ঞা) x ∈ A ∪ B ⇔ x ∈ A অথবা x ∈ B", "(∩ সংজ্ঞা) x ∈ A ∩ B ⇔ x ∈ A এবং x ∈ B"]},
+
+{"title": "∪ এর বিনিময় ধর্ম", "clear": 1, "say": "আমরা সংযোগের বিনিময় ধর্ম দিয়ে শুরু করি। প্রমাণ করতে চাই যে A সংযোগ B, B সংযোগ A এর সমান। আমরা শুরু করি, x, A সংযোগ B তে আছে, থেকে।", "L": [["goal", "প্রমাণ করতে হবে:  A ∪ B = B ∪ A"], ["txt", "x ∈ A ∪ B"]]},
+
+{"say": "প্রথম ধাপ। সংযোগের সংজ্ঞা অনুযায়ী, x, A সংযোগ B তে আছে যদি এবং কেবল যদি x, A তে আছে, অথবা x, B তে আছে।", "L": [["sub", "⇔  x ∈ A  অথবা  x ∈ B<span class='tag'>∪ এর সংজ্ঞা</span>"]]},
+
+{"say": "দ্বিতীয় ধাপ। যৌক্তিক বিয়োজন «অথবা» এর বিনিময় ধর্ম অনুযায়ী, আমরা ক্রম বদলাতে পারি: x, B তে আছে, অথবা x, A তে আছে।", "L": [["sub", "⇔  x ∈ B  অথবা  x ∈ A<span class='tag'>«অথবা» এর বিনিময় ধর্ম</span>"]]},
+
+{"say": "তৃতীয় ধাপ। সংযোগের সংজ্ঞা উল্টো দিক থেকে পড়লে, এটি এর সমতুল্য যে x, B সংযোগ A তে আছে। যেহেতু x যেকোনো, দুটি সেটের উপাদান একই, তাই তারা সমান।", "L": [["res", "⇔  x ∈ B ∪ A<span class='tag'>∪ এর সংজ্ঞা</span>"], ["res", "A ∪ B = B ∪ A   ∎"]]},
+
+{"title": "∩ এর বিনিময় ধর্ম", "clear": 1, "say": "এবার ছেদের বিনিময় ধর্ম। প্রমাণ করতে চাই যে A ছেদ B, B ছেদ A এর সমান। আমরা শুরু করি, x, A ছেদ B তে আছে, থেকে।", "L": [["goal", "প্রমাণ করতে হবে:  A ∩ B = B ∩ A"], ["txt", "x ∈ A ∩ B"]]},
+
+{"say": "প্রথম ধাপ। ছেদের সংজ্ঞা অনুযায়ী, x, A ছেদ B তে আছে যদি এবং কেবল যদি x, A তে আছে, এবং x, B তে আছে।", "L": [["sub", "⇔  x ∈ A  এবং  x ∈ B<span class='tag'>∩ এর সংজ্ঞা</span>"]]},
+
+{"say": "দ্বিতীয় ধাপ। যৌক্তিক সংযোজন «এবং» এর বিনিময় ধর্ম অনুযায়ী, আমরা ক্রম বদলাতে পারি: x, B তে আছে, এবং x, A তে আছে।", "L": [["sub", "⇔  x ∈ B  এবং  x ∈ A<span class='tag'>«এবং» এর বিনিময় ধর্ম</span>"]]},
+
+{"say": "তৃতীয় ধাপ। ছেদের সংজ্ঞা উল্টো দিক থেকে পড়লে, এটি এর সমতুল্য যে x, B ছেদ A তে আছে। যেহেতু x যেকোনো, দুটি সেট সমান।", "L": [["res", "⇔  x ∈ B ∩ A<span class='tag'>∩ এর সংজ্ঞা</span>"], ["res", "A ∩ B = B ∩ A   ∎"]]},
+
+{"title": "∪ এর সংযোজন ধর্ম", "clear": 1, "say": "এবার সংযোগের সংযোজন ধর্ম। প্রমাণ করতে চাই যে A সংযোগ, B সংযোগ C, সমান, A সংযোগ B, সংযোগ C। আমরা শুরু করি, x, A সংযোগ, B সংযোগ C তে আছে, থেকে।", "L": [["goal", "প্রমাণ করতে হবে:  A ∪ (B ∪ C) = (A ∪ B) ∪ C"], ["txt", "x ∈ A ∪ (B ∪ C)"]]},
+
+{"say": "প্রথম ধাপ। সংযোগের সংজ্ঞা অনুযায়ী, x, A তে আছে, অথবা x, B সংযোগ C তে আছে। আর সংজ্ঞাটি আবার প্রয়োগ করলে, x, B সংযোগ C তে আছে যদি এবং কেবল যদি x, B তে আছে, অথবা x, C তে আছে।", "L": [["sub", "⇔  x ∈ A  অথবা  (x ∈ B  অথবা  x ∈ C)<span class='tag'>∪ এর সংজ্ঞা, দুবার</span>"]]},
+
+{"say": "দ্বিতীয় ধাপ। যৌক্তিক বিয়োজন «অথবা» এর সংযোজন ধর্ম অনুযায়ী, কীভাবে দলবদ্ধ করি তাতে কিছু যায় আসে না, তাই বন্ধনী সরিয়ে দিতে পারি: x, A তে আছে, অথবা x, B তে আছে, অথবা x, C তে আছে।", "L": [["sub", "⇔  (x ∈ A  অথবা  x ∈ B  অথবা  x ∈ C)<span class='tag'>«অথবা» এর সংযোজন ধর্ম</span>"]]},
+
+{"say": "তৃতীয় ধাপ। প্রথম দুটি পদ একসাথে রাখি। সংযোগের সংজ্ঞা অনুযায়ী, x, A তে আছে, অথবা x, B তে আছে, এর সমতুল্য হলো x, A সংযোগ B তে আছে। সুতরাং, x, A সংযোগ B তে আছে, অথবা x, C তে আছে।", "L": [["sub", "⇔  (x ∈ A ∪ B)  অথবা  x ∈ C<span class='tag'>∪ এর সংজ্ঞা</span>"]]},
+
+{"say": "চতুর্থ ধাপ। সংযোগের সংজ্ঞা অনুযায়ী, এটি এর সমতুল্য যে x, A সংযোগ B, সংযোগ C তে আছে। যেহেতু x যেকোনো, দুটি সেট সমান।", "L": [["res", "⇔  x ∈ (A ∪ B) ∪ C<span class='tag'>∪ এর সংজ্ঞা</span>"], ["res", "A ∪ (B ∪ C) = (A ∪ B) ∪ C   ∎"]]},
+
+{"title": "∩ এর সংযোজন ধর্ম", "clear": 1, "say": "এবার ছেদের সংযোজন ধর্ম। প্রমাণ করতে চাই যে A ছেদ, B ছেদ C, সমান, A ছেদ B, ছেদ C। আমরা শুরু করি, x, A ছেদ, B ছেদ C তে আছে, থেকে।", "L": [["goal", "প্রমাণ করতে হবে:  A ∩ (B ∩ C) = (A ∩ B) ∩ C"], ["txt", "x ∈ A ∩ (B ∩ C)"]]},
+
+{"say": "প্রথম ধাপ। ছেদের সংজ্ঞা অনুযায়ী, x, A তে আছে, এবং x, B ছেদ C তে আছে। আর সংজ্ঞাটি আবার প্রয়োগ করলে, x, B ছেদ C তে আছে যদি এবং কেবল যদি x, B তে আছে, এবং x, C তে আছে।", "L": [["sub", "⇔  x ∈ A  এবং  (x ∈ B  এবং  x ∈ C)<span class='tag'>∩ এর সংজ্ঞা, দুবার</span>"]]},
+
+{"say": "দ্বিতীয় ধাপ। যৌক্তিক সংযোজন «এবং» এর সংযোজন ধর্ম অনুযায়ী, আমরা বন্ধনী সরিয়ে দিতে পারি: x, A তে আছে, এবং x, B তে আছে, এবং x, C তে আছে।", "L": [["sub", "⇔  (x ∈ A  এবং  x ∈ B  এবং  x ∈ C)<span class='tag'>«এবং» এর সংযোজন ধর্ম</span>"]]},
+
+{"say": "তৃতীয় ধাপ। প্রথম দুটি পদ একসাথে রাখি। ছেদের সংজ্ঞা অনুযায়ী, x, A তে আছে, এবং x, B তে আছে, এর সমতুল্য হলো x, A ছেদ B তে আছে। সুতরাং, x, A ছেদ B তে আছে, এবং x, C তে আছে।", "L": [["sub", "⇔  (x ∈ A ∩ B)  এবং  x ∈ C<span class='tag'>∩ এর সংজ্ঞা</span>"]]},
+
+{"say": "চতুর্থ ধাপ। ছেদের সংজ্ঞা অনুযায়ী, এটি এর সমতুল্য যে x, A ছেদ B, ছেদ C তে আছে। যেহেতু x যেকোনো, দুটি সেট সমান।", "L": [["res", "⇔  x ∈ (A ∩ B) ∩ C<span class='tag'>∩ এর সংজ্ঞা</span>"], ["res", "A ∩ (B ∩ C) = (A ∩ B) ∩ C   ∎"]]},
+
+{"title": "∪ এর শোষণ", "clear": 1, "say": "শেষে সংযোগের শোষণ। প্রমাণ করতে চাই যে A সংযোগ, A ছেদ B, সমান A। আমরা শুরু করি, x, A সংযোগ, A ছেদ B তে আছে, থেকে।", "L": [["goal", "প্রমাণ করতে হবে:  A ∪ (A ∩ B) = A"], ["txt", "x ∈ A ∪ (A ∩ B)"]]},
+
+{"say": "প্রথম ধাপ। সংযোগের সংজ্ঞা, এবং তারপর ছেদের সংজ্ঞা অনুযায়ী, x, A তে আছে, অথবা, x, A তে আছে এবং x, B তে আছে।", "L": [["sub", "⇔  x ∈ A  অথবা  (x ∈ A  এবং  x ∈ B)<span class='tag'>∪ ও ∩ এর সংজ্ঞা</span>"]]},
+
+{"say": "দ্বিতীয় ধাপ। এটি এর সমতুল্য যে x, A তে আছে। x যদি A তে থাকে, তবে বিয়োজনের প্রথম অংশ সত্য। আর বিপরীতভাবে, বিয়োজন সত্য হলে, হয় x, A তে আছে, নয়তো x, A ও B দুটিতেই আছে, আর দুই ক্ষেত্রেই x, A তে আছে।", "L": [["sub", "⇔  x ∈ A<span class='tag'>x ∈ A হলে বিয়োজন সত্য; আর বিয়োজন সত্য হলে x ∈ A</span>"]]},
+
+{"say": "তৃতীয় ধাপ। শেষ লাইনটি আবার লেখে যে x, A তে আছে। এটি সমতার ডান দিকের সেটে থাকা। যেহেতু x যেকোনো, দুটি সেট সমান।", "L": [["res", "⇔  x ∈ A"], ["res", "A ∪ (A ∩ B) = A   ∎"]]},
+
+{"title": "∩ এর শোষণ", "clear": 1, "say": "আর ছেদের শোষণ। প্রমাণ করতে চাই যে A ছেদ, A সংযোগ B, সমান A। আমরা শুরু করি, x, A ছেদ, A সংযোগ B তে আছে, থেকে।", "L": [["goal", "প্রমাণ করতে হবে:  A ∩ (A ∪ B) = A"], ["txt", "x ∈ A ∩ (A ∪ B)"]]},
+
+{"say": "প্রথম ধাপ। ছেদের সংজ্ঞা, এবং তারপর সংযোগের সংজ্ঞা অনুযায়ী, x, A তে আছে, এবং, x, A তে আছে অথবা x, B তে আছে।", "L": [["sub", "⇔  x ∈ A  এবং  (x ∈ A  অথবা  x ∈ B)<span class='tag'>∩ ও ∪ এর সংজ্ঞা</span>"]]},
+
+{"say": "দ্বিতীয় ধাপ। এটি এর সমতুল্য যে x, A তে আছে। x যদি A তে থাকে, তবে সংযোজনের দুটি অংশই সত্য, কারণ x এর A তে থাকা দ্বিতীয় অংশকে সত্য করে। আর বিপরীতভাবে, সংযোজন সত্য হলে, প্রথম অংশ থেকে x, A তে আছে।", "L": [["sub", "⇔  x ∈ A<span class='tag'>x ∈ A হলে সংযোজন সত্য; আর সংযোজন সত্য হলে x ∈ A</span>"]]},
+
+{"say": "তৃতীয় ধাপ। শেষ লাইনটি আবার লেখে যে x, A তে আছে। যেহেতু x যেকোনো, দুটি সেট সমান।", "L": [["res", "⇔  x ∈ A"], ["res", "A ∩ (A ∪ B) = A   ∎"]]},
+
+{"title": "উপসংহার", "clear": 1, "say": "যেহেতু দুটি প্রক্রিয়াই অভ্যন্তরীণ এবং বিনিময়, সংযোজন ও শোষণ ধর্ম মেনে চলে, আমরা সিদ্ধান্তে আসি যে U এর ঘাত সেট, সংযোগ ও ছেদ নিয়ে, একটি ল্যাটিস। দেখার জন্য ধন্যবাদ।", "L": [["res", "∪, ∩  𝒫(U) তে অভ্যন্তরীণ"], ["res", "বিনিময়,  সংযোজন,  শোষণ"], ["res", "(𝒫(U), ∪, ∩) একটি ল্যাটিস   ∎"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' প্লাস ').replace(/⊙/g,' গুণ ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ আবার চালান'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ চালিয়ে যান'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ বিরতি';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^bn/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/pradeep|bashkar|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="𝒫(U) একটি ল্যাটিস";$('sub').textContent="অনুশীলনী · বীজগাণিতিক ল্যাটিস";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

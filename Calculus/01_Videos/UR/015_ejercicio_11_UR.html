@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>U کے ذیلی سیٹوں کا سیٹ ایک لیٹس ہے</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-inline-end:2px dashed #3d5a50;padding-inline-end:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-inline-start:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+span[dir='ltr']{white-space:nowrap}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>یاد رکھیں</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ شروع کریں</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>رفتار <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">ریکارڈنگ موڈ (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ur-PK",
+"meta":{"nivel": 2, "titulo": "U کے ذیلی سیٹوں کا سیٹ ایک لیٹس ہے", "enunciado": "ثابت کریں کہ <span dir='ltr'>(𝒫(U), ∪, ∩)</span> ایک لیٹس ہے۔", "tesis": "(𝒫(U), ∪, ∩) ایک لیٹس ہے", "datos": ["لیٹس:  <span dir='ltr'>⊕</span>، <span dir='ltr'>⊙</span> اندرونی؛ تبادلیت، تلازم، جذب", "اتصال کی تعریف:  <span dir='ltr'>x ∈ A ∪ B ⇔ x ∈ A ∨ x ∈ B</span>", "تقاطع کی تعریف:  <span dir='ltr'>x ∈ A ∩ B ⇔ x ∈ A ∧ x ∈ B</span>"]},
+"steps":[
+{"title": "U کے ذیلی سیٹوں کا سیٹ ایک لیٹس ہے", "sub": "مشق · الجبری لیٹس", "clear": 1, "say": "السلام علیکم۔ اس ویڈیو میں ہم لیٹس اور سیٹوں پر ایک مشق حل کریں گے۔ ہم بہت آہستہ چلیں گے، ہر مساوات لکھیں گے اور ہر قدم کی وجہ بتائیں گے۔", "L": [["txt", "ثابت کریں کہ <span dir='ltr'>U</span> کے تمام ذیلی سیٹوں کا سیٹ، اتصال اور تقاطع کے ساتھ، ایک لیٹس ہے"]]},
+
+{"say": "پہلے، یاد کرتے ہیں کہ لیٹس کیا ہے۔ لیٹس میں، B پر دو عمل ہوتے ہیں، جمع اور ضرب، اور دونوں عمل B میں اندرونی ہونے چاہییں، اور تین خصوصیات پوری کرنی چاہییں: تبادلیت، تلازم اور جذب۔", "L": [["hyp", "<span dir='ltr'>(B, ⊕, ⊙)</span> لیٹس  ⇔  <span dir='ltr'>⊕</span>، <span dir='ltr'>⊙ B</span> میں اندرونی  اور  پورا کرتے ہیں:<span class='tag'>تعریف</span>"], ["hyp", "تبادلیت،   تلازم،   جذب"]]},
+
+{"say": "ہماری صورت میں، B، U کے تمام ذیلی سیٹوں کا سیٹ ہے، جمع اتصال ہے، اور ضرب تقاطع ہے۔ ہمیں یہ ثابت کرنا ہے کہ یہ شرائط پوری ہوتی ہیں۔", "L": [["sub", "<span dir='ltr'>B = 𝒫(U),     ⊕ = ∪,     ⊙ = ∩</span><span class='tag'>ہماری صورت</span>"], ["goal", "ثابت کرنا ہے کہ  <span dir='ltr'>(𝒫(U), ∪, ∩)</span> ایک لیٹس ہے<span class='tag'>مطلوب</span>"]]},
+
+{"title": "اندرونی عمل", "clear": 1, "say": "پہلے، عمل اندرونی ہیں۔ اگر A اور B، U کے دو ذیلی سیٹ ہوں، تو A اور B کا اتصال بھی U کا ذیلی سیٹ ہے، اور A اور B کا تقاطع بھی U کا ذیلی سیٹ ہے۔ یعنی U کے ذیلی سیٹوں کے سیٹ کے دو ارکان کا اتصال اور تقاطع، اسی سیٹ میں رہتے ہیں۔", "L": [["txt", "فرض کریں <span dir='ltr'>A, B ⊆ U</span>"], ["res", "<span dir='ltr'>A ∪ B ⊆ U</span><span class='tag'>اتصال اندرونی عمل ہے</span>"], ["res", "<span dir='ltr'>A ∩ B ⊆ U</span><span class='tag'>تقاطع اندرونی عمل ہے</span>"]]},
+
+{"title": "طریقہ: ارکان کے ذریعے استدلال", "clear": 1, "say": "اب ہم ارکان کے ذریعے استدلال کر کے خصوصیات ثابت کرتے ہیں۔ فرض کریں A، B اور C، U کے ذیلی سیٹ ہیں، اور x، U کا ایک رکن ہے۔ یاد رکھیں کہ دو سیٹ تب اور صرف تب برابر ہوتے ہیں جب ان کے ارکان ایک جیسے ہوں۔ اس لیے، دو سیٹوں کی برابری ثابت کرنے کے لیے، ہم دکھائیں گے کہ x ایک میں ہے تب اور صرف تب جب x دوسرے میں ہو۔", "L": [["txt", "فرض کریں <span dir='ltr'>A, B, C ⊆ U</span>  اور  <span dir='ltr'>x ∈ U</span>"], ["goal", "<span dir='ltr'>X = Y   ⇔   (x ∈ X ⇔ x ∈ Y)</span><span class='tag'>سیٹوں کی مساوات: ایک جیسے ارکان</span>"]]},
+
+{"say": "اور اتصال اور تقاطع کی تعریف یاد کرتے ہیں۔ x، A اور B کے اتصال میں ہے تب اور صرف تب جب x، A میں ہو، یا x، B میں ہو۔ اور x، A اور B کے تقاطع میں ہے تب اور صرف تب جب x، A میں ہو، اور x، B میں ہو۔ انہیں ہم ایک طرف لکھ لیتے ہیں۔", "L": [["sub", "<span dir='ltr'>x ∈ A ∪ B  ⇔  x ∈ A  ∨  x ∈ B</span><span class='tag'>اتصال کی تعریف</span>"], ["sub", "<span dir='ltr'>x ∈ A ∩ B  ⇔  x ∈ A  ∧  x ∈ B</span><span class='tag'>تقاطع کی تعریف</span>"]], "pin": ["اتصال کی تعریف: <span dir='ltr'>x ∈ A ∪ B ⇔ x ∈ A ∨ x ∈ B</span>", "تقاطع کی تعریف: <span dir='ltr'>x ∈ A ∩ B ⇔ x ∈ A ∧ x ∈ B</span>"]},
+
+{"title": "اتصال کی تبادلیت", "clear": 1, "say": "ہم اتصال کی تبادلیت سے شروع کرتے ہیں۔ ہمیں ثابت کرنا ہے کہ A اتصال B، B اتصال A کے برابر ہے۔ ہم اس سے شروع کرتے ہیں کہ x، A اتصال B میں ہے۔", "L": [["goal", "ثابت کرنا ہے:  <span dir='ltr'>A ∪ B = B ∪ A</span>"], ["txt", "<span dir='ltr'>x ∈ A ∪ B</span>"]]},
+
+{"say": "پہلا قدم۔ اتصال کی تعریف سے، x، A اتصال B میں ہے تب اور صرف تب جب x، A میں ہو، یا x، B میں ہو۔", "L": [["sub", "⇔  <span dir='ltr'>x ∈ A  ∨  x ∈ B</span><span class='tag'>اتصال کی تعریف</span>"]]},
+
+{"say": "دوسرا قدم۔ منطقی فصل «یا» کی تبادلیت سے، ہم ترتیب بدل سکتے ہیں: x، B میں ہے، یا x، A میں ہے۔", "L": [["sub", "⇔  <span dir='ltr'>x ∈ B  ∨  x ∈ A</span><span class='tag'><span dir='ltr'>«</span>یا<span dir='ltr'>»</span> کی تبادلیت</span>"]]},
+
+{"say": "تیسرا قدم۔ اتصال کی تعریف کو الٹا پڑھنے سے، یہ اس کے مساوی ہے کہ x، B اتصال A میں ہے۔ چونکہ x اختیاری ہے، دونوں سیٹوں کے ارکان ایک جیسے ہیں، اس لیے وہ برابر ہیں۔", "L": [["res", "⇔  <span dir='ltr'>x ∈ B ∪ A</span><span class='tag'>اتصال کی تعریف</span>"], ["res", "<span dir='ltr'>A ∪ B = B ∪ A   ∎</span>"]]},
+
+{"title": "تقاطع کی تبادلیت", "clear": 1, "say": "اب تقاطع کی تبادلیت۔ ہمیں ثابت کرنا ہے کہ A تقاطع B، B تقاطع A کے برابر ہے۔ ہم اس سے شروع کرتے ہیں کہ x، A تقاطع B میں ہے۔", "L": [["goal", "ثابت کرنا ہے:  <span dir='ltr'>A ∩ B = B ∩ A</span>"], ["txt", "<span dir='ltr'>x ∈ A ∩ B</span>"]]},
+
+{"say": "پہلا قدم۔ تقاطع کی تعریف سے، x، A تقاطع B میں ہے تب اور صرف تب جب x، A میں ہو، اور x، B میں ہو۔", "L": [["sub", "⇔  <span dir='ltr'>x ∈ A  ∧  x ∈ B</span><span class='tag'>تقاطع کی تعریف</span>"]]},
+
+{"say": "دوسرا قدم۔ منطقی وصل «اور» کی تبادلیت سے، ہم ترتیب بدل سکتے ہیں: x، B میں ہے، اور x، A میں ہے۔", "L": [["sub", "⇔  <span dir='ltr'>x ∈ B  ∧  x ∈ A</span><span class='tag'><span dir='ltr'>«</span>اور<span dir='ltr'>»</span> کی تبادلیت</span>"]]},
+
+{"say": "تیسرا قدم۔ تقاطع کی تعریف کو الٹا پڑھنے سے، یہ اس کے مساوی ہے کہ x، B تقاطع A میں ہے۔ چونکہ x اختیاری ہے، دونوں سیٹ برابر ہیں۔", "L": [["res", "⇔  <span dir='ltr'>x ∈ B ∩ A</span><span class='tag'>تقاطع کی تعریف</span>"], ["res", "<span dir='ltr'>A ∩ B = B ∩ A   ∎</span>"]]},
+
+{"title": "اتصال کا تلازم", "clear": 1, "say": "اب اتصال کا تلازم۔ ہمیں ثابت کرنا ہے کہ A اتصال، B اتصال C، برابر ہے، A اتصال B، اتصال C کے۔ ہم اس سے شروع کرتے ہیں کہ x، A اتصال، B اتصال C میں ہے۔", "L": [["goal", "ثابت کرنا ہے:  <span dir='ltr'>A ∪ (B ∪ C) = (A ∪ B) ∪ C</span>"], ["txt", "<span dir='ltr'>x ∈ A ∪ (B ∪ C)</span>"]]},
+
+{"say": "پہلا قدم۔ اتصال کی تعریف سے، x، A میں ہے، یا x، B اتصال C میں ہے۔ اور تعریف دوبارہ لگانے سے، x، B اتصال C میں ہے تب اور صرف تب جب x، B میں ہو، یا x، C میں ہو۔", "L": [["sub", "⇔  <span dir='ltr'>x ∈ A  ∨  (x ∈ B  ∨  x ∈ C)</span><span class='tag'>اتصال کی تعریف، دو بار</span>"]]},
+
+{"say": "دوسرا قدم۔ منطقی فصل «یا» کے تلازم سے، گروہ بندی سے کوئی فرق نہیں پڑتا، اس لیے ہم قوسین ہٹا سکتے ہیں: x، A میں ہے، یا x، B میں ہے، یا x، C میں ہے۔", "L": [["sub", "⇔  <span dir='ltr'>(x ∈ A  ∨  x ∈ B  ∨  x ∈ C)</span><span class='tag'><span dir='ltr'>«</span>یا<span dir='ltr'>»</span> کا تلازم</span>"]]},
+
+{"say": "تیسرا قدم۔ ہم پہلے دو حدود کو اکٹھا کرتے ہیں۔ اتصال کی تعریف سے، x، A میں ہے، یا x، B میں ہے، اس کے مساوی ہے کہ x، A اتصال B میں ہے۔ لہٰذا، x، A اتصال B میں ہے، یا x، C میں ہے۔", "L": [["sub", "⇔  <span dir='ltr'>(x ∈ A ∪ B)  ∨  x ∈ C</span><span class='tag'>اتصال کی تعریف</span>"]]},
+
+{"say": "چوتھا قدم۔ اتصال کی تعریف سے، یہ اس کے مساوی ہے کہ x، A اتصال B، اتصال C میں ہے۔ چونکہ x اختیاری ہے، دونوں سیٹ برابر ہیں۔", "L": [["res", "⇔  <span dir='ltr'>x ∈ (A ∪ B) ∪ C</span><span class='tag'>اتصال کی تعریف</span>"], ["res", "<span dir='ltr'>A ∪ (B ∪ C) = (A ∪ B) ∪ C   ∎</span>"]]},
+
+{"title": "تقاطع کا تلازم", "clear": 1, "say": "اب تقاطع کا تلازم۔ ہمیں ثابت کرنا ہے کہ A تقاطع، B تقاطع C، برابر ہے، A تقاطع B، تقاطع C کے۔ ہم اس سے شروع کرتے ہیں کہ x، A تقاطع، B تقاطع C میں ہے۔", "L": [["goal", "ثابت کرنا ہے:  <span dir='ltr'>A ∩ (B ∩ C) = (A ∩ B) ∩ C</span>"], ["txt", "<span dir='ltr'>x ∈ A ∩ (B ∩ C)</span>"]]},
+
+{"say": "پہلا قدم۔ تقاطع کی تعریف سے، x، A میں ہے، اور x، B تقاطع C میں ہے۔ اور تعریف دوبارہ لگانے سے، x، B تقاطع C میں ہے تب اور صرف تب جب x، B میں ہو، اور x، C میں ہو۔", "L": [["sub", "⇔  <span dir='ltr'>x ∈ A  ∧  (x ∈ B  ∧  x ∈ C)</span><span class='tag'>تقاطع کی تعریف، دو بار</span>"]]},
+
+{"say": "دوسرا قدم۔ منطقی وصل «اور» کے تلازم سے، ہم قوسین ہٹا سکتے ہیں: x، A میں ہے، اور x، B میں ہے، اور x، C میں ہے۔", "L": [["sub", "⇔  <span dir='ltr'>(x ∈ A  ∧  x ∈ B  ∧  x ∈ C)</span><span class='tag'><span dir='ltr'>«</span>اور<span dir='ltr'>»</span> کا تلازم</span>"]]},
+
+{"say": "تیسرا قدم۔ ہم پہلے دو حدود کو اکٹھا کرتے ہیں۔ تقاطع کی تعریف سے، x، A میں ہے، اور x، B میں ہے، اس کے مساوی ہے کہ x، A تقاطع B میں ہے۔ لہٰذا، x، A تقاطع B میں ہے، اور x، C میں ہے۔", "L": [["sub", "⇔  <span dir='ltr'>(x ∈ A ∩ B)  ∧  x ∈ C</span><span class='tag'>تقاطع کی تعریف</span>"]]},
+
+{"say": "چوتھا قدم۔ تقاطع کی تعریف سے، یہ اس کے مساوی ہے کہ x، A تقاطع B، تقاطع C میں ہے۔ چونکہ x اختیاری ہے، دونوں سیٹ برابر ہیں۔", "L": [["res", "⇔  <span dir='ltr'>x ∈ (A ∩ B) ∩ C</span><span class='tag'>تقاطع کی تعریف</span>"], ["res", "<span dir='ltr'>A ∩ (B ∩ C) = (A ∩ B) ∩ C   ∎</span>"]]},
+
+{"title": "اتصال کا جذب", "clear": 1, "say": "آخر میں اتصال کا جذب۔ ہمیں ثابت کرنا ہے کہ A اتصال، A تقاطع B، A کے برابر ہے۔ ہم اس سے شروع کرتے ہیں کہ x، A اتصال، A تقاطع B میں ہے۔", "L": [["goal", "ثابت کرنا ہے:  <span dir='ltr'>A ∪ (A ∩ B) = A</span>"], ["txt", "<span dir='ltr'>x ∈ A ∪ (A ∩ B)</span>"]]},
+
+{"say": "پہلا قدم۔ اتصال کی تعریف سے، اور پھر تقاطع کی تعریف سے، x، A میں ہے، یا، x، A میں ہے اور x، B میں ہے۔", "L": [["sub", "⇔  <span dir='ltr'>x ∈ A  ∨  (x ∈ A  ∧  x ∈ B)</span><span class='tag'>اتصال اور تقاطع کی تعریفیں</span>"]]},
+
+{"say": "دوسرا قدم۔ یہ اس کے مساوی ہے کہ x، A میں ہے۔ اگر x، A میں ہو، تو فصل کا پہلا حصہ درست ہے۔ اور الٹ، اگر فصل درست ہو، تو یا x، A میں ہے، یا x، A اور B دونوں میں ہے، اور دونوں صورتوں میں x، A میں ہے۔", "L": [["sub", "⇔  <span dir='ltr'>x ∈ A</span><span class='tag'>اگر <span dir='ltr'>x ∈ A</span> تو فصل درست ہے؛ اور اگر فصل درست ہو تو <span dir='ltr'>x ∈ A</span></span>"]]},
+
+{"say": "تیسرا قدم۔ آخری سطر دوبارہ لکھتی ہے کہ x، A میں ہے۔ یہ مساوات کی دائیں طرف والے سیٹ میں ہونا ہے۔ چونکہ x اختیاری ہے، دونوں سیٹ برابر ہیں۔", "L": [["res", "⇔  <span dir='ltr'>x ∈ A</span>"], ["res", "<span dir='ltr'>A ∪ (A ∩ B) = A   ∎</span>"]]},
+
+{"title": "تقاطع کا جذب", "clear": 1, "say": "اور تقاطع کا جذب۔ ہمیں ثابت کرنا ہے کہ A تقاطع، A اتصال B، A کے برابر ہے۔ ہم اس سے شروع کرتے ہیں کہ x، A تقاطع، A اتصال B میں ہے۔", "L": [["goal", "ثابت کرنا ہے:  <span dir='ltr'>A ∩ (A ∪ B) = A</span>"], ["txt", "<span dir='ltr'>x ∈ A ∩ (A ∪ B)</span>"]]},
+
+{"say": "پہلا قدم۔ تقاطع کی تعریف سے، اور پھر اتصال کی تعریف سے، x، A میں ہے، اور، x، A میں ہے یا x، B میں ہے۔", "L": [["sub", "⇔  <span dir='ltr'>x ∈ A  ∧  (x ∈ A  ∨  x ∈ B)</span><span class='tag'>تقاطع اور اتصال کی تعریفیں</span>"]]},
+
+{"say": "دوسرا قدم۔ یہ اس کے مساوی ہے کہ x، A میں ہے۔ اگر x، A میں ہو، تو وصل کے دونوں حصے درست ہیں، کیونکہ x کا A میں ہونا دوسرے حصے کو درست بناتا ہے۔ اور الٹ، اگر وصل درست ہو، تو پہلے حصے سے x، A میں ہے۔", "L": [["sub", "⇔  <span dir='ltr'>x ∈ A</span><span class='tag'>اگر <span dir='ltr'>x ∈ A</span> تو وصل درست ہے؛ اور اگر وصل درست ہو تو <span dir='ltr'>x ∈ A</span></span>"]]},
+
+{"say": "تیسرا قدم۔ آخری سطر دوبارہ لکھتی ہے کہ x، A میں ہے۔ چونکہ x اختیاری ہے، دونوں سیٹ برابر ہیں۔", "L": [["res", "⇔  <span dir='ltr'>x ∈ A</span>"], ["res", "<span dir='ltr'>A ∩ (A ∪ B) = A   ∎</span>"]]},
+
+{"title": "نتیجہ", "clear": 1, "say": "چونکہ دونوں عمل اندرونی ہیں اور تبادلیت، تلازم اور جذب کو پورا کرتے ہیں، ہم نتیجہ نکالتے ہیں کہ U کے تمام ذیلی سیٹوں کا سیٹ، اتصال اور تقاطع کے ساتھ، ایک لیٹس ہے۔ دیکھنے کا شکریہ۔", "L": [["res", "اتصال اور تقاطع، <span dir='ltr'>U</span> کے ذیلی سیٹوں کے سیٹ میں اندرونی"], ["res", "تبادلیت،  تلازم،  جذب"], ["res", "<span dir='ltr'>(𝒫(U), ∪, ∩)</span> ایک لیٹس ہے   <span dir='ltr'>∎</span>"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' جمع ').replace(/⊙/g,' ضرب ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ دوبارہ چلائیں'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ جاری رکھیں'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ وقفہ';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ وقفہ';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ وقفہ';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ur/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/asad|salman|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="U کے ذیلی سیٹوں کا سیٹ ایک لیٹس ہے";$('sub').textContent="مشق · الجبری لیٹس";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

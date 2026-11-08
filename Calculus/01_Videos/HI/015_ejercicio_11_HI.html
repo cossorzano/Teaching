@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>𝒫(U) एक जालक है</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>याद रखें</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ शुरू करें</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>गति <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">रिकॉर्डिंग मोड (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"hi-IN",
+"meta":{"nivel": 2, "titulo": "𝒫(U) एक जालक है", "enunciado": "सिद्ध कीजिए कि (𝒫(U), ∪, ∩) एक जालक है।", "tesis": "(𝒫(U), ∪, ∩) एक जालक है", "datos": ["(जालक)  ⊕, ⊙ आंतरिक;  क्रमविनिमेयता, साहचर्य, अवशोषण", "(∪ परिभाषा)  x ∈ A ∪ B ⇔ x ∈ A या x ∈ B", "(∩ परिभाषा)  x ∈ A ∩ B ⇔ x ∈ A और x ∈ B"]},
+"steps":[
+{"title": "𝒫(U) एक जालक है", "sub": "अभ्यास · बीजीय जालक", "clear": 1, "say": "नमस्ते। इस वीडियो में हम जालक और समुच्चयों पर एक अभ्यास हल करेंगे। हम बहुत धीरे चलेंगे, हर समीकरण लिखेंगे और हर चरण का कारण बताएँगे।", "L": [["txt", "सिद्ध कीजिए कि U का घात समुच्चय, सम्मिलन और सर्वनिष्ठ के साथ, एक जालक है"]]},
+
+{"say": "पहले, याद करते हैं कि जालक क्या है। एक जालक में, B पर दो संक्रियाएँ होती हैं, योग और गुणन, और दोनों संक्रियाएँ B में आंतरिक होनी चाहिए, तथा तीन गुण संतुष्ट करनी चाहिए: क्रमविनिमेयता, साहचर्य और अवशोषण।", "L": [["hyp", "(B, ⊕, ⊙) जालक  ⇔  ⊕, ⊙ B में आंतरिक  और  संतुष्ट करती हैं:<span class='tag'>परिभाषा</span>"], ["hyp", "क्रमविनिमेयता,   साहचर्य,   अवशोषण"]]},
+
+{"say": "हमारी स्थिति में, B, U का घात समुच्चय है, योग सम्मिलन है, और गुणन सर्वनिष्ठ है। हमें यह सिद्ध करना है कि ये शर्तें पूरी होती हैं।", "L": [["sub", "B = 𝒫(U),     ⊕ = ∪,     ⊙ = ∩<span class='tag'>हमारी स्थिति</span>"], ["goal", "सिद्ध करना है:  (𝒫(U), ∪, ∩) एक जालक है<span class='tag'>साध्य</span>"]]},
+
+{"title": "आंतरिक संक्रियाएँ", "clear": 1, "say": "पहले, संक्रियाएँ आंतरिक हैं। U के दो उपसमुच्चय A और B दिए हों, तो A और B का सम्मिलन भी U का उपसमुच्चय है, और A और B का सर्वनिष्ठ भी U का उपसमुच्चय है। यानी, U के घात समुच्चय के दो अवयवों का सम्मिलन और सर्वनिष्ठ, U के घात समुच्चय में ही रहते हैं।", "L": [["txt", "मान लीजिए A, B ⊆ U"], ["res", "A ∪ B ⊆ U<span class='tag'>∪ आंतरिक है</span>"], ["res", "A ∩ B ⊆ U<span class='tag'>∩ आंतरिक है</span>"]]},
+
+{"title": "विधि: अवयवों से तर्क", "clear": 1, "say": "अब हम गुणों को अवयवों से तर्क करके सिद्ध करते हैं। मान लीजिए A, B और C, U के उपसमुच्चय हैं, और x, U का एक अवयव है। याद रखें कि दो समुच्चय तभी और केवल तभी बराबर होते हैं, जब उनके अवयव समान हों। इसलिए, दो समुच्चयों को बराबर सिद्ध करने के लिए, हम दिखाएँगे कि x एक में है तभी और केवल तभी, जब x दूसरे में है।", "L": [["txt", "मान लीजिए A, B, C ⊆ U  और  x ∈ U"], ["goal", "X = Y   ⇔   (x ∈ X ⇔ x ∈ Y)<span class='tag'>समुच्चयों की समता: समान अवयव</span>"]]},
+
+{"say": "और सम्मिलन तथा सर्वनिष्ठ की परिभाषा याद करते हैं। x, A और B के सम्मिलन में है, तभी और केवल तभी, जब x, A में है, या x, B में है। और x, A और B के सर्वनिष्ठ में है, तभी और केवल तभी, जब x, A में है, और x, B में है। इन्हें हम बाईं ओर लिख लेते हैं।", "L": [["sub", "x ∈ A ∪ B  ⇔  x ∈ A  या  x ∈ B<span class='tag'>सम्मिलन की परिभाषा</span>"], ["sub", "x ∈ A ∩ B  ⇔  x ∈ A  और  x ∈ B<span class='tag'>सर्वनिष्ठ की परिभाषा</span>"]], "pin": ["(∪ परिभाषा) x ∈ A ∪ B ⇔ x ∈ A या x ∈ B", "(∩ परिभाषा) x ∈ A ∩ B ⇔ x ∈ A और x ∈ B"]},
+
+{"title": "∪ की क्रमविनिमेयता", "clear": 1, "say": "हम सम्मिलन की क्रमविनिमेयता से शुरू करते हैं। हमें सिद्ध करना है कि A सम्मिलन B, B सम्मिलन A के बराबर है। हम x, A सम्मिलन B में है, से शुरू करते हैं।", "L": [["goal", "सिद्ध करना है:  A ∪ B = B ∪ A"], ["txt", "x ∈ A ∪ B"]]},
+
+{"say": "पहला चरण। सम्मिलन की परिभाषा से, x, A सम्मिलन B में है, तभी और केवल तभी, जब x, A में है, या x, B में है।", "L": [["sub", "⇔  x ∈ A  या  x ∈ B<span class='tag'>∪ की परिभाषा</span>"]]},
+
+{"say": "दूसरा चरण। तार्किक वियोजन «या» की क्रमविनिमेयता से, हम क्रम बदल सकते हैं: x, B में है, या x, A में है।", "L": [["sub", "⇔  x ∈ B  या  x ∈ A<span class='tag'>«या» की क्रमविनिमेयता</span>"]]},
+
+{"say": "तीसरा चरण। सम्मिलन की परिभाषा को उल्टा पढ़ने पर, यह इसके तुल्य है कि x, B सम्मिलन A में है। चूँकि x स्वेच्छ है, दोनों समुच्चयों के अवयव समान हैं, और इसलिए वे बराबर हैं।", "L": [["res", "⇔  x ∈ B ∪ A<span class='tag'>∪ की परिभाषा</span>"], ["res", "A ∪ B = B ∪ A   ∎"]]},
+
+{"title": "∩ की क्रमविनिमेयता", "clear": 1, "say": "अब सर्वनिष्ठ की क्रमविनिमेयता। हमें सिद्ध करना है कि A सर्वनिष्ठ B, B सर्वनिष्ठ A के बराबर है। हम x, A सर्वनिष्ठ B में है, से शुरू करते हैं।", "L": [["goal", "सिद्ध करना है:  A ∩ B = B ∩ A"], ["txt", "x ∈ A ∩ B"]]},
+
+{"say": "पहला चरण। सर्वनिष्ठ की परिभाषा से, x, A सर्वनिष्ठ B में है, तभी और केवल तभी, जब x, A में है, और x, B में है।", "L": [["sub", "⇔  x ∈ A  और  x ∈ B<span class='tag'>∩ की परिभाषा</span>"]]},
+
+{"say": "दूसरा चरण। तार्किक संयोजन «और» की क्रमविनिमेयता से, हम क्रम बदल सकते हैं: x, B में है, और x, A में है।", "L": [["sub", "⇔  x ∈ B  और  x ∈ A<span class='tag'>«और» की क्रमविनिमेयता</span>"]]},
+
+{"say": "तीसरा चरण। सर्वनिष्ठ की परिभाषा को उल्टा पढ़ने पर, यह इसके तुल्य है कि x, B सर्वनिष्ठ A में है। चूँकि x स्वेच्छ है, दोनों समुच्चय बराबर हैं।", "L": [["res", "⇔  x ∈ B ∩ A<span class='tag'>∩ की परिभाषा</span>"], ["res", "A ∩ B = B ∩ A   ∎"]]},
+
+{"title": "∪ का साहचर्य", "clear": 1, "say": "अब सम्मिलन का साहचर्य। हमें सिद्ध करना है कि A सम्मिलन, B सम्मिलन C, बराबर है, A सम्मिलन B, सम्मिलन C के। हम x, A सम्मिलन, B सम्मिलन C में है, से शुरू करते हैं।", "L": [["goal", "सिद्ध करना है:  A ∪ (B ∪ C) = (A ∪ B) ∪ C"], ["txt", "x ∈ A ∪ (B ∪ C)"]]},
+
+{"say": "पहला चरण। सम्मिलन की परिभाषा से, x, A में है, या x, B सम्मिलन C में है। और परिभाषा फिर से लगाने पर, x, B सम्मिलन C में है, तभी और केवल तभी, जब x, B में है, या x, C में है।", "L": [["sub", "⇔  x ∈ A  या  (x ∈ B  या  x ∈ C)<span class='tag'>∪ की परिभाषा, दो बार</span>"]]},
+
+{"say": "दूसरा चरण। तार्किक वियोजन «या» के साहचर्य से, समूहन से कोई फर्क नहीं पड़ता, इसलिए हम कोष्ठक हटा सकते हैं: x, A में है, या x, B में है, या x, C में है।", "L": [["sub", "⇔  (x ∈ A  या  x ∈ B  या  x ∈ C)<span class='tag'>«या» का साहचर्य</span>"]]},
+
+{"say": "तीसरा चरण। हम पहले दो पदों को एक साथ रखते हैं। सम्मिलन की परिभाषा से, x, A में है, या x, B में है, इसके तुल्य है कि x, A सम्मिलन B में है। इसलिए, x, A सम्मिलन B में है, या x, C में है।", "L": [["sub", "⇔  (x ∈ A ∪ B)  या  x ∈ C<span class='tag'>∪ की परिभाषा</span>"]]},
+
+{"say": "चौथा चरण। सम्मिलन की परिभाषा से, यह इसके तुल्य है कि x, A सम्मिलन B, सम्मिलन C में है। चूँकि x स्वेच्छ है, दोनों समुच्चय बराबर हैं।", "L": [["res", "⇔  x ∈ (A ∪ B) ∪ C<span class='tag'>∪ की परिभाषा</span>"], ["res", "A ∪ (B ∪ C) = (A ∪ B) ∪ C   ∎"]]},
+
+{"title": "∩ का साहचर्य", "clear": 1, "say": "अब सर्वनिष्ठ का साहचर्य। हमें सिद्ध करना है कि A सर्वनिष्ठ, B सर्वनिष्ठ C, बराबर है, A सर्वनिष्ठ B, सर्वनिष्ठ C के। हम x, A सर्वनिष्ठ, B सर्वनिष्ठ C में है, से शुरू करते हैं।", "L": [["goal", "सिद्ध करना है:  A ∩ (B ∩ C) = (A ∩ B) ∩ C"], ["txt", "x ∈ A ∩ (B ∩ C)"]]},
+
+{"say": "पहला चरण। सर्वनिष्ठ की परिभाषा से, x, A में है, और x, B सर्वनिष्ठ C में है। और परिभाषा फिर से लगाने पर, x, B सर्वनिष्ठ C में है, तभी और केवल तभी, जब x, B में है, और x, C में है।", "L": [["sub", "⇔  x ∈ A  और  (x ∈ B  और  x ∈ C)<span class='tag'>∩ की परिभाषा, दो बार</span>"]]},
+
+{"say": "दूसरा चरण। तार्किक संयोजन «और» के साहचर्य से, हम कोष्ठक हटा सकते हैं: x, A में है, और x, B में है, और x, C में है।", "L": [["sub", "⇔  (x ∈ A  और  x ∈ B  और  x ∈ C)<span class='tag'>«और» का साहचर्य</span>"]]},
+
+{"say": "तीसरा चरण। हम पहले दो पदों को एक साथ रखते हैं। सर्वनिष्ठ की परिभाषा से, x, A में है, और x, B में है, इसके तुल्य है कि x, A सर्वनिष्ठ B में है। इसलिए, x, A सर्वनिष्ठ B में है, और x, C में है।", "L": [["sub", "⇔  (x ∈ A ∩ B)  और  x ∈ C<span class='tag'>∩ की परिभाषा</span>"]]},
+
+{"say": "चौथा चरण। सर्वनिष्ठ की परिभाषा से, यह इसके तुल्य है कि x, A सर्वनिष्ठ B, सर्वनिष्ठ C में है। चूँकि x स्वेच्छ है, दोनों समुच्चय बराबर हैं।", "L": [["res", "⇔  x ∈ (A ∩ B) ∩ C<span class='tag'>∩ की परिभाषा</span>"], ["res", "A ∩ (B ∩ C) = (A ∩ B) ∩ C   ∎"]]},
+
+{"title": "∪ का अवशोषण", "clear": 1, "say": "अंत में सम्मिलन का अवशोषण। हमें सिद्ध करना है कि A सम्मिलन, A सर्वनिष्ठ B, A के बराबर है। हम x, A सम्मिलन, A सर्वनिष्ठ B में है, से शुरू करते हैं।", "L": [["goal", "सिद्ध करना है:  A ∪ (A ∩ B) = A"], ["txt", "x ∈ A ∪ (A ∩ B)"]]},
+
+{"say": "पहला चरण। सम्मिलन की परिभाषा से, और फिर सर्वनिष्ठ की परिभाषा से, x, A में है, या, x, A में है और x, B में है।", "L": [["sub", "⇔  x ∈ A  या  (x ∈ A  और  x ∈ B)<span class='tag'>∪ और ∩ की परिभाषा</span>"]]},
+
+{"say": "दूसरा चरण। यह इसके तुल्य है कि x, A में है। अगर x, A में है, तो वियोजन का पहला भाग सत्य है। और उल्टे, अगर वियोजन सत्य है, तो या तो x, A में है, या x, A और B दोनों में है, और दोनों स्थितियों में x, A में है।", "L": [["sub", "⇔  x ∈ A<span class='tag'>x ∈ A हो तो वियोजन सत्य; और वियोजन सत्य हो तो x ∈ A</span>"]]},
+
+{"say": "तीसरा चरण। अंतिम पंक्ति फिर से लिखती है कि x, A में है। यह समता के दाईं ओर वाले समुच्चय में होना है। चूँकि x स्वेच्छ है, दोनों समुच्चय बराबर हैं।", "L": [["res", "⇔  x ∈ A"], ["res", "A ∪ (A ∩ B) = A   ∎"]]},
+
+{"title": "∩ का अवशोषण", "clear": 1, "say": "और सर्वनिष्ठ का अवशोषण। हमें सिद्ध करना है कि A सर्वनिष्ठ, A सम्मिलन B, A के बराबर है। हम x, A सर्वनिष्ठ, A सम्मिलन B में है, से शुरू करते हैं।", "L": [["goal", "सिद्ध करना है:  A ∩ (A ∪ B) = A"], ["txt", "x ∈ A ∩ (A ∪ B)"]]},
+
+{"say": "पहला चरण। सर्वनिष्ठ की परिभाषा से, और फिर सम्मिलन की परिभाषा से, x, A में है, और, x, A में है या x, B में है।", "L": [["sub", "⇔  x ∈ A  और  (x ∈ A  या  x ∈ B)<span class='tag'>∩ और ∪ की परिभाषा</span>"]]},
+
+{"say": "दूसरा चरण। यह इसके तुल्य है कि x, A में है। अगर x, A में है, तो संयोजन के दोनों भाग सत्य हैं, क्योंकि x का A में होना दूसरे भाग को सत्य बनाता है। और उल्टे, अगर संयोजन सत्य है, तो पहले भाग से x, A में है।", "L": [["sub", "⇔  x ∈ A<span class='tag'>x ∈ A हो तो संयोजन सत्य; और संयोजन सत्य हो तो x ∈ A</span>"]]},
+
+{"say": "तीसरा चरण। अंतिम पंक्ति फिर से लिखती है कि x, A में है। चूँकि x स्वेच्छ है, दोनों समुच्चय बराबर हैं।", "L": [["res", "⇔  x ∈ A"], ["res", "A ∩ (A ∪ B) = A   ∎"]]},
+
+{"title": "निष्कर्ष", "clear": 1, "say": "चूँकि दोनों संक्रियाएँ आंतरिक हैं और क्रमविनिमेयता, साहचर्य और अवशोषण को संतुष्ट करती हैं, हम निष्कर्ष निकालते हैं कि U का घात समुच्चय, सम्मिलन और सर्वनिष्ठ के साथ, एक जालक है। देखने के लिए धन्यवाद।", "L": [["res", "∪, ∩  𝒫(U) में आंतरिक"], ["res", "क्रमविनिमेयता,  साहचर्य,  अवशोषण"], ["res", "(𝒫(U), ∪, ∩) एक जालक है   ∎"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' प्लस ').replace(/⊙/g,' गुणा ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ फिर से चलाएँ'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ जारी रखें'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ रोकें';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^hi/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/madhur|hemant|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="𝒫(U) एक जालक है";$('sub').textContent="अभ्यास · बीजीय जालक";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

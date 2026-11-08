@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>𝒫(U) adalah latis</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Ingat</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Mulai</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Kecepatan <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Mode rekam (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"id-ID",
+"meta":{"nivel": 2, "titulo": "𝒫(U) adalah latis", "enunciado": "Buktikan bahwa (𝒫(U), ∪, ∩) adalah latis.", "tesis": "(𝒫(U), ∪, ∩) adalah latis", "datos": ["(Latis)  ⊕, ⊙ tertutup;  komutatif, asosiatif, absorpsi", "(Def ∪)  x ∈ A ∪ B ⇔ x ∈ A atau x ∈ B", "(Def ∩)  x ∈ A ∩ B ⇔ x ∈ A dan x ∈ B"]},
+"steps":[
+{"title": "𝒫(U) adalah latis", "sub": "Latihan · Latis aljabar", "clear": 1, "say": "Halo. Dalam video ini kita akan menyelesaikan sebuah soal tentang latis dan himpunan. Kita akan berjalan sangat perlahan, menuliskan setiap persamaan dan memberikan alasan untuk setiap langkah.", "L": [["txt", "Buktikan bahwa himpunan kuasa U, dengan gabungan dan irisan, adalah latis"]]},
+
+{"say": "Pertama, kita ingat apa itu latis. Dalam sebuah latis, B dengan operasi penjumlahan dan perkalian, kedua operasi harus tertutup di B, dan memenuhi tiga sifat: komutatif, asosiatif, dan absorpsi.", "L": [["hyp", "(B, ⊕, ⊙) latis  ⇔  ⊕, ⊙ tertutup di B  dan  memenuhi:<span class='tag'>Definisi</span>"], ["hyp", "Komutatif,   Asosiatif,   Absorpsi"]]},
+
+{"say": "Dalam kasus kita, B adalah himpunan kuasa dari U, penjumlahannya adalah gabungan, dan perkaliannya adalah irisan. Yang ingin kita buktikan adalah bahwa syarat-syarat ini terpenuhi.", "L": [["sub", "B = 𝒫(U),     ⊕ = ∪,     ⊙ = ∩<span class='tag'>Kasus kita</span>"], ["goal", "Buktikan:  (𝒫(U), ∪, ∩) adalah latis<span class='tag'>Yang dibuktikan</span>"]]},
+
+{"title": "Operasi tertutup", "clear": 1, "say": "Pertama, operasinya tertutup. Diberikan dua himpunan bagian A dan B dari U, gabungan A dan B juga himpunan bagian dari U, dan irisan A dan B juga himpunan bagian dari U. Artinya, gabungan dan irisan dua anggota himpunan kuasa U tetap berada di himpunan kuasa U.", "L": [["txt", "Misalkan A, B ⊆ U"], ["res", "A ∪ B ⊆ U<span class='tag'>∪ tertutup</span>"], ["res", "A ∩ B ⊆ U<span class='tag'>∩ tertutup</span>"]]},
+
+{"title": "Metode: bernalar dengan unsur", "clear": 1, "say": "Sekarang kita buktikan sifat-sifatnya dengan bernalar menggunakan unsur. Misalkan A, B, dan C himpunan bagian dari U, dan x sebuah unsur dari U. Ingat bahwa dua himpunan sama jika dan hanya jika keduanya memiliki unsur yang sama. Jadi, untuk membuktikan dua himpunan sama, kita akan membuktikan bahwa x anggota yang satu jika dan hanya jika x anggota yang lain.", "L": [["txt", "Misalkan A, B, C ⊆ U  dan  x ∈ U"], ["goal", "X = Y   ⇔   (x ∈ X ⇔ x ∈ Y)<span class='tag'>Kesamaan himpunan: unsur yang sama</span>"]]},
+
+{"say": "Dan kita ingat definisi gabungan dan irisan. x anggota gabungan A dan B jika dan hanya jika x anggota A, atau x anggota B. Dan x anggota irisan A dan B jika dan hanya jika x anggota A, dan x anggota B. Kita catat di sebelah kiri.", "L": [["sub", "x ∈ A ∪ B  ⇔  x ∈ A  atau  x ∈ B<span class='tag'>Definisi gabungan</span>"], ["sub", "x ∈ A ∩ B  ⇔  x ∈ A  dan  x ∈ B<span class='tag'>Definisi irisan</span>"]], "pin": ["(Def ∪) x ∈ A ∪ B ⇔ x ∈ A atau x ∈ B", "(Def ∩) x ∈ A ∩ B ⇔ x ∈ A dan x ∈ B"]},
+
+{"title": "Komutatif ∪", "clear": 1, "say": "Kita mulai dengan sifat komutatif gabungan. Kita ingin membuktikan bahwa A gabung B sama dengan B gabung A. Kita mulai dari x anggota A gabung B.", "L": [["goal", "Ingin dibuktikan:  A ∪ B = B ∪ A"], ["txt", "x ∈ A ∪ B"]]},
+
+{"say": "Langkah pertama. Menurut definisi gabungan, x anggota A gabung B jika dan hanya jika x anggota A, atau x anggota B.", "L": [["sub", "⇔  x ∈ A  atau  x ∈ B<span class='tag'>Definisi ∪</span>"]]},
+
+{"say": "Langkah kedua. Menurut sifat komutatif disjungsi logika atau, kita dapat menukar urutannya: x anggota B, atau x anggota A.", "L": [["sub", "⇔  x ∈ B  atau  x ∈ A<span class='tag'>Komutatif «atau»</span>"]]},
+
+{"say": "Langkah ketiga. Menurut definisi gabungan, dibaca dari arah sebaliknya, ini setara dengan x anggota B gabung A. Karena x sembarang, kedua himpunan memiliki unsur yang sama, sehingga keduanya sama.", "L": [["res", "⇔  x ∈ B ∪ A<span class='tag'>Definisi ∪</span>"], ["res", "A ∪ B = B ∪ A   ∎"]]},
+
+{"title": "Komutatif ∩", "clear": 1, "say": "Kita lanjutkan dengan sifat komutatif irisan. Kita ingin membuktikan bahwa A irisan B sama dengan B irisan A. Kita mulai dari x anggota A irisan B.", "L": [["goal", "Ingin dibuktikan:  A ∩ B = B ∩ A"], ["txt", "x ∈ A ∩ B"]]},
+
+{"say": "Langkah pertama. Menurut definisi irisan, x anggota A irisan B jika dan hanya jika x anggota A, dan x anggota B.", "L": [["sub", "⇔  x ∈ A  dan  x ∈ B<span class='tag'>Definisi ∩</span>"]]},
+
+{"say": "Langkah kedua. Menurut sifat komutatif konjungsi logika dan, kita dapat menukar urutannya: x anggota B, dan x anggota A.", "L": [["sub", "⇔  x ∈ B  dan  x ∈ A<span class='tag'>Komutatif «dan»</span>"]]},
+
+{"say": "Langkah ketiga. Menurut definisi irisan, dibaca dari arah sebaliknya, ini setara dengan x anggota B irisan A. Karena x sembarang, kedua himpunan sama.", "L": [["res", "⇔  x ∈ B ∩ A<span class='tag'>Definisi ∩</span>"], ["res", "A ∩ B = B ∩ A   ∎"]]},
+
+{"title": "Asosiatif ∪", "clear": 1, "say": "Kita beralih ke sifat asosiatif gabungan. Kita ingin membuktikan bahwa A gabung, B gabung C, sama dengan, A gabung B, gabung C. Kita mulai dari x anggota A gabung, B gabung C.", "L": [["goal", "Ingin dibuktikan:  A ∪ (B ∪ C) = (A ∪ B) ∪ C"], ["txt", "x ∈ A ∪ (B ∪ C)"]]},
+
+{"say": "Langkah pertama. Menurut definisi gabungan, x anggota A, atau x anggota B gabung C. Dan dengan memakai definisi itu lagi, x anggota B gabung C jika dan hanya jika x anggota B, atau x anggota C.", "L": [["sub", "⇔  x ∈ A  atau  (x ∈ B  atau  x ∈ C)<span class='tag'>Definisi ∪, dipakai dua kali</span>"]]},
+
+{"say": "Langkah kedua. Menurut sifat asosiatif disjungsi logika atau, cara pengelompokan tidak berpengaruh, jadi kita dapat menghapus tanda kurung: x anggota A, atau x anggota B, atau x anggota C.", "L": [["sub", "⇔  (x ∈ A  atau  x ∈ B  atau  x ∈ C)<span class='tag'>Asosiatif «atau»</span>"]]},
+
+{"say": "Langkah ketiga. Kita kelompokkan dua suku pertama. Menurut definisi gabungan, x anggota A, atau x anggota B, setara dengan x anggota A gabung B. Jadi, kita peroleh x anggota A gabung B, atau x anggota C.", "L": [["sub", "⇔  (x ∈ A ∪ B)  atau  x ∈ C<span class='tag'>Definisi ∪</span>"]]},
+
+{"say": "Langkah keempat. Menurut definisi gabungan, ini setara dengan x anggota, A gabung B, gabung C. Karena x sembarang, kedua himpunan sama.", "L": [["res", "⇔  x ∈ (A ∪ B) ∪ C<span class='tag'>Definisi ∪</span>"], ["res", "A ∪ (B ∪ C) = (A ∪ B) ∪ C   ∎"]]},
+
+{"title": "Asosiatif ∩", "clear": 1, "say": "Kita lanjutkan dengan sifat asosiatif irisan. Kita ingin membuktikan bahwa A irisan, B irisan C, sama dengan, A irisan B, irisan C. Kita mulai dari x anggota A irisan, B irisan C.", "L": [["goal", "Ingin dibuktikan:  A ∩ (B ∩ C) = (A ∩ B) ∩ C"], ["txt", "x ∈ A ∩ (B ∩ C)"]]},
+
+{"say": "Langkah pertama. Menurut definisi irisan, x anggota A, dan x anggota B irisan C. Dan dengan memakai definisi itu lagi, x anggota B irisan C jika dan hanya jika x anggota B, dan x anggota C.", "L": [["sub", "⇔  x ∈ A  dan  (x ∈ B  dan  x ∈ C)<span class='tag'>Definisi ∩, dipakai dua kali</span>"]]},
+
+{"say": "Langkah kedua. Menurut sifat asosiatif konjungsi logika dan, kita dapat menghapus tanda kurung: x anggota A, dan x anggota B, dan x anggota C.", "L": [["sub", "⇔  (x ∈ A  dan  x ∈ B  dan  x ∈ C)<span class='tag'>Asosiatif «dan»</span>"]]},
+
+{"say": "Langkah ketiga. Kita kelompokkan dua suku pertama. Menurut definisi irisan, x anggota A, dan x anggota B, setara dengan x anggota A irisan B. Jadi, kita peroleh x anggota A irisan B, dan x anggota C.", "L": [["sub", "⇔  (x ∈ A ∩ B)  dan  x ∈ C<span class='tag'>Definisi ∩</span>"]]},
+
+{"say": "Langkah keempat. Menurut definisi irisan, ini setara dengan x anggota, A irisan B, irisan C. Karena x sembarang, kedua himpunan sama.", "L": [["res", "⇔  x ∈ (A ∩ B) ∩ C<span class='tag'>Definisi ∩</span>"], ["res", "A ∩ (B ∩ C) = (A ∩ B) ∩ C   ∎"]]},
+
+{"title": "Absorpsi ∪", "clear": 1, "say": "Kita akhiri dengan absorpsi gabungan. Kita ingin membuktikan bahwa A gabung, A irisan B, sama dengan A. Kita mulai dari x anggota A gabung, A irisan B.", "L": [["goal", "Ingin dibuktikan:  A ∪ (A ∩ B) = A"], ["txt", "x ∈ A ∪ (A ∩ B)"]]},
+
+{"say": "Langkah pertama. Menurut definisi gabungan, lalu definisi irisan, x anggota A, atau, x anggota A dan x anggota B.", "L": [["sub", "⇔  x ∈ A  atau  (x ∈ A  dan  x ∈ B)<span class='tag'>Definisi ∪ dan ∩</span>"]]},
+
+{"say": "Langkah kedua. Ini setara dengan x anggota A. Jika x anggota A, bagian pertama disjungsi benar. Sebaliknya, jika disjungsi benar, maka x anggota A, atau x anggota A dan B, dan dalam kedua kasus x anggota A.", "L": [["sub", "⇔  x ∈ A<span class='tag'>Jika x ∈ A disjungsi benar; dan jika disjungsi benar, x ∈ A</span>"]]},
+
+{"say": "Langkah ketiga. Baris terakhir menuliskan lagi bahwa x anggota A. Ini adalah keanggotaan pada himpunan di ruas kanan kesamaan. Karena x sembarang, kedua himpunan sama.", "L": [["res", "⇔  x ∈ A"], ["res", "A ∪ (A ∩ B) = A   ∎"]]},
+
+{"title": "Absorpsi ∩", "clear": 1, "say": "Dan absorpsi irisan. Kita ingin membuktikan bahwa A irisan, A gabung B, sama dengan A. Kita mulai dari x anggota A irisan, A gabung B.", "L": [["goal", "Ingin dibuktikan:  A ∩ (A ∪ B) = A"], ["txt", "x ∈ A ∩ (A ∪ B)"]]},
+
+{"say": "Langkah pertama. Menurut definisi irisan, lalu definisi gabungan, x anggota A, dan, x anggota A atau x anggota B.", "L": [["sub", "⇔  x ∈ A  dan  (x ∈ A  atau  x ∈ B)<span class='tag'>Definisi ∩ dan ∪</span>"]]},
+
+{"say": "Langkah kedua. Ini setara dengan x anggota A. Jika x anggota A, kedua bagian konjungsi benar, karena x anggota A membuat bagian kedua benar. Sebaliknya, jika konjungsi benar, x anggota A menurut bagian pertamanya.", "L": [["sub", "⇔  x ∈ A<span class='tag'>Jika x ∈ A konjungsi benar; dan jika konjungsi benar, x ∈ A</span>"]]},
+
+{"say": "Langkah ketiga. Baris terakhir menuliskan lagi bahwa x anggota A. Karena x sembarang, kedua himpunan sama.", "L": [["res", "⇔  x ∈ A"], ["res", "A ∩ (A ∪ B) = A   ∎"]]},
+
+{"title": "Kesimpulan", "clear": 1, "say": "Karena kedua operasi tertutup dan memenuhi sifat komutatif, asosiatif, dan absorpsi, kita simpulkan bahwa himpunan kuasa U, dengan gabungan dan irisan, adalah latis. Terima kasih sudah menonton.", "L": [["res", "∪, ∩ tertutup di 𝒫(U)"], ["res", "Komutatif,  Asosiatif,  Absorpsi"], ["res", "(𝒫(U), ∪, ∩) adalah latis   ∎"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' tambah ').replace(/⊙/g,' kali ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Ulangi'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Lanjutkan'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Jeda';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Jeda';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Jeda';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^id/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/ardi|andika|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="𝒫(U) adalah latis";$('sub').textContent="Latihan · Latis aljabar";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

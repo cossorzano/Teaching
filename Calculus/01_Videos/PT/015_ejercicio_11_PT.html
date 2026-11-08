@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>𝒫(U) é um reticulado</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Lembre-se</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Começar</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Velocidade <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Modo gravação (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"pt-BR",
+"meta":{"nivel": 2, "titulo": "𝒫(U) é um reticulado", "enunciado": "Demonstrar que (𝒫(U), ∪, ∩) é um reticulado.", "tesis": "(𝒫(U), ∪, ∩) é um reticulado", "datos": ["(Reticulado)  ⊕, ⊙ internas;  comutatividade, associatividade, absorção", "(Def ∪)  x ∈ A ∪ B ⇔ x ∈ A ou x ∈ B", "(Def ∩)  x ∈ A ∩ B ⇔ x ∈ A e x ∈ B"]},
+"steps":[
+{"title": "𝒫(U) é um reticulado", "sub": "Exercício · Reticulados algébricos", "clear": 1, "say": "Olá. Neste vídeo vamos resolver um exercício sobre reticulados e conjuntos. Vamos devagar, escrevendo cada equação e justificando cada passo.", "L": [["txt", "Demonstrar que o conjunto das partes de U, com a união e a interseção, forma um reticulado"]]},
+
+{"say": "Primeiro, recordamos o que é um reticulado. Num reticulado, B com as operações soma e produto, as duas operações devem ser internas em B, e satisfazer três propriedades: comutatividade, associatividade e absorção.", "L": [["hyp", "(B, ⊕, ⊙) reticulado  ⇔  ⊕, ⊙ internas em B  e  cumprem:<span class='tag'>Definição</span>"], ["hyp", "Comutatividade,   Associatividade,   Absorção"]]},
+
+{"say": "No nosso caso, B é o conjunto das partes de U, a soma é a união, e o produto é a interseção. O que queremos demonstrar é que estas condições se cumprem.", "L": [["sub", "B = 𝒫(U),     ⊕ = ∪,     ⊙ = ∩<span class='tag'>Nosso caso</span>"], ["goal", "Provar:  (𝒫(U), ∪, ∩) é um reticulado<span class='tag'>Tese</span>"]]},
+
+{"title": "Operações internas", "clear": 1, "say": "Primeiro, as operações são internas. Dados dois subconjuntos A e B de U, a união de A e B também é um subconjunto de U, e a interseção de A e B também é um subconjunto de U. Ou seja, a união e a interseção de dois elementos das partes de U continuam nas partes de U.", "L": [["txt", "Sejam A, B ⊆ U"], ["res", "A ∪ B ⊆ U<span class='tag'>∪ é interna</span>"], ["res", "A ∩ B ⊆ U<span class='tag'>∩ é interna</span>"]]},
+
+{"title": "Método: raciocinar com elementos", "clear": 1, "say": "Provamos agora as propriedades raciocinando com elementos. Sejam A, B e C subconjuntos de U, e seja x um elemento de U. Lembramos que dois conjuntos são iguais se e somente se têm os mesmos elementos. Assim, para provar que dois conjuntos são iguais, provaremos que x pertence a um se e somente se pertence ao outro.", "L": [["txt", "Sejam A, B, C ⊆ U  e  x ∈ U"], ["goal", "X = Y   ⇔   (x ∈ X ⇔ x ∈ Y)<span class='tag'>Igualdade de conjuntos: mesmos elementos</span>"]]},
+
+{"say": "E recordamos a definição de união e de interseção. x pertence à união de A e B se e somente se x pertence a A, ou x pertence a B. E x pertence à interseção de A e B se e somente se x pertence a A, e x pertence a B. Anotamo-las à esquerda.", "L": [["sub", "x ∈ A ∪ B  ⇔  x ∈ A  ou  x ∈ B<span class='tag'>Definição de união</span>"], ["sub", "x ∈ A ∩ B  ⇔  x ∈ A  e  x ∈ B<span class='tag'>Definição de interseção</span>"]], "pin": ["(Def ∪) x ∈ A ∪ B ⇔ x ∈ A ou x ∈ B", "(Def ∩) x ∈ A ∩ B ⇔ x ∈ A e x ∈ B"]},
+
+{"title": "Comutatividade de ∪", "clear": 1, "say": "Começamos pela comutatividade da união. Queremos provar que A união B é igual a B união A. Partimos de x pertence a A união B.", "L": [["goal", "Queremos:  A ∪ B = B ∪ A"], ["txt", "x ∈ A ∪ B"]]},
+
+{"say": "Primeiro passo. Pela definição de união, x pertence a A união B se e somente se x pertence a A, ou x pertence a B.", "L": [["sub", "⇔  x ∈ A  ou  x ∈ B<span class='tag'>Definição de ∪</span>"]]},
+
+{"say": "Segundo passo. Pela comutatividade da disjunção lógica ou, podemos trocar a ordem: x pertence a B, ou x pertence a A.", "L": [["sub", "⇔  x ∈ B  ou  x ∈ A<span class='tag'>Comutatividade de «ou»</span>"]]},
+
+{"say": "Terceiro passo. Pela definição de união, lida ao contrário, isto equivale a x pertencer a B união A. Como x é arbitrário, os dois conjuntos têm os mesmos elementos, e portanto são iguais.", "L": [["res", "⇔  x ∈ B ∪ A<span class='tag'>Definição de ∪</span>"], ["res", "A ∪ B = B ∪ A   ∎"]]},
+
+{"title": "Comutatividade de ∩", "clear": 1, "say": "Seguimos com a comutatividade da interseção. Queremos provar que A interseção B é igual a B interseção A. Partimos de x pertence a A interseção B.", "L": [["goal", "Queremos:  A ∩ B = B ∩ A"], ["txt", "x ∈ A ∩ B"]]},
+
+{"say": "Primeiro passo. Pela definição de interseção, x pertence a A interseção B se e somente se x pertence a A, e x pertence a B.", "L": [["sub", "⇔  x ∈ A  e  x ∈ B<span class='tag'>Definição de ∩</span>"]]},
+
+{"say": "Segundo passo. Pela comutatividade da conjunção lógica e, podemos trocar a ordem: x pertence a B, e x pertence a A.", "L": [["sub", "⇔  x ∈ B  e  x ∈ A<span class='tag'>Comutatividade de «e»</span>"]]},
+
+{"say": "Terceiro passo. Pela definição de interseção, lida ao contrário, isto equivale a x pertencer a B interseção A. Como x é arbitrário, os dois conjuntos são iguais.", "L": [["res", "⇔  x ∈ B ∩ A<span class='tag'>Definição de ∩</span>"], ["res", "A ∩ B = B ∩ A   ∎"]]},
+
+{"title": "Associatividade de ∪", "clear": 1, "say": "Passamos à associatividade da união. Queremos provar que A união, B união C, é igual a, A união B, união C. Partimos de x pertence a A união, B união C.", "L": [["goal", "Queremos:  A ∪ (B ∪ C) = (A ∪ B) ∪ C"], ["txt", "x ∈ A ∪ (B ∪ C)"]]},
+
+{"say": "Primeiro passo. Pela definição de união, x pertence a A, ou x pertence a B união C. E aplicando outra vez a definição, x pertence a B união C se e somente se x pertence a B, ou x pertence a C.", "L": [["sub", "⇔  x ∈ A  ou  (x ∈ B  ou  x ∈ C)<span class='tag'>Definição de ∪, aplicada duas vezes</span>"]]},
+
+{"say": "Segundo passo. Pela associatividade da disjunção lógica ou, não importa como agrupamos, então podemos tirar os parênteses: x pertence a A, ou x pertence a B, ou x pertence a C.", "L": [["sub", "⇔  (x ∈ A  ou  x ∈ B  ou  x ∈ C)<span class='tag'>Associatividade de «ou»</span>"]]},
+
+{"say": "Terceiro passo. Agrupamos os dois primeiros termos. Pela definição de união, x pertence a A, ou x pertence a B, equivale a x pertencer a A união B. Portanto, temos x pertence a A união B, ou x pertence a C.", "L": [["sub", "⇔  (x ∈ A ∪ B)  ou  x ∈ C<span class='tag'>Definição de ∪</span>"]]},
+
+{"say": "Quarto passo. Pela definição de união, isto equivale a x pertencer a, A união B, união C. Como x é arbitrário, os dois conjuntos são iguais.", "L": [["res", "⇔  x ∈ (A ∪ B) ∪ C<span class='tag'>Definição de ∪</span>"], ["res", "A ∪ (B ∪ C) = (A ∪ B) ∪ C   ∎"]]},
+
+{"title": "Associatividade de ∩", "clear": 1, "say": "Seguimos com a associatividade da interseção. Queremos provar que A interseção, B interseção C, é igual a, A interseção B, interseção C. Partimos de x pertence a A interseção, B interseção C.", "L": [["goal", "Queremos:  A ∩ (B ∩ C) = (A ∩ B) ∩ C"], ["txt", "x ∈ A ∩ (B ∩ C)"]]},
+
+{"say": "Primeiro passo. Pela definição de interseção, x pertence a A, e x pertence a B interseção C. E aplicando outra vez a definição, x pertence a B interseção C se e somente se x pertence a B, e x pertence a C.", "L": [["sub", "⇔  x ∈ A  e  (x ∈ B  e  x ∈ C)<span class='tag'>Definição de ∩, aplicada duas vezes</span>"]]},
+
+{"say": "Segundo passo. Pela associatividade da conjunção lógica e, podemos tirar os parênteses: x pertence a A, e x pertence a B, e x pertence a C.", "L": [["sub", "⇔  (x ∈ A  e  x ∈ B  e  x ∈ C)<span class='tag'>Associatividade de «e»</span>"]]},
+
+{"say": "Terceiro passo. Agrupamos os dois primeiros termos. Pela definição de interseção, x pertence a A, e x pertence a B, equivale a x pertencer a A interseção B. Portanto, temos x pertence a A interseção B, e x pertence a C.", "L": [["sub", "⇔  (x ∈ A ∩ B)  e  x ∈ C<span class='tag'>Definição de ∩</span>"]]},
+
+{"say": "Quarto passo. Pela definição de interseção, isto equivale a x pertencer a, A interseção B, interseção C. Como x é arbitrário, os dois conjuntos são iguais.", "L": [["res", "⇔  x ∈ (A ∩ B) ∩ C<span class='tag'>Definição de ∩</span>"], ["res", "A ∩ (B ∩ C) = (A ∩ B) ∩ C   ∎"]]},
+
+{"title": "Absorção de ∪", "clear": 1, "say": "Terminamos com a absorção da união. Queremos provar que A união, A interseção B, é igual a A. Partimos de x pertence a A união, A interseção B.", "L": [["goal", "Queremos:  A ∪ (A ∩ B) = A"], ["txt", "x ∈ A ∪ (A ∩ B)"]]},
+
+{"say": "Primeiro passo. Pela definição de união, e depois pela de interseção, x pertence a A, ou, x pertence a A e x pertence a B.", "L": [["sub", "⇔  x ∈ A  ou  (x ∈ A  e  x ∈ B)<span class='tag'>Definição de ∪ e de ∩</span>"]]},
+
+{"say": "Segundo passo. Isto equivale a x pertencer a A. Se x pertence a A, a primeira parte da disjunção é verdadeira. E reciprocamente, se a disjunção é verdadeira, ou x pertence a A, ou x pertence a A e a B, e nos dois casos x pertence a A.", "L": [["sub", "⇔  x ∈ A<span class='tag'>Se x ∈ A, a disjunção é verdadeira; e se a disjunção é verdadeira, x ∈ A</span>"]]},
+
+{"say": "Terceiro passo. A última linha escreve de novo que x pertence a A. É a pertença ao conjunto do lado direito da igualdade. Como x é arbitrário, os dois conjuntos são iguais.", "L": [["res", "⇔  x ∈ A"], ["res", "A ∪ (A ∩ B) = A   ∎"]]},
+
+{"title": "Absorção de ∩", "clear": 1, "say": "E a absorção da interseção. Queremos provar que A interseção, A união B, é igual a A. Partimos de x pertence a A interseção, A união B.", "L": [["goal", "Queremos:  A ∩ (A ∪ B) = A"], ["txt", "x ∈ A ∩ (A ∪ B)"]]},
+
+{"say": "Primeiro passo. Pela definição de interseção, e depois pela de união, x pertence a A, e, x pertence a A ou x pertence a B.", "L": [["sub", "⇔  x ∈ A  e  (x ∈ A  ou  x ∈ B)<span class='tag'>Definição de ∩ e de ∪</span>"]]},
+
+{"say": "Segundo passo. Isto equivale a x pertencer a A. Se x pertence a A, as duas partes da conjunção são verdadeiras, porque x pertencer a A torna a segunda verdadeira. E reciprocamente, se a conjunção é verdadeira, x pertence a A pela primeira parte.", "L": [["sub", "⇔  x ∈ A<span class='tag'>Se x ∈ A, a conjunção é verdadeira; e se ela é verdadeira, x ∈ A</span>"]]},
+
+{"say": "Terceiro passo. A última linha escreve de novo que x pertence a A. Como x é arbitrário, os dois conjuntos são iguais.", "L": [["res", "⇔  x ∈ A"], ["res", "A ∩ (A ∪ B) = A   ∎"]]},
+
+{"title": "Conclusão", "clear": 1, "say": "Como as duas operações são internas e satisfazem comutatividade, associatividade e absorção, concluímos que o conjunto das partes de U, com a união e a interseção, é um reticulado. Obrigado por assistir.", "L": [["res", "∪, ∩ internas em 𝒫(U)"], ["res", "Comutatividade,  Associatividade,  Absorção"], ["res", "(𝒫(U), ∪, ∩) é um reticulado   ∎"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' mais ').replace(/⊙/g,' vezes ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Repetir'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Continuar'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pausa';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^pt/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/antonio|antônio|donato|fabio|duarte|male|google português$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="𝒫(U) é um reticulado";$('sub').textContent="Exercício · Reticulados algébricos";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
