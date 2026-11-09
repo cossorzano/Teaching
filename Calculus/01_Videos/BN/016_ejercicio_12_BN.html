@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>𝒫(U) একটি বণ্টনশীল ল্যাটিস</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>মনে রাখুন</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ শুরু</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>গতি <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">রেকর্ডিং মোড (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"bn-BD",
+"meta":{"nivel": 2, "titulo": "𝒫(U) একটি বণ্টনশীল ল্যাটিস", "enunciado": "প্রমাণ করুন যে (𝒫(U), ∪, ∩) একটি বণ্টনশীল ল্যাটিস।", "tesis": "(1)  A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C),   (2)  A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)", "datos": ["(অনুমান)  (𝒫(U), ∪, ∩) একটি ল্যাটিস", "(দ্বিমুখী অন্তর্ভুক্তি)  X = Y ⇔ X ⊆ Y এবং Y ⊆ X", "(∪, ∩ সংজ্ঞা)  x ∈ X ∪ Y ⇔ x ∈ X অথবা x ∈ Y,   x ∈ X ∩ Y ⇔ x ∈ X এবং x ∈ Y"]},
+"steps":[
+{"title": "𝒫(U) একটি বণ্টনশীল ল্যাটিস", "sub": "অনুশীলনী · সেটের বীজগণিত", "clear": 1, "say": "নমস্কার। এই ভিডিওতে আমরা সেটের বীজগণিত নিয়ে একটি অনুশীলনী সমাধান করব। আমরা খুব ধীরে এগোব, প্রতিটি সমীকরণ লিখব এবং প্রতিটি ধাপের যুক্তি দেব।", "L": [["txt", "প্রমাণ করুন যে U এর ঘাত সেট, সংযোগ ও ছেদ নিয়ে, একটি বণ্টনশীল ল্যাটিস"]]},
+
+{"say": "প্রথমে, প্রদত্ত তথ্য। আমরা আগেই জানি যে U এর ঘাত সেট, সংযোগ ও ছেদ নিয়ে, একটি ল্যাটিস, যেখানে সংযোগ ঊর্ধ্বসীমার ভূমিকা পালন করে, আর ছেদ নিম্নসীমার।", "L": [["hyp", "(𝒫(U), ∪, ∩) একটি ল্যাটিস<span class='tag'>অনুমান: আগে থেকেই জানা</span>"], ["txt", "∪ = ঊর্ধ্বসীমা,     ∩ = নিম্নসীমা"]]},
+
+{"say": "এটি বণ্টনশীল হওয়ার জন্য, আমাদের যাচাই করতে হবে যে U এর যেকোনো উপসেট A, B ও C এর জন্য দুটি সমতা সত্য। প্রথমটি: A ছেদ, B সংযোগ C, সমান, A ছেদ B, সংযোগ, A ছেদ C। দ্বিতীয়টি: A সংযোগ, B ছেদ C, সমান, A সংযোগ B, ছেদ, A সংযোগ C।", "L": [["txt", "ধরা যাক A, B, C ⊆ U"], ["goal", "(1)  A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)<span class='tag'>প্রামাণ্য</span>"], ["goal", "(2)  A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)<span class='tag'>প্রামাণ্য</span>"]]},
+
+{"say": "আমরা দুটি সমতাই দ্বিমুখী অন্তর্ভুক্তি দিয়ে প্রমাণ করব। মনে রাখি, দুটি সেট সমান হয় যদি এবং কেবল যদি প্রতিটি অন্যটির মধ্যে অন্তর্ভুক্ত থাকে। আর উপাদান দিয়ে সংযোগ ও ছেদের সংজ্ঞা মনে করি: x সংযোগে আছে যদি এটি দুটি সেটের যেকোনো একটিতে থাকে, আর x ছেদে আছে যদি এটি দুটিতেই থাকে। এগুলো আমরা বাঁ দিকে লিখে রাখি।", "L": [["sub", "X = Y  ⇔  X ⊆ Y  এবং  Y ⊆ X<span class='tag'>দ্বিমুখী অন্তর্ভুক্তি দিয়ে সমতা</span>"], ["sub", "X ⊆ Y  ⇔  (x ∈ X ⇒ x ∈ Y)<span class='tag'>অন্তর্ভুক্তি</span>"]], "pin": ["(দ্বিমুখী অন্তর্ভুক্তি) X = Y ⇔ X ⊆ Y এবং Y ⊆ X", "(∪ সংজ্ঞা) x ∈ X ∪ Y ⇔ x ∈ X অথবা x ∈ Y", "(∩ সংজ্ঞা) x ∈ X ∩ Y ⇔ x ∈ X এবং x ∈ Y"]},
+
+{"title": "প্রথম বিধি: A ∩ (B ∪ C) ⊆ (A ∩ B) ∪ (A ∩ C)", "clear": 1, "say": "আমরা প্রথম সমতা দিয়ে শুরু করি। ধরা যাক x হলো U এর একটি উপাদান। প্রথমে বাঁ থেকে ডানের অন্তর্ভুক্তি প্রমাণ করি। ধরে নিই যে x, A ছেদ, B সংযোগ C তে আছে। এটি একটি অনুমান।", "L": [["txt", "ধরা যাক x ∈ U"], ["hyp", "x ∈ A ∩ (B ∪ C)<span class='tag'>অনুমান</span>"], ["goal", "প্রমাণ করতে হবে:  x ∈ (A ∩ B) ∪ (A ∩ C)<span class='tag'>প্রামাণ্য</span>"]]},
+
+{"say": "ছেদের সংজ্ঞা অনুযায়ী, x, A তে আছে, এবং x, B সংযোগ C তে আছে। আর সংযোগের সংজ্ঞা অনুযায়ী, x, B সংযোগ C তে থাকার অর্থ হলো x, B তে আছে, অথবা x, C তে আছে।", "L": [["hyp", "x ∈ A   এবং   x ∈ B ∪ C<span class='tag'>∩ এর সংজ্ঞা</span>"], ["hyp", "x ∈ A   এবং   (x ∈ B  অথবা  x ∈ C)<span class='tag'>∪ এর সংজ্ঞা</span>"]]},
+
+{"say": "এবার আমরা দুটি ক্ষেত্র আলাদা করি। প্রথম ক্ষেত্র: x, B তে আছে। যেহেতু x, A তেও আছে, ছেদের সংজ্ঞা অনুযায়ী, x, A ছেদ B তে আছে।", "L": [["sub", "ক্ষেত্র 1:  x ∈ B"], ["sub", "x ∈ A  এবং  x ∈ B   ⟹   x ∈ A ∩ B<span class='tag'>∩ এর সংজ্ঞা</span>"]]},
+
+{"say": "দ্বিতীয় ক্ষেত্র: x, C তে আছে। যেহেতু x, A তেও আছে, ছেদের সংজ্ঞা অনুযায়ী, x, A ছেদ C তে আছে।", "L": [["sub", "ক্ষেত্র 2:  x ∈ C"], ["sub", "x ∈ A  এবং  x ∈ C   ⟹   x ∈ A ∩ C<span class='tag'>∩ এর সংজ্ঞা</span>"]]},
+
+{"say": "যেকোনো ক্ষেত্রে, x, A ছেদ B তে আছে, অথবা x, A ছেদ C তে আছে। সংযোগের সংজ্ঞা অনুযায়ী, x, A ছেদ B, সংযোগ, A ছেদ C তে আছে। এখানেই এই অন্তর্ভুক্তি শেষ।", "L": [["res", "x ∈ (A ∩ B) ∪ (A ∩ C)<span class='tag'>∪ এর সংজ্ঞা, যেকোনো ক্ষেত্রে</span>"], ["res", "A ∩ (B ∪ C) ⊆ (A ∩ B) ∪ (A ∩ C)   ∎"]]},
+
+{"title": "প্রথম বিধি: (A ∩ B) ∪ (A ∩ C) ⊆ A ∩ (B ∪ C)", "clear": 1, "say": "বিপরীতভাবে, আমরা ডান থেকে বাঁয়ের অন্তর্ভুক্তি প্রমাণ করি। ধরে নিই যে x, A ছেদ B, সংযোগ, A ছেদ C তে আছে। এটি একটি অনুমান। সংযোগের সংজ্ঞা অনুযায়ী, x, A ছেদ B তে আছে, অথবা x, A ছেদ C তে আছে।", "L": [["hyp", "x ∈ (A ∩ B) ∪ (A ∩ C)<span class='tag'>অনুমান</span>"], ["hyp", "x ∈ A ∩ B   অথবা   x ∈ A ∩ C<span class='tag'>∪ এর সংজ্ঞা</span>"], ["goal", "প্রমাণ করতে হবে:  x ∈ A ∩ (B ∪ C)<span class='tag'>প্রামাণ্য</span>"]]},
+
+{"say": "যেকোনো ক্ষেত্রে, x, A তে আছে। যদি x, A ছেদ B তে থাকে, তবে x, A তে ও B তে আছে। আর যদি x, A ছেদ C তে থাকে, তবে x, A তে ও C তে আছে। তাছাড়া, প্রথম ক্ষেত্রে x, B তে আছে, আর দ্বিতীয় ক্ষেত্রে x, C তে আছে। অর্থাৎ, x, A তে আছে, এবং, x, B তে আছে অথবা x, C তে আছে।", "L": [["sub", "x ∈ A   এবং   (x ∈ B  অথবা  x ∈ C)<span class='tag'>প্রতিটি ক্ষেত্রে ∩ এর সংজ্ঞা</span>"]]},
+
+{"say": "সংযোগের সংজ্ঞা অনুযায়ী, x, B তে আছে অথবা x, C তে আছে, এর অর্থ হলো x, B সংযোগ C তে আছে।", "L": [["sub", "x ∈ A   এবং   x ∈ B ∪ C<span class='tag'>∪ এর সংজ্ঞা</span>"]]},
+
+{"say": "সুতরাং, ছেদের সংজ্ঞা অনুযায়ী, x, A ছেদ, B সংযোগ C তে আছে। এখানেই এই অন্তর্ভুক্তি শেষ।", "L": [["res", "x ∈ A ∩ (B ∪ C)<span class='tag'>∩ এর সংজ্ঞা</span>"], ["res", "(A ∩ B) ∪ (A ∩ C) ⊆ A ∩ (B ∪ C)   ∎"]]},
+
+{"title": "প্রথম বণ্টন বিধি", "clear": 1, "say": "আমরা দুটি অন্তর্ভুক্তিই প্রমাণ করেছি। দ্বিমুখী অন্তর্ভুক্তি দিয়ে, আমরা প্রথম সমতায় পৌঁছাই: A ছেদ, B সংযোগ C, সমান, A ছেদ B, সংযোগ, A ছেদ C।", "L": [["res", "A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)   ∎<span class='tag'>দ্বিমুখী অন্তর্ভুক্তি</span>"]]},
+
+{"title": "দ্বিতীয় বিধি (1): A ∪ (B ∩ C) ⊆ (A ∪ B) ∩ (A ∪ C)", "clear": 1, "say": "এবার আমরা দ্বিতীয় বণ্টন বিধি প্রমাণ করি, এটিও দ্বিমুখী অন্তর্ভুক্তি দিয়ে। ধরা যাক x হলো U এর একটি উপাদান। আমরা অংশ এক দিয়ে শুরু করি: প্রমাণ করা যে A সংযোগ, B ছেদ C, অন্তর্ভুক্ত, A সংযোগ B, ছেদ, A সংযোগ C তে। ধরে নিই যে x, A সংযোগ, B ছেদ C তে আছে। এটি একটি অনুমান।", "L": [["txt", "ধরা যাক x ∈ U"], ["hyp", "x ∈ A ∪ (B ∩ C)<span class='tag'>অনুমান</span>"], ["goal", "প্রমাণ করতে হবে:  x ∈ (A ∪ B) ∩ (A ∪ C)<span class='tag'>প্রামাণ্য</span>"]]},
+
+{"say": "সংযোগের সংজ্ঞা অনুযায়ী, x, A তে আছে, অথবা x, B ছেদ C তে আছে। আমরা দুটি ক্ষেত্র আলাদা করি।", "L": [["hyp", "x ∈ A   অথবা   x ∈ B ∩ C<span class='tag'>∪ এর সংজ্ঞা</span>"]]},
+
+{"say": "প্রথম ক্ষেত্র: x, A তে আছে। তাহলে স্পষ্টতই, সংযোগের সংজ্ঞা অনুযায়ী, x, A সংযোগ B তে আছে, এবং x, A সংযোগ C তে আছে। সুতরাং, x দুটি সংযোগের ছেদে আছে।", "L": [["sub", "ক্ষেত্র 1:  x ∈ A"], ["sub", "x ∈ A ∪ B   এবং   x ∈ A ∪ C<span class='tag'>∪ এর সংজ্ঞা</span>"], ["res", "x ∈ (A ∪ B) ∩ (A ∪ C)<span class='tag'>∩ এর সংজ্ঞা</span>"]]},
+
+{"say": "দ্বিতীয় ক্ষেত্র: x, B ছেদ C তে আছে। তাহলে x, B তে আছে, এবং x, C তে আছে। বিশেষ করে, x, A সংযোগ B তে আছে, কারণ x, B তে আছে। আর x, A সংযোগ C তে আছে, কারণ x, C তে আছে। অতএব x দুটি সংযোগের ছেদে আছে।", "L": [["sub", "ক্ষেত্র 2:  x ∈ B ∩ C   ⟹   x ∈ B  এবং  x ∈ C<span class='tag'>∩ এর সংজ্ঞা</span>"], ["sub", "x ∈ A ∪ B  (কারণ x ∈ B)   এবং   x ∈ A ∪ C  (কারণ x ∈ C)<span class='tag'>∪ এর সংজ্ঞা</span>"], ["res", "x ∈ (A ∪ B) ∩ (A ∪ C)<span class='tag'>∩ এর সংজ্ঞা</span>"]]},
+
+{"say": "দুটি ক্ষেত্রের যেকোনোটিতে, x, A সংযোগ B, ছেদ, A সংযোগ C তে আছে। আর তাই, A সংযোগ, B ছেদ C, অন্তর্ভুক্ত, A সংযোগ B, ছেদ, A সংযোগ C তে।", "L": [["res", "A ∪ (B ∩ C) ⊆ (A ∪ B) ∩ (A ∪ C)   ∎<span class='tag'>দুই ক্ষেত্রেই</span>"]]},
+
+{"title": "দ্বিতীয় বিধি (2): (A ∪ B) ∩ (A ∪ C) ⊆ A ∪ (B ∩ C)", "clear": 1, "say": "এবার অংশ দুই: প্রমাণ করা যে A সংযোগ B, ছেদ, A সংযোগ C, অন্তর্ভুক্ত, A সংযোগ, B ছেদ C তে। এবার ধরে নিই যে x, A সংযোগ B, ছেদ, A সংযোগ C তে আছে। এটি একটি অনুমান।", "L": [["hyp", "x ∈ (A ∪ B) ∩ (A ∪ C)<span class='tag'>অনুমান</span>"], ["goal", "প্রমাণ করতে হবে:  x ∈ A ∪ (B ∩ C)<span class='tag'>প্রামাণ্য</span>"]]},
+
+{"say": "ছেদের সংজ্ঞা অনুযায়ী, x, A সংযোগ B তে আছে, এবং x, A সংযোগ C তে আছে। আর সংযোগের সংজ্ঞা অনুযায়ী, এর অর্থ: x, A তে আছে অথবা x, B তে আছে, এবং সেই সঙ্গে, x, A তে আছে অথবা x, C তে আছে।", "L": [["hyp", "x ∈ A ∪ B   এবং   x ∈ A ∪ C<span class='tag'>∩ এর সংজ্ঞা</span>"], ["hyp", "(x ∈ A  অথবা  x ∈ B)   এবং   (x ∈ A  অথবা  x ∈ C)<span class='tag'>∪ এর সংজ্ঞা</span>"]]},
+
+{"say": "প্রথম ক্ষেত্র: ধরি x, A তে আছে। এটি একটি অনুমান। তাহলে স্পষ্টতই, সংযোগের সংজ্ঞা অনুযায়ী, x, A সংযোগ, B ছেদ C তে আছে, এবং প্রমাণ শেষ।", "L": [["hyp", "ক্ষেত্র:  x ∈ A<span class='tag'>ক্ষেত্রের অনুমান</span>"], ["res", "x ∈ A ∪ (B ∩ C)<span class='tag'>∪ এর সংজ্ঞা: প্রমাণ শেষ</span>"]]},
+
+{"say": "দ্বিতীয় ক্ষেত্র: তাই ধরি x, A তে নেই। এটি একটি অনুমান। এই অনুমানের অধীনে, আগের শর্তগুলো থেকে নিচের কথাগুলো পাওয়া যায়।", "L": [["hyp", "ক্ষেত্র:  x ∉ A<span class='tag'>ক্ষেত্রের অনুমান</span>"]]},
+
+{"say": "x, A সংযোগ B তে আছে, এবং x, A তে নেই, এ থেকে পাওয়া যায় যে x, B তে আছে।", "L": [["sub", "x ∈ A ∪ B   এবং   x ∉ A   ⟹   x ∈ B<span class='tag'>যদি x ∈ A অথবা x ∈ B, এবং x ∉ A, তবে x ∈ B</span>"]]},
+
+{"say": "x, A সংযোগ C তে আছে, এবং x, A তে নেই, এ থেকে পাওয়া যায় যে x, C তে আছে।", "L": [["sub", "x ∈ A ∪ C   এবং   x ∉ A   ⟹   x ∈ C<span class='tag'>যদি x ∈ A অথবা x ∈ C, এবং x ∉ A, তবে x ∈ C</span>"]]},
+
+{"say": "সুতরাং, x, B তে আছে, এবং x, C তে আছে। অর্থাৎ, ছেদের সংজ্ঞা অনুযায়ী, x, B ছেদ C তে আছে।", "L": [["sub", "x ∈ B   এবং   x ∈ C   ⟹   x ∈ B ∩ C<span class='tag'>∩ এর সংজ্ঞা</span>"]]},
+
+{"say": "ফলে, সংযোগের সংজ্ঞা অনুযায়ী, x, A সংযোগ, B ছেদ C তে আছে।", "L": [["res", "x ∈ A ∪ (B ∩ C)<span class='tag'>∪ এর সংজ্ঞা</span>"]]},
+
+{"say": "আমরা প্রমাণ করেছি যে সব ক্ষেত্রে x, A সংযোগ, B ছেদ C তে আছে। অতএব, A সংযোগ B, ছেদ, A সংযোগ C, অন্তর্ভুক্ত, A সংযোগ, B ছেদ C তে।", "L": [["res", "(A ∪ B) ∩ (A ∪ C) ⊆ A ∪ (B ∩ C)   ∎<span class='tag'>সব ক্ষেত্রে</span>"]]},
+
+{"title": "দ্বিতীয় বণ্টন বিধি", "clear": 1, "say": "অংশ এক ও দুই থেকে, দ্বিমুখী অন্তর্ভুক্তি দিয়ে, আমরা সমতায় পৌঁছাই: A সংযোগ, B ছেদ C, সমান, A সংযোগ B, ছেদ, A সংযোগ C। অর্থাৎ, সংযোগ ছেদের উপর বণ্টিত হয়।", "L": [["res", "A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)   ∎<span class='tag'>দ্বিমুখী অন্তর্ভুক্তি: সংযোগ ছেদের উপর বণ্টিত হয়</span>"]]},
+
+{"title": "উপসংহার", "clear": 1, "say": "যেহেতু U এর ঘাত সেটে, সংযোগ ও ছেদ নিয়ে, দুটি বণ্টন বিধিই সত্য, আমরা সিদ্ধান্তে আসি যে এটি একটি বণ্টনশীল ল্যাটিস। দেখার জন্য ধন্যবাদ।", "L": [["res", "A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)<span class='tag'>ছেদ সংযোগের উপর বণ্টিত হয়</span>"], ["res", "A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)<span class='tag'>সংযোগ ছেদের উপর বণ্টিত হয়</span>"], ["res", "(𝒫(U), ∪, ∩) একটি বণ্টনশীল ল্যাটিস   ∎"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' প্লাস ').replace(/⊙/g,' গুণ ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ আবার চালান'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ চালিয়ে যান'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ বিরতি';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^bn/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/pradeep|bashkar|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="𝒫(U) একটি বণ্টনশীল ল্যাটিস";$('sub').textContent="অনুশীলনী · সেটের বীজগণিত";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

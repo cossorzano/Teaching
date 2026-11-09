@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>𝒫(U) एक वितरणीय जालक है</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>याद रखें</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ शुरू करें</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>गति <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">रिकॉर्डिंग मोड (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"hi-IN",
+"meta":{"nivel": 2, "titulo": "𝒫(U) एक वितरणीय जालक है", "enunciado": "सिद्ध कीजिए कि (𝒫(U), ∪, ∩) एक वितरणीय जालक है।", "tesis": "(1)  A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C),   (2)  A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)", "datos": ["(परिकल्पना)  (𝒫(U), ∪, ∩) एक जालक है", "(दोहरा समावेश)  X = Y ⇔ X ⊆ Y और Y ⊆ X", "(∪, ∩ परिभाषा)  x ∈ X ∪ Y ⇔ x ∈ X या x ∈ Y,   x ∈ X ∩ Y ⇔ x ∈ X और x ∈ Y"]},
+"steps":[
+{"title": "𝒫(U) एक वितरणीय जालक है", "sub": "अभ्यास · समुच्चयों का बीजगणित", "clear": 1, "say": "नमस्ते। इस वीडियो में हम समुच्चयों के बीजगणित पर एक अभ्यास हल करेंगे। हम बहुत धीरे चलेंगे, हर समीकरण लिखेंगे और हर चरण का कारण बताएँगे।", "L": [["txt", "सिद्ध कीजिए कि U का घात समुच्चय, सम्मिलन और सर्वनिष्ठ के साथ, एक वितरणीय जालक है"]]},
+
+{"say": "पहले, दी गई जानकारी। हम पहले से जानते हैं कि U का घात समुच्चय, सम्मिलन और सर्वनिष्ठ के साथ, एक जालक है, जहाँ सम्मिलन उच्चक की भूमिका निभाता है, और सर्वनिष्ठ निम्नक की।", "L": [["hyp", "(𝒫(U), ∪, ∩) एक जालक है<span class='tag'>परिकल्पना: पहले से ज्ञात</span>"], ["txt", "∪ = उच्चक,     ∩ = निम्नक"]]},
+
+{"say": "इसके वितरणीय होने के लिए, हमें जाँचना है कि U के किन्हीं उपसमुच्चयों A, B और C के लिए, दो समताएँ सत्य हैं। पहली: A सर्वनिष्ठ, B सम्मिलन C, बराबर है, A सर्वनिष्ठ B, सम्मिलन, A सर्वनिष्ठ C के। दूसरी: A सम्मिलन, B सर्वनिष्ठ C, बराबर है, A सम्मिलन B, सर्वनिष्ठ, A सम्मिलन C के।", "L": [["txt", "मान लीजिए A, B, C ⊆ U"], ["goal", "(1)  A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)<span class='tag'>साध्य</span>"], ["goal", "(2)  A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)<span class='tag'>साध्य</span>"]]},
+
+{"say": "हम दोनों समताओं को दोहरे समावेश से सिद्ध करेंगे। याद रखें कि दो समुच्चय तभी और केवल तभी बराबर होते हैं, जब हर एक दूसरे में समाविष्ट हो। और अवयवों के साथ सम्मिलन और सर्वनिष्ठ की परिभाषा याद करते हैं: x सम्मिलन में है, यदि वह दोनों में से किसी एक समुच्चय में है, और x सर्वनिष्ठ में है, यदि वह दोनों में है। इन्हें हम बाईं ओर लिख लेते हैं।", "L": [["sub", "X = Y  ⇔  X ⊆ Y  और  Y ⊆ X<span class='tag'>दोहरे समावेश से समता</span>"], ["sub", "X ⊆ Y  ⇔  (x ∈ X ⇒ x ∈ Y)<span class='tag'>समावेश</span>"]], "pin": ["(दोहरा समावेश) X = Y ⇔ X ⊆ Y और Y ⊆ X", "(∪ परिभाषा) x ∈ X ∪ Y ⇔ x ∈ X या x ∈ Y", "(∩ परिभाषा) x ∈ X ∩ Y ⇔ x ∈ X और x ∈ Y"]},
+
+{"title": "पहला नियम: A ∩ (B ∪ C) ⊆ (A ∩ B) ∪ (A ∩ C)", "clear": 1, "say": "हम पहली समता से शुरू करते हैं। मान लीजिए x, U का एक अवयव है। पहले हम बाएँ से दाएँ समावेश सिद्ध करते हैं। मान लेते हैं कि x, A सर्वनिष्ठ, B सम्मिलन C में है। यह एक परिकल्पना है।", "L": [["txt", "मान लीजिए x ∈ U"], ["hyp", "x ∈ A ∩ (B ∪ C)<span class='tag'>परिकल्पना</span>"], ["goal", "सिद्ध करना है:  x ∈ (A ∩ B) ∪ (A ∩ C)<span class='tag'>साध्य</span>"]]},
+
+{"say": "सर्वनिष्ठ की परिभाषा से, x, A में है, और x, B सम्मिलन C में है। और सम्मिलन की परिभाषा से, x का B सम्मिलन C में होने का अर्थ है कि x, B में है, या x, C में है।", "L": [["hyp", "x ∈ A   और   x ∈ B ∪ C<span class='tag'>∩ की परिभाषा</span>"], ["hyp", "x ∈ A   और   (x ∈ B  या  x ∈ C)<span class='tag'>∪ की परिभाषा</span>"]]},
+
+{"say": "अब हम दो स्थितियाँ अलग करते हैं। पहली स्थिति: x, B में है। चूँकि x, A में भी है, सर्वनिष्ठ की परिभाषा से, x, A सर्वनिष्ठ B में है।", "L": [["sub", "स्थिति 1:  x ∈ B"], ["sub", "x ∈ A  और  x ∈ B   ⟹   x ∈ A ∩ B<span class='tag'>∩ की परिभाषा</span>"]]},
+
+{"say": "दूसरी स्थिति: x, C में है। चूँकि x, A में भी है, सर्वनिष्ठ की परिभाषा से, x, A सर्वनिष्ठ C में है।", "L": [["sub", "स्थिति 2:  x ∈ C"], ["sub", "x ∈ A  और  x ∈ C   ⟹   x ∈ A ∩ C<span class='tag'>∩ की परिभाषा</span>"]]},
+
+{"say": "किसी भी स्थिति में, x, A सर्वनिष्ठ B में है, या x, A सर्वनिष्ठ C में है। सम्मिलन की परिभाषा से, x, A सर्वनिष्ठ B, सम्मिलन, A सर्वनिष्ठ C में है। इसके साथ यह समावेश पूरा होता है।", "L": [["res", "x ∈ (A ∩ B) ∪ (A ∩ C)<span class='tag'>∪ की परिभाषा, किसी भी स्थिति में</span>"], ["res", "A ∩ (B ∪ C) ⊆ (A ∩ B) ∪ (A ∩ C)   ∎"]]},
+
+{"title": "पहला नियम: (A ∩ B) ∪ (A ∩ C) ⊆ A ∩ (B ∪ C)", "clear": 1, "say": "उल्टे, हम दाएँ से बाएँ समावेश सिद्ध करते हैं। मान लेते हैं कि x, A सर्वनिष्ठ B, सम्मिलन, A सर्वनिष्ठ C में है। यह एक परिकल्पना है। सम्मिलन की परिभाषा से, x, A सर्वनिष्ठ B में है, या x, A सर्वनिष्ठ C में है।", "L": [["hyp", "x ∈ (A ∩ B) ∪ (A ∩ C)<span class='tag'>परिकल्पना</span>"], ["hyp", "x ∈ A ∩ B   या   x ∈ A ∩ C<span class='tag'>∪ की परिभाषा</span>"], ["goal", "सिद्ध करना है:  x ∈ A ∩ (B ∪ C)<span class='tag'>साध्य</span>"]]},
+
+{"say": "किसी भी स्थिति में, x, A में है। यदि x, A सर्वनिष्ठ B में है, तो x, A में और B में है। और यदि x, A सर्वनिष्ठ C में है, तो x, A में और C में है। साथ ही, पहली स्थिति में x, B में है, और दूसरी में x, C में है। यानी, x, A में है, और, x, B में है या x, C में है।", "L": [["sub", "x ∈ A   और   (x ∈ B  या  x ∈ C)<span class='tag'>हर स्थिति में ∩ की परिभाषा</span>"]]},
+
+{"say": "सम्मिलन की परिभाषा से, x, B में है या x, C में है, का अर्थ है कि x, B सम्मिलन C में है।", "L": [["sub", "x ∈ A   और   x ∈ B ∪ C<span class='tag'>∪ की परिभाषा</span>"]]},
+
+{"say": "इसलिए, सर्वनिष्ठ की परिभाषा से, x, A सर्वनिष्ठ, B सम्मिलन C में है। इसके साथ यह समावेश पूरा होता है।", "L": [["res", "x ∈ A ∩ (B ∪ C)<span class='tag'>∩ की परिभाषा</span>"], ["res", "(A ∩ B) ∪ (A ∩ C) ⊆ A ∩ (B ∪ C)   ∎"]]},
+
+{"title": "पहला वितरण नियम", "clear": 1, "say": "हमने दोनों समावेश सिद्ध कर दिए। दोहरे समावेश से, हम पहली समता पर पहुँचते हैं: A सर्वनिष्ठ, B सम्मिलन C, बराबर है, A सर्वनिष्ठ B, सम्मिलन, A सर्वनिष्ठ C के।", "L": [["res", "A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)   ∎<span class='tag'>दोहरा समावेश</span>"]]},
+
+{"title": "दूसरा नियम (1): A ∪ (B ∩ C) ⊆ (A ∪ B) ∩ (A ∪ C)", "clear": 1, "say": "अब हम दूसरा वितरण नियम सिद्ध करते हैं, यह भी दोहरे समावेश से। मान लीजिए x, U का एक अवयव है। हम भाग एक से शुरू करते हैं: सिद्ध करना कि A सम्मिलन, B सर्वनिष्ठ C, समाविष्ट है, A सम्मिलन B, सर्वनिष्ठ, A सम्मिलन C में। मान लेते हैं कि x, A सम्मिलन, B सर्वनिष्ठ C में है। यह एक परिकल्पना है।", "L": [["txt", "मान लीजिए x ∈ U"], ["hyp", "x ∈ A ∪ (B ∩ C)<span class='tag'>परिकल्पना</span>"], ["goal", "सिद्ध करना है:  x ∈ (A ∪ B) ∩ (A ∪ C)<span class='tag'>साध्य</span>"]]},
+
+{"say": "सम्मिलन की परिभाषा से, x, A में है, या x, B सर्वनिष्ठ C में है। हम दो स्थितियाँ अलग करते हैं।", "L": [["hyp", "x ∈ A   या   x ∈ B ∩ C<span class='tag'>∪ की परिभाषा</span>"]]},
+
+{"say": "पहली स्थिति: x, A में है। तब, स्पष्ट रूप से, सम्मिलन की परिभाषा से, x, A सम्मिलन B में है, और x, A सम्मिलन C में है। इसलिए, x दोनों सम्मिलनों के सर्वनिष्ठ में है।", "L": [["sub", "स्थिति 1:  x ∈ A"], ["sub", "x ∈ A ∪ B   और   x ∈ A ∪ C<span class='tag'>∪ की परिभाषा</span>"], ["res", "x ∈ (A ∪ B) ∩ (A ∪ C)<span class='tag'>∩ की परिभाषा</span>"]]},
+
+{"say": "दूसरी स्थिति: x, B सर्वनिष्ठ C में है। तब x, B में है, और x, C में है। विशेष रूप से, x, A सम्मिलन B में है, क्योंकि x, B में है। और x, A सम्मिलन C में है, क्योंकि x, C में है। अतः x दोनों सम्मिलनों के सर्वनिष्ठ में है।", "L": [["sub", "स्थिति 2:  x ∈ B ∩ C   ⟹   x ∈ B  और  x ∈ C<span class='tag'>∩ की परिभाषा</span>"], ["sub", "x ∈ A ∪ B  (क्योंकि x ∈ B)   और   x ∈ A ∪ C  (क्योंकि x ∈ C)<span class='tag'>∪ की परिभाषा</span>"], ["res", "x ∈ (A ∪ B) ∩ (A ∪ C)<span class='tag'>∩ की परिभाषा</span>"]]},
+
+{"say": "दोनों में से किसी भी स्थिति में, x, A सम्मिलन B, सर्वनिष्ठ, A सम्मिलन C में है। और इसलिए, A सम्मिलन, B सर्वनिष्ठ C, समाविष्ट है, A सम्मिलन B, सर्वनिष्ठ, A सम्मिलन C में।", "L": [["res", "A ∪ (B ∩ C) ⊆ (A ∪ B) ∩ (A ∪ C)   ∎<span class='tag'>दोनों स्थितियों में</span>"]]},
+
+{"title": "दूसरा नियम (2): (A ∪ B) ∩ (A ∪ C) ⊆ A ∪ (B ∩ C)", "clear": 1, "say": "अब भाग दो: सिद्ध करना कि A सम्मिलन B, सर्वनिष्ठ, A सम्मिलन C, समाविष्ट है, A सम्मिलन, B सर्वनिष्ठ C में। अब मान लेते हैं कि x, A सम्मिलन B, सर्वनिष्ठ, A सम्मिलन C में है। यह एक परिकल्पना है।", "L": [["hyp", "x ∈ (A ∪ B) ∩ (A ∪ C)<span class='tag'>परिकल्पना</span>"], ["goal", "सिद्ध करना है:  x ∈ A ∪ (B ∩ C)<span class='tag'>साध्य</span>"]]},
+
+{"say": "सर्वनिष्ठ की परिभाषा से, x, A सम्मिलन B में है, और x, A सम्मिलन C में है। और सम्मिलन की परिभाषा से, इसका अर्थ है: x, A में है या x, B में है, और साथ ही, x, A में है या x, C में है।", "L": [["hyp", "x ∈ A ∪ B   और   x ∈ A ∪ C<span class='tag'>∩ की परिभाषा</span>"], ["hyp", "(x ∈ A  या  x ∈ B)   और   (x ∈ A  या  x ∈ C)<span class='tag'>∪ की परिभाषा</span>"]]},
+
+{"say": "पहली स्थिति: मान लीजिए x, A में है। यह एक परिकल्पना है। तब, स्पष्ट रूप से, सम्मिलन की परिभाषा से, x, A सम्मिलन, B सर्वनिष्ठ C में है, और सिद्ध हो गया।", "L": [["hyp", "स्थिति:  x ∈ A<span class='tag'>स्थिति की परिकल्पना</span>"], ["res", "x ∈ A ∪ (B ∩ C)<span class='tag'>∪ की परिभाषा: सिद्ध हो गया</span>"]]},
+
+{"say": "दूसरी स्थिति: इसलिए मान लीजिए कि x, A में नहीं है। यह एक परिकल्पना है। इस मान्यता के तहत, पिछली शर्तों से निम्नलिखित निकलता है।", "L": [["hyp", "स्थिति:  x ∉ A<span class='tag'>स्थिति की परिकल्पना</span>"]]},
+
+{"say": "x, A सम्मिलन B में है, और x, A में नहीं है, इससे निकलता है कि x, B में है।", "L": [["sub", "x ∈ A ∪ B   और   x ∉ A   ⟹   x ∈ B<span class='tag'>यदि x ∈ A या x ∈ B, और x ∉ A, तो x ∈ B</span>"]]},
+
+{"say": "x, A सम्मिलन C में है, और x, A में नहीं है, इससे निकलता है कि x, C में है।", "L": [["sub", "x ∈ A ∪ C   और   x ∉ A   ⟹   x ∈ C<span class='tag'>यदि x ∈ A या x ∈ C, और x ∉ A, तो x ∈ C</span>"]]},
+
+{"say": "इसलिए, x, B में है, और x, C में है। यानी, सर्वनिष्ठ की परिभाषा से, x, B सर्वनिष्ठ C में है।", "L": [["sub", "x ∈ B   और   x ∈ C   ⟹   x ∈ B ∩ C<span class='tag'>∩ की परिभाषा</span>"]]},
+
+{"say": "फलस्वरूप, सम्मिलन की परिभाषा से, x, A सम्मिलन, B सर्वनिष्ठ C में है।", "L": [["res", "x ∈ A ∪ (B ∩ C)<span class='tag'>∪ की परिभाषा</span>"]]},
+
+{"say": "हमने सिद्ध किया कि सभी स्थितियों में x, A सम्मिलन, B सर्वनिष्ठ C में है। अतः, A सम्मिलन B, सर्वनिष्ठ, A सम्मिलन C, समाविष्ट है, A सम्मिलन, B सर्वनिष्ठ C में।", "L": [["res", "(A ∪ B) ∩ (A ∪ C) ⊆ A ∪ (B ∩ C)   ∎<span class='tag'>सभी स्थितियों में</span>"]]},
+
+{"title": "दूसरा वितरण नियम", "clear": 1, "say": "भाग एक और दो से, दोहरे समावेश द्वारा, हम समता पर पहुँचते हैं: A सम्मिलन, B सर्वनिष्ठ C, बराबर है, A सम्मिलन B, सर्वनिष्ठ, A सम्मिलन C के। यानी, सम्मिलन सर्वनिष्ठ पर वितरित होता है।", "L": [["res", "A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)   ∎<span class='tag'>दोहरा समावेश: सम्मिलन सर्वनिष्ठ पर वितरित होता है</span>"]]},
+
+{"title": "निष्कर्ष", "clear": 1, "say": "चूँकि U के घात समुच्चय में, सम्मिलन और सर्वनिष्ठ के साथ, दोनों वितरण नियम सत्य हैं, हम निष्कर्ष निकालते हैं कि यह एक वितरणीय जालक है। देखने के लिए धन्यवाद।", "L": [["res", "A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)<span class='tag'>सर्वनिष्ठ सम्मिलन पर वितरित होता है</span>"], ["res", "A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)<span class='tag'>सम्मिलन सर्वनिष्ठ पर वितरित होता है</span>"], ["res", "(𝒫(U), ∪, ∩) एक वितरणीय जालक है   ∎"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' प्लस ').replace(/⊙/g,' गुणा ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ फिर से चलाएँ'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ जारी रखें'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ रोकें';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^hi/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/madhur|hemant|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="𝒫(U) एक वितरणीय जालक है";$('sub').textContent="अभ्यास · समुच्चयों का बीजगणित";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

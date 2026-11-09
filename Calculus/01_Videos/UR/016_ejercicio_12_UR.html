@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>U کے ذیلی سیٹوں کا سیٹ ایک تقسیمی لیٹس ہے</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-inline-end:2px dashed #3d5a50;padding-inline-end:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-inline-start:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+span[dir='ltr']{white-space:nowrap}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>یاد رکھیں</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ شروع کریں</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>رفتار <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">ریکارڈنگ موڈ (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ur-PK",
+"meta":{"nivel": 2, "titulo": "U کے ذیلی سیٹوں کا سیٹ ایک تقسیمی لیٹس ہے", "enunciado": "ثابت کریں کہ <span dir='ltr'>(𝒫(U), ∪, ∩)</span> ایک تقسیمی لیٹس ہے۔", "tesis": "(1)  A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C),   (2)  A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)", "datos": ["مفروضہ:  <span dir='ltr'>(𝒫(U), ∪, ∩)</span> ایک لیٹس ہے", "دوہری شمولیت:  <span dir='ltr'>X = Y ⇔ X ⊆ Y ∧ Y ⊆ X</span>", "اتصال اور تقاطع کی تعریفیں:  <span dir='ltr'>x ∈ X ∪ Y ⇔ x ∈ X ∨ x ∈ Y</span>،   <span dir='ltr'>x ∈ X ∩ Y ⇔ x ∈ X ∧ x ∈ Y</span>"]},
+"steps":[
+{"title": "U کے ذیلی سیٹوں کا سیٹ ایک تقسیمی لیٹس ہے", "sub": "مشق · سیٹوں کا الجبرا", "clear": 1, "say": "السلام علیکم۔ اس ویڈیو میں ہم سیٹوں کے الجبرا پر ایک مشق حل کریں گے۔ ہم بہت آہستہ چلیں گے، ہر مساوات لکھیں گے اور ہر قدم کی وجہ بتائیں گے۔", "L": [["txt", "ثابت کریں کہ <span dir='ltr'>U</span> کے تمام ذیلی سیٹوں کا سیٹ، اتصال اور تقاطع کے ساتھ، ایک تقسیمی لیٹس ہے"]]},
+
+{"say": "پہلے، دی گئی معلومات۔ ہم پہلے سے جانتے ہیں کہ U کے تمام ذیلی سیٹوں کا سیٹ، اتصال اور تقاطع کے ساتھ، ایک لیٹس ہے، جہاں اتصال بالائی حد کا کردار ادا کرتا ہے، اور تقاطع زیریں حد کا۔", "L": [["hyp", "<span dir='ltr'>(𝒫(U), ∪, ∩)</span> ایک لیٹس ہے<span class='tag'>مفروضہ: پہلے سے معلوم</span>"], ["txt", "اتصال بالائی حد ہے،     تقاطع زیریں حد ہے"]]},
+
+{"say": "اس کے تقسیمی ہونے کے لیے، ہمیں جانچنا ہے کہ U کے کسی بھی ذیلی سیٹ A، B اور C کے لیے، دو مساواتیں درست ہیں۔ پہلی: A تقاطع، B اتصال C، برابر ہے، A تقاطع B، اتصال، A تقاطع C کے۔ دوسری: A اتصال، B تقاطع C، برابر ہے، A اتصال B، تقاطع، A اتصال C کے۔", "L": [["txt", "فرض کریں <span dir='ltr'>A, B, C ⊆ U</span>"], ["goal", "<span dir='ltr'>(1)  A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)</span><span class='tag'>مطلوب</span>"], ["goal", "<span dir='ltr'>(2)  A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)</span><span class='tag'>مطلوب</span>"]]},
+
+{"say": "ہم دونوں مساواتیں دوہری شمولیت سے ثابت کریں گے۔ یاد رکھیں کہ دو سیٹ تب اور صرف تب برابر ہوتے ہیں جب ہر ایک دوسرے میں شامل ہو۔ اور ارکان کے ذریعے اتصال اور تقاطع کی تعریفیں یاد کرتے ہیں: x اتصال میں ہے اگر وہ دونوں میں سے کسی ایک سیٹ میں ہو، اور x تقاطع میں ہے اگر وہ دونوں میں ہو۔ انہیں ہم ایک طرف لکھ لیتے ہیں۔", "L": [["sub", "<span dir='ltr'>X = Y  ⇔  X ⊆ Y  ∧  Y ⊆ X</span><span class='tag'>دوہری شمولیت سے مساوات</span>"], ["sub", "<span dir='ltr'>X ⊆ Y  ⇔  (x ∈ X ⇒ x ∈ Y)</span><span class='tag'>شمولیت</span>"]], "pin": ["دوہری شمولیت: <span dir='ltr'>X = Y ⇔ X ⊆ Y ∧ Y ⊆ X</span>", "اتصال کی تعریف: <span dir='ltr'>x ∈ X ∪ Y ⇔ x ∈ X ∨ x ∈ Y</span>", "تقاطع کی تعریف: <span dir='ltr'>x ∈ X ∩ Y ⇔ x ∈ X ∧ x ∈ Y</span>"]},
+
+{"title": "پہلا قانون: پہلی شمولیت", "clear": 1, "say": "ہم پہلی مساوات سے شروع کرتے ہیں۔ فرض کریں x، U کا ایک رکن ہے۔ پہلے ہم بائیں سے دائیں شمولیت ثابت کرتے ہیں۔ فرض کرتے ہیں کہ x، A تقاطع، B اتصال C میں ہے۔ یہ ایک مفروضہ ہے۔", "L": [["txt", "فرض کریں <span dir='ltr'>x ∈ U</span>"], ["hyp", "<span dir='ltr'>x ∈ A ∩ (B ∪ C)</span><span class='tag'>مفروضہ</span>"], ["goal", "ثابت کرنا ہے:  <span dir='ltr'>x ∈ (A ∩ B) ∪ (A ∩ C)</span><span class='tag'>مطلوب</span>"]]},
+
+{"say": "تقاطع کی تعریف سے، x، A میں ہے، اور x، B اتصال C میں ہے۔ اور اتصال کی تعریف سے، x کے B اتصال C میں ہونے کا مطلب ہے کہ x، B میں ہے، یا x، C میں ہے۔", "L": [["hyp", "<span dir='ltr'>x ∈ A   ∧   x ∈ B ∪ C</span><span class='tag'>تقاطع کی تعریف</span>"], ["hyp", "<span dir='ltr'>x ∈ A   ∧   (x ∈ B  ∨  x ∈ C)</span><span class='tag'>اتصال کی تعریف</span>"]]},
+
+{"say": "اب ہم دو صورتیں الگ کرتے ہیں۔ پہلی صورت: x، B میں ہے۔ چونکہ x، A میں بھی ہے، تقاطع کی تعریف سے، x، A تقاطع B میں ہے۔", "L": [["sub", "صورت ۱:  <span dir='ltr'>x ∈ B</span>"], ["sub", "<span dir='ltr'>x ∈ A  ∧  x ∈ B   ⟹   x ∈ A ∩ B</span><span class='tag'>تقاطع کی تعریف</span>"]]},
+
+{"say": "دوسری صورت: x، C میں ہے۔ چونکہ x، A میں بھی ہے، تقاطع کی تعریف سے، x، A تقاطع C میں ہے۔", "L": [["sub", "صورت ۲:  <span dir='ltr'>x ∈ C</span>"], ["sub", "<span dir='ltr'>x ∈ A  ∧  x ∈ C   ⟹   x ∈ A ∩ C</span><span class='tag'>تقاطع کی تعریف</span>"]]},
+
+{"say": "ہر صورت میں، x، A تقاطع B میں ہے، یا x، A تقاطع C میں ہے۔ اتصال کی تعریف سے، x، A تقاطع B، اتصال، A تقاطع C میں ہے۔ اس کے ساتھ یہ شمولیت مکمل ہوتی ہے۔", "L": [["res", "<span dir='ltr'>x ∈ (A ∩ B) ∪ (A ∩ C)</span><span class='tag'>اتصال کی تعریف، ہر صورت میں</span>"], ["res", "<span dir='ltr'>A ∩ (B ∪ C) ⊆ (A ∩ B) ∪ (A ∩ C)   ∎</span>"]]},
+
+{"title": "پہلا قانون: الٹی شمولیت", "clear": 1, "say": "الٹ، ہم دائیں سے بائیں شمولیت ثابت کرتے ہیں۔ فرض کرتے ہیں کہ x، A تقاطع B، اتصال، A تقاطع C میں ہے۔ یہ ایک مفروضہ ہے۔ اتصال کی تعریف سے، x، A تقاطع B میں ہے، یا x، A تقاطع C میں ہے۔", "L": [["hyp", "<span dir='ltr'>x ∈ (A ∩ B) ∪ (A ∩ C)</span><span class='tag'>مفروضہ</span>"], ["hyp", "<span dir='ltr'>x ∈ A ∩ B   ∨   x ∈ A ∩ C</span><span class='tag'>اتصال کی تعریف</span>"], ["goal", "ثابت کرنا ہے:  <span dir='ltr'>x ∈ A ∩ (B ∪ C)</span><span class='tag'>مطلوب</span>"]]},
+
+{"say": "ہر صورت میں، x، A میں ہے۔ اگر x، A تقاطع B میں ہو، تو x، A میں اور B میں ہے۔ اور اگر x، A تقاطع C میں ہو، تو x، A میں اور C میں ہے۔ مزید یہ کہ پہلی صورت میں x، B میں ہے، اور دوسری میں x، C میں ہے۔ یعنی x، A میں ہے، اور، x، B میں ہے یا x، C میں ہے۔", "L": [["sub", "<span dir='ltr'>x ∈ A   ∧   (x ∈ B  ∨  x ∈ C)</span><span class='tag'>ہر صورت میں تقاطع کی تعریف</span>"]]},
+
+{"say": "اتصال کی تعریف سے، x، B میں ہے یا x، C میں ہے، کا مطلب ہے کہ x، B اتصال C میں ہے۔", "L": [["sub", "<span dir='ltr'>x ∈ A   ∧   x ∈ B ∪ C</span><span class='tag'>اتصال کی تعریف</span>"]]},
+
+{"say": "لہٰذا، تقاطع کی تعریف سے، x، A تقاطع، B اتصال C میں ہے۔ اس کے ساتھ یہ شمولیت مکمل ہوتی ہے۔", "L": [["res", "<span dir='ltr'>x ∈ A ∩ (B ∪ C)</span><span class='tag'>تقاطع کی تعریف</span>"], ["res", "<span dir='ltr'>(A ∩ B) ∪ (A ∩ C) ⊆ A ∩ (B ∪ C)   ∎</span>"]]},
+
+{"title": "پہلا تقسیمی قانون", "clear": 1, "say": "ہم نے دونوں شمولیتیں ثابت کر دیں۔ دوہری شمولیت سے، ہم پہلی مساوات پر پہنچتے ہیں: A تقاطع، B اتصال C، برابر ہے، A تقاطع B، اتصال، A تقاطع C کے۔", "L": [["res", "<span dir='ltr'>A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)   ∎</span><span class='tag'>دوہری شمولیت</span>"]]},
+
+{"title": "دوسرا قانون: پہلی شمولیت", "clear": 1, "say": "اب ہم دوسرا تقسیمی قانون ثابت کرتے ہیں، یہ بھی دوہری شمولیت سے۔ فرض کریں x، U کا ایک رکن ہے۔ ہم حصہ ایک سے شروع کرتے ہیں: ثابت کرنا کہ A اتصال، B تقاطع C، شامل ہے، A اتصال B، تقاطع، A اتصال C میں۔ فرض کرتے ہیں کہ x، A اتصال، B تقاطع C میں ہے۔ یہ ایک مفروضہ ہے۔", "L": [["txt", "فرض کریں <span dir='ltr'>x ∈ U</span>"], ["hyp", "<span dir='ltr'>x ∈ A ∪ (B ∩ C)</span><span class='tag'>مفروضہ</span>"], ["goal", "ثابت کرنا ہے:  <span dir='ltr'>x ∈ (A ∪ B) ∩ (A ∪ C)</span><span class='tag'>مطلوب</span>"]]},
+
+{"say": "اتصال کی تعریف سے، x، A میں ہے، یا x، B تقاطع C میں ہے۔ ہم دو صورتیں الگ کرتے ہیں۔", "L": [["hyp", "<span dir='ltr'>x ∈ A   ∨   x ∈ B ∩ C</span><span class='tag'>اتصال کی تعریف</span>"]]},
+
+{"say": "پہلی صورت: x، A میں ہے۔ تب ظاہر ہے کہ اتصال کی تعریف سے، x، A اتصال B میں ہے، اور x، A اتصال C میں ہے۔ لہٰذا x دونوں اتصالوں کے تقاطع میں ہے۔", "L": [["sub", "صورت ۱:  <span dir='ltr'>x ∈ A</span>"], ["sub", "<span dir='ltr'>x ∈ A ∪ B   ∧   x ∈ A ∪ C</span><span class='tag'>اتصال کی تعریف</span>"], ["res", "<span dir='ltr'>x ∈ (A ∪ B) ∩ (A ∪ C)</span><span class='tag'>تقاطع کی تعریف</span>"]]},
+
+{"say": "دوسری صورت: x، B تقاطع C میں ہے۔ تب x، B میں ہے، اور x، C میں ہے۔ خاص طور پر، x، A اتصال B میں ہے، کیونکہ x، B میں ہے۔ اور x، A اتصال C میں ہے، کیونکہ x، C میں ہے۔ چنانچہ x دونوں اتصالوں کے تقاطع میں ہے۔", "L": [["sub", "صورت ۲:  <span dir='ltr'>x ∈ B ∩ C   ⟹   x ∈ B  ∧  x ∈ C</span><span class='tag'>تقاطع کی تعریف</span>"], ["sub", "<span dir='ltr'>x ∈ A ∪ B</span>  کیونکہ  <span dir='ltr'>x ∈ B</span>،   اور   <span dir='ltr'>x ∈ A ∪ C</span>  کیونکہ  <span dir='ltr'>x ∈ C</span><span class='tag'>اتصال کی تعریف</span>"], ["res", "<span dir='ltr'>x ∈ (A ∪ B) ∩ (A ∪ C)</span><span class='tag'>تقاطع کی تعریف</span>"]]},
+
+{"say": "دونوں میں سے کسی بھی صورت میں، x، A اتصال B، تقاطع، A اتصال C میں ہے۔ اور اس لیے، A اتصال، B تقاطع C، شامل ہے، A اتصال B، تقاطع، A اتصال C میں۔", "L": [["res", "<span dir='ltr'>A ∪ (B ∩ C) ⊆ (A ∪ B) ∩ (A ∪ C)   ∎</span><span class='tag'>دونوں صورتوں میں</span>"]]},
+
+{"title": "دوسرا قانون: الٹی شمولیت", "clear": 1, "say": "اب حصہ دو: ثابت کرنا کہ A اتصال B، تقاطع، A اتصال C، شامل ہے، A اتصال، B تقاطع C میں۔ اب فرض کرتے ہیں کہ x، A اتصال B، تقاطع، A اتصال C میں ہے۔ یہ ایک مفروضہ ہے۔", "L": [["hyp", "<span dir='ltr'>x ∈ (A ∪ B) ∩ (A ∪ C)</span><span class='tag'>مفروضہ</span>"], ["goal", "ثابت کرنا ہے:  <span dir='ltr'>x ∈ A ∪ (B ∩ C)</span><span class='tag'>مطلوب</span>"]]},
+
+{"say": "تقاطع کی تعریف سے، x، A اتصال B میں ہے، اور x، A اتصال C میں ہے۔ اور اتصال کی تعریف سے، اس کا مطلب ہے: x، A میں ہے یا x، B میں ہے، اور ساتھ ہی، x، A میں ہے یا x، C میں ہے۔", "L": [["hyp", "<span dir='ltr'>x ∈ A ∪ B   ∧   x ∈ A ∪ C</span><span class='tag'>تقاطع کی تعریف</span>"], ["hyp", "<span dir='ltr'>(x ∈ A  ∨  x ∈ B)   ∧   (x ∈ A  ∨  x ∈ C)</span><span class='tag'>اتصال کی تعریف</span>"]]},
+
+{"say": "پہلی صورت: فرض کریں کہ x، A میں ہے۔ یہ ایک مفروضہ ہے۔ تب ظاہر ہے کہ اتصال کی تعریف سے، x، A اتصال، B تقاطع C میں ہے، اور ثبوت مکمل ہوا۔", "L": [["hyp", "صورت:  <span dir='ltr'>x ∈ A</span><span class='tag'>صورت کا مفروضہ</span>"], ["res", "<span dir='ltr'>x ∈ A ∪ (B ∩ C)</span><span class='tag'>اتصال کی تعریف: ثبوت مکمل</span>"]]},
+
+{"say": "دوسری صورت: اس لیے فرض کریں کہ x، A میں نہیں ہے۔ یہ ایک مفروضہ ہے۔ اس مفروضے کے تحت، پچھلی شرائط سے یہ نتیجہ نکلتا ہے۔", "L": [["hyp", "صورت:  <span dir='ltr'>x ∉ A</span><span class='tag'>صورت کا مفروضہ</span>"]]},
+
+{"say": "x کے A اتصال B میں ہونے، اور A میں نہ ہونے سے، یہ نکلتا ہے کہ x، B میں ہے۔", "L": [["sub", "<span dir='ltr'>x ∈ A ∪ B   ∧   x ∉ A   ⟹   x ∈ B</span><span class='tag'>اگر <span dir='ltr'>x ∈ A ∪ B</span> اور <span dir='ltr'>x ∉ A</span> تو <span dir='ltr'>x ∈ B</span></span>"]]},
+
+{"say": "x کے A اتصال C میں ہونے، اور A میں نہ ہونے سے، یہ نکلتا ہے کہ x، C میں ہے۔", "L": [["sub", "<span dir='ltr'>x ∈ A ∪ C   ∧   x ∉ A   ⟹   x ∈ C</span><span class='tag'>اگر <span dir='ltr'>x ∈ A ∪ C</span> اور <span dir='ltr'>x ∉ A</span> تو <span dir='ltr'>x ∈ C</span></span>"]]},
+
+{"say": "لہٰذا، x، B میں ہے، اور x، C میں ہے۔ یعنی تقاطع کی تعریف سے، x، B تقاطع C میں ہے۔", "L": [["sub", "<span dir='ltr'>x ∈ B   ∧   x ∈ C   ⟹   x ∈ B ∩ C</span><span class='tag'>تقاطع کی تعریف</span>"]]},
+
+{"say": "نتیجتاً، اتصال کی تعریف سے، x، A اتصال، B تقاطع C میں ہے۔", "L": [["res", "<span dir='ltr'>x ∈ A ∪ (B ∩ C)</span><span class='tag'>اتصال کی تعریف</span>"]]},
+
+{"say": "ہم نے ثابت کیا کہ تمام صورتوں میں x، A اتصال، B تقاطع C میں ہے۔ چنانچہ، A اتصال B، تقاطع، A اتصال C، شامل ہے، A اتصال، B تقاطع C میں۔", "L": [["res", "<span dir='ltr'>(A ∪ B) ∩ (A ∪ C) ⊆ A ∪ (B ∩ C)   ∎</span><span class='tag'>تمام صورتوں میں</span>"]]},
+
+{"title": "دوسرا تقسیمی قانون", "clear": 1, "say": "حصہ ایک اور دو سے، دوہری شمولیت کے ذریعے، ہم مساوات پر پہنچتے ہیں: A اتصال، B تقاطع C، برابر ہے، A اتصال B، تقاطع، A اتصال C کے۔ یعنی اتصال تقاطع پر تقسیمی ہے۔", "L": [["res", "<span dir='ltr'>A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)   ∎</span><span class='tag'>دوہری شمولیت: اتصال تقاطع پر تقسیمی ہے</span>"]]},
+
+{"title": "نتیجہ", "clear": 1, "say": "چونکہ U کے تمام ذیلی سیٹوں کے سیٹ میں، اتصال اور تقاطع کے ساتھ، دونوں تقسیمی قوانین درست ہیں، ہم نتیجہ نکالتے ہیں کہ یہ ایک تقسیمی لیٹس ہے۔ دیکھنے کا شکریہ۔", "L": [["res", "<span dir='ltr'>A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)</span><span class='tag'>تقاطع اتصال پر تقسیمی ہے</span>"], ["res", "<span dir='ltr'>A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)</span><span class='tag'>اتصال تقاطع پر تقسیمی ہے</span>"], ["res", "<span dir='ltr'>(𝒫(U), ∪, ∩)</span> ایک تقسیمی لیٹس ہے   <span dir='ltr'>∎</span>"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' جمع ').replace(/⊙/g,' ضرب ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ دوبارہ چلائیں'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ جاری رکھیں'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ وقفہ';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ وقفہ';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ وقفہ';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ur/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/asad|salman|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="U کے ذیلی سیٹوں کا سیٹ ایک تقسیمی لیٹس ہے";$('sub').textContent="مشق · سیٹوں کا الجبرا";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

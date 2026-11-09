@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>𝒫(U) is a distributive lattice</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Remember</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Start</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Speed <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Recording mode (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"en-US",
+"meta":{"nivel": 2, "titulo": "𝒫(U) is a distributive lattice", "enunciado": "Prove that (𝒫(U), ∪, ∩) is a distributive lattice.", "tesis": "(1)  A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C),   (2)  A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)", "datos": ["(Hypothesis)  (𝒫(U), ∪, ∩) is a lattice", "(Double inclusion)  X = Y ⇔ X ⊆ Y and Y ⊆ X", "(Def ∪, ∩)  x ∈ X ∪ Y ⇔ x ∈ X or x ∈ Y,   x ∈ X ∩ Y ⇔ x ∈ X and x ∈ Y"]},
+"steps":[
+{"title": "𝒫(U) is a distributive lattice", "sub": "Exercise · Algebra of sets", "clear": 1, "say": "Hello. In this video we are going to solve an exercise about the algebra of sets. We will go very slowly, writing every equation and justifying every step.", "L": [["txt", "Prove that the power set of U, with union and intersection, is a distributive lattice"]]},
+
+{"say": "First, the data. We already know that the power set of U, with union and intersection, is a lattice, where the union plays the role of the supremum, and the intersection that of the infimum.", "L": [["hyp", "(𝒫(U), ∪, ∩) is a lattice<span class='tag'>Hypothesis: already known</span>"], ["txt", "∪ = supremum,     ∩ = infimum"]]},
+
+{"say": "For it to be distributive, we must check that, for any subsets A, B and C of U, two equalities hold. The first: A intersection, B union C, equals, A intersection B, union, A intersection C. The second: A union, B intersection C, equals, A union B, intersection, A union C.", "L": [["txt", "Let A, B, C ⊆ U"], ["goal", "(1)  A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)<span class='tag'>Claim</span>"], ["goal", "(2)  A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)<span class='tag'>Claim</span>"]]},
+
+{"say": "We will prove both equalities by double inclusion. Recall that two sets are equal if and only if each one is contained in the other. And recall the definitions of union and intersection with elements: x belongs to the union if it belongs to one of the two sets, and x belongs to the intersection if it belongs to both. We write them on the left.", "L": [["sub", "X = Y  ⇔  X ⊆ Y  and  Y ⊆ X<span class='tag'>Equality by double inclusion</span>"], ["sub", "X ⊆ Y  ⇔  (x ∈ X ⇒ x ∈ Y)<span class='tag'>Inclusion</span>"]], "pin": ["(Double inclusion) X = Y ⇔ X ⊆ Y and Y ⊆ X", "(Def ∪) x ∈ X ∪ Y ⇔ x ∈ X or x ∈ Y", "(Def ∩) x ∈ X ∩ Y ⇔ x ∈ X and x ∈ Y"]},
+
+{"title": "First law: A ∩ (B ∪ C) ⊆ (A ∩ B) ∪ (A ∩ C)", "clear": 1, "say": "We start with the first equality. Let x be an element of U. First we prove the inclusion from left to right. We assume that x belongs to A intersection, B union C. This is a hypothesis.", "L": [["txt", "Let x ∈ U"], ["hyp", "x ∈ A ∩ (B ∪ C)<span class='tag'>Hypothesis</span>"], ["goal", "We want:  x ∈ (A ∩ B) ∪ (A ∩ C)<span class='tag'>Claim</span>"]]},
+
+{"say": "By the definition of intersection, x belongs to A, and x belongs to B union C. And by the definition of union, x belongs to B union C means that x belongs to B, or x belongs to C.", "L": [["hyp", "x ∈ A   and   x ∈ B ∪ C<span class='tag'>Definition of ∩</span>"], ["hyp", "x ∈ A   and   (x ∈ B  or  x ∈ C)<span class='tag'>Definition of ∪</span>"]]},
+
+{"say": "Now we distinguish two cases. First case: x belongs to B. Since x also belongs to A, by the definition of intersection, x belongs to A intersection B.", "L": [["sub", "Case 1:  x ∈ B"], ["sub", "x ∈ A  and  x ∈ B   ⟹   x ∈ A ∩ B<span class='tag'>Definition of ∩</span>"]]},
+
+{"say": "Second case: x belongs to C. Since x also belongs to A, by the definition of intersection, x belongs to A intersection C.", "L": [["sub", "Case 2:  x ∈ C"], ["sub", "x ∈ A  and  x ∈ C   ⟹   x ∈ A ∩ C<span class='tag'>Definition of ∩</span>"]]},
+
+{"say": "In either case, x belongs to A intersection B, or x belongs to A intersection C. By the definition of union, x belongs to A intersection B, union, A intersection C. This ends this inclusion.", "L": [["res", "x ∈ (A ∩ B) ∪ (A ∩ C)<span class='tag'>Definition of ∪, in either case</span>"], ["res", "A ∩ (B ∪ C) ⊆ (A ∩ B) ∪ (A ∩ C)   ∎"]]},
+
+{"title": "First law: (A ∩ B) ∪ (A ∩ C) ⊆ A ∩ (B ∪ C)", "clear": 1, "say": "Conversely, we prove the inclusion from right to left. We assume that x belongs to A intersection B, union, A intersection C. This is a hypothesis. By the definition of union, x belongs to A intersection B, or x belongs to A intersection C.", "L": [["hyp", "x ∈ (A ∩ B) ∪ (A ∩ C)<span class='tag'>Hypothesis</span>"], ["hyp", "x ∈ A ∩ B   or   x ∈ A ∩ C<span class='tag'>Definition of ∪</span>"], ["goal", "We want:  x ∈ A ∩ (B ∪ C)<span class='tag'>Claim</span>"]]},
+
+{"say": "In either case, x belongs to A. If x belongs to A intersection B, then x belongs to A and to B. And if x belongs to A intersection C, then x belongs to A and to C. Moreover, in the first case x belongs to B, and in the second x belongs to C. That is, x belongs to A, and x belongs to B or x belongs to C.", "L": [["sub", "x ∈ A   and   (x ∈ B  or  x ∈ C)<span class='tag'>Definition of ∩ in each case</span>"]]},
+
+{"say": "By the definition of union, x belongs to B or x belongs to C means that x belongs to B union C.", "L": [["sub", "x ∈ A   and   x ∈ B ∪ C<span class='tag'>Definition of ∪</span>"]]},
+
+{"say": "Therefore, by the definition of intersection, x belongs to A intersection, B union C. This ends this inclusion.", "L": [["res", "x ∈ A ∩ (B ∪ C)<span class='tag'>Definition of ∩</span>"], ["res", "(A ∩ B) ∪ (A ∩ C) ⊆ A ∩ (B ∪ C)   ∎"]]},
+
+{"title": "First distributive law", "clear": 1, "say": "We have proved both inclusions. By double inclusion, we conclude the first equality: A intersection, B union C, equals, A intersection B, union, A intersection C.", "L": [["res", "A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)   ∎<span class='tag'>Double inclusion</span>"]]},
+
+{"title": "Second law (1): A ∪ (B ∩ C) ⊆ (A ∪ B) ∩ (A ∪ C)", "clear": 1, "say": "Now we prove the second distributive law, also by double inclusion. Let x be an element of U. We start with part one: prove that A union, B intersection C, is contained in, A union B, intersection, A union C. We assume that x belongs to A union, B intersection C. This is a hypothesis.", "L": [["txt", "Let x ∈ U"], ["hyp", "x ∈ A ∪ (B ∩ C)<span class='tag'>Hypothesis</span>"], ["goal", "We want:  x ∈ (A ∪ B) ∩ (A ∪ C)<span class='tag'>Claim</span>"]]},
+
+{"say": "By the definition of union, x belongs to A, or x belongs to B intersection C. We distinguish two cases.", "L": [["hyp", "x ∈ A   or   x ∈ B ∩ C<span class='tag'>Definition of ∪</span>"]]},
+
+{"say": "First case: x belongs to A. Then, clearly, x belongs to A union B, and x belongs to A union C, by the definition of union. Therefore, x belongs to the intersection of the two unions.", "L": [["sub", "Case 1:  x ∈ A"], ["sub", "x ∈ A ∪ B   and   x ∈ A ∪ C<span class='tag'>Definition of ∪</span>"], ["res", "x ∈ (A ∪ B) ∩ (A ∪ C)<span class='tag'>Definition of ∩</span>"]]},
+
+{"say": "Second case: x belongs to B intersection C. Then x belongs to B, and x belongs to C. In particular, x belongs to A union B, because x belongs to B. And x belongs to A union C, because x belongs to C. So x belongs to the intersection of the two unions.", "L": [["sub", "Case 2:  x ∈ B ∩ C   ⟹   x ∈ B  and  x ∈ C<span class='tag'>Definition of ∩</span>"], ["sub", "x ∈ A ∪ B  (because x ∈ B)   and   x ∈ A ∪ C  (because x ∈ C)<span class='tag'>Definition of ∪</span>"], ["res", "x ∈ (A ∪ B) ∩ (A ∪ C)<span class='tag'>Definition of ∩</span>"]]},
+
+{"say": "In either of the two cases, x belongs to A union B, intersection, A union C. And therefore, A union, B intersection C, is contained in, A union B, intersection, A union C.", "L": [["res", "A ∪ (B ∩ C) ⊆ (A ∪ B) ∩ (A ∪ C)   ∎<span class='tag'>In both cases</span>"]]},
+
+{"title": "Second law (2): (A ∪ B) ∩ (A ∪ C) ⊆ A ∪ (B ∩ C)", "clear": 1, "say": "We move on to part two: prove that A union B, intersection, A union C, is contained in, A union, B intersection C. Now we assume that x belongs to A union B, intersection, A union C. This is a hypothesis.", "L": [["hyp", "x ∈ (A ∪ B) ∩ (A ∪ C)<span class='tag'>Hypothesis</span>"], ["goal", "We want:  x ∈ A ∪ (B ∩ C)<span class='tag'>Claim</span>"]]},
+
+{"say": "By the definition of intersection, x belongs to A union B, and x belongs to A union C. And by the definition of union, this means: x belongs to A or x belongs to B, and also, x belongs to A or x belongs to C.", "L": [["hyp", "x ∈ A ∪ B   and   x ∈ A ∪ C<span class='tag'>Definition of ∩</span>"], ["hyp", "(x ∈ A  or  x ∈ B)   and   (x ∈ A  or  x ∈ C)<span class='tag'>Definition of ∪</span>"]]},
+
+{"say": "First case: suppose that x belongs to A. This is a hypothesis. Then, clearly, x belongs to A union, B intersection C, by the definition of union, and we are done.", "L": [["hyp", "Case:  x ∈ A<span class='tag'>Case hypothesis</span>"], ["res", "x ∈ A ∪ (B ∩ C)<span class='tag'>Definition of ∪: we are done</span>"]]},
+
+{"say": "Second case: suppose therefore that x does not belong to A. This is a hypothesis. Under this assumption, the previous conditions give the following.", "L": [["hyp", "Case:  x ∉ A<span class='tag'>Case hypothesis</span>"]]},
+
+{"say": "From x belongs to A union B, and x does not belong to A, it follows that x belongs to B.", "L": [["sub", "x ∈ A ∪ B   and   x ∉ A   ⟹   x ∈ B<span class='tag'>If x ∈ A or x ∈ B, and x ∉ A, then x ∈ B</span>"]]},
+
+{"say": "From x belongs to A union C, and x does not belong to A, it follows that x belongs to C.", "L": [["sub", "x ∈ A ∪ C   and   x ∉ A   ⟹   x ∈ C<span class='tag'>If x ∈ A or x ∈ C, and x ∉ A, then x ∈ C</span>"]]},
+
+{"say": "Therefore, x belongs to B, and x belongs to C. That is, by the definition of intersection, x belongs to B intersection C.", "L": [["sub", "x ∈ B   and   x ∈ C   ⟹   x ∈ B ∩ C<span class='tag'>Definition of ∩</span>"]]},
+
+{"say": "Consequently, by the definition of union, x belongs to A union, B intersection C.", "L": [["res", "x ∈ A ∪ (B ∩ C)<span class='tag'>Definition of ∪</span>"]]},
+
+{"say": "We have proved that in all cases x belongs to A union, B intersection C. Hence, A union B, intersection, A union C, is contained in, A union, B intersection C.", "L": [["res", "(A ∪ B) ∩ (A ∪ C) ⊆ A ∪ (B ∩ C)   ∎<span class='tag'>In all cases</span>"]]},
+
+{"title": "Second distributive law", "clear": 1, "say": "From parts one and two, by double inclusion, we conclude the equality: A union, B intersection C, equals, A union B, intersection, A union C. That is, union distributes over intersection.", "L": [["res", "A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)   ∎<span class='tag'>Double inclusion: union distributes over intersection</span>"]]},
+
+{"title": "Conclusion", "clear": 1, "say": "Since both distributive laws hold in the power set of U, with union and intersection, we conclude that it is a distributive lattice. Thanks for watching.", "L": [["res", "A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)<span class='tag'>Intersection distributes over union</span>"], ["res", "A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)<span class='tag'>Union distributes over intersection</span>"], ["res", "(𝒫(U), ∪, ∩) is a distributive lattice   ∎"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' plus ').replace(/⊙/g,' times ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Replay'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Resume'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pause';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/andrew|guy|brian|christopher|eric|david|mark|male|google us english$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="𝒫(U) is a distributive lattice";$('sub').textContent="Exercise · Algebra of sets";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

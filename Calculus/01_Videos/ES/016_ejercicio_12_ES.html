@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>P(U) es un retículo distributivo</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Recuerda</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Empezar</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Velocidad <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Modo grabación (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"es-ES",
+"meta":{"nivel": 2, "titulo": "𝒫(U) es un retículo distributivo", "enunciado": "Demostrar que (𝒫(U), ∪, ∩) es un retículo distributivo.", "tesis": "(1)  A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C),   (2)  A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)", "datos": ["(Hipótesis)  (𝒫(U), ∪, ∩) es un retículo", "(Doble inclusión)  X = Y ⇔ X ⊆ Y y Y ⊆ X", "(Def ∪, ∩)  x ∈ X ∪ Y ⇔ x ∈ X o x ∈ Y,   x ∈ X ∩ Y ⇔ x ∈ X y x ∈ Y"]},
+"steps":[
+{"title": "𝒫(U) es un retículo distributivo", "sub": "Ejercicio · Álgebra de conjuntos", "clear": 1, "say": "Hola. En este vídeo vamos a resolver un ejercicio sobre álgebra de conjuntos. Vamos a ir muy despacio, escribiendo cada ecuación y justificando cada paso.", "L": [["txt", "Demostrar que las partes de U, con la unión y la intersección, forman un retículo distributivo"]]},
+{"say": "Primero, los datos. Ya sabemos que las partes de U, con la unión y la intersección, forman un retículo, donde la unión juega el papel de supremo, y la intersección el de ínfimo.", "L": [["hyp", "(𝒫(U), ∪, ∩) es un retículo<span class='tag'>Hipótesis: ya sabemos</span>"], ["txt", "∪ = supremo,     ∩ = ínfimo"]]},
+{"say": "Para que sea distributivo, debemos comprobar que, para cualesquiera subconjuntos A, B y C de U, se cumplen dos igualdades. La primera: A intersección, B unión C, es igual a, A intersección B, unión, A intersección C. La segunda: A unión, B intersección C, es igual a, A unión B, intersección, A unión C.", "L": [["txt", "Sean A, B, C ⊆ U"], ["goal", "(1)  A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)<span class='tag'>Tesis</span>"], ["goal", "(2)  A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)<span class='tag'>Tesis</span>"]]},
+{"say": "Vamos a probar las dos igualdades por doble inclusión. Recordamos que dos conjuntos son iguales si y solo si cada uno está contenido en el otro. Y recordamos las definiciones de unión y de intersección con elementos: x pertenece a la unión si pertenece a uno de los dos conjuntos, y x pertenece a la intersección si pertenece a los dos. Las anotamos a la izquierda.", "L": [["sub", "X = Y  ⇔  X ⊆ Y  y  Y ⊆ X<span class='tag'>Igualdad por doble inclusión</span>"], ["sub", "X ⊆ Y  ⇔  (x ∈ X ⇒ x ∈ Y)<span class='tag'>Inclusión</span>"]], "pin": ["(Doble inclusión) X = Y ⇔ X ⊆ Y y Y ⊆ X", "(Def ∪) x ∈ X ∪ Y ⇔ x ∈ X o x ∈ Y", "(Def ∩) x ∈ X ∩ Y ⇔ x ∈ X y x ∈ Y"]},
+{"title": "Primera ley: A ∩ (B ∪ C) ⊆ (A ∩ B) ∪ (A ∩ C)", "clear": 1, "say": "Empezamos con la primera igualdad. Sea x un elemento de U. Primero probamos la inclusión de izquierda a derecha. Suponemos que x pertenece a A intersección, B unión C. Esto es una hipótesis.", "L": [["txt", "Sea x ∈ U"], ["hyp", "x ∈ A ∩ (B ∪ C)<span class='tag'>Hipótesis</span>"], ["goal", "Queremos:  x ∈ (A ∩ B) ∪ (A ∩ C)<span class='tag'>Tesis</span>"]]},
+{"say": "Por la definición de intersección, x pertenece a A, y x pertenece a B unión C. Y por la definición de unión, x pertenece a B unión C significa que x pertenece a B, o x pertenece a C.", "L": [["hyp", "x ∈ A   y   x ∈ B ∪ C<span class='tag'>Definición de ∩</span>"], ["hyp", "x ∈ A   y   (x ∈ B  o  x ∈ C)<span class='tag'>Definición de ∪</span>"]]},
+{"say": "Ahora distinguimos dos casos. Primer caso: x pertenece a B. Como además x pertenece a A, por la definición de intersección, x pertenece a A intersección B.", "L": [["sub", "Caso 1:  x ∈ B"], ["sub", "x ∈ A  y  x ∈ B   ⟹   x ∈ A ∩ B<span class='tag'>Definición de ∩</span>"]]},
+{"say": "Segundo caso: x pertenece a C. Como además x pertenece a A, por la definición de intersección, x pertenece a A intersección C.", "L": [["sub", "Caso 2:  x ∈ C"], ["sub", "x ∈ A  y  x ∈ C   ⟹   x ∈ A ∩ C<span class='tag'>Definición de ∩</span>"]]},
+{"say": "En cualquier caso, x pertenece a A intersección B, o x pertenece a A intersección C. Por la definición de unión, x pertenece a A intersección B, unión, A intersección C. Con esto termina esta inclusión.", "L": [["res", "x ∈ (A ∩ B) ∪ (A ∩ C)<span class='tag'>Definición de ∪, en cualquier caso</span>"], ["res", "A ∩ (B ∪ C) ⊆ (A ∩ B) ∪ (A ∩ C)   ∎"]]},
+{"title": "Primera ley: (A ∩ B) ∪ (A ∩ C) ⊆ A ∩ (B ∪ C)", "clear": 1, "say": "Recíprocamente, probamos la inclusión de derecha a izquierda. Suponemos que x pertenece a A intersección B, unión, A intersección C. Esto es una hipótesis. Por la definición de unión, x pertenece a A intersección B, o x pertenece a A intersección C.", "L": [["hyp", "x ∈ (A ∩ B) ∪ (A ∩ C)<span class='tag'>Hipótesis</span>"], ["hyp", "x ∈ A ∩ B   o   x ∈ A ∩ C<span class='tag'>Definición de ∪</span>"], ["goal", "Queremos:  x ∈ A ∩ (B ∪ C)<span class='tag'>Tesis</span>"]]},
+{"say": "En cualquier caso, x pertenece a A. Si x pertenece a A intersección B, entonces x pertenece a A y a B. Y si x pertenece a A intersección C, entonces x pertenece a A y a C. Además, en el primer caso x pertenece a B, y en el segundo x pertenece a C. Es decir, x pertenece a A, y x pertenece a B o x pertenece a C.", "L": [["sub", "x ∈ A   y   (x ∈ B  o  x ∈ C)<span class='tag'>Definición de ∩ en cada caso</span>"]]},
+{"say": "Por la definición de unión, x pertenece a B o x pertenece a C significa que x pertenece a B unión C.", "L": [["sub", "x ∈ A   y   x ∈ B ∪ C<span class='tag'>Definición de ∪</span>"]]},
+{"say": "Por tanto, por la definición de intersección, x pertenece a A intersección, B unión C. Con esto termina esta inclusión.", "L": [["res", "x ∈ A ∩ (B ∪ C)<span class='tag'>Definición de ∩</span>"], ["res", "(A ∩ B) ∪ (A ∩ C) ⊆ A ∩ (B ∪ C)   ∎"]]},
+{"title": "Primera ley distributiva", "clear": 1, "say": "Hemos probado las dos inclusiones. Por la doble inclusión, concluimos la primera igualdad: A intersección, B unión C, es igual a, A intersección B, unión, A intersección C.", "L": [["res", "A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)   ∎<span class='tag'>Doble inclusión</span>"]]},
+{"title": "Segunda ley (1): A ∪ (B ∩ C) ⊆ (A ∪ B) ∩ (A ∪ C)", "clear": 1, "say": "Probamos ahora la segunda ley distributiva, también por doble inclusión. Sea x un elemento de U. Empezamos por el apartado uno: demostrar que A unión, B intersección C, está contenido en, A unión B, intersección, A unión C. Suponemos que x pertenece a A unión, B intersección C. Esto es una hipótesis.", "L": [["txt", "Sea x ∈ U"], ["hyp", "x ∈ A ∪ (B ∩ C)<span class='tag'>Hipótesis</span>"], ["goal", "Queremos:  x ∈ (A ∪ B) ∩ (A ∪ C)<span class='tag'>Tesis</span>"]]},
+{"say": "Por la definición de unión, x pertenece a A, o x pertenece a B intersección C. Distinguimos dos casos.", "L": [["hyp", "x ∈ A   o   x ∈ B ∩ C<span class='tag'>Definición de ∪</span>"]]},
+{"say": "Primer caso: x pertenece a A. Entonces, claramente, x pertenece a A unión B, y x pertenece a A unión C, por la definición de unión. Por tanto, x pertenece a la intersección de las dos uniones.", "L": [["sub", "Caso 1:  x ∈ A"], ["sub", "x ∈ A ∪ B   y   x ∈ A ∪ C<span class='tag'>Definición de ∪</span>"], ["res", "x ∈ (A ∪ B) ∩ (A ∪ C)<span class='tag'>Definición de ∩</span>"]]},
+{"say": "Segundo caso: x pertenece a B intersección C. Entonces x pertenece a B, y x pertenece a C. En particular, x pertenece a A unión B, porque x pertenece a B. Y x pertenece a A unión C, porque x pertenece a C. Luego x pertenece a la intersección de las dos uniones.", "L": [["sub", "Caso 2:  x ∈ B ∩ C   ⟹   x ∈ B  y  x ∈ C<span class='tag'>Definición de ∩</span>"], ["sub", "x ∈ A ∪ B  (porque x ∈ B)   y   x ∈ A ∪ C  (porque x ∈ C)<span class='tag'>Definición de ∪</span>"], ["res", "x ∈ (A ∪ B) ∩ (A ∪ C)<span class='tag'>Definición de ∩</span>"]]},
+{"say": "En cualquiera de los dos casos, x pertenece a A unión B, intersección, A unión C. Y por tanto, A unión, B intersección C, está contenido en, A unión B, intersección, A unión C.", "L": [["res", "A ∪ (B ∩ C) ⊆ (A ∪ B) ∩ (A ∪ C)   ∎<span class='tag'>En ambos casos</span>"]]},
+{"title": "Segunda ley (2): (A ∪ B) ∩ (A ∪ C) ⊆ A ∪ (B ∩ C)", "clear": 1, "say": "Pasamos al apartado dos: demostrar que A unión B, intersección, A unión C, está contenido en, A unión, B intersección C. Suponemos ahora que x pertenece a A unión B, intersección, A unión C. Esto es una hipótesis.", "L": [["hyp", "x ∈ (A ∪ B) ∩ (A ∪ C)<span class='tag'>Hipótesis</span>"], ["goal", "Queremos:  x ∈ A ∪ (B ∩ C)<span class='tag'>Tesis</span>"]]},
+{"say": "Por la definición de intersección, x pertenece a A unión B, y x pertenece a A unión C. Y por la definición de unión, esto significa: x pertenece a A o x pertenece a B, y además, x pertenece a A o x pertenece a C.", "L": [["hyp", "x ∈ A ∪ B   y   x ∈ A ∪ C<span class='tag'>Definición de ∩</span>"], ["hyp", "(x ∈ A  o  x ∈ B)   y   (x ∈ A  o  x ∈ C)<span class='tag'>Definición de ∪</span>"]]},
+{"say": "Primer caso: supongamos que x pertenece a A. Esto es una hipótesis. Entonces, claramente, x pertenece a A unión, B intersección C, por la definición de unión, y hemos terminado.", "L": [["hyp", "Caso:  x ∈ A<span class='tag'>Hipótesis del caso</span>"], ["res", "x ∈ A ∪ (B ∩ C)<span class='tag'>Definición de ∪: hemos terminado</span>"]]},
+{"say": "Segundo caso: supongamos por tanto que x no pertenece a A. Esto es una hipótesis. Bajo esta suposición, de las condiciones anteriores se deduce lo siguiente.", "L": [["hyp", "Caso:  x ∉ A<span class='tag'>Hipótesis del caso</span>"]]},
+{"say": "De x pertenece a A unión B, y x no pertenece a A, se sigue que x pertenece a B.", "L": [["sub", "x ∈ A ∪ B   y   x ∉ A   ⟹   x ∈ B<span class='tag'>Si x ∈ A o x ∈ B, y x ∉ A, entonces x ∈ B</span>"]]},
+{"say": "De x pertenece a A unión C, y x no pertenece a A, se sigue que x pertenece a C.", "L": [["sub", "x ∈ A ∪ C   y   x ∉ A   ⟹   x ∈ C<span class='tag'>Si x ∈ A o x ∈ C, y x ∉ A, entonces x ∈ C</span>"]]},
+{"say": "Por tanto, x pertenece a B, y x pertenece a C. Es decir, por la definición de intersección, x pertenece a B intersección C.", "L": [["sub", "x ∈ B   y   x ∈ C   ⟹   x ∈ B ∩ C<span class='tag'>Definición de ∩</span>"]]},
+{"say": "En consecuencia, por la definición de unión, x pertenece a A unión, B intersección C.", "L": [["res", "x ∈ A ∪ (B ∩ C)<span class='tag'>Definición de ∪</span>"]]},
+{"say": "Hemos probado que en todos los casos x pertenece a A unión, B intersección C. Luego, A unión B, intersección, A unión C, está contenido en, A unión, B intersección C.", "L": [["res", "(A ∪ B) ∩ (A ∪ C) ⊆ A ∪ (B ∩ C)   ∎<span class='tag'>En todos los casos</span>"]]},
+{"title": "Segunda ley distributiva", "clear": 1, "say": "De los apartados uno y dos, por la doble inclusión, concluimos la igualdad: A unión, B intersección C, es igual a, A unión B, intersección, A unión C. Es decir, la unión distribuye sobre la intersección.", "L": [["res", "A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)   ∎<span class='tag'>Doble inclusión: la unión distribuye sobre la intersección</span>"]]},
+{"title": "Conclusión", "clear": 1, "say": "Como en las partes de U, con la unión y la intersección, se verifican ambas leyes distributivas, concluimos que es un retículo distributivo. Gracias por ver el vídeo.", "L": [["res", "A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)<span class='tag'>La intersección distribuye sobre la unión</span>"], ["res", "A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)<span class='tag'>La unión distribuye sobre la intersección</span>"], ["res", "(𝒫(U), ∪, ∩) es un retículo distributivo   ∎"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' más ').replace(/⊙/g,' por ').replace(/∼/g,' complementario de ').replace(/≤/g,' menor o igual que ').replace(/[()]/g,', ').replace(/\b1\b/g,' uno ').replace(/\b0\b/g,' cero ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Repetir'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Continuar'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pausa';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^es/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/pablo|jorge|diego|enrique|miguel|alvaro|álvaro|male|google español$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent='𝒫(U) es un retículo distributivo';$('sub').textContent='Ejercicio · Álgebra de conjuntos';
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

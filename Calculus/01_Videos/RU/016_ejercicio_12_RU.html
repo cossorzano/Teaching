@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>𝒫(U) — дистрибутивная решётка</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Запомним</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Начать</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Скорость <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Режим записи (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ru-RU",
+"meta":{"nivel": 2, "titulo": "𝒫(U) — дистрибутивная решётка", "enunciado": "Доказать, что (𝒫(U), ∪, ∩) — дистрибутивная решётка.", "tesis": "(1)  A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C),   (2)  A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)", "datos": ["(Гипотеза)  (𝒫(U), ∪, ∩) — решётка", "(Двойное включение)  X = Y ⇔ X ⊆ Y и Y ⊆ X", "(Опр ∪, ∩)  x ∈ X ∪ Y ⇔ x ∈ X или x ∈ Y,   x ∈ X ∩ Y ⇔ x ∈ X и x ∈ Y"]},
+"steps":[
+{"title": "𝒫(U) — дистрибутивная решётка", "sub": "Упражнение · Алгебра множеств", "clear": 1, "say": "Здравствуйте. В этом видео мы решим упражнение об алгебре множеств. Мы будем двигаться очень медленно, записывая каждое равенство и обосновывая каждый шаг.", "L": [["txt", "Доказать, что множество всех подмножеств U с объединением и пересечением — дистрибутивная решётка"]]},
+
+{"say": "Сначала данные. Мы уже знаем, что множество всех подмножеств У с объединением и пересечением образует решётку, где объединение играет роль супремума, а пересечение — инфимума.", "L": [["hyp", "(𝒫(U), ∪, ∩) — решётка<span class='tag'>Гипотеза: уже известно</span>"], ["txt", "∪ = супремум,     ∩ = инфимум"]]},
+
+{"say": "Чтобы она была дистрибутивной, нужно проверить, что для любых подмножеств А, Бэ и Цэ множества У выполняются два равенства. Первое: А пересечение, Бэ объединение Цэ, равно, А пересечение Бэ, объединение, А пересечение Цэ. Второе: А объединение, Бэ пересечение Цэ, равно, А объединение Бэ, пересечение, А объединение Цэ.", "L": [["txt", "Пусть A, B, C ⊆ U"], ["goal", "(1)  A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)<span class='tag'>Утверждение</span>"], ["goal", "(2)  A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)<span class='tag'>Утверждение</span>"]]},
+
+{"say": "Мы докажем оба равенства двойным включением. Напомним, что два множества равны тогда и только тогда, когда каждое содержится в другом. И вспомним определения объединения и пересечения через элементы: икс принадлежит объединению, если он принадлежит одному из двух множеств, и икс принадлежит пересечению, если он принадлежит обоим. Запишем их слева.", "L": [["sub", "X = Y  ⇔  X ⊆ Y  и  Y ⊆ X<span class='tag'>Равенство через двойное включение</span>"], ["sub", "X ⊆ Y  ⇔  (x ∈ X ⇒ x ∈ Y)<span class='tag'>Включение</span>"]], "pin": ["(Двойное включение) X = Y ⇔ X ⊆ Y и Y ⊆ X", "(Опр ∪) x ∈ X ∪ Y ⇔ x ∈ X или x ∈ Y", "(Опр ∩) x ∈ X ∩ Y ⇔ x ∈ X и x ∈ Y"]},
+
+{"title": "Первый закон: A ∩ (B ∪ C) ⊆ (A ∩ B) ∪ (A ∩ C)", "clear": 1, "say": "Начнём с первого равенства. Пусть икс — элемент У. Сначала докажем включение слева направо. Предположим, что икс принадлежит А пересечение, Бэ объединение Цэ. Это гипотеза.", "L": [["txt", "Пусть x ∈ U"], ["hyp", "x ∈ A ∩ (B ∪ C)<span class='tag'>Гипотеза</span>"], ["goal", "Хотим:  x ∈ (A ∩ B) ∪ (A ∩ C)<span class='tag'>Утверждение</span>"]]},
+
+{"say": "По определению пересечения, икс принадлежит А, и икс принадлежит Бэ объединение Цэ. А по определению объединения, икс принадлежит Бэ объединение Цэ означает, что икс принадлежит Бэ, или икс принадлежит Цэ.", "L": [["hyp", "x ∈ A   и   x ∈ B ∪ C<span class='tag'>Определение ∩</span>"], ["hyp", "x ∈ A   и   (x ∈ B  или  x ∈ C)<span class='tag'>Определение ∪</span>"]]},
+
+{"say": "Теперь рассмотрим два случая. Первый случай: икс принадлежит Бэ. Так как икс принадлежит также А, по определению пересечения, икс принадлежит А пересечение Бэ.", "L": [["sub", "Случай 1:  x ∈ B"], ["sub", "x ∈ A  и  x ∈ B   ⟹   x ∈ A ∩ B<span class='tag'>Определение ∩</span>"]]},
+
+{"say": "Второй случай: икс принадлежит Цэ. Так как икс принадлежит также А, по определению пересечения, икс принадлежит А пересечение Цэ.", "L": [["sub", "Случай 2:  x ∈ C"], ["sub", "x ∈ A  и  x ∈ C   ⟹   x ∈ A ∩ C<span class='tag'>Определение ∩</span>"]]},
+
+{"say": "В любом случае икс принадлежит А пересечение Бэ, или икс принадлежит А пересечение Цэ. По определению объединения, икс принадлежит, А пересечение Бэ, объединение, А пересечение Цэ. На этом это включение доказано.", "L": [["res", "x ∈ (A ∩ B) ∪ (A ∩ C)<span class='tag'>Определение ∪, в любом случае</span>"], ["res", "A ∩ (B ∪ C) ⊆ (A ∩ B) ∪ (A ∩ C)   ∎"]]},
+
+{"title": "Первый закон: (A ∩ B) ∪ (A ∩ C) ⊆ A ∩ (B ∪ C)", "clear": 1, "say": "Обратно, докажем включение справа налево. Предположим, что икс принадлежит, А пересечение Бэ, объединение, А пересечение Цэ. Это гипотеза. По определению объединения, икс принадлежит А пересечение Бэ, или икс принадлежит А пересечение Цэ.", "L": [["hyp", "x ∈ (A ∩ B) ∪ (A ∩ C)<span class='tag'>Гипотеза</span>"], ["hyp", "x ∈ A ∩ B   или   x ∈ A ∩ C<span class='tag'>Определение ∪</span>"], ["goal", "Хотим:  x ∈ A ∩ (B ∪ C)<span class='tag'>Утверждение</span>"]]},
+
+{"say": "В любом случае икс принадлежит А. Если икс принадлежит А пересечение Бэ, то икс принадлежит А и Бэ. А если икс принадлежит А пересечение Цэ, то икс принадлежит А и Цэ. Кроме того, в первом случае икс принадлежит Бэ, а во втором икс принадлежит Цэ. То есть икс принадлежит А, и, икс принадлежит Бэ или икс принадлежит Цэ.", "L": [["sub", "x ∈ A   и   (x ∈ B  или  x ∈ C)<span class='tag'>Определение ∩ в каждом случае</span>"]]},
+
+{"say": "По определению объединения, икс принадлежит Бэ или икс принадлежит Цэ означает, что икс принадлежит Бэ объединение Цэ.", "L": [["sub", "x ∈ A   и   x ∈ B ∪ C<span class='tag'>Определение ∪</span>"]]},
+
+{"say": "Следовательно, по определению пересечения, икс принадлежит А пересечение, Бэ объединение Цэ. На этом это включение доказано.", "L": [["res", "x ∈ A ∩ (B ∪ C)<span class='tag'>Определение ∩</span>"], ["res", "(A ∩ B) ∪ (A ∩ C) ⊆ A ∩ (B ∪ C)   ∎"]]},
+
+{"title": "Первый закон дистрибутивности", "clear": 1, "say": "Мы доказали оба включения. По двойному включению получаем первое равенство: А пересечение, Бэ объединение Цэ, равно, А пересечение Бэ, объединение, А пересечение Цэ.", "L": [["res", "A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)   ∎<span class='tag'>Двойное включение</span>"]]},
+
+{"title": "Второй закон (1): A ∪ (B ∩ C) ⊆ (A ∪ B) ∩ (A ∪ C)", "clear": 1, "say": "Теперь докажем второй закон дистрибутивности, тоже двойным включением. Пусть икс — элемент У. Начнём с части один: доказать, что А объединение, Бэ пересечение Цэ, содержится в, А объединение Бэ, пересечение, А объединение Цэ. Предположим, что икс принадлежит А объединение, Бэ пересечение Цэ. Это гипотеза.", "L": [["txt", "Пусть x ∈ U"], ["hyp", "x ∈ A ∪ (B ∩ C)<span class='tag'>Гипотеза</span>"], ["goal", "Хотим:  x ∈ (A ∪ B) ∩ (A ∪ C)<span class='tag'>Утверждение</span>"]]},
+
+{"say": "По определению объединения, икс принадлежит А, или икс принадлежит Бэ пересечение Цэ. Рассмотрим два случая.", "L": [["hyp", "x ∈ A   или   x ∈ B ∩ C<span class='tag'>Определение ∪</span>"]]},
+
+{"say": "Первый случай: икс принадлежит А. Тогда, очевидно, по определению объединения, икс принадлежит А объединение Бэ, и икс принадлежит А объединение Цэ. Следовательно, икс принадлежит пересечению двух объединений.", "L": [["sub", "Случай 1:  x ∈ A"], ["sub", "x ∈ A ∪ B   и   x ∈ A ∪ C<span class='tag'>Определение ∪</span>"], ["res", "x ∈ (A ∪ B) ∩ (A ∪ C)<span class='tag'>Определение ∩</span>"]]},
+
+{"say": "Второй случай: икс принадлежит Бэ пересечение Цэ. Тогда икс принадлежит Бэ, и икс принадлежит Цэ. В частности, икс принадлежит А объединение Бэ, так как икс принадлежит Бэ. И икс принадлежит А объединение Цэ, так как икс принадлежит Цэ. Значит, икс принадлежит пересечению двух объединений.", "L": [["sub", "Случай 2:  x ∈ B ∩ C   ⟹   x ∈ B  и  x ∈ C<span class='tag'>Определение ∩</span>"], ["sub", "x ∈ A ∪ B  (так как x ∈ B)   и   x ∈ A ∪ C  (так как x ∈ C)<span class='tag'>Определение ∪</span>"], ["res", "x ∈ (A ∪ B) ∩ (A ∪ C)<span class='tag'>Определение ∩</span>"]]},
+
+{"say": "В любом из двух случаев икс принадлежит, А объединение Бэ, пересечение, А объединение Цэ. И, следовательно, А объединение, Бэ пересечение Цэ, содержится в, А объединение Бэ, пересечение, А объединение Цэ.", "L": [["res", "A ∪ (B ∩ C) ⊆ (A ∪ B) ∩ (A ∪ C)   ∎<span class='tag'>В обоих случаях</span>"]]},
+
+{"title": "Второй закон (2): (A ∪ B) ∩ (A ∪ C) ⊆ A ∪ (B ∩ C)", "clear": 1, "say": "Переходим к части два: доказать, что, А объединение Бэ, пересечение, А объединение Цэ, содержится в, А объединение, Бэ пересечение Цэ. Теперь предположим, что икс принадлежит, А объединение Бэ, пересечение, А объединение Цэ. Это гипотеза.", "L": [["hyp", "x ∈ (A ∪ B) ∩ (A ∪ C)<span class='tag'>Гипотеза</span>"], ["goal", "Хотим:  x ∈ A ∪ (B ∩ C)<span class='tag'>Утверждение</span>"]]},
+
+{"say": "По определению пересечения, икс принадлежит А объединение Бэ, и икс принадлежит А объединение Цэ. А по определению объединения это означает: икс принадлежит А или икс принадлежит Бэ, и, кроме того, икс принадлежит А или икс принадлежит Цэ.", "L": [["hyp", "x ∈ A ∪ B   и   x ∈ A ∪ C<span class='tag'>Определение ∩</span>"], ["hyp", "(x ∈ A  или  x ∈ B)   и   (x ∈ A  или  x ∈ C)<span class='tag'>Определение ∪</span>"]]},
+
+{"say": "Первый случай: предположим, что икс принадлежит А. Это гипотеза. Тогда, очевидно, по определению объединения, икс принадлежит А объединение, Бэ пересечение Цэ, и всё доказано.", "L": [["hyp", "Случай:  x ∈ A<span class='tag'>Гипотеза случая</span>"], ["res", "x ∈ A ∪ (B ∩ C)<span class='tag'>Определение ∪: доказано</span>"]]},
+
+{"say": "Второй случай: предположим поэтому, что икс не принадлежит А. Это гипотеза. При этом предположении из предыдущих условий следует следующее.", "L": [["hyp", "Случай:  x ∉ A<span class='tag'>Гипотеза случая</span>"]]},
+
+{"say": "Из того, что икс принадлежит А объединение Бэ, и икс не принадлежит А, следует, что икс принадлежит Бэ.", "L": [["sub", "x ∈ A ∪ B   и   x ∉ A   ⟹   x ∈ B<span class='tag'>Если x ∈ A или x ∈ B, и x ∉ A, то x ∈ B</span>"]]},
+
+{"say": "Из того, что икс принадлежит А объединение Цэ, и икс не принадлежит А, следует, что икс принадлежит Цэ.", "L": [["sub", "x ∈ A ∪ C   и   x ∉ A   ⟹   x ∈ C<span class='tag'>Если x ∈ A или x ∈ C, и x ∉ A, то x ∈ C</span>"]]},
+
+{"say": "Следовательно, икс принадлежит Бэ, и икс принадлежит Цэ. То есть, по определению пересечения, икс принадлежит Бэ пересечение Цэ.", "L": [["sub", "x ∈ B   и   x ∈ C   ⟹   x ∈ B ∩ C<span class='tag'>Определение ∩</span>"]]},
+
+{"say": "Поэтому, по определению объединения, икс принадлежит А объединение, Бэ пересечение Цэ.", "L": [["res", "x ∈ A ∪ (B ∩ C)<span class='tag'>Определение ∪</span>"]]},
+
+{"say": "Мы доказали, что во всех случаях икс принадлежит А объединение, Бэ пересечение Цэ. Значит, А объединение Бэ, пересечение, А объединение Цэ, содержится в, А объединение, Бэ пересечение Цэ.", "L": [["res", "(A ∪ B) ∩ (A ∪ C) ⊆ A ∪ (B ∩ C)   ∎<span class='tag'>Во всех случаях</span>"]]},
+
+{"title": "Второй закон дистрибутивности", "clear": 1, "say": "Из частей один и два, по двойному включению, получаем равенство: А объединение, Бэ пересечение Цэ, равно, А объединение Бэ, пересечение, А объединение Цэ. То есть объединение дистрибутивно относительно пересечения.", "L": [["res", "A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)   ∎<span class='tag'>Двойное включение: объединение дистрибутивно относительно пересечения</span>"]]},
+
+{"title": "Вывод", "clear": 1, "say": "Поскольку в множестве всех подмножеств У с объединением и пересечением выполняются оба закона дистрибутивности, мы заключаем, что это дистрибутивная решётка. Спасибо за внимание.", "L": [["res", "A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)<span class='tag'>Пересечение дистрибутивно относительно объединения</span>"], ["res", "A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)<span class='tag'>Объединение дистрибутивно относительно пересечения</span>"], ["res", "(𝒫(U), ∪, ∩) — дистрибутивная решётка   ∎"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' плюс ').replace(/⊙/g,' умножить на ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Повторить'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Продолжить'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Пауза';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Пауза';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Пауза';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ru/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/dmitry|pavel|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="𝒫(U) — дистрибутивная решётка";$('sub').textContent="Упражнение · Алгебра множеств";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
