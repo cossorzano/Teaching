@@ -36,7 +36,7 @@ def main():
                 for f in ficheros)
             d = ' dir="rtl"' if lang in RTL else ""
             bloques.append(f'    <section class="lang"{d}>\n    <h3>{nombre} <span>{lang}</span></h3>\n'
-                           f'    <ul>\n{items}\n    </ul>\n    </section>')
+                           f'    <ol>\n{items}\n    </ol>\n    </section>')
         if bloques:
             num = tema.name.split("_")[0]
             secciones.append(f'  <h2>Topic {num}</h2>\n  <div class="grid">\n' + "\n".join(bloques) + "\n  </div>")
@@ -55,7 +55,7 @@ h2{{border-bottom:2px dashed #3d5a50;padding-bottom:6px}}
 .grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}}
 .lang{{background:var(--card);border-radius:12px;padding:12px 18px}}
 .lang h3{{margin:4px 0 8px}} .lang h3 span{{color:var(--mut);font:13px sans-serif}}
-ul{{margin:0;padding-inline-start:20px}} li{{margin:4px 0}}
+ol{{margin:0;padding-inline-start:30px}} li{{margin:4px 0}} li::marker{{color:var(--mut)}}
 a{{color:var(--link);text-decoration:none}} a:hover{{text-decoration:underline}}
 </style></head><body>
   <h1>Calculus · Interactive whiteboards</h1>
