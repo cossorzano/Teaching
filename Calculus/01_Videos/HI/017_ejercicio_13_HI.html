@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>𝒫(U) एक बूलीय बीजगणित है</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>याद रखें</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ शुरू करें</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>गति <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">रिकॉर्डिंग मोड (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"hi-IN",
+"meta":{"nivel": 2, "titulo": "𝒫(U) एक बूलीय बीजगणित है", "enunciado": "सिद्ध कीजिए कि (𝒫(U), ∪, ∩, ᶜ) एक बूलीय बीजगणित है।", "tesis": "(𝒫(U), ∪, ∩, ᶜ) एक बूलीय बीजगणित है", "datos": ["(परिकल्पना)  (𝒫(U), ∪, ∩) एक वितरणीय जालक है", "(पूरक परिभाषा)  Aᶜ = { x ∈ U | x ∉ A }", "(∪, ∩ परिभाषा)  x ∈ X ∪ Y ⇔ x ∈ X या x ∈ Y,   x ∈ X ∩ Y ⇔ x ∈ X और x ∈ Y"]},
+"steps":[
+{"title": "𝒫(U) एक बूलीय बीजगणित है", "sub": "अभ्यास · समुच्चयों का बीजगणित", "clear": 1, "say": "नमस्ते। इस वीडियो में हम समुच्चयों के बीजगणित पर एक अभ्यास हल करेंगे। हम बहुत धीरे चलेंगे, हर समीकरण लिखेंगे और हर चरण का कारण बताएँगे।", "L": [["txt", "सिद्ध कीजिए कि U का घात समुच्चय, सम्मिलन, सर्वनिष्ठ और पूरक के साथ, एक बूलीय बीजगणित है"]]},
+
+{"say": "पहले, दी गई जानकारी। U एक समुच्चय है, और U का घात समुच्चय उसके सभी उपसमुच्चयों का समुच्चय है। हम जानते हैं कि U का घात समुच्चय, सम्मिलन और सर्वनिष्ठ के साथ, एक वितरणीय जालक है।", "L": [["hyp", "(𝒫(U), ∪, ∩) एक वितरणीय जालक है<span class='tag'>परिकल्पना</span>"]]},
+
+{"say": "U के हर उपसमुच्चय A के लिए, हम उसका पूरक इस प्रकार परिभाषित करते हैं: U के उन सभी x का समुच्चय, जो A में नहीं हैं।", "L": [["sub", "A<sup>c</sup> = { x ∈ U | x ∉ A }<span class='tag'>पूरक की परिभाषा</span>"]]},
+
+{"say": "हमें क्या सिद्ध करना है। U का घात समुच्चय, सम्मिलन, सर्वनिष्ठ और पूरक के साथ, एक बूलीय बीजगणित है।", "L": [["goal", "(𝒫(U), ∪, ∩, <sup>c</sup>) एक बूलीय बीजगणित है<span class='tag'>साध्य</span>"]]},
+
+{"say": "इसे सिद्ध करने के लिए, इसके वितरणीय जालक होने के अलावा, हमें दो बातें जाँचनी हैं। पहली: एक न्यूनतम अवयव, शून्य, और एक अधिकतम अवयव, एक, का अस्तित्व। दूसरी: कि हर अवयव A, यानी U का हर उपसमुच्चय, का एक पूरक है। हम बाईं ओर अवयवों के साथ सम्मिलन और सर्वनिष्ठ की परिभाषाएँ, और पूरक की परिभाषा लिख लेते हैं, जिनका हम उपयोग करेंगे।", "L": [["goal", "(1)  एक न्यूनतम अवयव 0 और एक अधिकतम 1 है"], ["goal", "(2)  हर A ⊆ U का एक पूरक है<span class='tag'>क्या जाँचना है</span>"]], "pin": ["(∪ परिभाषा) x ∈ X ∪ Y ⇔ x ∈ X या x ∈ Y", "(∩ परिभाषा) x ∈ X ∩ Y ⇔ x ∈ X और x ∈ Y", "(पूरक परिभाषा) x ∈ A<sup>c</sup> ⇔ x ∈ U और x ∉ A"]},
+
+{"title": "(1) न्यूनतम और अधिकतम अवयव", "clear": 1, "say": "हम न्यूनतम अवयव से शुरू करते हैं। रिक्त समुच्चय न्यूनतम अवयव है। इसे सिद्ध करने के लिए, मान लीजिए A, U का कोई भी उपसमुच्चय है। हम दो समताएँ जाँचते हैं।", "L": [["txt", "मान लीजिए A ⊆ U  (स्वेच्छ)"], ["goal", "सिद्ध करना है:  ∅ न्यूनतम अवयव है"]]},
+
+{"say": "पहली समता। रिक्त समुच्चय सम्मिलन A, A के बराबर है।", "L": [["sub", "∅ ∪ A = A<span class='tag'>रिक्त समुच्चय कोई अवयव नहीं जोड़ता</span>"]]},
+
+{"say": "दूसरी समता। रिक्त समुच्चय सर्वनिष्ठ A, रिक्त समुच्चय के बराबर है।", "L": [["sub", "∅ ∩ A = ∅<span class='tag'>रिक्त समुच्चय का A के साथ कोई उभयनिष्ठ अवयव नहीं</span>"]]},
+
+{"say": "इसलिए, रिक्त समुच्चय न्यूनतम अवयव है।", "L": [["res", "∅ न्यूनतम अवयव है   ∎"]]},
+
+{"say": "अब अधिकतम अवयव। पूरा समुच्चय U अधिकतम अवयव है। इसे सिद्ध करने के लिए, मान लीजिए A, U का कोई भी उपसमुच्चय है। हम दो समताएँ जाँचते हैं।", "L": [["txt", "मान लीजिए A ⊆ U  (स्वेच्छ)"], ["goal", "सिद्ध करना है:  U अधिकतम अवयव है"]], "title": "अधिकतम अवयव", "clear": 1},
+
+{"say": "पहली समता। A सम्मिलन U, U के बराबर है।", "L": [["sub", "A ∪ U = U<span class='tag'>U में पहले से सभी अवयव हैं</span>"]]},
+
+{"say": "दूसरी समता। A सर्वनिष्ठ U, A के बराबर है।", "L": [["sub", "A ∩ U = A<span class='tag'>A के अवयव U में हैं</span>"]]},
+
+{"say": "इसलिए, पूरा समुच्चय U अधिकतम अवयव है।", "L": [["res", "U अधिकतम अवयव है   ∎"]]},
+
+{"say": "इसलिए, रिक्त समुच्चय सम्मिलन का तत्समक अवयव है, और U सर्वनिष्ठ का तत्समक अवयव है। यानी, शून्य रिक्त समुच्चय है, और एक U है। इन्हें हम बाईं ओर लिख लेते हैं।", "L": [["res", "∅, ∪ का तत्समक है   (0 = ∅)"], ["res", "U, ∩ का तत्समक है   (1 = U)"]], "title": "तत्समक अवयव", "clear": 1, "pin": ["(तत्समक) ∅ ∪ A = A,   A ∩ U = A"]},
+
+{"title": "(2) पूरक का अस्तित्व", "clear": 1, "say": "अब पूरक का अस्तित्व। मान लीजिए A, U का एक उपसमुच्चय है। हम सिद्ध करेंगे कि A का पूरक समुच्चय, A का पूरक अवयव है। इसके लिए दो शर्तें जाँचनी हैं: A सम्मिलन उसका पूरक, U है, और A सर्वनिष्ठ उसका पूरक, रिक्त समुच्चय है।", "L": [["txt", "मान लीजिए A ⊆ U"], ["goal", "(a)  A ∪ A<sup>c</sup> = U"], ["goal", "(b)  A ∩ A<sup>c</sup> = ∅<span class='tag'>पूरक की दो शर्तें</span>"]]},
+
+{"title": "(a) पहली शर्त: A ∪ Aᶜ = U", "clear": 1, "say": "पहली शर्त। हमें सिद्ध करना है कि A सम्मिलन उसका पूरक, U के बराबर है। मान लीजिए x, U का एक अवयव है। हम x, A सम्मिलन A के पूरक में है, से शुरू करते हैं।", "L": [["goal", "सिद्ध करना है:  A ∪ A<sup>c</sup> = U"], ["txt", "मान लीजिए x ∈ U"], ["txt", "x ∈ A ∪ A<sup>c</sup>"]]},
+
+{"say": "पहला चरण। सम्मिलन की परिभाषा से, x, A सम्मिलन A के पूरक में है, तभी और केवल तभी, जब x, A में है, या x, A के पूरक में है।", "L": [["sub", "⇔  (x ∈ A  या  x ∈ A<sup>c</sup>)<span class='tag'>∪ की परिभाषा</span>"]]},
+
+{"say": "दूसरा चरण। पूरक की परिभाषा से, x, A के पूरक में है, तभी और केवल तभी, जब x, A में नहीं है। इसलिए हमें मिलता है: x, A में है, या x, A में नहीं है।", "L": [["sub", "⇔  (x ∈ A  या  x ∉ A)<span class='tag'>पूरक की परिभाषा</span>"]]},
+
+{"say": "यह सदा सत्य है: या तो x, A में है, या नहीं है। इसलिए, U का हर अवयव x, A सम्मिलन उसके पूरक में है। और चूँकि A और उसका पूरक U के उपसमुच्चय हैं, उनका सम्मिलन भी है, और हम निष्कर्ष निकालते हैं कि A सम्मिलन उसका पूरक, U के बराबर है।", "L": [["res", "(x ∈ A  या  x ∉ A)  सदा सत्य है<span class='tag'>कोई अवयव A में होता है या नहीं होता</span>"], ["res", "A ∪ A<sup>c</sup> = U   ∎"]]},
+
+{"title": "(b) दूसरी शर्त: A ∩ Aᶜ = ∅", "clear": 1, "say": "दूसरी शर्त। हमें सिद्ध करना है कि A सर्वनिष्ठ उसका पूरक, रिक्त समुच्चय के बराबर है। मान लीजिए x, U का एक अवयव है। हम x, A सर्वनिष्ठ A के पूरक में है, से शुरू करते हैं।", "L": [["goal", "सिद्ध करना है:  A ∩ A<sup>c</sup> = ∅"], ["txt", "मान लीजिए x ∈ U"], ["txt", "x ∈ A ∩ A<sup>c</sup>"]]},
+
+{"say": "पहला चरण। सर्वनिष्ठ की परिभाषा से, x, A सर्वनिष्ठ A के पूरक में है, तभी और केवल तभी, जब x, A में है, और x, A के पूरक में है।", "L": [["sub", "⇔  (x ∈ A  और  x ∈ A<sup>c</sup>)<span class='tag'>∩ की परिभाषा</span>"]]},
+
+{"say": "दूसरा चरण। पूरक की परिभाषा से, x, A के पूरक में है, तभी और केवल तभी, जब x, A में नहीं है। इसलिए हमें मिलता है: x, A में है, और x, A में नहीं है।", "L": [["sub", "⇔  (x ∈ A  और  x ∉ A)<span class='tag'>पूरक की परिभाषा</span>"]]},
+
+{"say": "यह असंभव है: x एक साथ A में होना और A में न होना, दोनों नहीं हो सकता। इसलिए, कोई भी अवयव x, A सर्वनिष्ठ उसके पूरक में नहीं है, और हम निष्कर्ष निकालते हैं कि A सर्वनिष्ठ उसका पूरक, रिक्त समुच्चय के बराबर है।", "L": [["res", "(x ∈ A  और  x ∉ A)  असंभव है<span class='tag'>कोई x दोनों शर्तें पूरी नहीं करता</span>"], ["res", "A ∩ A<sup>c</sup> = ∅   ∎"]]},
+
+{"title": "हर अवयव का पूरक है", "clear": 1, "say": "हमने सिद्ध किया कि U के हर उपसमुच्चय A के लिए, A सम्मिलन उसका पूरक U है, और A सर्वनिष्ठ उसका पूरक रिक्त समुच्चय है। यानी, U के घात समुच्चय के हर अवयव का पूरक है।", "L": [["res", "A ∪ A<sup>c</sup> = U<span class='tag'>हर A ⊆ U के लिए</span>"], ["res", "A ∩ A<sup>c</sup> = ∅<span class='tag'>हर A ⊆ U के लिए</span>"], ["res", "𝒫(U) के हर अवयव का पूरक है   ∎"]]},
+
+{"title": "निष्कर्ष", "clear": 1, "say": "चूँकि U का घात समुच्चय, सम्मिलन और सर्वनिष्ठ के साथ, एक वितरणीय जालक है, जिसमें न्यूनतम अवयव रिक्त समुच्चय, अधिकतम अवयव U, और हर अवयव का पूरक है, हम निष्कर्ष निकालते हैं कि U का घात समुच्चय, सम्मिलन, सर्वनिष्ठ और पूरक के साथ, एक बूलीय बीजगणित है। देखने के लिए धन्यवाद।", "L": [["res", "(𝒫(U), ∪, ∩) वितरणीय जालक"], ["res", "न्यूनतम ∅,   अधिकतम U"], ["res", "हर A का पूरक A<sup>c</sup> है"], ["res", "(𝒫(U), ∪, ∩, <sup>c</sup>) एक बूलीय बीजगणित है   ∎"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' प्लस ').replace(/⊙/g,' गुणा ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ फिर से चलाएँ'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ जारी रखें'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ रोकें';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^hi/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/madhur|hemant|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="𝒫(U) एक बूलीय बीजगणित है";$('sub').textContent="अभ्यास · समुच्चयों का बीजगणित";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

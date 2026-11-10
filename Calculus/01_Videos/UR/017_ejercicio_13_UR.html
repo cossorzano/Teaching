@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>U کے ذیلی سیٹوں کا سیٹ ایک بولین الجبرا ہے</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-inline-end:2px dashed #3d5a50;padding-inline-end:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-inline-start:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+span[dir='ltr']{white-space:nowrap}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>یاد رکھیں</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ شروع کریں</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>رفتار <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">ریکارڈنگ موڈ (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ur-PK",
+"meta":{"nivel": 2, "titulo": "U کے ذیلی سیٹوں کا سیٹ ایک بولین الجبرا ہے", "enunciado": "ثابت کریں کہ <span dir='ltr'>(𝒫(U), ∪, ∩, ᶜ)</span> ایک بولین الجبرا ہے۔", "tesis": "(𝒫(U), ∪, ∩, ᶜ) ایک بولین الجبرا ہے", "datos": ["مفروضہ:  <span dir='ltr'>(𝒫(U), ∪, ∩)</span> ایک تقسیمی لیٹس ہے", "تکملے کی تعریف:  <span dir='ltr'>Aᶜ = { x ∈ U | x ∉ A }</span>", "اتصال اور تقاطع کی تعریفیں:  <span dir='ltr'>x ∈ X ∪ Y ⇔ x ∈ X ∨ x ∈ Y</span>،   <span dir='ltr'>x ∈ X ∩ Y ⇔ x ∈ X ∧ x ∈ Y</span>"]},
+"steps":[
+{"title": "U کے ذیلی سیٹوں کا سیٹ ایک بولین الجبرا ہے", "sub": "مشق · سیٹوں کا الجبرا", "clear": 1, "say": "السلام علیکم۔ اس ویڈیو میں ہم سیٹوں کے الجبرا پر ایک مشق حل کریں گے۔ ہم بہت آہستہ چلیں گے، ہر مساوات لکھیں گے اور ہر قدم کی وجہ بتائیں گے۔", "L": [["txt", "ثابت کریں کہ <span dir='ltr'>U</span> کے تمام ذیلی سیٹوں کا سیٹ، اتصال، تقاطع اور تکملے کے ساتھ، ایک بولین الجبرا ہے"]]},
+
+{"say": "پہلے، دی گئی معلومات۔ U ایک سیٹ ہے، اور U کے تمام ذیلی سیٹوں کا سیٹ اس کا پاور سیٹ ہے۔ ہم جانتے ہیں کہ U کے تمام ذیلی سیٹوں کا سیٹ، اتصال اور تقاطع کے ساتھ، ایک تقسیمی لیٹس ہے۔", "L": [["hyp", "<span dir='ltr'>(𝒫(U), ∪, ∩)</span> ایک تقسیمی لیٹس ہے<span class='tag'>مفروضہ</span>"]]},
+
+{"say": "U کے ہر ذیلی سیٹ A کے لیے، ہم اس کا تکملہ یوں تعریف کرتے ہیں: U کے ان تمام x کا سیٹ، جو A میں نہیں ہیں۔", "L": [["sub", "<span dir='ltr'>A<sup>c</sup> = { x ∈ U | x ∉ A }</span><span class='tag'>تکملے کی تعریف</span>"]]},
+
+{"say": "ہمیں کیا ثابت کرنا ہے۔ U کے تمام ذیلی سیٹوں کا سیٹ، اتصال، تقاطع اور تکملے کے ساتھ، ایک بولین الجبرا ہے۔", "L": [["goal", "<span dir='ltr'>(𝒫(U), ∪, ∩, <sup>c</sup>)</span> ایک بولین الجبرا ہے<span class='tag'>مطلوب</span>"]]},
+
+{"say": "اسے ثابت کرنے کے لیے، اس کے تقسیمی لیٹس ہونے کے علاوہ، ہمیں دو باتیں جانچنی ہیں۔ پہلی: ایک کم ترین رکن، صفر، اور ایک زیادہ ترین رکن، ایک، کا وجود۔ دوسری: یہ کہ ہر رکن A، یعنی U کے ہر ذیلی سیٹ، کا ایک تکملہ ہے۔ ہم ایک طرف ارکان کے ذریعے اتصال اور تقاطع کی تعریفیں، اور تکملے کی تعریف لکھ لیتے ہیں، جو ہم استعمال کریں گے۔", "L": [["goal", "<span dir='ltr'>(1)</span>  ایک کم ترین رکن <span dir='ltr'>0</span> اور ایک زیادہ ترین رکن <span dir='ltr'>1</span> موجود ہے"], ["goal", "<span dir='ltr'>(2)</span>  ہر <span dir='ltr'>A ⊆ U</span> کا ایک تکملہ ہے<span class='tag'>کیا جانچنا ہے</span>"]], "pin": ["اتصال کی تعریف: <span dir='ltr'>x ∈ X ∪ Y ⇔ x ∈ X ∨ x ∈ Y</span>", "تقاطع کی تعریف: <span dir='ltr'>x ∈ X ∩ Y ⇔ x ∈ X ∧ x ∈ Y</span>", "تکملے کی تعریف: <span dir='ltr'>x ∈ A<sup>c</sup> ⇔ x ∈ U ∧ x ∉ A</span>"]},
+
+{"title": "اول: کم ترین اور زیادہ ترین ارکان", "clear": 1, "say": "ہم کم ترین رکن سے شروع کرتے ہیں۔ خالی سیٹ کم ترین رکن ہے۔ اسے ثابت کرنے کے لیے، فرض کریں A، U کا کوئی بھی ذیلی سیٹ ہے۔ ہم دو مساواتیں جانچتے ہیں۔", "L": [["txt", "فرض کریں <span dir='ltr'>A ⊆ U</span>  اختیاری"], ["goal", "ثابت کرنا ہے:  <span dir='ltr'>∅</span> کم ترین رکن ہے"]]},
+
+{"say": "پہلی مساوات۔ خالی سیٹ اتصال A، A کے برابر ہے۔", "L": [["sub", "<span dir='ltr'>∅ ∪ A = A</span><span class='tag'>خالی سیٹ کوئی رکن نہیں بڑھاتا</span>"]]},
+
+{"say": "دوسری مساوات۔ خالی سیٹ تقاطع A، خالی سیٹ کے برابر ہے۔", "L": [["sub", "<span dir='ltr'>∅ ∩ A = ∅</span><span class='tag'>خالی سیٹ اور <span dir='ltr'>A</span> میں کوئی مشترک رکن نہیں</span>"]]},
+
+{"say": "لہٰذا، خالی سیٹ کم ترین رکن ہے۔", "L": [["res", "<span dir='ltr'>∅</span> کم ترین رکن ہے   <span dir='ltr'>∎</span>"]]},
+
+{"say": "اب زیادہ ترین رکن۔ پورا سیٹ U زیادہ ترین رکن ہے۔ اسے ثابت کرنے کے لیے، فرض کریں A، U کا کوئی بھی ذیلی سیٹ ہے۔ ہم دو مساواتیں جانچتے ہیں۔", "L": [["txt", "فرض کریں <span dir='ltr'>A ⊆ U</span>  اختیاری"], ["goal", "ثابت کرنا ہے:  <span dir='ltr'>U</span> زیادہ ترین رکن ہے"]], "title": "زیادہ ترین رکن", "clear": 1},
+
+{"say": "پہلی مساوات۔ A اتصال U، U کے برابر ہے۔", "L": [["sub", "<span dir='ltr'>A ∪ U = U</span><span class='tag'><span dir='ltr'>U</span> میں پہلے سے تمام ارکان ہیں</span>"]]},
+
+{"say": "دوسری مساوات۔ A تقاطع U، A کے برابر ہے۔", "L": [["sub", "<span dir='ltr'>A ∩ U = A</span><span class='tag'><span dir='ltr'>A</span> کے ارکان <span dir='ltr'>U</span> میں ہیں</span>"]]},
+
+{"say": "لہٰذا، پورا سیٹ U زیادہ ترین رکن ہے۔", "L": [["res", "<span dir='ltr'>U</span> زیادہ ترین رکن ہے   <span dir='ltr'>∎</span>"]]},
+
+{"say": "لہٰذا، خالی سیٹ اتصال کا غیر جانبدار رکن ہے، اور U تقاطع کا غیر جانبدار رکن ہے۔ یعنی صفر خالی سیٹ ہے، اور ایک U ہے۔ انہیں ہم ایک طرف لکھ لیتے ہیں۔", "L": [["res", "<span dir='ltr'>∅</span> اتصال کا غیر جانبدار رکن ہے:   <span dir='ltr'>0 = ∅</span>"], ["res", "<span dir='ltr'>U</span> تقاطع کا غیر جانبدار رکن ہے:   <span dir='ltr'>1 = U</span>"]], "title": "غیر جانبدار ارکان", "clear": 1, "pin": ["غیر جانبدار ارکان: <span dir='ltr'>∅ ∪ A = A</span>،   <span dir='ltr'>A ∩ U = A</span>"]},
+
+{"title": "دوم: تکملے کا وجود", "clear": 1, "say": "اب تکملے کا وجود۔ فرض کریں A، U کا ایک ذیلی سیٹ ہے۔ ہم ثابت کریں گے کہ سیٹ A کا تکملہ، لیٹس میں A کا تکملہ ہے۔ اس کے لیے دو شرائط جانچنی ہیں: A اتصال اس کا تکملہ U ہے، اور A تقاطع اس کا تکملہ خالی سیٹ ہے۔", "L": [["txt", "فرض کریں <span dir='ltr'>A ⊆ U</span>"], ["goal", "<span dir='ltr'>(a)  A ∪ A<sup>c</sup> = U</span>"], ["goal", "<span dir='ltr'>(b)  A ∩ A<sup>c</sup> = ∅</span><span class='tag'>تکملے کی دو شرائط</span>"]]},
+
+{"title": "پہلی شرط: A اور اس کے تکملے کا اتصال U ہے", "clear": 1, "say": "پہلی شرط۔ ہمیں ثابت کرنا ہے کہ A اتصال اس کا تکملہ، U کے برابر ہے۔ فرض کریں x، U کا ایک رکن ہے۔ ہم اس سے شروع کرتے ہیں کہ x، A اتصال A کے تکملے میں ہے۔", "L": [["goal", "ثابت کرنا ہے:  <span dir='ltr'>A ∪ A<sup>c</sup> = U</span>"], ["txt", "فرض کریں <span dir='ltr'>x ∈ U</span>"], ["txt", "<span dir='ltr'>x ∈ A ∪ A<sup>c</sup></span>"]]},
+
+{"say": "پہلا قدم۔ اتصال کی تعریف سے، x، A اتصال A کے تکملے میں ہے، تب اور صرف تب، جب x، A میں ہو، یا x، A کے تکملے میں ہو۔", "L": [["sub", "⇔  <span dir='ltr'>(x ∈ A  ∨  x ∈ A<sup>c</sup>)</span><span class='tag'>اتصال کی تعریف</span>"]]},
+
+{"say": "دوسرا قدم۔ تکملے کی تعریف سے، x، A کے تکملے میں ہے، تب اور صرف تب، جب x، A میں نہ ہو۔ لہٰذا ہمیں ملتا ہے: x، A میں ہے، یا x، A میں نہیں ہے۔", "L": [["sub", "⇔  <span dir='ltr'>(x ∈ A  ∨  x ∉ A)</span><span class='tag'>تکملے کی تعریف</span>"]]},
+
+{"say": "یہ ہمیشہ درست ہے: یا تو x، A میں ہے، یا نہیں ہے۔ لہٰذا U کا ہر رکن x، A اتصال اس کے تکملے میں ہے۔ اور چونکہ A اور اس کا تکملہ U کے ذیلی سیٹ ہیں، ان کا اتصال بھی ہے، اور ہم نتیجہ نکالتے ہیں کہ A اتصال اس کا تکملہ، U کے برابر ہے۔", "L": [["res", "<span dir='ltr'>(x ∈ A  ∨  x ∉ A)</span>  ہمیشہ درست ہے<span class='tag'>کوئی رکن یا تو <span dir='ltr'>A</span> میں ہوتا ہے یا نہیں ہوتا</span>"], ["res", "<span dir='ltr'>A ∪ A<sup>c</sup> = U   ∎</span>"]]},
+
+{"title": "دوسری شرط: A اور اس کے تکملے کا تقاطع خالی ہے", "clear": 1, "say": "دوسری شرط۔ ہمیں ثابت کرنا ہے کہ A تقاطع اس کا تکملہ، خالی سیٹ کے برابر ہے۔ فرض کریں x، U کا ایک رکن ہے۔ ہم اس سے شروع کرتے ہیں کہ x، A تقاطع A کے تکملے میں ہے۔", "L": [["goal", "ثابت کرنا ہے:  <span dir='ltr'>A ∩ A<sup>c</sup> = ∅</span>"], ["txt", "فرض کریں <span dir='ltr'>x ∈ U</span>"], ["txt", "<span dir='ltr'>x ∈ A ∩ A<sup>c</sup></span>"]]},
+
+{"say": "پہلا قدم۔ تقاطع کی تعریف سے، x، A تقاطع A کے تکملے میں ہے، تب اور صرف تب، جب x، A میں ہو، اور x، A کے تکملے میں ہو۔", "L": [["sub", "⇔  <span dir='ltr'>(x ∈ A  ∧  x ∈ A<sup>c</sup>)</span><span class='tag'>تقاطع کی تعریف</span>"]]},
+
+{"say": "دوسرا قدم۔ تکملے کی تعریف سے، x، A کے تکملے میں ہے، تب اور صرف تب، جب x، A میں نہ ہو۔ لہٰذا ہمیں ملتا ہے: x، A میں ہے، اور x، A میں نہیں ہے۔", "L": [["sub", "⇔  <span dir='ltr'>(x ∈ A  ∧  x ∉ A)</span><span class='tag'>تکملے کی تعریف</span>"]]},
+
+{"say": "یہ ناممکن ہے: x ایک ہی وقت میں A میں ہو اور A میں نہ ہو، ایسا نہیں ہو سکتا۔ لہٰذا کوئی رکن x، A تقاطع اس کے تکملے میں نہیں ہے، اور ہم نتیجہ نکالتے ہیں کہ A تقاطع اس کا تکملہ، خالی سیٹ کے برابر ہے۔", "L": [["res", "<span dir='ltr'>(x ∈ A  ∧  x ∉ A)</span>  ناممکن ہے<span class='tag'>کوئی <span dir='ltr'>x</span> دونوں شرطیں پوری نہیں کرتا</span>"], ["res", "<span dir='ltr'>A ∩ A<sup>c</sup> = ∅   ∎</span>"]]},
+
+{"title": "ہر رکن کا تکملہ ہے", "clear": 1, "say": "ہم نے ثابت کیا کہ U کے ہر ذیلی سیٹ A کے لیے، A اتصال اس کا تکملہ U ہے، اور A تقاطع اس کا تکملہ خالی سیٹ ہے۔ یعنی U کے ذیلی سیٹوں کے سیٹ کے ہر رکن کا تکملہ ہے۔", "L": [["res", "<span dir='ltr'>A ∪ A<sup>c</sup> = U</span><span class='tag'>ہر <span dir='ltr'>A ⊆ U</span> کے لیے</span>"], ["res", "<span dir='ltr'>A ∩ A<sup>c</sup> = ∅</span><span class='tag'>ہر <span dir='ltr'>A ⊆ U</span> کے لیے</span>"], ["res", "<span dir='ltr'>U</span> کے ذیلی سیٹوں کے سیٹ کے ہر رکن کا تکملہ ہے   <span dir='ltr'>∎</span>"]]},
+
+{"title": "نتیجہ", "clear": 1, "say": "چونکہ U کے تمام ذیلی سیٹوں کا سیٹ، اتصال اور تقاطع کے ساتھ، ایک تقسیمی لیٹس ہے، جس کا کم ترین رکن خالی سیٹ، زیادہ ترین رکن U، اور ہر رکن کا تکملہ ہے، ہم نتیجہ نکالتے ہیں کہ U کے تمام ذیلی سیٹوں کا سیٹ، اتصال، تقاطع اور تکملے کے ساتھ، ایک بولین الجبرا ہے۔ دیکھنے کا شکریہ۔", "L": [["res", "<span dir='ltr'>(𝒫(U), ∪, ∩)</span> تقسیمی لیٹس"], ["res", "کم ترین <span dir='ltr'>∅</span>،   زیادہ ترین <span dir='ltr'>U</span>"], ["res", "ہر <span dir='ltr'>A</span> کا تکملہ <span dir='ltr'>A<sup>c</sup></span> ہے"], ["res", "<span dir='ltr'>(𝒫(U), ∪, ∩, <sup>c</sup>)</span> ایک بولین الجبرا ہے   <span dir='ltr'>∎</span>"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' جمع ').replace(/⊙/g,' ضرب ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ دوبارہ چلائیں'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ جاری رکھیں'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ وقفہ';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ وقفہ';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ وقفہ';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ur/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/asad|salman|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="U کے ذیلی سیٹوں کا سیٹ ایک بولین الجبرا ہے";$('sub').textContent="مشق · سیٹوں کا الجبرا";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

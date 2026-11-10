@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>𝒫(U) adalah aljabar Boole</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Ingat</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Mulai</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Kecepatan <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Mode rekam (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"id-ID",
+"meta":{"nivel": 2, "titulo": "𝒫(U) adalah aljabar Boole", "enunciado": "Buktikan bahwa (𝒫(U), ∪, ∩, ᶜ) adalah aljabar Boole.", "tesis": "(𝒫(U), ∪, ∩, ᶜ) adalah aljabar Boole", "datos": ["(Hipotesis)  (𝒫(U), ∪, ∩) adalah latis distributif", "(Def c)  Aᶜ = { x ∈ U | x ∉ A }", "(Def ∪, ∩)  x ∈ X ∪ Y ⇔ x ∈ X atau x ∈ Y,   x ∈ X ∩ Y ⇔ x ∈ X dan x ∈ Y"]},
+"steps":[
+{"title": "𝒫(U) adalah aljabar Boole", "sub": "Latihan · Aljabar himpunan", "clear": 1, "say": "Halo. Dalam video ini kita akan menyelesaikan sebuah soal tentang aljabar himpunan. Kita akan berjalan sangat perlahan, menuliskan setiap persamaan dan memberikan alasan untuk setiap langkah.", "L": [["txt", "Buktikan bahwa himpunan kuasa U, dengan gabungan, irisan, dan komplemen, adalah aljabar Boole"]]},
+
+{"say": "Pertama, data yang diketahui. U adalah sebuah himpunan, dan himpunan kuasa U adalah himpunan semua himpunan bagiannya. Kita tahu bahwa himpunan kuasa U, dengan gabungan dan irisan, adalah latis distributif.", "L": [["hyp", "(𝒫(U), ∪, ∩) adalah latis distributif<span class='tag'>Hipotesis</span>"]]},
+
+{"say": "Untuk setiap himpunan bagian A dari U, kita definisikan komplemennya sebagai himpunan semua x di U yang bukan anggota A.", "L": [["sub", "A<sup>c</sup> = { x ∈ U | x ∉ A }<span class='tag'>Definisi komplemen</span>"]]},
+
+{"say": "Yang ingin kita buktikan. Himpunan kuasa U, dengan gabungan, irisan, dan komplemen, adalah aljabar Boole.", "L": [["goal", "(𝒫(U), ∪, ∩, <sup>c</sup>) adalah aljabar Boole<span class='tag'>Yang dibuktikan</span>"]]},
+
+{"say": "Untuk membuktikannya kita harus memeriksa dua hal, selain bahwa ia sudah merupakan latis distributif. Pertama: adanya unsur minimum, nol, dan unsur maksimum, satu. Kedua: bahwa setiap unsur A, yaitu himpunan bagian dari U, punya komplemen. Kita catat di sebelah kiri definisi gabungan dan irisan dengan unsur, serta definisi komplemen, yang akan kita pakai.", "L": [["goal", "(1)  Ada unsur minimum 0 dan maksimum 1"], ["goal", "(2)  Setiap A ⊆ U punya komplemen<span class='tag'>Yang harus diperiksa</span>"]], "pin": ["(Def ∪) x ∈ X ∪ Y ⇔ x ∈ X atau x ∈ Y", "(Def ∩) x ∈ X ∩ Y ⇔ x ∈ X dan x ∈ Y", "(Def c) x ∈ A<sup>c</sup> ⇔ x ∈ U dan x ∉ A"]},
+
+{"title": "(1) Unsur minimum dan maksimum", "clear": 1, "say": "Kita mulai dengan unsur minimum. Himpunan kosong adalah unsur minimum. Untuk membuktikannya, misalkan A sembarang himpunan bagian dari U. Kita periksa dua kesamaan.", "L": [["txt", "Misalkan A ⊆ U  (sembarang)"], ["goal", "Ingin dibuktikan:  ∅ adalah unsur minimum"]]},
+
+{"say": "Kesamaan pertama. Himpunan kosong gabung A sama dengan A.", "L": [["sub", "∅ ∪ A = A<span class='tag'>Himpunan kosong tidak menambah unsur</span>"]]},
+
+{"say": "Kesamaan kedua. Himpunan kosong irisan A sama dengan himpunan kosong.", "L": [["sub", "∅ ∩ A = ∅<span class='tag'>Himpunan kosong tidak punya unsur bersama dengan A</span>"]]},
+
+{"say": "Jadi, himpunan kosong adalah unsur minimum.", "L": [["res", "∅ adalah unsur minimum   ∎"]]},
+
+{"say": "Kita lanjutkan dengan unsur maksimum. Himpunan semesta U adalah unsur maksimum. Untuk membuktikannya, misalkan A sembarang himpunan bagian dari U. Kita periksa dua kesamaan.", "L": [["txt", "Misalkan A ⊆ U  (sembarang)"], ["goal", "Ingin dibuktikan:  U adalah unsur maksimum"]], "title": "Unsur maksimum", "clear": 1},
+
+{"say": "Kesamaan pertama. A gabung U sama dengan U.", "L": [["sub", "A ∪ U = U<span class='tag'>U sudah memuat semua unsur</span>"]]},
+
+{"say": "Kesamaan kedua. A irisan U sama dengan A.", "L": [["sub", "A ∩ U = A<span class='tag'>Unsur-unsur A ada di U</span>"]]},
+
+{"say": "Jadi, himpunan semesta U adalah unsur maksimum.", "L": [["res", "U adalah unsur maksimum   ∎"]]},
+
+{"say": "Jadi, himpunan kosong adalah unsur identitas gabungan, dan U adalah unsur identitas irisan. Artinya, nol adalah himpunan kosong, dan satu adalah U. Kita catat di sebelah kiri.", "L": [["res", "∅ adalah identitas ∪   (0 = ∅)"], ["res", "U adalah identitas ∩   (1 = U)"]], "title": "Unsur identitas", "clear": 1, "pin": ["(Identitas) ∅ ∪ A = A,   A ∩ U = A"]},
+
+{"title": "(2) Keberadaan komplemen", "clear": 1, "say": "Kita beralih ke keberadaan komplemen. Misalkan A himpunan bagian dari U. Kita akan membuktikan bahwa komplemen himpunan A adalah komplemen dari A dalam latis. Untuk itu ada dua syarat yang harus diperiksa: A gabung komplemennya adalah U, dan A irisan komplemennya adalah himpunan kosong.", "L": [["txt", "Misalkan A ⊆ U"], ["goal", "(a)  A ∪ A<sup>c</sup> = U"], ["goal", "(b)  A ∩ A<sup>c</sup> = ∅<span class='tag'>Dua syarat komplemen</span>"]]},
+
+{"title": "(a) Syarat pertama: A ∪ Aᶜ = U", "clear": 1, "say": "Syarat pertama. Kita ingin membuktikan bahwa A gabung komplemennya sama dengan U. Misalkan x sebuah unsur dari U. Kita mulai dari x anggota A gabung komplemen A.", "L": [["goal", "Ingin dibuktikan:  A ∪ A<sup>c</sup> = U"], ["txt", "Misalkan x ∈ U"], ["txt", "x ∈ A ∪ A<sup>c</sup>"]]},
+
+{"say": "Langkah pertama. Menurut definisi gabungan, x anggota A gabung komplemen A, jika dan hanya jika, x anggota A, atau x anggota komplemen A.", "L": [["sub", "⇔  (x ∈ A  atau  x ∈ A<sup>c</sup>)<span class='tag'>Definisi ∪</span>"]]},
+
+{"say": "Langkah kedua. Menurut definisi komplemen, x anggota komplemen A, jika dan hanya jika, x bukan anggota A. Jadi, kita peroleh: x anggota A, atau x bukan anggota A.", "L": [["sub", "⇔  (x ∈ A  atau  x ∉ A)<span class='tag'>Definisi komplemen</span>"]]},
+
+{"say": "Ini selalu benar: x anggota A, atau bukan. Jadi, setiap unsur x dari U adalah anggota A gabung komplemennya. Karena A dan komplemennya juga himpunan bagian dari U, gabungannya pun demikian, dan kita simpulkan bahwa A gabung komplemennya sama dengan U.", "L": [["res", "(x ∈ A  atau  x ∉ A)  selalu benar<span class='tag'>Suatu unsur anggota A atau bukan anggota A</span>"], ["res", "A ∪ A<sup>c</sup> = U   ∎"]]},
+
+{"title": "(b) Syarat kedua: A ∩ Aᶜ = ∅", "clear": 1, "say": "Syarat kedua. Kita ingin membuktikan bahwa A irisan komplemennya sama dengan himpunan kosong. Misalkan x sebuah unsur dari U. Kita mulai dari x anggota A irisan komplemen A.", "L": [["goal", "Ingin dibuktikan:  A ∩ A<sup>c</sup> = ∅"], ["txt", "Misalkan x ∈ U"], ["txt", "x ∈ A ∩ A<sup>c</sup>"]]},
+
+{"say": "Langkah pertama. Menurut definisi irisan, x anggota A irisan komplemen A, jika dan hanya jika, x anggota A, dan x anggota komplemen A.", "L": [["sub", "⇔  (x ∈ A  dan  x ∈ A<sup>c</sup>)<span class='tag'>Definisi ∩</span>"]]},
+
+{"say": "Langkah kedua. Menurut definisi komplemen, x anggota komplemen A, jika dan hanya jika, x bukan anggota A. Jadi, kita peroleh: x anggota A, dan x bukan anggota A.", "L": [["sub", "⇔  (x ∈ A  dan  x ∉ A)<span class='tag'>Definisi komplemen</span>"]]},
+
+{"say": "Ini mustahil: x tidak bisa sekaligus anggota A dan bukan anggota A. Jadi, tidak ada unsur x yang menjadi anggota A irisan komplemennya, dan kita simpulkan bahwa A irisan komplemennya sama dengan himpunan kosong.", "L": [["res", "(x ∈ A  dan  x ∉ A)  mustahil<span class='tag'>Tidak ada x yang memenuhi keduanya</span>"], ["res", "A ∩ A<sup>c</sup> = ∅   ∎"]]},
+
+{"title": "Setiap unsur punya komplemen", "clear": 1, "say": "Kita sudah membuktikan bahwa, untuk setiap himpunan bagian A dari U, A gabung komplemennya adalah U, dan A irisan komplemennya adalah himpunan kosong. Artinya, setiap unsur himpunan kuasa U punya komplemen.", "L": [["res", "A ∪ A<sup>c</sup> = U<span class='tag'>Untuk setiap A ⊆ U</span>"], ["res", "A ∩ A<sup>c</sup> = ∅<span class='tag'>Untuk setiap A ⊆ U</span>"], ["res", "Setiap unsur 𝒫(U) punya komplemen   ∎"]]},
+
+{"title": "Kesimpulan", "clear": 1, "say": "Karena himpunan kuasa U, dengan gabungan dan irisan, adalah latis distributif, dengan unsur minimum himpunan kosong, unsur maksimum U, dan komplemen untuk setiap unsur, kita simpulkan bahwa himpunan kuasa U, dengan gabungan, irisan, dan komplemen, adalah aljabar Boole. Terima kasih sudah menonton.", "L": [["res", "(𝒫(U), ∪, ∩) latis distributif"], ["res", "Minimum ∅,   maksimum U"], ["res", "Setiap A punya komplemen A<sup>c</sup>"], ["res", "(𝒫(U), ∪, ∩, <sup>c</sup>) adalah aljabar Boole   ∎"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' tambah ').replace(/⊙/g,' kali ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Ulangi'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Lanjutkan'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Jeda';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Jeda';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Jeda';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^id/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/ardi|andika|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="𝒫(U) adalah aljabar Boole";$('sub').textContent="Latihan · Aljabar himpunan";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

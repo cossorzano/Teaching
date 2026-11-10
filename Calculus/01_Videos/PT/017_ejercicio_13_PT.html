@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>𝒫(U) é uma álgebra de Boole</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Lembre-se</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Começar</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Velocidade <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Modo gravação (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"pt-BR",
+"meta":{"nivel": 2, "titulo": "𝒫(U) é uma álgebra de Boole", "enunciado": "Demonstrar que (𝒫(U), ∪, ∩, ᶜ) é uma álgebra de Boole.", "tesis": "(𝒫(U), ∪, ∩, ᶜ) é uma álgebra de Boole", "datos": ["(Hipótese)  (𝒫(U), ∪, ∩) é um reticulado distributivo", "(Def c)  Aᶜ = { x ∈ U | x ∉ A }", "(Def ∪, ∩)  x ∈ X ∪ Y ⇔ x ∈ X ou x ∈ Y,   x ∈ X ∩ Y ⇔ x ∈ X e x ∈ Y"]},
+"steps":[
+{"title": "𝒫(U) é uma álgebra de Boole", "sub": "Exercício · Álgebra de conjuntos", "clear": 1, "say": "Olá. Neste vídeo vamos resolver um exercício sobre álgebra de conjuntos. Vamos devagar, escrevendo cada equação e justificando cada passo.", "L": [["txt", "Demonstrar que o conjunto das partes de U, com a união, a interseção e o complementar, forma uma álgebra de Boole"]]},
+
+{"say": "Primeiro, os dados. U é um conjunto, e P de U é o seu conjunto das partes. Sabemos que o conjunto das partes de U, com a união e a interseção, forma um reticulado distributivo.", "L": [["hyp", "(𝒫(U), ∪, ∩) é um reticulado distributivo<span class='tag'>Hipótese</span>"]]},
+
+{"say": "Para cada subconjunto A de U, definimos o seu complementar como o conjunto dos x de U tais que x não pertence a A.", "L": [["sub", "A<sup>c</sup> = { x ∈ U | x ∉ A }<span class='tag'>Definição de complementar</span>"]]},
+
+{"say": "O que queremos demonstrar. O conjunto das partes de U, com a união, a interseção e o complementar, forma uma álgebra de Boole.", "L": [["goal", "(𝒫(U), ∪, ∩, <sup>c</sup>) é uma álgebra de Boole<span class='tag'>Tese</span>"]]},
+
+{"say": "Para o provar devemos verificar duas coisas, além de que já é um reticulado distributivo. Primeira: a existência de um elemento mínimo, zero, e de um máximo, um. Segunda: que todo elemento A, subconjunto de U, admite um complemento. Anotamos à esquerda as definições de união e de interseção com elementos, e a do complementar, que vamos usar.", "L": [["goal", "(1)  Existe um elemento mínimo 0 e um máximo 1"], ["goal", "(2)  Todo A ⊆ U admite um complemento<span class='tag'>O que é preciso verificar</span>"]], "pin": ["(Def ∪) x ∈ X ∪ Y ⇔ x ∈ X ou x ∈ Y", "(Def ∩) x ∈ X ∩ Y ⇔ x ∈ X e x ∈ Y", "(Def c) x ∈ A<sup>c</sup> ⇔ x ∈ U e x ∉ A"]},
+
+{"title": "(1) Elementos mínimo e máximo", "clear": 1, "say": "Começamos pelo elemento mínimo. O conjunto vazio é o elemento mínimo. Para o provar, seja A um subconjunto qualquer de U. Verificamos duas igualdades.", "L": [["txt", "Seja A ⊆ U  (arbitrário)"], ["goal", "Queremos:  ∅ é o elemento mínimo"]]},
+
+{"say": "Primeira igualdade. O conjunto vazio união A é igual a A.", "L": [["sub", "∅ ∪ A = A<span class='tag'>O vazio não acrescenta elementos</span>"]]},
+
+{"say": "Segunda igualdade. O conjunto vazio interseção A é igual ao conjunto vazio.", "L": [["sub", "∅ ∩ A = ∅<span class='tag'>O vazio não tem elementos em comum com A</span>"]]},
+
+{"say": "Portanto, o conjunto vazio é o elemento mínimo.", "L": [["res", "∅ é o elemento mínimo   ∎"]]},
+
+{"say": "Seguimos com o elemento máximo. O conjunto total U é o elemento máximo. Para o provar, seja A um subconjunto qualquer de U. Verificamos duas igualdades.", "L": [["txt", "Seja A ⊆ U  (arbitrário)"], ["goal", "Queremos:  U é o elemento máximo"]], "title": "Elemento máximo", "clear": 1},
+
+{"say": "Primeira igualdade. A união U é igual a U.", "L": [["sub", "A ∪ U = U<span class='tag'>U já contém todos os elementos</span>"]]},
+
+{"say": "Segunda igualdade. A interseção U é igual a A.", "L": [["sub", "A ∩ U = A<span class='tag'>Os elementos de A estão em U</span>"]]},
+
+{"say": "Portanto, o conjunto total U é o elemento máximo.", "L": [["res", "U é o elemento máximo   ∎"]]},
+
+{"say": "Portanto, o conjunto vazio é o neutro da união, e U é o neutro da interseção. Ou seja, zero é o conjunto vazio, e um é U. Anotamo-los à esquerda.", "L": [["res", "∅ é o neutro de ∪   (0 = ∅)"], ["res", "U é o neutro de ∩   (1 = U)"]], "title": "Neutros", "clear": 1, "pin": ["(Neutros) ∅ ∪ A = A,   A ∩ U = A"]},
+
+{"title": "(2) Existência de complemento", "clear": 1, "say": "Passamos à existência de complemento. Seja A um subconjunto de U. Vamos demonstrar que o complementar de A é um complemento de A. Para isso é preciso verificar duas condições: A união o seu complementar é U, e A interseção o seu complementar é o conjunto vazio.", "L": [["txt", "Seja A ⊆ U"], ["goal", "(a)  A ∪ A<sup>c</sup> = U"], ["goal", "(b)  A ∩ A<sup>c</sup> = ∅<span class='tag'>As duas condições do complemento</span>"]]},
+
+{"title": "(a) Primeira condição: A ∪ Aᶜ = U", "clear": 1, "say": "Primeira condição. Queremos provar que A união o seu complementar é igual a U. Seja x um elemento de U. Partimos de x pertence a A união o complementar de A.", "L": [["goal", "Queremos:  A ∪ A<sup>c</sup> = U"], ["txt", "Seja x ∈ U"], ["txt", "x ∈ A ∪ A<sup>c</sup>"]]},
+
+{"say": "Primeiro passo. Pela definição de união, x pertence a A união o complementar de A, se e somente se, x pertence a A, ou x pertence ao complementar de A.", "L": [["sub", "⇔  (x ∈ A  ou  x ∈ A<sup>c</sup>)<span class='tag'>Definição de ∪</span>"]]},
+
+{"say": "Segundo passo. Pela definição de complementar, x pertence ao complementar de A, se e somente se, x não pertence a A. Portanto, temos: x pertence a A, ou x não pertence a A.", "L": [["sub", "⇔  (x ∈ A  ou  x ∉ A)<span class='tag'>Definição de complementar</span>"]]},
+
+{"say": "Isto é sempre verdadeiro: ou x pertence a A, ou não pertence. Portanto, todo elemento x de U pertence a A união o seu complementar. Como além disso A e o seu complementar são subconjuntos de U, a sua união também o é, e concluímos que A união o seu complementar é igual a U.", "L": [["res", "(x ∈ A  ou  x ∉ A)  é sempre verdadeiro<span class='tag'>Um elemento pertence ou não pertence a A</span>"], ["res", "A ∪ A<sup>c</sup> = U   ∎"]]},
+
+{"title": "(b) Segunda condição: A ∩ Aᶜ = ∅", "clear": 1, "say": "Segunda condição. Queremos provar que A interseção o seu complementar é igual ao conjunto vazio. Seja x um elemento de U. Partimos de x pertence a A interseção o complementar de A.", "L": [["goal", "Queremos:  A ∩ A<sup>c</sup> = ∅"], ["txt", "Seja x ∈ U"], ["txt", "x ∈ A ∩ A<sup>c</sup>"]]},
+
+{"say": "Primeiro passo. Pela definição de interseção, x pertence a A interseção o complementar de A, se e somente se, x pertence a A, e x pertence ao complementar de A.", "L": [["sub", "⇔  (x ∈ A  e  x ∈ A<sup>c</sup>)<span class='tag'>Definição de ∩</span>"]]},
+
+{"say": "Segundo passo. Pela definição de complementar, x pertence ao complementar de A, se e somente se, x não pertence a A. Portanto, temos: x pertence a A, e x não pertence a A.", "L": [["sub", "⇔  (x ∈ A  e  x ∉ A)<span class='tag'>Definição de complementar</span>"]]},
+
+{"say": "Isto é impossível: x não pode pertencer a A e não pertencer a A ao mesmo tempo. Portanto, nenhum elemento x pertence a A interseção o seu complementar, e concluímos que A interseção o seu complementar é igual ao conjunto vazio.", "L": [["res", "(x ∈ A  e  x ∉ A)  é impossível<span class='tag'>Nenhum x cumpre as duas coisas</span>"], ["res", "A ∩ A<sup>c</sup> = ∅   ∎"]]},
+
+{"title": "Todo elemento tem complemento", "clear": 1, "say": "Provamos que, para todo subconjunto A de U, A união o seu complementar é U, e A interseção o seu complementar é o conjunto vazio. Ou seja, todo elemento do conjunto das partes de U tem complemento.", "L": [["res", "A ∪ A<sup>c</sup> = U<span class='tag'>Para todo A ⊆ U</span>"], ["res", "A ∩ A<sup>c</sup> = ∅<span class='tag'>Para todo A ⊆ U</span>"], ["res", "Todo elemento de 𝒫(U) tem complemento   ∎"]]},
+
+{"title": "Conclusão", "clear": 1, "say": "Como o conjunto das partes de U, com a união e a interseção, forma um reticulado distributivo, com elemento mínimo, o conjunto vazio, elemento máximo, U, e complemento para todo elemento, concluímos que o conjunto das partes de U, com a união, a interseção e o complementar, forma uma álgebra de Boole. Obrigado por assistir.", "L": [["res", "(𝒫(U), ∪, ∩) reticulado distributivo"], ["res", "Mínimo ∅,   máximo U"], ["res", "Todo A tem complemento A<sup>c</sup>"], ["res", "(𝒫(U), ∪, ∩, <sup>c</sup>) é uma álgebra de Boole   ∎"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' mais ').replace(/⊙/g,' vezes ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Repetir'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Continuar'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pausa';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^pt/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/antonio|antônio|donato|fabio|duarte|male|google português$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="𝒫(U) é uma álgebra de Boole";$('sub').textContent="Exercício · Álgebra de conjuntos";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
