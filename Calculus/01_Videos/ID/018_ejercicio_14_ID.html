@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Inklusi dengan selisih</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Ingat</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Mulai</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Kecepatan <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Mode rekam (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"id-ID",
+"meta":{"nivel": 1, "titulo": "Inklusi dengan selisih", "enunciado": "Buktikan bahwa, untuk sembarang himpunan A, B, D, berlaku:", "tesis": "A ∖ B ⊆ (A ∖ D) ∪ (D ∖ B)", "datos": ["(Inkl)  X ⊆ Y ⇔ (x ∈ X ⇒ x ∈ Y)", "(Sel)  x ∈ X ∖ Y ⇔ x ∈ X dan x ∉ Y", "(Def ∪)  x ∈ X ∪ Y ⇔ x ∈ X atau x ∈ Y"]},
+"steps":[
+{"title": "Inklusi dengan selisih", "sub": "Latihan · Aljabar himpunan", "clear": 1, "say": "Halo. Dalam video ini kita akan menyelesaikan sebuah soal tentang aljabar himpunan. Kita akan berjalan sangat perlahan, menuliskan setiap persamaan dan memberikan alasan untuk setiap langkah.", "L": [["txt", "Sebuah inklusi antarhimpunan dengan selisih"]]},
+
+{"say": "Yang ingin kita buktikan. Untuk sembarang himpunan A, B, dan D, A kurang B termuat dalam, A kurang D, gabung, D kurang B.", "L": [["txt", "Misalkan A, B, D sembarang himpunan"], ["goal", "A ∖ B ⊆ (A ∖ D) ∪ (D ∖ B)<span class='tag'>Yang dibuktikan</span>"]]},
+
+{"say": "Untuk membuktikannya, kita ingat tiga definisi, yang kita catat di sebelah kiri. Inklusi: X termuat dalam Y jika setiap unsur x dari X adalah anggota Y. Selisih: x anggota X kurang Y jika x anggota X, dan x bukan anggota Y. Dan gabungan: x anggota X gabung Y jika x anggota X, atau x anggota Y.", "L": [["sub", "X ⊆ Y  ⇔  (x ∈ X ⇒ x ∈ Y)<span class='tag'>Inklusi</span>"], ["sub", "x ∈ X ∖ Y  ⇔  x ∈ X  dan  x ∉ Y<span class='tag'>Selisih</span>"], ["sub", "x ∈ X ∪ Y  ⇔  x ∈ X  atau  x ∈ Y<span class='tag'>Gabungan</span>"]], "pin": ["(Inkl) X ⊆ Y ⇔ (x ∈ X ⇒ x ∈ Y)", "(Sel) x ∈ X ∖ Y ⇔ x ∈ X dan x ∉ Y", "(Def ∪) x ∈ X ∪ Y ⇔ x ∈ X atau x ∈ Y"]},
+
+{"title": "Misalkan x ∈ A ∖ B", "clear": 1, "say": "Menurut definisi inklusi, kita harus mengambil sembarang unsur dari himpunan di kiri dan membuktikan bahwa ia anggota himpunan di kanan. Misalkan x sebuah unsur dari A kurang B. Ini adalah hipotesis. Kita ingin membuktikan bahwa x anggota A kurang D, gabung, D kurang B.", "L": [["hyp", "Misalkan  x ∈ A ∖ B<span class='tag'>Hipotesis</span>"], ["goal", "Ingin dibuktikan:  x ∈ (A ∖ D) ∪ (D ∖ B)<span class='tag'>Yang dibuktikan</span>"]]},
+
+{"say": "Menurut definisi selisih, x anggota A, dan x bukan anggota B.", "L": [["hyp", "x ∈ A   dan   x ∉ B<span class='tag'>Definisi selisih</span>"]]},
+
+{"say": "Sekarang kita tinjau dua kasus, tergantung apakah x anggota D atau bukan. Hanya ada dua kasus yang mungkin: x bukan anggota D, atau x anggota D.", "L": [["sub", "Kasus 1:  x ∉ D"], ["sub", "Kasus 2:  x ∈ D<span class='tag'>Hanya ada dua kasus yang mungkin</span>"]]},
+
+{"title": "Kasus 1: x ∉ D", "clear": 1, "say": "Kasus pertama: andaikan x bukan anggota D. Ini adalah hipotesis.", "L": [["hyp", "x ∉ D<span class='tag'>Hipotesis kasus 1</span>"]]},
+
+{"say": "Maka, karena x anggota A, dan x bukan anggota D, menurut definisi selisih, x anggota A kurang D.", "L": [["sub", "x ∈ A   dan   x ∉ D   ⟹   x ∈ A ∖ D<span class='tag'>Definisi selisih</span>"]]},
+
+{"say": "Jadi, menurut definisi gabungan, x anggota A kurang D, gabung, D kurang B. Dengan ini kasus pertama selesai.", "L": [["res", "x ∈ (A ∖ D) ∪ (D ∖ B)<span class='tag'>Definisi ∪</span>"]]},
+
+{"title": "Kasus 2: x ∈ D", "clear": 1, "say": "Kasus kedua: andaikan x anggota D. Ini adalah hipotesis.", "L": [["hyp", "x ∈ D<span class='tag'>Hipotesis kasus 2</span>"]]},
+
+{"say": "Maka, karena x anggota D, dan x bukan anggota B, menurut definisi selisih, x anggota D kurang B. Ingat bahwa x bukan anggota B adalah bagian dari hipotesis awal.", "L": [["sub", "x ∈ D   dan   x ∉ B   ⟹   x ∈ D ∖ B<span class='tag'>Definisi selisih</span>"]]},
+
+{"say": "Jadi, menurut definisi gabungan, x anggota A kurang D, gabung, D kurang B. Dengan ini kasus kedua selesai.", "L": [["res", "x ∈ (A ∖ D) ∪ (D ∖ B)<span class='tag'>Definisi ∪</span>"]]},
+
+{"title": "Kesimpulan", "clear": 1, "say": "Pada kedua kasus, x anggota A kurang D, gabung, D kurang B. Karena x adalah unsur sembarang dari A kurang B, menurut definisi inklusi kita simpulkan bahwa A kurang B termuat dalam, A kurang D, gabung, D kurang B. Terima kasih sudah menonton.", "L": [["res", "Pada kedua kasus:  x ∈ (A ∖ D) ∪ (D ∖ B)"], ["res", "A ∖ B ⊆ (A ∖ D) ∪ (D ∖ B)   ∎<span class='tag'>x sembarang di A ∖ B</span>"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' tambah ').replace(/⊙/g,' kali ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Ulangi'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Lanjutkan'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Jeda';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Jeda';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Jeda';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^id/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/ardi|andika|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Inklusi dengan selisih";$('sub').textContent="Latihan · Aljabar himpunan";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>অন্তরসহ অন্তর্ভুক্তি</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>মনে রাখুন</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ শুরু</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>গতি <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">রেকর্ডিং মোড (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"bn-BD",
+"meta":{"nivel": 1, "titulo": "অন্তরসহ অন্তর্ভুক্তি", "enunciado": "প্রমাণ করুন যে যেকোনো সেট A, B, D এর জন্য:", "tesis": "A ∖ B ⊆ (A ∖ D) ∪ (D ∖ B)", "datos": ["(অন্তর্ভুক্তি)  X ⊆ Y ⇔ (x ∈ X ⇒ x ∈ Y)", "(অন্তর)  x ∈ X ∖ Y ⇔ x ∈ X এবং x ∉ Y", "(∪ সংজ্ঞা)  x ∈ X ∪ Y ⇔ x ∈ X অথবা x ∈ Y"]},
+"steps":[
+{"title": "অন্তরসহ অন্তর্ভুক্তি", "sub": "অনুশীলনী · সেটের বীজগণিত", "clear": 1, "say": "নমস্কার। এই ভিডিওতে আমরা সেটের বীজগণিত নিয়ে একটি অনুশীলনী সমাধান করব। আমরা খুব ধীরে এগোব, প্রতিটি সমীকরণ লিখব এবং প্রতিটি ধাপের যুক্তি দেব।", "L": [["txt", "অন্তরযুক্ত সেটগুলোর মধ্যে একটি অন্তর্ভুক্তি"]]},
+
+{"say": "আমরা যা প্রমাণ করতে চাই। যেকোনো সেট A, B ও D এর জন্য, A বাদ B অন্তর্ভুক্ত, A বাদ D, সংযোগ, D বাদ B তে।", "L": [["txt", "ধরা যাক A, B, D যেকোনো সেট"], ["goal", "A ∖ B ⊆ (A ∖ D) ∪ (D ∖ B)<span class='tag'>প্রামাণ্য</span>"]]},
+
+{"say": "এটি প্রমাণ করতে, আমরা তিনটি সংজ্ঞা মনে করি, যা বাঁ দিকে লিখে রাখি। অন্তর্ভুক্তি: X, Y তে অন্তর্ভুক্ত যদি X এর প্রতিটি উপাদান x, Y তে থাকে। অন্তর: x, X বাদ Y তে আছে যদি x, X এ থাকে, এবং x, Y তে না থাকে। আর সংযোগ: x, X সংযোগ Y তে আছে যদি x, X এ থাকে, অথবা x, Y তে থাকে।", "L": [["sub", "X ⊆ Y  ⇔  (x ∈ X ⇒ x ∈ Y)<span class='tag'>অন্তর্ভুক্তি</span>"], ["sub", "x ∈ X ∖ Y  ⇔  x ∈ X  এবং  x ∉ Y<span class='tag'>অন্তর</span>"], ["sub", "x ∈ X ∪ Y  ⇔  x ∈ X  অথবা  x ∈ Y<span class='tag'>সংযোগ</span>"]], "pin": ["(অন্তর্ভুক্তি) X ⊆ Y ⇔ (x ∈ X ⇒ x ∈ Y)", "(অন্তর) x ∈ X ∖ Y ⇔ x ∈ X এবং x ∉ Y", "(∪ সংজ্ঞা) x ∈ X ∪ Y ⇔ x ∈ X অথবা x ∈ Y"]},
+
+{"title": "ধরা যাক x ∈ A ∖ B", "clear": 1, "say": "অন্তর্ভুক্তির সংজ্ঞা অনুযায়ী, বাঁ দিকের সেটের যেকোনো একটি উপাদান নিয়ে প্রমাণ করতে হবে যে সেটি ডান দিকের সেটে আছে। ধরা যাক x হলো A বাদ B এর একটি উপাদান। এটি একটি অনুমান। আমরা প্রমাণ করতে চাই যে x, A বাদ D, সংযোগ, D বাদ B তে আছে।", "L": [["hyp", "ধরা যাক  x ∈ A ∖ B<span class='tag'>অনুমান</span>"], ["goal", "প্রমাণ করতে হবে:  x ∈ (A ∖ D) ∪ (D ∖ B)<span class='tag'>প্রামাণ্য</span>"]]},
+
+{"say": "অন্তরের সংজ্ঞা অনুযায়ী, x, A তে আছে, এবং x, B তে নেই।", "L": [["hyp", "x ∈ A   এবং   x ∉ B<span class='tag'>অন্তরের সংজ্ঞা</span>"]]},
+
+{"say": "এবার আমরা দুটি ক্ষেত্র বিবেচনা করি, x, D তে আছে কিনা তার উপর নির্ভর করে। কেবল এই দুটি ক্ষেত্রই সম্ভব: হয় x, D তে নেই, নয়তো x, D তে আছে।", "L": [["sub", "ক্ষেত্র 1:  x ∉ D"], ["sub", "ক্ষেত্র 2:  x ∈ D<span class='tag'>কেবল এই দুটি ক্ষেত্রই সম্ভব</span>"]]},
+
+{"title": "ক্ষেত্র 1: x ∉ D", "clear": 1, "say": "প্রথম ক্ষেত্র: ধরি x, D তে নেই। এটি একটি অনুমান।", "L": [["hyp", "x ∉ D<span class='tag'>ক্ষেত্র 1 এর অনুমান</span>"]]},
+
+{"say": "তাহলে, যেহেতু x, A তে আছে, এবং x, D তে নেই, অন্তরের সংজ্ঞা অনুযায়ী, x, A বাদ D তে আছে।", "L": [["sub", "x ∈ A   এবং   x ∉ D   ⟹   x ∈ A ∖ D<span class='tag'>অন্তরের সংজ্ঞা</span>"]]},
+
+{"say": "সুতরাং, সংযোগের সংজ্ঞা অনুযায়ী, x, A বাদ D, সংযোগ, D বাদ B তে আছে। এখানেই প্রথম ক্ষেত্র শেষ।", "L": [["res", "x ∈ (A ∖ D) ∪ (D ∖ B)<span class='tag'>∪ এর সংজ্ঞা</span>"]]},
+
+{"title": "ক্ষেত্র 2: x ∈ D", "clear": 1, "say": "দ্বিতীয় ক্ষেত্র: ধরি x, D তে আছে। এটি একটি অনুমান।", "L": [["hyp", "x ∈ D<span class='tag'>ক্ষেত্র 2 এর অনুমান</span>"]]},
+
+{"say": "তাহলে, যেহেতু x, D তে আছে, এবং x, B তে নেই, অন্তরের সংজ্ঞা অনুযায়ী, x, D বাদ B তে আছে। মনে রাখি, x যে B তে নেই, তা ছিল প্রাথমিক অনুমানের অংশ।", "L": [["sub", "x ∈ D   এবং   x ∉ B   ⟹   x ∈ D ∖ B<span class='tag'>অন্তরের সংজ্ঞা</span>"]]},
+
+{"say": "সুতরাং, সংযোগের সংজ্ঞা অনুযায়ী, x, A বাদ D, সংযোগ, D বাদ B তে আছে। এখানেই দ্বিতীয় ক্ষেত্র শেষ।", "L": [["res", "x ∈ (A ∖ D) ∪ (D ∖ B)<span class='tag'>∪ এর সংজ্ঞা</span>"]]},
+
+{"title": "উপসংহার", "clear": 1, "say": "দুই ক্ষেত্রেই, x, A বাদ D, সংযোগ, D বাদ B তে আছে। যেহেতু x ছিল A বাদ B এর যেকোনো একটি উপাদান, অন্তর্ভুক্তির সংজ্ঞা অনুযায়ী আমরা সিদ্ধান্তে আসি যে A বাদ B অন্তর্ভুক্ত, A বাদ D, সংযোগ, D বাদ B তে। দেখার জন্য ধন্যবাদ।", "L": [["res", "দুই ক্ষেত্রেই:  x ∈ (A ∖ D) ∪ (D ∖ B)"], ["res", "A ∖ B ⊆ (A ∖ D) ∪ (D ∖ B)   ∎<span class='tag'>x ছিল A ∖ B এর যেকোনো উপাদান</span>"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' প্লাস ').replace(/⊙/g,' গুণ ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ আবার চালান'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ চালিয়ে যান'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ বিরতি';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^bn/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/pradeep|bashkar|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="অন্তরসহ অন্তর্ভুক্তি";$('sub').textContent="অনুশীলনী · সেটের বীজগণিত";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
