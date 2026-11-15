@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>সমতলে অন্তর্ভুক্তি</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>মনে রাখুন</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ শুরু</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>গতি <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">রেকর্ডিং মোড (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"bn-BD",
+"meta":{"nivel": 1, "titulo": "সমতলে অন্তর্ভুক্তি", "enunciado": "ধরা যাক δ > 0 এবং ℝ² এ সেটগুলো A = { (x, y) ∈ ℝ² | |x| + |y| < δ }, B = { (x, y) ∈ ℝ² | √(x² + y²) < δ } ও C = { (x, y) ∈ ℝ² | max{ |x|, |y| } < δ }। প্রমাণ করুন যে:", "tesis": "A ⊆ B ⊆ C", "datos": ["δ > 0", "A = { (x, y) ∈ ℝ² | |x| + |y| < δ }", "B = { (x, y) ∈ ℝ² | √(x² + y²) < δ }", "C = { (x, y) ∈ ℝ² | max{ |x|, |y| } < δ }"]},
+"steps":[
+{"title": "সমতলে অন্তর্ভুক্তি", "sub": "অনুশীলনী · সেটের বীজগণিত", "clear": 1, "say": "নমস্কার। এই ভিডিওতে আমরা প্রমাণ করব যে সমতলের তিনটি সেট, যেগুলো পরম মান, ইউক্লিডীয় নর্ম এবং সর্বোচ্চ মান দিয়ে সংজ্ঞায়িত, একটি আরেকটির ভেতরে আছে। আমরা খুব ধীরে এগোব, প্রতিটি সমীকরণ লিখব এবং প্রতিটি ধাপের যুক্তি দেব।", "L": [["txt", "প্রমাণ করুন যে সমতলে  A ⊆ B ⊆ C"]]},
+
+{"say": "প্রদত্ত তথ্য। ধরা যাক ডেল্টা শূন্য থেকে বড় একটি বাস্তব সংখ্যা। A হলো সমতলের সেই সব বিন্দু x, y এর সেট, যাদের জন্য x এর পরম মান, যোগ y এর পরম মান, ডেল্টা থেকে ছোট। B হলো সেই সব বিন্দু x, y এর সেট, যাদের জন্য x এর বর্গ যোগ y এর বর্গের বর্গমূল ডেল্টা থেকে ছোট। আর C হলো সেই সব বিন্দু x, y এর সেট, যাদের জন্য x এর পরম মান ও y এর পরম মানের সর্বোচ্চটি ডেল্টা থেকে ছোট।", "L": [["hyp", "δ &gt; 0<span class='tag'>প্রদত্ত</span>"], ["hyp", "A = { (x, y) ∈ ℝ² | |x| + |y| &lt; δ }"], ["hyp", "B = { (x, y) ∈ ℝ² | √(x² + y²) &lt; δ }"], ["hyp", "C = { (x, y) ∈ ℝ² | max{ |x|, |y| } &lt; δ }"]]},
+
+{"say": "আমরা কী প্রমাণ করতে চাই। A, B এর অন্তর্ভুক্ত, এবং B, C এর অন্তর্ভুক্ত। এখানে অন্তর্ভুক্ত মানে অন্তর্ভুক্ত বা সমান। ডান দিকে আমরা ডেল্টা সমান এক এর জন্য আঁকা তিনটি সেট দেখি: A হলো রম্বস, B হলো বৃত্ত, এবং C হলো বর্গ। ভাঙা রেখাগুলো বোঝায় যে সীমানা সেটের অন্তর্ভুক্ত নয়। বাম দিকে আমরা মনে করিয়ে দিই যা ব্যবহার করব: অন্তর্ভুক্তির সংজ্ঞা, পরম মানের বর্গ হলো সংখ্যাটির বর্গ, কোনো সংখ্যার বর্গের বর্গমূল হলো তার পরম মান, এবং বর্গমূল ক্রম রক্ষা করে।", "L": [["goal", "A ⊆ B   এবং   B ⊆ C<span class='tag'>প্রমাণ করুন</span>"], ["txt", "<svg viewBox='0 0 300 300' width='100%' style='max-width:300px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='40' y='40' width='220' height='220' fill='#7be0a0' fill-opacity='.15' stroke='#7be0a0' stroke-width='2.5' stroke-dasharray='6 4'/><circle cx='150' cy='150' r='110' fill='#ffd166' fill-opacity='.15' stroke='#ffd166' stroke-width='2.5' stroke-dasharray='6 4'/><polygon points='150,40 260,150 150,260 40,150' fill='#7cc4ff' fill-opacity='.25' stroke='#7cc4ff' stroke-width='2.5' stroke-dasharray='6 4'/><line x1='10' y1='150' x2='290' y2='150' stroke='#9fb3aa' stroke-width='1'/><line x1='150' y1='10' x2='150' y2='290' stroke='#9fb3aa' stroke-width='1'/><text x='260' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>δ</text><text x='40' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>−δ</text><text x='156' y='54' fill='#9fb3aa' font-size='14'>δ</text><text x='136' y='155' fill='#7cc4ff' font-size='18'>A</text><text x='184' y='116' fill='#ffd166' font-size='18'>B</text><text x='216' y='84' fill='#7be0a0' font-size='18'>C</text></svg>"]], "pin": ["(⊆ সংজ্ঞা) X ⊆ Y  ⟺  প্রতিটি p ∈ X এর জন্য p ∈ Y", "(P1) |a|² = a²", "(P2) √(a²) = |a|", "(P3) যদি 0 ≤ u ≤ v তবে √u ≤ √v"], "clear": 1},
+
+{"title": "1) A ⊆ B", "clear": 1, "say": "প্রথম অংশ: আমরা প্রমাণ করি যে A, B এর অন্তর্ভুক্ত। অন্তর্ভুক্তির সংজ্ঞা অনুযায়ী, আমরা A এর যেকোনো একটি বিন্দু x, y নিই, এবং প্রমাণ করতে হবে যে এটি B তে আছে।", "L": [["hyp", "ধরা যাক (x, y) ∈ A"], ["goal", "আমরা চাই:  (x, y) ∈ B,  অর্থাৎ  √(x² + y²) &lt; δ"]]},
+
+{"say": "যেহেতু x, y, A তে আছে, A এর সংজ্ঞা অনুযায়ী x এর পরম মান, যোগ y এর পরম মান, ডেল্টা থেকে ছোট। এটিই আমাদের অনুমান।", "L": [["hyp", "(x, y) ∈ A  ⟹  |x| + |y| &lt; δ<span class='tag'>অনুমান</span>"]]},
+
+{"clear": 1, "say": "এবার আমরা পরম মানগুলোর যোগফলের বর্গ নির্ণয় করি। যোগফলের বর্গ বিস্তার করলে, এটি হলো x এর পরম মানের বর্গ, যোগ দুই গুণ x এর পরম মান গুণ y এর পরম মান, যোগ y এর পরম মানের বর্গ।", "L": [["txt", "যোগফলের বর্গ বিস্তার করি:"], ["sub", "(|x| + |y|)² = |x|² + 2|x||y| + |y|²"]]},
+
+{"say": "ধর্ম P1 অনুযায়ী, x এর পরম মানের বর্গ হলো x এর বর্গ, এবং y এর পরম মানের বর্গ হলো y এর বর্গ। আমরা এগুলো বসাই।", "L": [["txt", "(P1) থেকে, a = x  ও  a = y নিয়ে:"], ["sub", "(|x| + |y|)² = <mark>x²</mark> + 2|x||y| + <mark>y²</mark>"]]},
+
+{"say": "যেহেতু x এর পরম মান ও y এর পরম মান শূন্য থেকে বড় বা সমান, তাই দুই গুণ x এর পরম মান গুণ y এর পরম মান পদটি শূন্য থেকে বড় বা সমান। সুতরাং, এটিকে যোগফল থেকে বাদ দিলে যোগফল কমে বা একই থাকে। তাই যোগফলের বর্গ, x এর বর্গ যোগ y এর বর্গ থেকে বড় বা সমান।", "L": [["txt", "যেহেতু |x| ≥ 0 ও |y| ≥ 0, তাই 2|x||y| ≥ 0, সুতরাং:"], ["res", "x² + y² ≤ (|x| + |y|)²"]]},
+
+{"clear": 1, "say": "এবার আমরা বর্গমূল নিই। আমরা ধর্ম P3 ব্যবহার করি, u সমান x এর বর্গ যোগ y এর বর্গ, এবং v সমান পরম মানগুলোর যোগফলের বর্গ নিয়ে। দুটিই শূন্য থেকে বড় বা সমান, এবং u, v থেকে ছোট বা সমান। তাহলে x এর বর্গ যোগ y এর বর্গের বর্গমূল, x এর পরম মান যোগ y এর পরম মানের বর্গের বর্গমূল থেকে ছোট বা সমান।", "L": [["txt", "(P3),  u = x² + y²,  v = (|x| + |y|)²,  0 ≤ u ≤ v  নিয়ে:"], ["sub", "√(x² + y²) ≤ √( (|x| + |y|)² )"]]},
+
+{"say": "আর ধর্ম P2 অনুযায়ী, a সমান x এর পরম মান ও y এর পরম মানের যোগফল নিয়ে, সেই বর্গের বর্গমূল হলো যোগফলের পরম মান। কিন্তু যোগফলটি আগে থেকেই শূন্য থেকে বড় বা সমান, তাই এর পরম মান এটি নিজেই।", "L": [["txt", "(P2),  a = |x| + |y| ≥ 0  নিয়ে:   √( (|x| + |y|)² ) = | |x| + |y| | = |x| + |y|"], ["res", "√(x² + y²) ≤ |x| + |y|"]]},
+
+{"clear": 1, "say": "আমরা এই অসমতাকে অনুমানের সাথে মিলাই। x এর বর্গ যোগ y এর বর্গের বর্গমূল, x এর পরম মান যোগ y এর পরম মান থেকে ছোট বা সমান, এবং এটি ডেল্টা থেকে ছোট।", "L": [["txt", "অনুমান  |x| + |y| &lt; δ  এর সাথে মিলিয়ে:"], ["res", "√(x² + y²) ≤ |x| + |y| &lt; δ"]]},
+
+{"say": "সুতরাং, x এর বর্গ যোগ y এর বর্গের বর্গমূল ডেল্টা থেকে ছোট। এটিই ঠিক B এর সংজ্ঞা, তাই x, y, B তে আছে। যেহেতু x, y ছিল A এর যেকোনো একটি বিন্দু, আমরা সিদ্ধান্তে আসি যে A, B এর অন্তর্ভুক্ত।", "L": [["txt", "তাহলে  √(x² + y²) &lt; δ,  সুতরাং:"], ["hyp", "(x, y) ∈ B"], ["res", "A ⊆ B"]]},
+
+{"title": "2) B ⊆ C", "clear": 1, "say": "দ্বিতীয় অংশ: আমরা প্রমাণ করি যে B, C এর অন্তর্ভুক্ত। আমরা B এর যেকোনো একটি বিন্দু x, y নিই, এবং প্রমাণ করতে হবে যে এটি C তে আছে।", "L": [["hyp", "ধরা যাক (x, y) ∈ B"], ["goal", "আমরা চাই:  (x, y) ∈ C,  অর্থাৎ  max{ |x|, |y| } &lt; δ"]]},
+
+{"say": "যেহেতু x, y, B তে আছে, B এর সংজ্ঞা অনুযায়ী x এর বর্গ যোগ y এর বর্গের বর্গমূল ডেল্টা থেকে ছোট। এটিই আমাদের অনুমান।", "L": [["hyp", "(x, y) ∈ B  ⟹  √(x² + y²) &lt; δ<span class='tag'>অনুমান</span>"]]},
+
+{"clear": 1, "say": "প্রথমে, যেহেতু y এর বর্গ শূন্য থেকে বড় বা সমান, x এর বর্গ, x এর বর্গ যোগ y এর বর্গ থেকে ছোট বা সমান। একইভাবে, যেহেতু x এর বর্গ শূন্য থেকে বড় বা সমান, y এর বর্গ, x এর বর্গ যোগ y এর বর্গ থেকে ছোট বা সমান।", "L": [["txt", "যেহেতু  y² ≥ 0  ও  x² ≥ 0:"], ["sub", "x² ≤ x² + y²"], ["sub", "y² ≤ x² + y²"]]},
+
+{"say": "আমরা ধর্ম P3 দিয়ে বর্গমূল নিই। u সমান x এর বর্গ, এবং v সমান x এর বর্গ যোগ y এর বর্গ নিয়ে, x এর বর্গের মূল, x এর বর্গ যোগ y এর বর্গের মূল থেকে ছোট বা সমান। আর ধর্ম P2 অনুযায়ী, x এর বর্গের বর্গমূল হলো x এর পরম মান। y এর ক্ষেত্রেও একই।", "L": [["txt", "(P3),  u = x²,  v = x² + y²  নিয়ে,  তারপর (P2),  a = x  নিয়ে:"], ["sub", "|x| = √(x²) ≤ √(x² + y²)"], ["txt", "(P3),  u = y²,  v = x² + y²  নিয়ে,  তারপর (P2),  a = y  নিয়ে:"], ["sub", "|y| = √(y²) ≤ √(x² + y²)"]]},
+
+{"clear": 1, "say": "এবার আমরা অনুমান ব্যবহার করি। x এর পরম মান, x এর বর্গ যোগ y এর বর্গের মূল থেকে ছোট বা সমান, যা ডেল্টা থেকে ছোট। আর y এর ক্ষেত্রেও একই। সুতরাং, x এর পরম মান ডেল্টা থেকে ছোট, এবং y এর পরম মান ডেল্টা থেকে ছোট।", "L": [["txt", "অনুমান  √(x² + y²) &lt; δ  এর সাথে মিলিয়ে:"], ["res", "|x| ≤ √(x² + y²) &lt; δ"], ["res", "|y| ≤ √(x² + y²) &lt; δ"]]},
+
+{"say": "দুটি সংখ্যার সর্বোচ্চটি হলো ওই দুটির একটি, এবং দুটিই ডেল্টা থেকে ছোট। সুতরাং, x এর পরম মান ও y এর পরম মানের সর্বোচ্চটি ডেল্টা থেকে ছোট। এটিই C এর সংজ্ঞা, তাই x, y, C তে আছে। যেহেতু x, y ছিল B এর যেকোনো একটি বিন্দু, আমরা সিদ্ধান্তে আসি যে B, C এর অন্তর্ভুক্ত।", "L": [["txt", "|x| &lt; δ  এবং  |y| &lt; δ  ⟹  max{ |x|, |y| } &lt; δ"], ["hyp", "(x, y) ∈ C"], ["res", "B ⊆ C"]]},
+
+{"title": "উপসংহার", "clear": 1, "say": "উপসংহার। দুটি অংশ মিলিয়ে, A, B এর অন্তর্ভুক্ত, এবং B, C এর অন্তর্ভুক্ত। জ্যামিতিকভাবে, রম্বসটি বৃত্তের ভেতরে, এবং বৃত্তটি বর্গের ভেতরে। দেখার জন্য ধন্যবাদ।", "L": [["res", "A ⊆ B   এবং   B ⊆ C   ⟹   A ⊆ B ⊆ C"], ["txt", "<svg viewBox='0 0 300 300' width='100%' style='max-width:300px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='40' y='40' width='220' height='220' fill='#7be0a0' fill-opacity='.15' stroke='#7be0a0' stroke-width='2.5' stroke-dasharray='6 4'/><circle cx='150' cy='150' r='110' fill='#ffd166' fill-opacity='.15' stroke='#ffd166' stroke-width='2.5' stroke-dasharray='6 4'/><polygon points='150,40 260,150 150,260 40,150' fill='#7cc4ff' fill-opacity='.25' stroke='#7cc4ff' stroke-width='2.5' stroke-dasharray='6 4'/><line x1='10' y1='150' x2='290' y2='150' stroke='#9fb3aa' stroke-width='1'/><line x1='150' y1='10' x2='150' y2='290' stroke='#9fb3aa' stroke-width='1'/><text x='260' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>δ</text><text x='40' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>−δ</text><text x='156' y='54' fill='#9fb3aa' font-size='14'>δ</text><text x='136' y='155' fill='#7cc4ff' font-size='18'>A</text><text x='184' y='116' fill='#ffd166' font-size='18'>B</text><text x='216' y='84' fill='#7be0a0' font-size='18'>C</text></svg>"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' প্লাস ').replace(/⊙/g,' গুণ ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ আবার চালান'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ চালিয়ে যান'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ বিরতি';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^bn/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/pradeep|bashkar|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="সমতলে অন্তর্ভুক্তি";$('sub').textContent="অনুশীলনী · সেটের বীজগণিত";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

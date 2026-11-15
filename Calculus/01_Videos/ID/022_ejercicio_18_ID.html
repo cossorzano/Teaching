@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Inklusi di bidang</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Ingat</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Mulai</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Kecepatan <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Mode rekam (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"id-ID",
+"meta":{"nivel": 1, "titulo": "Inklusi di bidang", "enunciado": "Misalkan δ > 0 dan perhatikan di ℝ² himpunan A = { (x, y) ∈ ℝ² | |x| + |y| < δ }, B = { (x, y) ∈ ℝ² | √(x² + y²) < δ } dan C = { (x, y) ∈ ℝ² | max{ |x|, |y| } < δ }. Buktikan bahwa:", "tesis": "A ⊆ B ⊆ C", "datos": ["δ > 0", "A = { (x, y) ∈ ℝ² | |x| + |y| < δ }", "B = { (x, y) ∈ ℝ² | √(x² + y²) < δ }", "C = { (x, y) ∈ ℝ² | max{ |x|, |y| } < δ }"]},
+"steps":[
+{"title": "Inklusi di bidang", "sub": "Latihan · Aljabar himpunan", "clear": 1, "say": "Halo. Dalam video ini kita akan membuktikan bahwa tiga himpunan di bidang, yang didefinisikan dengan nilai mutlak, norma Euklides, dan maksimum, terletak satu di dalam yang lain. Kita akan berjalan sangat perlahan, menuliskan setiap persamaan dan memberikan alasan untuk setiap langkah.", "L": [["txt", "Buktikan bahwa  A ⊆ B ⊆ C  di bidang"]]},
+
+{"say": "Data yang diketahui. Misalkan delta adalah bilangan real yang lebih besar dari nol. A adalah himpunan titik x, y di bidang sehingga nilai mutlak x, ditambah nilai mutlak y, lebih kecil dari delta. B adalah himpunan titik x, y sehingga akar kuadrat dari x kuadrat ditambah y kuadrat lebih kecil dari delta. Dan C adalah himpunan titik x, y sehingga maksimum dari nilai mutlak x dan nilai mutlak y lebih kecil dari delta.", "L": [["hyp", "δ &gt; 0<span class='tag'>Diketahui</span>"], ["hyp", "A = { (x, y) ∈ ℝ² | |x| + |y| &lt; δ }"], ["hyp", "B = { (x, y) ∈ ℝ² | √(x² + y²) &lt; δ }"], ["hyp", "C = { (x, y) ∈ ℝ² | max{ |x|, |y| } &lt; δ }"]]},
+
+{"say": "Yang ingin kita buktikan. A termuat dalam B, dan B termuat dalam C. Di sini inklusi berarti termuat atau sama. Di sebelah kanan kita lihat ketiga himpunan digambar untuk delta sama dengan satu: A adalah belah ketupat, B adalah lingkaran, dan C adalah persegi. Garis putus-putus menunjukkan bahwa batasnya tidak termasuk dalam himpunan. Di sebelah kiri kita ingat apa yang akan kita pakai: definisi inklusi, bahwa kuadrat suatu nilai mutlak sama dengan kuadrat bilangannya, bahwa akar kuadrat dari kuadrat suatu bilangan adalah nilai mutlaknya, dan bahwa akar kuadrat mempertahankan urutan.", "L": [["goal", "A ⊆ B   dan   B ⊆ C<span class='tag'>Buktikan</span>"], ["txt", "<svg viewBox='0 0 300 300' width='100%' style='max-width:300px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='40' y='40' width='220' height='220' fill='#7be0a0' fill-opacity='.15' stroke='#7be0a0' stroke-width='2.5' stroke-dasharray='6 4'/><circle cx='150' cy='150' r='110' fill='#ffd166' fill-opacity='.15' stroke='#ffd166' stroke-width='2.5' stroke-dasharray='6 4'/><polygon points='150,40 260,150 150,260 40,150' fill='#7cc4ff' fill-opacity='.25' stroke='#7cc4ff' stroke-width='2.5' stroke-dasharray='6 4'/><line x1='10' y1='150' x2='290' y2='150' stroke='#9fb3aa' stroke-width='1'/><line x1='150' y1='10' x2='150' y2='290' stroke='#9fb3aa' stroke-width='1'/><text x='260' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>δ</text><text x='40' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>−δ</text><text x='156' y='54' fill='#9fb3aa' font-size='14'>δ</text><text x='136' y='155' fill='#7cc4ff' font-size='18'>A</text><text x='184' y='116' fill='#ffd166' font-size='18'>B</text><text x='216' y='84' fill='#7be0a0' font-size='18'>C</text></svg>"]], "pin": ["(Def ⊆) X ⊆ Y  ⟺  setiap p ∈ X memenuhi p ∈ Y", "(P1) |a|² = a²", "(P2) √(a²) = |a|", "(P3) jika 0 ≤ u ≤ v maka √u ≤ √v"], "clear": 1},
+
+{"title": "1) A ⊆ B", "clear": 1, "say": "Bagian pertama: kita buktikan bahwa A termuat dalam B. Menurut definisi inklusi, kita ambil sebarang titik x, y di A, dan kita harus membuktikan bahwa titik itu anggota B.", "L": [["hyp", "Misalkan (x, y) ∈ A"], ["goal", "Ingin ditunjukkan:  (x, y) ∈ B,  yaitu  √(x² + y²) &lt; δ"]]},
+
+{"say": "Karena x, y anggota A, menurut definisi A berlaku bahwa nilai mutlak x, ditambah nilai mutlak y, lebih kecil dari delta. Inilah hipotesis kita.", "L": [["hyp", "(x, y) ∈ A  ⟹  |x| + |y| &lt; δ<span class='tag'>Hipotesis</span>"]]},
+
+{"clear": 1, "say": "Sekarang kita hitung kuadrat dari jumlah nilai-nilai mutlak. Dengan menjabarkan kuadrat suatu jumlah, hasilnya adalah kuadrat nilai mutlak x, ditambah dua kali nilai mutlak x kali nilai mutlak y, ditambah kuadrat nilai mutlak y.", "L": [["txt", "Kita jabarkan kuadrat suatu jumlah:"], ["sub", "(|x| + |y|)² = |x|² + 2|x||y| + |y|²"]]},
+
+{"say": "Dengan sifat P1, kuadrat nilai mutlak x adalah x kuadrat, dan kuadrat nilai mutlak y adalah y kuadrat. Kita substitusikan.", "L": [["txt", "Dengan (P1) untuk a = x  dan  untuk a = y:"], ["sub", "(|x| + |y|)² = <mark>x²</mark> + 2|x||y| + <mark>y²</mark>"]]},
+
+{"say": "Karena nilai mutlak x dan nilai mutlak y lebih besar atau sama dengan nol, suku dua kali nilai mutlak x kali nilai mutlak y lebih besar atau sama dengan nol. Jadi, jika suku itu kita buang dari jumlahnya, jumlahnya berkurang atau tetap sama. Maka kuadrat jumlahnya lebih besar atau sama dengan x kuadrat ditambah y kuadrat.", "L": [["txt", "Karena |x| ≥ 0 dan |y| ≥ 0, maka 2|x||y| ≥ 0, sehingga:"], ["res", "x² + y² ≤ (|x| + |y|)²"]]},
+
+{"clear": 1, "say": "Sekarang kita ambil akar kuadrat. Kita gunakan sifat P3, dengan u sama dengan x kuadrat ditambah y kuadrat, dan v sama dengan kuadrat dari jumlah nilai-nilai mutlak. Keduanya lebih besar atau sama dengan nol, dan u lebih kecil atau sama dengan v. Maka akar kuadrat dari x kuadrat ditambah y kuadrat lebih kecil atau sama dengan akar kuadrat dari, nilai mutlak x ditambah nilai mutlak y, dikuadratkan.", "L": [["txt", "(P3) dengan  u = x² + y²,  v = (|x| + |y|)²,  0 ≤ u ≤ v:"], ["sub", "√(x² + y²) ≤ √( (|x| + |y|)² )"]]},
+
+{"say": "Dan dengan sifat P2, dengan a sama dengan jumlah nilai mutlak x dan nilai mutlak y, akar kuadrat dari kuadrat itu adalah nilai mutlak dari jumlahnya. Tetapi jumlahnya sudah lebih besar atau sama dengan nol, jadi nilai mutlaknya adalah jumlah itu sendiri.", "L": [["txt", "(P2) dengan  a = |x| + |y| ≥ 0:   √( (|x| + |y|)² ) = | |x| + |y| | = |x| + |y|"], ["res", "√(x² + y²) ≤ |x| + |y|"]]},
+
+{"clear": 1, "say": "Kita gabungkan pertidaksamaan ini dengan hipotesis. Akar kuadrat dari x kuadrat ditambah y kuadrat lebih kecil atau sama dengan nilai mutlak x ditambah nilai mutlak y, dan ini lebih kecil dari delta.", "L": [["txt", "Digabung dengan hipotesis  |x| + |y| &lt; δ :"], ["res", "√(x² + y²) ≤ |x| + |y| &lt; δ"]]},
+
+{"say": "Jadi, akar kuadrat dari x kuadrat ditambah y kuadrat lebih kecil dari delta. Ini tepat definisi B, jadi x, y anggota B. Karena x, y adalah sebarang titik di A, kita simpulkan bahwa A termuat dalam B.", "L": [["txt", "Maka  √(x² + y²) &lt; δ,  sehingga:"], ["hyp", "(x, y) ∈ B"], ["res", "A ⊆ B"]]},
+
+{"title": "2) B ⊆ C", "clear": 1, "say": "Bagian kedua: kita buktikan bahwa B termuat dalam C. Kita ambil sebarang titik x, y di B, dan kita harus membuktikan bahwa titik itu anggota C.", "L": [["hyp", "Misalkan (x, y) ∈ B"], ["goal", "Ingin ditunjukkan:  (x, y) ∈ C,  yaitu  max{ |x|, |y| } &lt; δ"]]},
+
+{"say": "Karena x, y anggota B, menurut definisi B berlaku bahwa akar kuadrat dari x kuadrat ditambah y kuadrat lebih kecil dari delta. Inilah hipotesis kita.", "L": [["hyp", "(x, y) ∈ B  ⟹  √(x² + y²) &lt; δ<span class='tag'>Hipotesis</span>"]]},
+
+{"clear": 1, "say": "Pertama, karena y kuadrat lebih besar atau sama dengan nol, x kuadrat lebih kecil atau sama dengan x kuadrat ditambah y kuadrat. Dengan cara yang sama, karena x kuadrat lebih besar atau sama dengan nol, y kuadrat lebih kecil atau sama dengan x kuadrat ditambah y kuadrat.", "L": [["txt", "Karena  y² ≥ 0  dan  x² ≥ 0:"], ["sub", "x² ≤ x² + y²"], ["sub", "y² ≤ x² + y²"]]},
+
+{"say": "Kita ambil akar kuadrat, dengan sifat P3. Dengan u sama dengan x kuadrat, dan v sama dengan x kuadrat ditambah y kuadrat, akar dari x kuadrat lebih kecil atau sama dengan akar dari x kuadrat ditambah y kuadrat. Dan dengan sifat P2, akar kuadrat dari x kuadrat adalah nilai mutlak x. Hal yang sama untuk y.", "L": [["txt", "(P3) dengan  u = x²,  v = x² + y²,  lalu (P2) dengan  a = x:"], ["sub", "|x| = √(x²) ≤ √(x² + y²)"], ["txt", "(P3) dengan  u = y²,  v = x² + y²,  lalu (P2) dengan  a = y:"], ["sub", "|y| = √(y²) ≤ √(x² + y²)"]]},
+
+{"clear": 1, "say": "Sekarang kita gunakan hipotesis. Nilai mutlak x lebih kecil atau sama dengan akar dari x kuadrat ditambah y kuadrat, yang lebih kecil dari delta. Dan hal yang sama untuk y. Jadi, nilai mutlak x lebih kecil dari delta, dan nilai mutlak y lebih kecil dari delta.", "L": [["txt", "Digabung dengan hipotesis  √(x² + y²) &lt; δ :"], ["res", "|x| ≤ √(x² + y²) &lt; δ"], ["res", "|y| ≤ √(x² + y²) &lt; δ"]]},
+
+{"say": "Maksimum dari dua bilangan adalah salah satu dari keduanya, dan keduanya lebih kecil dari delta. Jadi, maksimum dari nilai mutlak x dan nilai mutlak y lebih kecil dari delta. Ini adalah definisi C, jadi x, y anggota C. Karena x, y adalah sebarang titik di B, kita simpulkan bahwa B termuat dalam C.", "L": [["txt", "|x| &lt; δ  dan  |y| &lt; δ  ⟹  max{ |x|, |y| } &lt; δ"], ["hyp", "(x, y) ∈ C"], ["res", "B ⊆ C"]]},
+
+{"title": "Kesimpulan", "clear": 1, "say": "Kesimpulan. Menggabungkan kedua bagian, A termuat dalam B, dan B termuat dalam C. Secara geometris, belah ketupat berada di dalam lingkaran, dan lingkaran berada di dalam persegi. Terima kasih sudah menonton.", "L": [["res", "A ⊆ B   dan   B ⊆ C   ⟹   A ⊆ B ⊆ C"], ["txt", "<svg viewBox='0 0 300 300' width='100%' style='max-width:300px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='40' y='40' width='220' height='220' fill='#7be0a0' fill-opacity='.15' stroke='#7be0a0' stroke-width='2.5' stroke-dasharray='6 4'/><circle cx='150' cy='150' r='110' fill='#ffd166' fill-opacity='.15' stroke='#ffd166' stroke-width='2.5' stroke-dasharray='6 4'/><polygon points='150,40 260,150 150,260 40,150' fill='#7cc4ff' fill-opacity='.25' stroke='#7cc4ff' stroke-width='2.5' stroke-dasharray='6 4'/><line x1='10' y1='150' x2='290' y2='150' stroke='#9fb3aa' stroke-width='1'/><line x1='150' y1='10' x2='150' y2='290' stroke='#9fb3aa' stroke-width='1'/><text x='260' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>δ</text><text x='40' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>−δ</text><text x='156' y='54' fill='#9fb3aa' font-size='14'>δ</text><text x='136' y='155' fill='#7cc4ff' font-size='18'>A</text><text x='184' y='116' fill='#ffd166' font-size='18'>B</text><text x='216' y='84' fill='#7be0a0' font-size='18'>C</text></svg>"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' tambah ').replace(/⊙/g,' kali ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Ulangi'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Lanjutkan'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Jeda';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Jeda';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Jeda';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^id/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/ardi|andika|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Inklusi di bidang";$('sub').textContent="Latihan · Aljabar himpunan";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

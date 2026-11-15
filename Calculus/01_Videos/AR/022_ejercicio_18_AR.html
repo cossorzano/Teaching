@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>الاحتواءات في المستوى</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-inline-end:2px dashed #3d5a50;padding-inline-end:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-inline-start:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+span[dir='ltr']{white-space:nowrap}
+svg{direction:ltr}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>تذكّر</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ ابدأ</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>السرعة <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">وضع التسجيل (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ar-SA",
+"meta":{"nivel": 1, "titulo": "الاحتواءات في المستوى", "enunciado": "ليكن <span dir='ltr'>δ > 0</span> ولنعتبر في <span dir='ltr'>ℝ²</span> المجموعات <span dir='ltr'>A = { (x, y) ∈ ℝ² | δ > |x| + |y| }</span> و <span dir='ltr'>B = { (x, y) ∈ ℝ² | δ > √(x² + y²) }</span> و <span dir='ltr'>C = { (x, y) ∈ ℝ² | δ > max{ |x|, |y| } }</span>؛ أثبت أن:", "tesis": "A ⊆ B ⊆ C", "datos": ["<span dir='ltr'>δ > 0</span>", "<span dir='ltr'>A = { (x, y) ∈ ℝ² | δ > |x| + |y| }</span>", "<span dir='ltr'>B = { (x, y) ∈ ℝ² | δ > √(x² + y²) }</span>", "<span dir='ltr'>C = { (x, y) ∈ ℝ² | δ > max{ |x|, |y| } }</span>"]},
+"steps":[
+{"title": "الاحتواءات في المستوى", "sub": "تمرين · جبر المجموعات", "clear": 1, "say": "مرحبًا. في هذا الفيديو سنثبت أن ثلاث مجموعات في المستوى، معرّفة بالقيمة المطلقة والنظيم الإقليدي والقيمة العظمى، تقع كل واحدة منها داخل الأخرى. سنتقدم ببطء شديد، فنكتب كل معادلة ونبرر كل خطوة.", "L": [["txt", "إثبات أن  <span dir='ltr'>A ⊆ B ⊆ C</span>  في المستوى"]]},
+
+{"say": "المعطيات. ليكن دلتا عددًا حقيقيًا أكبر من صفر. A هي مجموعة نقاط المستوى x، y التي يكون فيها مجموع القيمة المطلقة لـ x والقيمة المطلقة لـ y أصغر من دلتا. و B هي مجموعة النقاط x، y التي يكون فيها الجذر التربيعي لـ x تربيع زائد y تربيع أصغر من دلتا. و C هي مجموعة النقاط x، y التي تكون فيها القيمة العظمى بين القيمة المطلقة لـ x والقيمة المطلقة لـ y أصغر من دلتا.", "L": [["hyp", "<span dir='ltr'>δ &gt; 0</span><span class='tag'>معطى</span>"], ["hyp", "<span dir='ltr'>A = { (x, y) ∈ ℝ² | |x| + |y| &lt; δ }</span>"], ["hyp", "<span dir='ltr'>B = { (x, y) ∈ ℝ² | √(x² + y²) &lt; δ }</span>"], ["hyp", "<span dir='ltr'>C = { (x, y) ∈ ℝ² | max{ |x|, |y| } &lt; δ }</span>"]]},
+
+{"say": "ما نريد إثباته. A محتواة في B، و B محتواة في C. والاحتواء هنا يعني محتواة أو مساوية. نرى على اللوح المجموعات الثلاث مرسومة عندما يكون دلتا مساويًا لواحد: A هي المعيّن، و B هي الدائرة، و C هي المربع. وتدل الخطوط المتقطعة على أن الحدود لا تنتمي إلى المجموعة. ونتذكر على الجانب ما سنستخدمه: تعريف الاحتواء، وأن مربع القيمة المطلقة يساوي مربع العدد، وأن الجذر التربيعي لمربع عدد يساوي قيمته المطلقة، وأن الجذر التربيعي يحافظ على الترتيب.", "L": [["goal", "<span dir='ltr'>A ⊆ B   ∧   B ⊆ C</span><span class='tag'>أثبت</span>"], ["txt", "<svg dir='ltr' viewBox='0 0 300 300' width='100%' style='max-width:300px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='40' y='40' width='220' height='220' fill='#7be0a0' fill-opacity='.15' stroke='#7be0a0' stroke-width='2.5' stroke-dasharray='6 4'/><circle cx='150' cy='150' r='110' fill='#ffd166' fill-opacity='.15' stroke='#ffd166' stroke-width='2.5' stroke-dasharray='6 4'/><polygon points='150,40 260,150 150,260 40,150' fill='#7cc4ff' fill-opacity='.25' stroke='#7cc4ff' stroke-width='2.5' stroke-dasharray='6 4'/><line x1='10' y1='150' x2='290' y2='150' stroke='#9fb3aa' stroke-width='1'/><line x1='150' y1='10' x2='150' y2='290' stroke='#9fb3aa' stroke-width='1'/><text x='260' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>δ</text><text x='40' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>−δ</text><text x='156' y='54' fill='#9fb3aa' font-size='14'>δ</text><text x='136' y='155' fill='#7cc4ff' font-size='18'>A</text><text x='184' y='116' fill='#ffd166' font-size='18'>B</text><text x='216' y='84' fill='#7be0a0' font-size='18'>C</text></svg>"]], "pin": ["تعريف الاحتواء: <span dir='ltr'>X ⊆ Y</span>  ⟺  كل <span dir='ltr'>p ∈ X</span> يحقق <span dir='ltr'>p ∈ Y</span>", "<span dir='ltr'>(P1) |a|² = a²</span>", "<span dir='ltr'>(P2) √(a²) = |a|</span>", "<span dir='ltr'>(P3)</span> إذا كان <span dir='ltr'>0 ≤ u ≤ v</span> فإن <span dir='ltr'>√u ≤ √v</span>"], "clear": 1},
+
+{"title": "١) A محتواة في B", "clear": 1, "say": "الجزء الأول: نثبت أن A محتواة في B. بحسب تعريف الاحتواء، نأخذ نقطة كيفية x، y من A، وعلينا أن نثبت أنها تنتمي إلى B.", "L": [["hyp", "ليكن <span dir='ltr'>(x, y) ∈ A</span>"], ["goal", "نريد:  <span dir='ltr'>(x, y) ∈ B</span>،  أي  <span dir='ltr'>√(x² + y²) &lt; δ</span>"]]},
+
+{"say": "بما أن x، y تنتمي إلى A، فبحسب تعريف A يكون مجموع القيمة المطلقة لـ x والقيمة المطلقة لـ y أصغر من دلتا. وهذه هي فرضيتنا.", "L": [["hyp", "<span dir='ltr'>(x, y) ∈ A  ⟹  |x| + |y| &lt; δ</span><span class='tag'>الفرضية</span>"]]},
+
+{"clear": 1, "say": "الآن نحسب مربع مجموع القيمتين المطلقتين. بفك مربع المجموع، نحصل على مربع القيمة المطلقة لـ x، زائد ضعف حاصل ضرب القيمة المطلقة لـ x في القيمة المطلقة لـ y، زائد مربع القيمة المطلقة لـ y.", "L": [["txt", "نفك مربع مجموع:"], ["sub", "<span dir='ltr'>(|x| + |y|)² = |x|² + 2|x||y| + |y|²</span>"]]},
+
+{"say": "بحسب الخاصية P1، مربع القيمة المطلقة لـ x يساوي x تربيع، ومربع القيمة المطلقة لـ y يساوي y تربيع. فنعوّض بهما.", "L": [["txt", "حسب <span dir='ltr'>(P1)</span> مع <span dir='ltr'>a = x</span>  ومع <span dir='ltr'>a = y</span>:"], ["sub", "<span dir='ltr'>(|x| + |y|)² = <mark>x²</mark> + 2|x||y| + <mark>y²</mark></span>"]]},
+
+{"say": "بما أن القيمة المطلقة لـ x والقيمة المطلقة لـ y أكبر من أو تساويان صفرًا، فإن الحد اثنين في القيمة المطلقة لـ x في القيمة المطلقة لـ y أكبر من أو يساوي صفرًا. لذلك إذا حذفناه من المجموع، فإن المجموع ينقص أو يبقى كما هو. إذن مربع المجموع أكبر من أو يساوي x تربيع زائد y تربيع.", "L": [["txt", "بما أن <span dir='ltr'>|x| ≥ 0</span> و <span dir='ltr'>|y| ≥ 0</span>، فإن <span dir='ltr'>2|x||y| ≥ 0</span>، ومنه:"], ["res", "<span dir='ltr'>x² + y² ≤ (|x| + |y|)²</span>"]]},
+
+{"clear": 1, "say": "الآن نأخذ الجذور التربيعية. نستخدم الخاصية P3، حيث u يساوي x تربيع زائد y تربيع، و v يساوي مربع مجموع القيمتين المطلقتين. وكلاهما أكبر من أو يساوي صفرًا، و u أصغر من أو يساوي v. إذن الجذر التربيعي لـ x تربيع زائد y تربيع أصغر من أو يساوي الجذر التربيعي لمربع مجموع القيمة المطلقة لـ x والقيمة المطلقة لـ y.", "L": [["txt", "<span dir='ltr'>(P3)</span> مع  <span dir='ltr'>u = x² + y²</span>،  <span dir='ltr'>v = (|x| + |y|)²</span>،  <span dir='ltr'>0 ≤ u ≤ v</span>:"], ["sub", "<span dir='ltr'>√(x² + y²) ≤ √( (|x| + |y|)² )</span>"]]},
+
+{"say": "وبحسب الخاصية P2، حيث a يساوي مجموع القيمة المطلقة لـ x والقيمة المطلقة لـ y، فإن الجذر التربيعي لهذا المربع يساوي القيمة المطلقة للمجموع. لكن المجموع أكبر من أو يساوي صفرًا أصلًا، فقيمته المطلقة هي المجموع نفسه.", "L": [["txt", "<span dir='ltr'>(P2)</span> مع  <span dir='ltr'>a = |x| + |y| ≥ 0:   √( (|x| + |y|)² ) = | |x| + |y| | = |x| + |y|</span>"], ["res", "<span dir='ltr'>√(x² + y²) ≤ |x| + |y|</span>"]]},
+
+{"clear": 1, "say": "نجمع هذه المتباينة مع الفرضية. الجذر التربيعي لـ x تربيع زائد y تربيع أصغر من أو يساوي مجموع القيمة المطلقة لـ x والقيمة المطلقة لـ y، وهذا أصغر من دلتا.", "L": [["txt", "بالجمع مع الفرضية  <span dir='ltr'>|x| + |y| &lt; δ</span> :"], ["res", "<span dir='ltr'>√(x² + y²) ≤ |x| + |y| &lt; δ</span>"]]},
+
+{"say": "إذن، الجذر التربيعي لـ x تربيع زائد y تربيع أصغر من دلتا. وهذا هو تعريف B بالضبط، فالنقطة x، y تنتمي إلى B. وبما أن x، y كانت نقطة كيفية من A، نستنتج أن A محتواة في B.", "L": [["txt", "إذن  <span dir='ltr'>√(x² + y²) &lt; δ</span>،  ومنه:"], ["hyp", "<span dir='ltr'>(x, y) ∈ B</span>"], ["res", "<span dir='ltr'>A ⊆ B</span>"]]},
+
+{"title": "٢) B محتواة في C", "clear": 1, "say": "الجزء الثاني: نثبت أن B محتواة في C. نأخذ نقطة كيفية x، y من B، وعلينا أن نثبت أنها تنتمي إلى C.", "L": [["hyp", "ليكن <span dir='ltr'>(x, y) ∈ B</span>"], ["goal", "نريد:  <span dir='ltr'>(x, y) ∈ C</span>،  أي  <span dir='ltr'>max{ |x|, |y| } &lt; δ</span>"]]},
+
+{"say": "بما أن x، y تنتمي إلى B، فبحسب تعريف B يكون الجذر التربيعي لـ x تربيع زائد y تربيع أصغر من دلتا. وهذه هي فرضيتنا.", "L": [["hyp", "<span dir='ltr'>(x, y) ∈ B  ⟹  √(x² + y²) &lt; δ</span><span class='tag'>الفرضية</span>"]]},
+
+{"clear": 1, "say": "أولًا، بما أن y تربيع أكبر من أو يساوي صفرًا، فإن x تربيع أصغر من أو يساوي x تربيع زائد y تربيع. وبالطريقة نفسها، بما أن x تربيع أكبر من أو يساوي صفرًا، فإن y تربيع أصغر من أو يساوي x تربيع زائد y تربيع.", "L": [["txt", "بما أن  <span dir='ltr'>y² ≥ 0</span>  و  <span dir='ltr'>x² ≥ 0</span>:"], ["sub", "<span dir='ltr'>x² ≤ x² + y²</span>"], ["sub", "<span dir='ltr'>y² ≤ x² + y²</span>"]]},
+
+{"say": "نأخذ الجذور التربيعية بالخاصية P3. حيث u يساوي x تربيع، و v يساوي x تربيع زائد y تربيع، فيكون جذر x تربيع أصغر من أو يساوي جذر x تربيع زائد y تربيع. وبحسب الخاصية P2، الجذر التربيعي لـ x تربيع هو القيمة المطلقة لـ x. والأمر نفسه مع y.", "L": [["txt", "<span dir='ltr'>(P3)</span> مع  <span dir='ltr'>u = x²</span>،  <span dir='ltr'>v = x² + y²</span>،  ثم <span dir='ltr'>(P2)</span> مع  <span dir='ltr'>a = x</span>:"], ["sub", "<span dir='ltr'>|x| = √(x²) ≤ √(x² + y²)</span>"], ["txt", "<span dir='ltr'>(P3)</span> مع  <span dir='ltr'>u = y²</span>،  <span dir='ltr'>v = x² + y²</span>،  ثم <span dir='ltr'>(P2)</span> مع  <span dir='ltr'>a = y</span>:"], ["sub", "<span dir='ltr'>|y| = √(y²) ≤ √(x² + y²)</span>"]]},
+
+{"clear": 1, "say": "الآن نستخدم الفرضية. القيمة المطلقة لـ x أصغر من أو تساوي جذر x تربيع زائد y تربيع، وهو أصغر من دلتا. والأمر نفسه مع y. إذن، القيمة المطلقة لـ x أصغر من دلتا، والقيمة المطلقة لـ y أصغر من دلتا.", "L": [["txt", "بالجمع مع الفرضية  <span dir='ltr'>√(x² + y²) &lt; δ</span> :"], ["res", "<span dir='ltr'>|x| ≤ √(x² + y²) &lt; δ</span>"], ["res", "<span dir='ltr'>|y| ≤ √(x² + y²) &lt; δ</span>"]]},
+
+{"say": "القيمة العظمى لعددين هي أحدهما، وكلاهما أصغر من دلتا. إذن، القيمة العظمى بين القيمة المطلقة لـ x والقيمة المطلقة لـ y أصغر من دلتا. وهذا هو تعريف C، فالنقطة x، y تنتمي إلى C. وبما أن x، y كانت نقطة كيفية من B، نستنتج أن B محتواة في C.", "L": [["txt", "<span dir='ltr'>|x| &lt; δ  ∧  |y| &lt; δ  ⟹  max{ |x|, |y| } &lt; δ</span>"], ["hyp", "<span dir='ltr'>(x, y) ∈ C</span>"], ["res", "<span dir='ltr'>B ⊆ C</span>"]]},
+
+{"title": "الخاتمة", "clear": 1, "say": "الخاتمة. بجمع الجزأين، A محتواة في B، و B محتواة في C. هندسيًا، المعيّن داخل الدائرة، والدائرة داخل المربع. شكرًا على المشاهدة.", "L": [["res", "<span dir='ltr'>A ⊆ B   ∧   B ⊆ C   ⟹   A ⊆ B ⊆ C</span>"], ["txt", "<svg dir='ltr' viewBox='0 0 300 300' width='100%' style='max-width:300px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='40' y='40' width='220' height='220' fill='#7be0a0' fill-opacity='.15' stroke='#7be0a0' stroke-width='2.5' stroke-dasharray='6 4'/><circle cx='150' cy='150' r='110' fill='#ffd166' fill-opacity='.15' stroke='#ffd166' stroke-width='2.5' stroke-dasharray='6 4'/><polygon points='150,40 260,150 150,260 40,150' fill='#7cc4ff' fill-opacity='.25' stroke='#7cc4ff' stroke-width='2.5' stroke-dasharray='6 4'/><line x1='10' y1='150' x2='290' y2='150' stroke='#9fb3aa' stroke-width='1'/><line x1='150' y1='10' x2='150' y2='290' stroke='#9fb3aa' stroke-width='1'/><text x='260' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>δ</text><text x='40' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>−δ</text><text x='156' y='54' fill='#9fb3aa' font-size='14'>δ</text><text x='136' y='155' fill='#7cc4ff' font-size='18'>A</text><text x='184' y='116' fill='#ffd166' font-size='18'>B</text><text x='216' y='84' fill='#7be0a0' font-size='18'>C</text></svg>"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' زائد ').replace(/⊙/g,' ضرب ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ إعادة'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ متابعة'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ إيقاف مؤقت';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ إيقاف مؤقت';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ إيقاف مؤقت';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ar/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/hamed|shakir|naayf|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="الاحتواءات في المستوى";$('sub').textContent="تمرين · جبر المجموعات";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

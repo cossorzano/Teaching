@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>سطح میں شمولیت</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-inline-end:2px dashed #3d5a50;padding-inline-end:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-inline-start:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+span[dir='ltr']{white-space:nowrap}
+svg{direction:ltr}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>یاد رکھیں</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ شروع کریں</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>رفتار <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">ریکارڈنگ موڈ (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ur-PK",
+"meta":{"nivel": 1, "titulo": "سطح میں شمولیت", "enunciado": "فرض کریں <span dir='ltr'>δ > 0</span> اور <span dir='ltr'>ℝ²</span> میں سیٹ <span dir='ltr'>A = { (x, y) ∈ ℝ² | δ > |x| + |y| }</span>، <span dir='ltr'>B = { (x, y) ∈ ℝ² | δ > √(x² + y²) }</span> اور <span dir='ltr'>C = { (x, y) ∈ ℝ² | δ > max{ |x|, |y| } }</span> لیں؛ ثابت کریں کہ:", "tesis": "A ⊆ B ⊆ C", "datos": ["<span dir='ltr'>δ > 0</span>", "<span dir='ltr'>A = { (x, y) ∈ ℝ² | δ > |x| + |y| }</span>", "<span dir='ltr'>B = { (x, y) ∈ ℝ² | δ > √(x² + y²) }</span>", "<span dir='ltr'>C = { (x, y) ∈ ℝ² | δ > max{ |x|, |y| } }</span>"]},
+"steps":[
+{"title": "سطح میں شمولیت", "sub": "مشق · سیٹوں کا الجبرا", "clear": 1, "say": "السلام علیکم۔ اس ویڈیو میں ہم ثابت کریں گے کہ سطح کے تین سیٹ، جو مطلق قیمت، اقلیدسی نارم اور زیادہ سے زیادہ قیمت سے تعریف کیے گئے ہیں، ایک دوسرے کے اندر واقع ہیں۔ ہم بہت آہستہ چلیں گے، ہر مساوات لکھیں گے اور ہر قدم کی وجہ بتائیں گے۔", "L": [["txt", "ثابت کریں کہ سطح میں  <span dir='ltr'>A ⊆ B ⊆ C</span>"]]},
+
+{"say": "دی گئی معلومات۔ فرض کریں ڈیلٹا صفر سے بڑا ایک حقیقی عدد ہے۔ A سطح کے ان نقاط x، y کا سیٹ ہے جن کے لیے x کی مطلق قیمت، جمع y کی مطلق قیمت، ڈیلٹا سے چھوٹی ہے۔ B ان نقاط x، y کا سیٹ ہے جن کے لیے x کے مربع جمع y کے مربع کا جذر المربع ڈیلٹا سے چھوٹا ہے۔ اور C ان نقاط x، y کا سیٹ ہے جن کے لیے x کی مطلق قیمت اور y کی مطلق قیمت میں سے بڑی قیمت ڈیلٹا سے چھوٹی ہے۔", "L": [["hyp", "<span dir='ltr'>δ &gt; 0</span><span class='tag'>دیا گیا</span>"], ["hyp", "<span dir='ltr'>A = { (x, y) ∈ ℝ² | |x| + |y| &lt; δ }</span>"], ["hyp", "<span dir='ltr'>B = { (x, y) ∈ ℝ² | √(x² + y²) &lt; δ }</span>"], ["hyp", "<span dir='ltr'>C = { (x, y) ∈ ℝ² | max{ |x|, |y| } &lt; δ }</span>"]]},
+
+{"say": "ہم کیا ثابت کرنا چاہتے ہیں۔ A، B میں شامل ہے، اور B، C میں شامل ہے۔ یہاں شمولیت کا مطلب ہے شامل یا برابر۔ تختے پر ہم ڈیلٹا برابر ایک کے لیے تینوں سیٹ بنے ہوئے دیکھتے ہیں: A معین ہے، B دائرہ ہے، اور C مربع ہے۔ ٹوٹی ہوئی لکیریں بتاتی ہیں کہ کنارہ سیٹ میں شامل نہیں ہے۔ ہم ایک طرف وہ یاد کرتے ہیں جو ہم استعمال کریں گے: شمولیت کی تعریف، کہ مطلق قیمت کا مربع عدد کا مربع ہے، کہ کسی عدد کے مربع کا جذر المربع اس کی مطلق قیمت ہے، اور کہ جذر المربع ترتیب کو قائم رکھتا ہے۔", "L": [["goal", "<span dir='ltr'>A ⊆ B   ∧   B ⊆ C</span><span class='tag'>ثابت کریں</span>"], ["txt", "<svg dir='ltr' viewBox='0 0 300 300' width='100%' style='max-width:300px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='40' y='40' width='220' height='220' fill='#7be0a0' fill-opacity='.15' stroke='#7be0a0' stroke-width='2.5' stroke-dasharray='6 4'/><circle cx='150' cy='150' r='110' fill='#ffd166' fill-opacity='.15' stroke='#ffd166' stroke-width='2.5' stroke-dasharray='6 4'/><polygon points='150,40 260,150 150,260 40,150' fill='#7cc4ff' fill-opacity='.25' stroke='#7cc4ff' stroke-width='2.5' stroke-dasharray='6 4'/><line x1='10' y1='150' x2='290' y2='150' stroke='#9fb3aa' stroke-width='1'/><line x1='150' y1='10' x2='150' y2='290' stroke='#9fb3aa' stroke-width='1'/><text x='260' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>δ</text><text x='40' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>−δ</text><text x='156' y='54' fill='#9fb3aa' font-size='14'>δ</text><text x='136' y='155' fill='#7cc4ff' font-size='18'>A</text><text x='184' y='116' fill='#ffd166' font-size='18'>B</text><text x='216' y='84' fill='#7be0a0' font-size='18'>C</text></svg>"]], "pin": ["شمولیت کی تعریف: <span dir='ltr'>X ⊆ Y</span>  ⟺  ہر <span dir='ltr'>p ∈ X</span> کے لیے <span dir='ltr'>p ∈ Y</span>", "<span dir='ltr'>(P1) |a|² = a²</span>", "<span dir='ltr'>(P2) √(a²) = |a|</span>", "<span dir='ltr'>(P3)</span> اگر <span dir='ltr'>0 ≤ u ≤ v</span> تو <span dir='ltr'>√u ≤ √v</span>"], "clear": 1},
+
+{"title": "۱) A شامل ہے B میں", "clear": 1, "say": "پہلا حصہ: ہم ثابت کرتے ہیں کہ A، B میں شامل ہے۔ شمولیت کی تعریف کے مطابق، ہم A کا کوئی بھی نقطہ x، y لیتے ہیں، اور ہمیں ثابت کرنا ہے کہ وہ B میں ہے۔", "L": [["hyp", "فرض کریں <span dir='ltr'>(x, y) ∈ A</span>"], ["goal", "ہمیں چاہیے:  <span dir='ltr'>(x, y) ∈ B</span>،  یعنی  <span dir='ltr'>√(x² + y²) &lt; δ</span>"]]},
+
+{"say": "چونکہ x، y، A میں ہے، A کی تعریف کے مطابق x کی مطلق قیمت، جمع y کی مطلق قیمت، ڈیلٹا سے چھوٹی ہے۔ یہ ہمارا مفروضہ ہے۔", "L": [["hyp", "<span dir='ltr'>(x, y) ∈ A  ⟹  |x| + |y| &lt; δ</span><span class='tag'>مفروضہ</span>"]]},
+
+{"clear": 1, "say": "اب ہم مطلق قیمتوں کے مجموعے کا مربع نکالتے ہیں۔ مجموعے کے مربع کو پھیلانے پر، یہ x کی مطلق قیمت کا مربع، جمع دو گنا x کی مطلق قیمت ضرب y کی مطلق قیمت، جمع y کی مطلق قیمت کا مربع ہے۔", "L": [["txt", "ہم مجموعے کے مربع کو پھیلاتے ہیں:"], ["sub", "<span dir='ltr'>(|x| + |y|)² = |x|² + 2|x||y| + |y|²</span>"]]},
+
+{"say": "خاصیت P1 سے، x کی مطلق قیمت کا مربع x کا مربع ہے، اور y کی مطلق قیمت کا مربع y کا مربع ہے۔ ہم انہیں رکھتے ہیں۔", "L": [["txt", "<span dir='ltr'>(P1)</span> سے،  <span dir='ltr'>a = x</span>  اور  <span dir='ltr'>a = y</span>  لے کر:"], ["sub", "<span dir='ltr'>(|x| + |y|)² = <mark>x²</mark> + 2|x||y| + <mark>y²</mark></span>"]]},
+
+{"say": "چونکہ x کی مطلق قیمت اور y کی مطلق قیمت صفر سے بڑی یا برابر ہیں، اس لیے دو ضرب x کی مطلق قیمت ضرب y کی مطلق قیمت والی رقم صفر سے بڑی یا برابر ہے۔ لہٰذا، اگر ہم اسے مجموعے سے نکال دیں، تو مجموعہ کم ہوتا ہے یا ویسا ہی رہتا ہے۔ چنانچہ مجموعے کا مربع، x کے مربع جمع y کے مربع سے بڑا یا برابر ہے۔", "L": [["txt", "چونکہ <span dir='ltr'>|x| ≥ 0</span> اور <span dir='ltr'>|y| ≥ 0</span>، اس لیے <span dir='ltr'>2|x||y| ≥ 0</span>، لہٰذا:"], ["res", "<span dir='ltr'>x² + y² ≤ (|x| + |y|)²</span>"]]},
+
+{"clear": 1, "say": "اب ہم جذر المربع لیتے ہیں۔ ہم خاصیت P3 استعمال کرتے ہیں، u برابر x کا مربع جمع y کا مربع، اور v برابر مطلق قیمتوں کے مجموعے کا مربع لے کر۔ دونوں صفر سے بڑے یا برابر ہیں، اور u، v سے چھوٹا یا برابر ہے۔ تب x کے مربع جمع y کے مربع کا جذر المربع، x کی مطلق قیمت جمع y کی مطلق قیمت کے مربع کے جذر المربع سے چھوٹا یا برابر ہے۔", "L": [["txt", "<span dir='ltr'>(P3)</span>،  <span dir='ltr'>u = x² + y²</span>،  <span dir='ltr'>v = (|x| + |y|)²</span>،  <span dir='ltr'>0 ≤ u ≤ v</span>  لے کر:"], ["sub", "<span dir='ltr'>√(x² + y²) ≤ √( (|x| + |y|)² )</span>"]]},
+
+{"say": "اور خاصیت P2 سے، a برابر x کی مطلق قیمت اور y کی مطلق قیمت کا مجموعہ لے کر، اس مربع کا جذر المربع مجموعے کی مطلق قیمت ہے۔ لیکن مجموعہ پہلے ہی صفر سے بڑا یا برابر ہے، اس لیے اس کی مطلق قیمت وہ خود ہے۔", "L": [["txt", "<span dir='ltr'>(P2)</span>،  <span dir='ltr'>a = |x| + |y| ≥ 0</span>  لے کر:   <span dir='ltr'>√( (|x| + |y|)² ) = | |x| + |y| | = |x| + |y|</span>"], ["res", "<span dir='ltr'>√(x² + y²) ≤ |x| + |y|</span>"]]},
+
+{"clear": 1, "say": "ہم اس عدم مساوات کو مفروضے کے ساتھ ملاتے ہیں۔ x کے مربع جمع y کے مربع کا جذر المربع، x کی مطلق قیمت جمع y کی مطلق قیمت سے چھوٹا یا برابر ہے، اور یہ ڈیلٹا سے چھوٹا ہے۔", "L": [["txt", "مفروضے  <span dir='ltr'>|x| + |y| &lt; δ</span>  کے ساتھ ملا کر:"], ["res", "<span dir='ltr'>√(x² + y²) ≤ |x| + |y| &lt; δ</span>"]]},
+
+{"say": "لہٰذا، x کے مربع جمع y کے مربع کا جذر المربع ڈیلٹا سے چھوٹا ہے۔ یہ بالکل B کی تعریف ہے، اس لیے x، y، B میں ہے۔ چونکہ x، y، A کا کوئی بھی نقطہ تھا، ہم نتیجہ نکالتے ہیں کہ A، B میں شامل ہے۔", "L": [["txt", "تب  <span dir='ltr'>√(x² + y²) &lt; δ</span>،  لہٰذا:"], ["hyp", "<span dir='ltr'>(x, y) ∈ B</span>"], ["res", "<span dir='ltr'>A ⊆ B</span>"]]},
+
+{"title": "۲) B شامل ہے C میں", "clear": 1, "say": "دوسرا حصہ: ہم ثابت کرتے ہیں کہ B، C میں شامل ہے۔ ہم B کا کوئی بھی نقطہ x، y لیتے ہیں، اور ہمیں ثابت کرنا ہے کہ وہ C میں ہے۔", "L": [["hyp", "فرض کریں <span dir='ltr'>(x, y) ∈ B</span>"], ["goal", "ہمیں چاہیے:  <span dir='ltr'>(x, y) ∈ C</span>،  یعنی  <span dir='ltr'>max{ |x|, |y| } &lt; δ</span>"]]},
+
+{"say": "چونکہ x، y، B میں ہے، B کی تعریف کے مطابق x کے مربع جمع y کے مربع کا جذر المربع ڈیلٹا سے چھوٹا ہے۔ یہ ہمارا مفروضہ ہے۔", "L": [["hyp", "<span dir='ltr'>(x, y) ∈ B  ⟹  √(x² + y²) &lt; δ</span><span class='tag'>مفروضہ</span>"]]},
+
+{"clear": 1, "say": "پہلے، چونکہ y کا مربع صفر سے بڑا یا برابر ہے، x کا مربع، x کے مربع جمع y کے مربع سے چھوٹا یا برابر ہے۔ اسی طرح، چونکہ x کا مربع صفر سے بڑا یا برابر ہے، y کا مربع، x کے مربع جمع y کے مربع سے چھوٹا یا برابر ہے۔", "L": [["txt", "چونکہ  <span dir='ltr'>y² ≥ 0</span>  اور  <span dir='ltr'>x² ≥ 0</span>:"], ["sub", "<span dir='ltr'>x² ≤ x² + y²</span>"], ["sub", "<span dir='ltr'>y² ≤ x² + y²</span>"]]},
+
+{"say": "ہم خاصیت P3 سے جذر المربع لیتے ہیں۔ u برابر x کا مربع، اور v برابر x کا مربع جمع y کا مربع لے کر، x کے مربع کا جذر، x کے مربع جمع y کے مربع کے جذر سے چھوٹا یا برابر ہے۔ اور خاصیت P2 سے، x کے مربع کا جذر المربع x کی مطلق قیمت ہے۔ y کے ساتھ بھی ایسا ہی ہے۔", "L": [["txt", "<span dir='ltr'>(P3)</span>،  <span dir='ltr'>u = x²</span>،  <span dir='ltr'>v = x² + y²</span>  لے کر،  پھر <span dir='ltr'>(P2)</span>،  <span dir='ltr'>a = x</span>  لے کر:"], ["sub", "<span dir='ltr'>|x| = √(x²) ≤ √(x² + y²)</span>"], ["txt", "<span dir='ltr'>(P3)</span>،  <span dir='ltr'>u = y²</span>،  <span dir='ltr'>v = x² + y²</span>  لے کر،  پھر <span dir='ltr'>(P2)</span>،  <span dir='ltr'>a = y</span>  لے کر:"], ["sub", "<span dir='ltr'>|y| = √(y²) ≤ √(x² + y²)</span>"]]},
+
+{"clear": 1, "say": "اب ہم مفروضہ استعمال کرتے ہیں۔ x کی مطلق قیمت، x کے مربع جمع y کے مربع کے جذر سے چھوٹی یا برابر ہے، جو ڈیلٹا سے چھوٹا ہے۔ اور y کے لیے بھی ایسا ہی ہے۔ لہٰذا، x کی مطلق قیمت ڈیلٹا سے چھوٹی ہے، اور y کی مطلق قیمت ڈیلٹا سے چھوٹی ہے۔", "L": [["txt", "مفروضے  <span dir='ltr'>√(x² + y²) &lt; δ</span>  کے ساتھ ملا کر:"], ["res", "<span dir='ltr'>|x| ≤ √(x² + y²) &lt; δ</span>"], ["res", "<span dir='ltr'>|y| ≤ √(x² + y²) &lt; δ</span>"]]},
+
+{"say": "دو اعداد میں سے بڑا ان دونوں میں سے ایک ہوتا ہے، اور دونوں ڈیلٹا سے چھوٹے ہیں۔ لہٰذا، x کی مطلق قیمت اور y کی مطلق قیمت میں سے بڑی قیمت ڈیلٹا سے چھوٹی ہے۔ یہ C کی تعریف ہے، اس لیے x، y، C میں ہے۔ چونکہ x، y، B کا کوئی بھی نقطہ تھا، ہم نتیجہ نکالتے ہیں کہ B، C میں شامل ہے۔", "L": [["txt", "<span dir='ltr'>|x| &lt; δ  ∧  |y| &lt; δ  ⟹  max{ |x|, |y| } &lt; δ</span>"], ["hyp", "<span dir='ltr'>(x, y) ∈ C</span>"], ["res", "<span dir='ltr'>B ⊆ C</span>"]]},
+
+{"title": "نتیجہ", "clear": 1, "say": "نتیجہ۔ دونوں حصوں کو ملا کر، A، B میں شامل ہے، اور B، C میں شامل ہے۔ جیومیٹری کے لحاظ سے، معین دائرے کے اندر ہے، اور دائرہ مربع کے اندر ہے۔ دیکھنے کا شکریہ۔", "L": [["res", "<span dir='ltr'>A ⊆ B   ∧   B ⊆ C   ⟹   A ⊆ B ⊆ C</span>"], ["txt", "<svg dir='ltr' viewBox='0 0 300 300' width='100%' style='max-width:300px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='40' y='40' width='220' height='220' fill='#7be0a0' fill-opacity='.15' stroke='#7be0a0' stroke-width='2.5' stroke-dasharray='6 4'/><circle cx='150' cy='150' r='110' fill='#ffd166' fill-opacity='.15' stroke='#ffd166' stroke-width='2.5' stroke-dasharray='6 4'/><polygon points='150,40 260,150 150,260 40,150' fill='#7cc4ff' fill-opacity='.25' stroke='#7cc4ff' stroke-width='2.5' stroke-dasharray='6 4'/><line x1='10' y1='150' x2='290' y2='150' stroke='#9fb3aa' stroke-width='1'/><line x1='150' y1='10' x2='150' y2='290' stroke='#9fb3aa' stroke-width='1'/><text x='260' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>δ</text><text x='40' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>−δ</text><text x='156' y='54' fill='#9fb3aa' font-size='14'>δ</text><text x='136' y='155' fill='#7cc4ff' font-size='18'>A</text><text x='184' y='116' fill='#ffd166' font-size='18'>B</text><text x='216' y='84' fill='#7be0a0' font-size='18'>C</text></svg>"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' جمع ').replace(/⊙/g,' ضرب ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ دوبارہ چلائیں'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ جاری رکھیں'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ وقفہ';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ وقفہ';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ وقفہ';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ur/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/asad|salman|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="سطح میں شمولیت";$('sub').textContent="مشق · سیٹوں کا الجبرا";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

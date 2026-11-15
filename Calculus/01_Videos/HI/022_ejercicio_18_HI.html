@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>समतल में अंतर्विष्टियाँ</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>याद रखें</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ शुरू करें</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>गति <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">रिकॉर्डिंग मोड (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"hi-IN",
+"meta":{"nivel": 1, "titulo": "समतल में अंतर्विष्टियाँ", "enunciado": "मान लीजिए δ > 0 और ℝ² में समुच्चय A = { (x, y) ∈ ℝ² | |x| + |y| < δ }, B = { (x, y) ∈ ℝ² | √(x² + y²) < δ } और C = { (x, y) ∈ ℝ² | max{ |x|, |y| } < δ } लीजिए। सिद्ध कीजिए कि:", "tesis": "A ⊆ B ⊆ C", "datos": ["δ > 0", "A = { (x, y) ∈ ℝ² | |x| + |y| < δ }", "B = { (x, y) ∈ ℝ² | √(x² + y²) < δ }", "C = { (x, y) ∈ ℝ² | max{ |x|, |y| } < δ }"]},
+"steps":[
+{"title": "समतल में अंतर्विष्टियाँ", "sub": "अभ्यास · समुच्चयों का बीजगणित", "clear": 1, "say": "नमस्ते। इस वीडियो में हम सिद्ध करेंगे कि समतल के तीन समुच्चय, जो निरपेक्ष मान, यूक्लिडीय मानक और अधिकतम से परिभाषित हैं, एक दूसरे के भीतर स्थित हैं। हम बहुत धीरे चलेंगे, हर समीकरण लिखेंगे और हर चरण का कारण बताएँगे।", "L": [["txt", "सिद्ध करें कि समतल में  A ⊆ B ⊆ C"]]},
+
+{"say": "दी गई जानकारी। मान लीजिए डेल्टा शून्य से बड़ी एक वास्तविक संख्या है। A समतल के उन बिंदुओं x, y का समुच्चय है, जिनके लिए x का निरपेक्ष मान, धन y का निरपेक्ष मान, डेल्टा से छोटा है। B उन बिंदुओं x, y का समुच्चय है, जिनके लिए x के वर्ग धन y के वर्ग का वर्गमूल डेल्टा से छोटा है। और C उन बिंदुओं x, y का समुच्चय है, जिनके लिए x के निरपेक्ष मान और y के निरपेक्ष मान का अधिकतम डेल्टा से छोटा है।", "L": [["hyp", "δ &gt; 0<span class='tag'>दिया गया</span>"], ["hyp", "A = { (x, y) ∈ ℝ² | |x| + |y| &lt; δ }"], ["hyp", "B = { (x, y) ∈ ℝ² | √(x² + y²) &lt; δ }"], ["hyp", "C = { (x, y) ∈ ℝ² | max{ |x|, |y| } &lt; δ }"]]},
+
+{"say": "हम क्या सिद्ध करना चाहते हैं। A, B में अंतर्विष्ट है, और B, C में अंतर्विष्ट है। यहाँ अंतर्विष्ट का अर्थ है अंतर्विष्ट या बराबर। दाईं ओर हम डेल्टा बराबर एक के लिए तीनों समुच्चय बने हुए देखते हैं: A समचतुर्भुज है, B वृत्त है, और C वर्ग है। बिंदुदार रेखाएँ बताती हैं कि किनारा समुच्चय में शामिल नहीं है। बाईं ओर हम वह याद करते हैं जिसका हम उपयोग करेंगे: अंतर्विष्टि की परिभाषा, कि निरपेक्ष मान का वर्ग संख्या का वर्ग है, कि किसी संख्या के वर्ग का वर्गमूल उसका निरपेक्ष मान है, और कि वर्गमूल क्रम को बनाए रखता है।", "L": [["goal", "A ⊆ B   और   B ⊆ C<span class='tag'>सिद्ध करें</span>"], ["txt", "<svg viewBox='0 0 300 300' width='100%' style='max-width:300px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='40' y='40' width='220' height='220' fill='#7be0a0' fill-opacity='.15' stroke='#7be0a0' stroke-width='2.5' stroke-dasharray='6 4'/><circle cx='150' cy='150' r='110' fill='#ffd166' fill-opacity='.15' stroke='#ffd166' stroke-width='2.5' stroke-dasharray='6 4'/><polygon points='150,40 260,150 150,260 40,150' fill='#7cc4ff' fill-opacity='.25' stroke='#7cc4ff' stroke-width='2.5' stroke-dasharray='6 4'/><line x1='10' y1='150' x2='290' y2='150' stroke='#9fb3aa' stroke-width='1'/><line x1='150' y1='10' x2='150' y2='290' stroke='#9fb3aa' stroke-width='1'/><text x='260' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>δ</text><text x='40' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>−δ</text><text x='156' y='54' fill='#9fb3aa' font-size='14'>δ</text><text x='136' y='155' fill='#7cc4ff' font-size='18'>A</text><text x='184' y='116' fill='#ffd166' font-size='18'>B</text><text x='216' y='84' fill='#7be0a0' font-size='18'>C</text></svg>"]], "pin": ["(⊆ परिभाषा) X ⊆ Y  ⟺  हर p ∈ X के लिए p ∈ Y", "(P1) |a|² = a²", "(P2) √(a²) = |a|", "(P3) यदि 0 ≤ u ≤ v तो √u ≤ √v"], "clear": 1},
+
+{"title": "1) A ⊆ B", "clear": 1, "say": "पहला भाग: हम सिद्ध करते हैं कि A, B में अंतर्विष्ट है। अंतर्विष्टि की परिभाषा के अनुसार, हम A का कोई भी बिंदु x, y लेते हैं, और हमें सिद्ध करना है कि वह B में है।", "L": [["hyp", "मान लीजिए (x, y) ∈ A"], ["goal", "हमें चाहिए:  (x, y) ∈ B,  अर्थात  √(x² + y²) &lt; δ"]]},
+
+{"say": "चूँकि x, y, A में है, A की परिभाषा के अनुसार x का निरपेक्ष मान, धन y का निरपेक्ष मान, डेल्टा से छोटा है। यह हमारी परिकल्पना है।", "L": [["hyp", "(x, y) ∈ A  ⟹  |x| + |y| &lt; δ<span class='tag'>परिकल्पना</span>"]]},
+
+{"clear": 1, "say": "अब हम निरपेक्ष मानों के योग का वर्ग निकालते हैं। योग के वर्ग का विस्तार करने पर, यह x के निरपेक्ष मान का वर्ग, धन दो गुना x का निरपेक्ष मान गुणा y का निरपेक्ष मान, धन y के निरपेक्ष मान का वर्ग है।", "L": [["txt", "योग के वर्ग का विस्तार करते हैं:"], ["sub", "(|x| + |y|)² = |x|² + 2|x||y| + |y|²"]]},
+
+{"say": "गुण P1 से, x के निरपेक्ष मान का वर्ग x का वर्ग है, और y के निरपेक्ष मान का वर्ग y का वर्ग है। हम इन्हें रखते हैं।", "L": [["txt", "(P1) से, a = x  और  a = y लेकर:"], ["sub", "(|x| + |y|)² = <mark>x²</mark> + 2|x||y| + <mark>y²</mark>"]]},
+
+{"say": "चूँकि x का निरपेक्ष मान और y का निरपेक्ष मान शून्य से बड़े या बराबर हैं, पद दो गुणा x का निरपेक्ष मान गुणा y का निरपेक्ष मान शून्य से बड़ा या बराबर है। इसलिए, यदि हम इसे योग से हटा दें, तो योग घटता है या वैसा ही रहता है। अतः योग का वर्ग, x के वर्ग धन y के वर्ग से बड़ा या बराबर है।", "L": [["txt", "चूँकि |x| ≥ 0 और |y| ≥ 0, इसलिए 2|x||y| ≥ 0, अतः:"], ["res", "x² + y² ≤ (|x| + |y|)²"]]},
+
+{"clear": 1, "say": "अब हम वर्गमूल लेते हैं। हम गुण P3 का उपयोग करते हैं, u बराबर x का वर्ग धन y का वर्ग, और v बराबर निरपेक्ष मानों के योग का वर्ग लेकर। दोनों शून्य से बड़े या बराबर हैं, और u, v से छोटा या बराबर है। तब x के वर्ग धन y के वर्ग का वर्गमूल, x के निरपेक्ष मान धन y के निरपेक्ष मान के वर्ग के वर्गमूल से छोटा या बराबर है।", "L": [["txt", "(P3),  u = x² + y²,  v = (|x| + |y|)²,  0 ≤ u ≤ v  लेकर:"], ["sub", "√(x² + y²) ≤ √( (|x| + |y|)² )"]]},
+
+{"say": "और गुण P2 से, a बराबर x के निरपेक्ष मान और y के निरपेक्ष मान का योग लेकर, उस वर्ग का वर्गमूल योग का निरपेक्ष मान है। पर योग पहले से ही शून्य से बड़ा या बराबर है, इसलिए उसका निरपेक्ष मान वह स्वयं है।", "L": [["txt", "(P2),  a = |x| + |y| ≥ 0  लेकर:   √( (|x| + |y|)² ) = | |x| + |y| | = |x| + |y|"], ["res", "√(x² + y²) ≤ |x| + |y|"]]},
+
+{"clear": 1, "say": "हम इस असमिका को परिकल्पना के साथ मिलाते हैं। x के वर्ग धन y के वर्ग का वर्गमूल, x के निरपेक्ष मान धन y के निरपेक्ष मान से छोटा या बराबर है, और यह डेल्टा से छोटा है।", "L": [["txt", "परिकल्पना  |x| + |y| &lt; δ  के साथ मिलाकर:"], ["res", "√(x² + y²) ≤ |x| + |y| &lt; δ"]]},
+
+{"say": "अतः, x के वर्ग धन y के वर्ग का वर्गमूल डेल्टा से छोटा है। यह ठीक B की परिभाषा है, इसलिए x, y, B में है। चूँकि x, y, A का कोई भी बिंदु था, हम निष्कर्ष निकालते हैं कि A, B में अंतर्विष्ट है।", "L": [["txt", "तब  √(x² + y²) &lt; δ,  अतः:"], ["hyp", "(x, y) ∈ B"], ["res", "A ⊆ B"]]},
+
+{"title": "2) B ⊆ C", "clear": 1, "say": "दूसरा भाग: हम सिद्ध करते हैं कि B, C में अंतर्विष्ट है। हम B का कोई भी बिंदु x, y लेते हैं, और हमें सिद्ध करना है कि वह C में है।", "L": [["hyp", "मान लीजिए (x, y) ∈ B"], ["goal", "हमें चाहिए:  (x, y) ∈ C,  अर्थात  max{ |x|, |y| } &lt; δ"]]},
+
+{"say": "चूँकि x, y, B में है, B की परिभाषा के अनुसार x के वर्ग धन y के वर्ग का वर्गमूल डेल्टा से छोटा है। यह हमारी परिकल्पना है।", "L": [["hyp", "(x, y) ∈ B  ⟹  √(x² + y²) &lt; δ<span class='tag'>परिकल्पना</span>"]]},
+
+{"clear": 1, "say": "पहले, चूँकि y का वर्ग शून्य से बड़ा या बराबर है, x का वर्ग, x के वर्ग धन y के वर्ग से छोटा या बराबर है। इसी तरह, चूँकि x का वर्ग शून्य से बड़ा या बराबर है, y का वर्ग, x के वर्ग धन y के वर्ग से छोटा या बराबर है।", "L": [["txt", "चूँकि  y² ≥ 0  और  x² ≥ 0:"], ["sub", "x² ≤ x² + y²"], ["sub", "y² ≤ x² + y²"]]},
+
+{"say": "हम गुण P3 से वर्गमूल लेते हैं। u बराबर x का वर्ग, और v बराबर x का वर्ग धन y का वर्ग लेकर, x के वर्ग का मूल, x के वर्ग धन y के वर्ग के मूल से छोटा या बराबर है। और गुण P2 से, x के वर्ग का वर्गमूल x का निरपेक्ष मान है। y के साथ भी ऐसा ही।", "L": [["txt", "(P3),  u = x²,  v = x² + y²  लेकर,  फिर (P2),  a = x  लेकर:"], ["sub", "|x| = √(x²) ≤ √(x² + y²)"], ["txt", "(P3),  u = y²,  v = x² + y²  लेकर,  फिर (P2),  a = y  लेकर:"], ["sub", "|y| = √(y²) ≤ √(x² + y²)"]]},
+
+{"clear": 1, "say": "अब हम परिकल्पना का उपयोग करते हैं। x का निरपेक्ष मान, x के वर्ग धन y के वर्ग के मूल से छोटा या बराबर है, जो डेल्टा से छोटा है। और y के लिए भी ऐसा ही। अतः, x का निरपेक्ष मान डेल्टा से छोटा है, और y का निरपेक्ष मान डेल्टा से छोटा है।", "L": [["txt", "परिकल्पना  √(x² + y²) &lt; δ  के साथ मिलाकर:"], ["res", "|x| ≤ √(x² + y²) &lt; δ"], ["res", "|y| ≤ √(x² + y²) &lt; δ"]]},
+
+{"say": "दो संख्याओं का अधिकतम उन दोनों में से एक होता है, और दोनों डेल्टा से छोटी हैं। अतः, x के निरपेक्ष मान और y के निरपेक्ष मान का अधिकतम डेल्टा से छोटा है। यह C की परिभाषा है, इसलिए x, y, C में है। चूँकि x, y, B का कोई भी बिंदु था, हम निष्कर्ष निकालते हैं कि B, C में अंतर्विष्ट है।", "L": [["txt", "|x| &lt; δ  और  |y| &lt; δ  ⟹  max{ |x|, |y| } &lt; δ"], ["hyp", "(x, y) ∈ C"], ["res", "B ⊆ C"]]},
+
+{"title": "निष्कर्ष", "clear": 1, "say": "निष्कर्ष। दोनों भागों को मिलाकर, A, B में अंतर्विष्ट है, और B, C में अंतर्विष्ट है। ज्यामितीय रूप से, समचतुर्भुज वृत्त के भीतर है, और वृत्त वर्ग के भीतर है। देखने के लिए धन्यवाद।", "L": [["res", "A ⊆ B   और   B ⊆ C   ⟹   A ⊆ B ⊆ C"], ["txt", "<svg viewBox='0 0 300 300' width='100%' style='max-width:300px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='40' y='40' width='220' height='220' fill='#7be0a0' fill-opacity='.15' stroke='#7be0a0' stroke-width='2.5' stroke-dasharray='6 4'/><circle cx='150' cy='150' r='110' fill='#ffd166' fill-opacity='.15' stroke='#ffd166' stroke-width='2.5' stroke-dasharray='6 4'/><polygon points='150,40 260,150 150,260 40,150' fill='#7cc4ff' fill-opacity='.25' stroke='#7cc4ff' stroke-width='2.5' stroke-dasharray='6 4'/><line x1='10' y1='150' x2='290' y2='150' stroke='#9fb3aa' stroke-width='1'/><line x1='150' y1='10' x2='150' y2='290' stroke='#9fb3aa' stroke-width='1'/><text x='260' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>δ</text><text x='40' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>−δ</text><text x='156' y='54' fill='#9fb3aa' font-size='14'>δ</text><text x='136' y='155' fill='#7cc4ff' font-size='18'>A</text><text x='184' y='116' fill='#ffd166' font-size='18'>B</text><text x='216' y='84' fill='#7be0a0' font-size='18'>C</text></svg>"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' प्लस ').replace(/⊙/g,' गुणा ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ फिर से चलाएँ'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ जारी रखें'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ रोकें';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^hi/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/madhur|hemant|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="समतल में अंतर्विष्टियाँ";$('sub').textContent="अभ्यास · समुच्चयों का बीजगणित";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Включения на плоскости</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Запомним</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Начать</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Скорость <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Режим записи (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ru-RU",
+"meta":{"nivel": 1, "titulo": "Включения на плоскости", "enunciado": "Пусть δ > 0, и рассмотрим в ℝ² множества A = { (x, y) ∈ ℝ² | |x| + |y| < δ }, B = { (x, y) ∈ ℝ² | √(x² + y²) < δ } и C = { (x, y) ∈ ℝ² | max{ |x|, |y| } < δ }. Доказать, что:", "tesis": "A ⊆ B ⊆ C", "datos": ["δ > 0", "A = { (x, y) ∈ ℝ² | |x| + |y| < δ }", "B = { (x, y) ∈ ℝ² | √(x² + y²) < δ }", "C = { (x, y) ∈ ℝ² | max{ |x|, |y| } < δ }"]},
+"steps":[
+{"title": "Включения на плоскости", "sub": "Упражнение · Алгебра множеств", "clear": 1, "say": "Здравствуйте. В этом видео мы докажем, что три множества на плоскости, заданные с помощью модуля, евклидовой нормы и максимума, вложены одно в другое. Мы будем двигаться очень медленно, записывая каждое равенство и обосновывая каждый шаг.", "L": [["txt", "Доказать, что  A ⊆ B ⊆ C  на плоскости"]]},
+
+{"say": "Данные. Пусть дельта — действительное число, большее нуля. А — множество точек икс, игрек плоскости, таких что модуль икс плюс модуль игрек меньше дельты. Бэ — множество точек икс, игрек, таких что квадратный корень из икс в квадрате плюс игрек в квадрате меньше дельты. И Цэ — множество точек икс, игрек, таких что максимум из модуля икс и модуля игрек меньше дельты.", "L": [["hyp", "δ &gt; 0<span class='tag'>Дано</span>"], ["hyp", "A = { (x, y) ∈ ℝ² | |x| + |y| &lt; δ }"], ["hyp", "B = { (x, y) ∈ ℝ² | √(x² + y²) &lt; δ }"], ["hyp", "C = { (x, y) ∈ ℝ² | max{ |x|, |y| } &lt; δ }"]]},
+
+{"say": "Что мы хотим доказать. А содержится в Бэ, а Бэ содержится в Цэ. Здесь включение означает содержится или равно. Справа мы видим три множества, нарисованные для дельты, равной единице: А — ромб, Бэ — круг, а Цэ — квадрат. Пунктирные линии показывают, что граница не принадлежит множеству. Слева мы вспоминаем то, чем будем пользоваться: определение включения, то, что квадрат модуля равен квадрату числа, что квадратный корень из квадрата числа равен его модулю, и что квадратный корень сохраняет порядок.", "L": [["goal", "A ⊆ B   и   B ⊆ C<span class='tag'>Доказать</span>"], ["txt", "<svg viewBox='0 0 300 300' width='100%' style='max-width:300px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='40' y='40' width='220' height='220' fill='#7be0a0' fill-opacity='.15' stroke='#7be0a0' stroke-width='2.5' stroke-dasharray='6 4'/><circle cx='150' cy='150' r='110' fill='#ffd166' fill-opacity='.15' stroke='#ffd166' stroke-width='2.5' stroke-dasharray='6 4'/><polygon points='150,40 260,150 150,260 40,150' fill='#7cc4ff' fill-opacity='.25' stroke='#7cc4ff' stroke-width='2.5' stroke-dasharray='6 4'/><line x1='10' y1='150' x2='290' y2='150' stroke='#9fb3aa' stroke-width='1'/><line x1='150' y1='10' x2='150' y2='290' stroke='#9fb3aa' stroke-width='1'/><text x='260' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>δ</text><text x='40' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>−δ</text><text x='156' y='54' fill='#9fb3aa' font-size='14'>δ</text><text x='136' y='155' fill='#7cc4ff' font-size='18'>A</text><text x='184' y='116' fill='#ffd166' font-size='18'>B</text><text x='216' y='84' fill='#7be0a0' font-size='18'>C</text></svg>"]], "pin": ["(Опр ⊆) X ⊆ Y  ⟺  каждое p ∈ X удовлетворяет p ∈ Y", "(P1) |a|² = a²", "(P2) √(a²) = |a|", "(P3) если 0 ≤ u ≤ v, то √u ≤ √v"], "clear": 1},
+
+{"title": "1) A ⊆ B", "clear": 1, "say": "Первая часть: докажем, что А содержится в Бэ. По определению включения возьмём произвольную точку икс, игрек из А, и нам нужно доказать, что она принадлежит Бэ.", "L": [["hyp", "Пусть (x, y) ∈ A"], ["goal", "Хотим:  (x, y) ∈ B,  то есть  √(x² + y²) &lt; δ"]]},
+
+{"say": "Так как икс, игрек принадлежит А, по определению А модуль икс плюс модуль игрек меньше дельты. Это наша гипотеза.", "L": [["hyp", "(x, y) ∈ A  ⟹  |x| + |y| &lt; δ<span class='tag'>Гипотеза</span>"]]},
+
+{"clear": 1, "say": "Теперь вычислим квадрат суммы модулей. Раскрывая квадрат суммы, получаем квадрат модуля икс, плюс удвоенное произведение модуля икс на модуль игрек, плюс квадрат модуля игрек.", "L": [["txt", "Раскрываем квадрат суммы:"], ["sub", "(|x| + |y|)² = |x|² + 2|x||y| + |y|²"]]},
+
+{"say": "По свойству пэ один, квадрат модуля икс равен икс в квадрате, а квадрат модуля игрек равен игрек в квадрате. Подставим их.", "L": [["txt", "По (P1) при a = x  и  при a = y:"], ["sub", "(|x| + |y|)² = <mark>x²</mark> + 2|x||y| + <mark>y²</mark>"]]},
+
+{"say": "Так как модуль икс и модуль игрек больше или равны нулю, слагаемое два, умноженное на модуль икс и на модуль игрек, больше или равно нулю. Поэтому, если убрать его из суммы, сумма уменьшится или останется прежней. Значит, квадрат суммы больше или равен икс в квадрате плюс игрек в квадрате.", "L": [["txt", "Так как |x| ≥ 0 и |y| ≥ 0, имеем 2|x||y| ≥ 0, поэтому:"], ["res", "x² + y² ≤ (|x| + |y|)²"]]},
+
+{"clear": 1, "say": "Теперь извлечём квадратные корни. Используем свойство пэ три, где у равно икс в квадрате плюс игрек в квадрате, а вэ равно квадрату суммы модулей. Оба больше или равны нулю, и у меньше или равно вэ. Тогда квадратный корень из икс в квадрате плюс игрек в квадрате меньше или равен квадратному корню из квадрата суммы модуля икс и модуля игрек.", "L": [["txt", "(P3) при  u = x² + y²,  v = (|x| + |y|)²,  0 ≤ u ≤ v:"], ["sub", "√(x² + y²) ≤ √( (|x| + |y|)² )"]]},
+
+{"say": "А по свойству пэ два, где а равно сумме модуля икс и модуля игрек, квадратный корень из этого квадрата равен модулю суммы. Но сумма уже больше или равна нулю, поэтому её модуль равен ей самой.", "L": [["txt", "(P2) при  a = |x| + |y| ≥ 0:   √( (|x| + |y|)² ) = | |x| + |y| | = |x| + |y|"], ["res", "√(x² + y²) ≤ |x| + |y|"]]},
+
+{"clear": 1, "say": "Объединим это неравенство с гипотезой. Квадратный корень из икс в квадрате плюс игрек в квадрате меньше или равен модулю икс плюс модулю игрек, а это меньше дельты.", "L": [["txt", "Вместе с гипотезой  |x| + |y| &lt; δ :"], ["res", "√(x² + y²) ≤ |x| + |y| &lt; δ"]]},
+
+{"say": "Следовательно, квадратный корень из икс в квадрате плюс игрек в квадрате меньше дельты. Это в точности определение Бэ, значит, икс, игрек принадлежит Бэ. Так как икс, игрек была произвольной точкой из А, заключаем, что А содержится в Бэ.", "L": [["txt", "Тогда  √(x² + y²) &lt; δ,  поэтому:"], ["hyp", "(x, y) ∈ B"], ["res", "A ⊆ B"]]},
+
+{"title": "2) B ⊆ C", "clear": 1, "say": "Вторая часть: докажем, что Бэ содержится в Цэ. Возьмём произвольную точку икс, игрек из Бэ, и нам нужно доказать, что она принадлежит Цэ.", "L": [["hyp", "Пусть (x, y) ∈ B"], ["goal", "Хотим:  (x, y) ∈ C,  то есть  max{ |x|, |y| } &lt; δ"]]},
+
+{"say": "Так как икс, игрек принадлежит Бэ, по определению Бэ квадратный корень из икс в квадрате плюс игрек в квадрате меньше дельты. Это наша гипотеза.", "L": [["hyp", "(x, y) ∈ B  ⟹  √(x² + y²) &lt; δ<span class='tag'>Гипотеза</span>"]]},
+
+{"clear": 1, "say": "Сначала: так как игрек в квадрате больше или равно нулю, икс в квадрате меньше или равно икс в квадрате плюс игрек в квадрате. Точно так же, так как икс в квадрате больше или равно нулю, игрек в квадрате меньше или равно икс в квадрате плюс игрек в квадрате.", "L": [["txt", "Так как  y² ≥ 0  и  x² ≥ 0:"], ["sub", "x² ≤ x² + y²"], ["sub", "y² ≤ x² + y²"]]},
+
+{"say": "Извлечём квадратные корни по свойству пэ три. При у, равном икс в квадрате, и вэ, равном икс в квадрате плюс игрек в квадрате, корень из икс в квадрате меньше или равен корню из икс в квадрате плюс игрек в квадрате. А по свойству пэ два квадратный корень из икс в квадрате равен модулю икс. То же самое для игрек.", "L": [["txt", "(P3) при  u = x²,  v = x² + y²,  затем (P2) при  a = x:"], ["sub", "|x| = √(x²) ≤ √(x² + y²)"], ["txt", "(P3) при  u = y²,  v = x² + y²,  затем (P2) при  a = y:"], ["sub", "|y| = √(y²) ≤ √(x² + y²)"]]},
+
+{"clear": 1, "say": "Теперь используем гипотезу. Модуль икс меньше или равен корню из икс в квадрате плюс игрек в квадрате, а он меньше дельты. И то же самое для игрек. Следовательно, модуль икс меньше дельты, и модуль игрек меньше дельты.", "L": [["txt", "Вместе с гипотезой  √(x² + y²) &lt; δ :"], ["res", "|x| ≤ √(x² + y²) &lt; δ"], ["res", "|y| ≤ √(x² + y²) &lt; δ"]]},
+
+{"say": "Максимум двух чисел — это одно из них, а оба числа меньше дельты. Следовательно, максимум из модуля икс и модуля игрек меньше дельты. Это определение Цэ, значит, икс, игрек принадлежит Цэ. Так как икс, игрек была произвольной точкой из Бэ, заключаем, что Бэ содержится в Цэ.", "L": [["txt", "|x| &lt; δ  и  |y| &lt; δ  ⟹  max{ |x|, |y| } &lt; δ"], ["hyp", "(x, y) ∈ C"], ["res", "B ⊆ C"]]},
+
+{"title": "Вывод", "clear": 1, "say": "Вывод. Объединяя обе части, А содержится в Бэ, а Бэ содержится в Цэ. Геометрически ромб лежит внутри круга, а круг лежит внутри квадрата. Спасибо за внимание.", "L": [["res", "A ⊆ B   и   B ⊆ C   ⟹   A ⊆ B ⊆ C"], ["txt", "<svg viewBox='0 0 300 300' width='100%' style='max-width:300px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='40' y='40' width='220' height='220' fill='#7be0a0' fill-opacity='.15' stroke='#7be0a0' stroke-width='2.5' stroke-dasharray='6 4'/><circle cx='150' cy='150' r='110' fill='#ffd166' fill-opacity='.15' stroke='#ffd166' stroke-width='2.5' stroke-dasharray='6 4'/><polygon points='150,40 260,150 150,260 40,150' fill='#7cc4ff' fill-opacity='.25' stroke='#7cc4ff' stroke-width='2.5' stroke-dasharray='6 4'/><line x1='10' y1='150' x2='290' y2='150' stroke='#9fb3aa' stroke-width='1'/><line x1='150' y1='10' x2='150' y2='290' stroke='#9fb3aa' stroke-width='1'/><text x='260' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>δ</text><text x='40' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>−δ</text><text x='156' y='54' fill='#9fb3aa' font-size='14'>δ</text><text x='136' y='155' fill='#7cc4ff' font-size='18'>A</text><text x='184' y='116' fill='#ffd166' font-size='18'>B</text><text x='216' y='84' fill='#7be0a0' font-size='18'>C</text></svg>"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' плюс ').replace(/⊙/g,' умножить на ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Повторить'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Продолжить'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Пауза';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Пауза';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Пауза';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ru/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/dmitry|pavel|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Включения на плоскости";$('sub').textContent="Упражнение · Алгебра множеств";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>平面中的包含关系</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>备忘</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ 开始</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>语速 <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">录制模式 (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"zh-CN",
+"meta":{"nivel": 1, "titulo": "平面中的包含关系", "enunciado": "设 δ > 0，在 ℝ² 中考虑集合 A = { (x, y) ∈ ℝ² | |x| + |y| < δ }，B = { (x, y) ∈ ℝ² | √(x² + y²) < δ }，C = { (x, y) ∈ ℝ² | max{ |x|, |y| } < δ }。证明：", "tesis": "A ⊆ B ⊆ C", "datos": ["δ > 0", "A = { (x, y) ∈ ℝ² | |x| + |y| < δ }", "B = { (x, y) ∈ ℝ² | √(x² + y²) < δ }", "C = { (x, y) ∈ ℝ² | max{ |x|, |y| } < δ }"]},
+"steps":[
+{"title": "平面中的包含关系", "sub": "练习 · 集合代数", "clear": 1, "say": "大家好。在这个视频中，我们要证明平面中的三个集合，分别用绝对值、欧几里得范数和最大值来定义，它们一个包含在另一个之中。我们会讲得很慢，写出每一个等式，并说明每一步的理由。", "L": [["txt", "证明在平面中  A ⊆ B ⊆ C"]]},
+
+{"say": "已知条件。设德尔塔是一个大于零的实数。A 是平面上满足 x 的绝对值加 y 的绝对值小于德尔塔的点 x, y 构成的集合。B 是满足 x 的平方加 y 的平方的平方根小于德尔塔的点 x, y 构成的集合。C 是满足 x 的绝对值与 y 的绝对值中的最大值小于德尔塔的点 x, y 构成的集合。", "L": [["hyp", "δ &gt; 0<span class='tag'>已知</span>"], ["hyp", "A = { (x, y) ∈ ℝ² | |x| + |y| &lt; δ }"], ["hyp", "B = { (x, y) ∈ ℝ² | √(x² + y²) &lt; δ }"], ["hyp", "C = { (x, y) ∈ ℝ² | max{ |x|, |y| } &lt; δ }"]]},
+
+{"say": "我们要证明的是：A 包含于 B，并且 B 包含于 C。这里的包含指的是包含于或等于。右边画出了德尔塔等于一时的三个集合：A 是菱形，B 是圆，C 是正方形。虚线表示边界不属于该集合。我们在左边列出要用到的内容：包含的定义；绝对值的平方等于这个数的平方；一个数的平方的平方根等于它的绝对值；以及平方根保持大小顺序。", "L": [["goal", "A ⊆ B   且   B ⊆ C<span class='tag'>证明</span>"], ["txt", "<svg viewBox='0 0 300 300' width='100%' style='max-width:300px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='40' y='40' width='220' height='220' fill='#7be0a0' fill-opacity='.15' stroke='#7be0a0' stroke-width='2.5' stroke-dasharray='6 4'/><circle cx='150' cy='150' r='110' fill='#ffd166' fill-opacity='.15' stroke='#ffd166' stroke-width='2.5' stroke-dasharray='6 4'/><polygon points='150,40 260,150 150,260 40,150' fill='#7cc4ff' fill-opacity='.25' stroke='#7cc4ff' stroke-width='2.5' stroke-dasharray='6 4'/><line x1='10' y1='150' x2='290' y2='150' stroke='#9fb3aa' stroke-width='1'/><line x1='150' y1='10' x2='150' y2='290' stroke='#9fb3aa' stroke-width='1'/><text x='260' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>δ</text><text x='40' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>−δ</text><text x='156' y='54' fill='#9fb3aa' font-size='14'>δ</text><text x='136' y='155' fill='#7cc4ff' font-size='18'>A</text><text x='184' y='116' fill='#ffd166' font-size='18'>B</text><text x='216' y='84' fill='#7be0a0' font-size='18'>C</text></svg>"]], "pin": ["（⊆ 定义） X ⊆ Y  ⟺  每个 p ∈ X 都满足 p ∈ Y", "(P1) |a|² = a²", "(P2) √(a²) = |a|", "(P3) 若 0 ≤ u ≤ v，则 √u ≤ √v"], "clear": 1},
+
+{"title": "1) A ⊆ B", "clear": 1, "say": "第一部分：证明 A 包含于 B。根据包含的定义，我们在 A 中任取一点 x, y，需要证明它属于 B。", "L": [["hyp", "设 (x, y) ∈ A"], ["goal", "要证：  (x, y) ∈ B，  即  √(x² + y²) &lt; δ"]]},
+
+{"say": "因为 x, y 属于 A，根据 A 的定义，x 的绝对值加 y 的绝对值小于德尔塔。这就是我们的假设。", "L": [["hyp", "(x, y) ∈ A  ⟹  |x| + |y| &lt; δ<span class='tag'>假设</span>"]]},
+
+{"clear": 1, "say": "现在我们计算绝对值之和的平方。按照和的平方展开，它等于 x 的绝对值的平方，加上二倍的 x 的绝对值乘以 y 的绝对值，再加上 y 的绝对值的平方。", "L": [["txt", "展开和的平方："], ["sub", "(|x| + |y|)² = |x|² + 2|x||y| + |y|²"]]},
+
+{"say": "由性质 P1，x 的绝对值的平方等于 x 的平方，y 的绝对值的平方等于 y 的平方。我们把它们代入。", "L": [["txt", "由 (P1)，取 a = x  和  a = y："], ["sub", "(|x| + |y|)² = <mark>x²</mark> + 2|x||y| + <mark>y²</mark>"]]},
+
+{"say": "因为 x 的绝对值和 y 的绝对值都大于等于零，所以二乘以 x 的绝对值乘以 y 的绝对值这一项大于等于零。因此，从和中去掉这一项，和会变小或者不变。所以和的平方大于等于 x 的平方加 y 的平方。", "L": [["txt", "因为 |x| ≥ 0 且 |y| ≥ 0，所以 2|x||y| ≥ 0，于是："], ["res", "x² + y² ≤ (|x| + |y|)²"]]},
+
+{"clear": 1, "say": "现在两边开平方。我们用性质 P3，取 u 等于 x 的平方加 y 的平方，v 等于绝对值之和的平方。两者都大于等于零，并且 u 小于等于 v。于是 x 的平方加 y 的平方的平方根，小于等于 x 的绝对值加 y 的绝对值之和的平方的平方根。", "L": [["txt", "(P3)，取  u = x² + y²，  v = (|x| + |y|)²，  0 ≤ u ≤ v："], ["sub", "√(x² + y²) ≤ √( (|x| + |y|)² )"]]},
+
+{"say": "再由性质 P2，取 a 等于 x 的绝对值与 y 的绝对值之和，这个平方的平方根等于这个和的绝对值。而这个和本身已经大于等于零，所以它的绝对值就是它自己。", "L": [["txt", "(P2)，取  a = |x| + |y| ≥ 0：   √( (|x| + |y|)² ) = | |x| + |y| | = |x| + |y|"], ["res", "√(x² + y²) ≤ |x| + |y|"]]},
+
+{"clear": 1, "say": "把这个不等式和假设结合起来。x 的平方加 y 的平方的平方根，小于等于 x 的绝对值加 y 的绝对值，而后者小于德尔塔。", "L": [["txt", "结合假设  |x| + |y| &lt; δ ："], ["res", "√(x² + y²) ≤ |x| + |y| &lt; δ"]]},
+
+{"say": "因此，x 的平方加 y 的平方的平方根小于德尔塔。这正是 B 的定义，所以 x, y 属于 B。由于 x, y 是 A 中任意一点，我们得出 A 包含于 B。", "L": [["txt", "于是  √(x² + y²) &lt; δ，  所以："], ["hyp", "(x, y) ∈ B"], ["res", "A ⊆ B"]]},
+
+{"title": "2) B ⊆ C", "clear": 1, "say": "第二部分：证明 B 包含于 C。我们在 B 中任取一点 x, y，需要证明它属于 C。", "L": [["hyp", "设 (x, y) ∈ B"], ["goal", "要证：  (x, y) ∈ C，  即  max{ |x|, |y| } &lt; δ"]]},
+
+{"say": "因为 x, y 属于 B，根据 B 的定义，x 的平方加 y 的平方的平方根小于德尔塔。这就是我们的假设。", "L": [["hyp", "(x, y) ∈ B  ⟹  √(x² + y²) &lt; δ<span class='tag'>假设</span>"]]},
+
+{"clear": 1, "say": "首先，因为 y 的平方大于等于零，所以 x 的平方小于等于 x 的平方加 y 的平方。同样，因为 x 的平方大于等于零，所以 y 的平方小于等于 x 的平方加 y 的平方。", "L": [["txt", "因为  y² ≥ 0  且  x² ≥ 0："], ["sub", "x² ≤ x² + y²"], ["sub", "y² ≤ x² + y²"]]},
+
+{"say": "用性质 P3 开平方。取 u 等于 x 的平方，v 等于 x 的平方加 y 的平方，那么 x 的平方的平方根，小于等于 x 的平方加 y 的平方的平方根。再由性质 P2，x 的平方的平方根等于 x 的绝对值。对 y 也一样。", "L": [["txt", "(P3)，取  u = x²，  v = x² + y²，  再用 (P2)，取  a = x："], ["sub", "|x| = √(x²) ≤ √(x² + y²)"], ["txt", "(P3)，取  u = y²，  v = x² + y²，  再用 (P2)，取  a = y："], ["sub", "|y| = √(y²) ≤ √(x² + y²)"]]},
+
+{"clear": 1, "say": "现在使用假设。x 的绝对值小于等于 x 的平方加 y 的平方的平方根，而它小于德尔塔。对 y 也一样。因此，x 的绝对值小于德尔塔，y 的绝对值也小于德尔塔。", "L": [["txt", "结合假设  √(x² + y²) &lt; δ ："], ["res", "|x| ≤ √(x² + y²) &lt; δ"], ["res", "|y| ≤ √(x² + y²) &lt; δ"]]},
+
+{"say": "两个数的最大值就是其中之一，而这两个数都小于德尔塔。因此，x 的绝对值与 y 的绝对值中的最大值小于德尔塔。这正是 C 的定义，所以 x, y 属于 C。由于 x, y 是 B 中任意一点，我们得出 B 包含于 C。", "L": [["txt", "|x| &lt; δ  且  |y| &lt; δ  ⟹  max{ |x|, |y| } &lt; δ"], ["hyp", "(x, y) ∈ C"], ["res", "B ⊆ C"]]},
+
+{"title": "结论", "clear": 1, "say": "结论。把两部分合起来，A 包含于 B，B 包含于 C。从几何上看，菱形在圆的内部，圆在正方形的内部。感谢观看。", "L": [["res", "A ⊆ B   且   B ⊆ C   ⟹   A ⊆ B ⊆ C"], ["txt", "<svg viewBox='0 0 300 300' width='100%' style='max-width:300px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='40' y='40' width='220' height='220' fill='#7be0a0' fill-opacity='.15' stroke='#7be0a0' stroke-width='2.5' stroke-dasharray='6 4'/><circle cx='150' cy='150' r='110' fill='#ffd166' fill-opacity='.15' stroke='#ffd166' stroke-width='2.5' stroke-dasharray='6 4'/><polygon points='150,40 260,150 150,260 40,150' fill='#7cc4ff' fill-opacity='.25' stroke='#7cc4ff' stroke-width='2.5' stroke-dasharray='6 4'/><line x1='10' y1='150' x2='290' y2='150' stroke='#9fb3aa' stroke-width='1'/><line x1='150' y1='10' x2='150' y2='290' stroke='#9fb3aa' stroke-width='1'/><text x='260' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>δ</text><text x='40' y='166' fill='#9fb3aa' font-size='16' text-anchor='middle'>−δ</text><text x='156' y='54' fill='#9fb3aa' font-size='14'>δ</text><text x='136' y='155' fill='#7cc4ff' font-size='18'>A</text><text x='184' y='116' fill='#ffd166' font-size='18'>B</text><text x='216' y='84' fill='#7be0a0' font-size='18'>C</text></svg>"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' 加 ').replace(/⊙/g,' 乘 ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ 重播'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ 继续'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ 暂停';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^zh/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/yunyang|yunxi|yunjian|kangkang|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="平面中的包含关系";$('sub').textContent="练习 · 集合代数";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
