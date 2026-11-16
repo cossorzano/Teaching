@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hasil kali Kartesius</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Ingat</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Mulai</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Kecepatan <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Mode rekam (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"id-ID",
+"meta":{"nivel": 1, "titulo": "Hasil kali Kartesius", "enunciado": "Misalkan A = (0, 2] dan B = [−1, 1]. (a) Hitung dan jelaskan hasil kali Kartesius A × B dan B × A. (b) Buktikan bahwa:", "tesis": "A × B ≠ B × A", "datos": ["A = (0, 2] = { x ∈ ℝ | 0 < x ≤ 2 }", "B = [−1, 1] = { x ∈ ℝ | −1 ≤ x ≤ 1 }"], "figura": "ultima"},
+"steps":[
+{"title": "Hasil kali Kartesius", "sub": "Latihan · Aljabar himpunan", "clear": 1, "say": "Halo. Dalam video ini kita akan menghitung dua hasil kali Kartesius dari selang, dan membuktikan bahwa keduanya tidak sama. Kita akan berjalan sangat perlahan, menuliskan setiap persamaan dan memberikan alasan untuk setiap langkah.", "L": [["txt", "Hasil kali Kartesius A × B dan B × A dari dua selang"]]},
+
+{"say": "Data yang diketahui. A adalah selang yang terbuka di kiri pada nol, dan tertutup di kanan pada dua: bilangan real x sehingga x lebih besar dari nol, dan lebih kecil atau sama dengan dua. B adalah selang tertutup dari minus satu sampai satu: bilangan real x sehingga x lebih besar atau sama dengan minus satu, dan lebih kecil atau sama dengan satu.", "L": [["hyp", "A = (0, 2] = { x ∈ ℝ | 0 &lt; x ≤ 2 }<span class='tag'>Diketahui</span>"], ["hyp", "B = [−1, 1] = { x ∈ ℝ | −1 ≤ x ≤ 1 }<span class='tag'>Diketahui</span>"]]},
+
+{"clear": 1, "say": "Yang ingin kita lakukan. Pertama, bagian a: menghitung dan menjelaskan hasil kali Kartesius A kali B, dan B kali A. Kedua, bagian b: membuktikan bahwa A kali B berbeda dari B kali A. Di sebelah kiri kita ingat definisi hasil kali Kartesius, dan cara membuktikan bahwa dua himpunan berbeda: cukup menemukan satu titik yang ada di salah satunya dan tidak di yang lain.", "L": [["goal", "(a)  Hitung dan jelaskan  A × B  dan  B × A"], ["goal", "(b)  Buktikan bahwa  A × B ≠ B × A"]], "pin": ["(Def ×) X × Y = { (x, y) ∈ ℝ² | x ∈ X  dan  y ∈ Y }", "(Def ≠) X ≠ Y  ⟸  ada titik yang berada di salah satunya dan tidak di yang lain"]},
+
+{"title": "a) Menghitung A × B", "clear": 1, "say": "Bagian a. Kita mulai dengan A kali B. Menurut definisi hasil kali Kartesius, A kali B adalah himpunan titik x, y di bidang sehingga x anggota A, dan y anggota B.", "L": [["sub", "A × B = { (x, y) ∈ ℝ² | x ∈ A,  y ∈ B }<span class='tag'>Definisi hasil kali Kartesius</span>"]]},
+
+{"say": "Kita ganti A dan B dengan selang yang diberikan. x anggota A berarti x lebih besar dari nol dan lebih kecil atau sama dengan dua. Dan y anggota B berarti y lebih besar atau sama dengan minus satu, dan lebih kecil atau sama dengan satu.", "L": [["txt", "x ∈ A  ⟺  0 &lt; x ≤ 2          y ∈ B  ⟺  −1 ≤ y ≤ 1"], ["res", "A × B = { (x, y) ∈ ℝ² | 0 &lt; x ≤ 2,  −1 ≤ y ≤ 1 }"]]},
+
+{"say": "Kita jelaskan himpunan ini. Ini adalah persegi bersisi dua. Koordinat x dari nol sampai dua, dan koordinat y dari minus satu sampai satu. Sisi kiri, tempat x sama dengan nol, tidak termasuk, karena itu digambar dengan garis putus-putus. Tiga sisi lainnya termasuk.", "L": [["txt", "Ini persegi bersisi 2:  x antara 0 dan 2,  y antara −1 dan 1"], ["txt", "Sisi x = 0: tidak termasuk.  Tiga sisi lainnya: termasuk."], ["txt", "<svg viewBox='0 0 380 380' width='100%' style='max-width:340px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='157.5' y='147.5' width='170' height='170' fill='#7cc4ff' fill-opacity='.22' stroke='none'/><line x1='157.5' y1='317.5' x2='157.5' y2='147.5' stroke='#7cc4ff' stroke-width='3' stroke-dasharray='6 5'/><line x1='327.5' y1='317.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='317.5' x2='327.5' y2='317.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='147.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='10' y1='232.5' x2='370' y2='232.5' stroke='#9fb3aa'/><line x1='157.5' y1='10' x2='157.5' y2='370' stroke='#9fb3aa'/><text x='72.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>-1</text><text x='149.5' y='322.5' fill='#9fb3aa' font-size='14' text-anchor='end'>-1</text><text x='242.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>1</text><text x='149.5' y='152.5' fill='#9fb3aa' font-size='14' text-anchor='end'>1</text><text x='327.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>2</text><text x='149.5' y='67.5' fill='#9fb3aa' font-size='14' text-anchor='end'>2</text><text x='362' y='226' fill='#9fb3aa' font-size='15'>x</text><text x='165' y='22' fill='#9fb3aa' font-size='15'>y</text><text x='242.5' y='283.5' fill='#7cc4ff' font-size='20' text-anchor='middle'>A×B</text></svg>"]]},
+
+{"title": "a) Menghitung B × A", "clear": 1, "say": "Sekarang B kali A. Menurut definisi, B kali A adalah himpunan titik x, y di bidang sehingga x anggota B, dan y anggota A.", "L": [["sub", "B × A = { (x, y) ∈ ℝ² | x ∈ B,  y ∈ A }<span class='tag'>Definisi hasil kali Kartesius</span>"]]},
+
+{"say": "Kita substitusikan. Sekarang perannya tertukar. x anggota B berarti x lebih besar atau sama dengan minus satu, dan lebih kecil atau sama dengan satu. Dan y anggota A berarti y lebih besar dari nol, dan lebih kecil atau sama dengan dua.", "L": [["txt", "x ∈ B  ⟺  −1 ≤ x ≤ 1          y ∈ A  ⟺  0 &lt; y ≤ 2"], ["res", "B × A = { (x, y) ∈ ℝ² | −1 ≤ x ≤ 1,  0 &lt; y ≤ 2 }"]]},
+
+{"say": "Kita jelaskan himpunan ini. Ini juga persegi bersisi dua. Koordinat x dari minus satu sampai satu, dan koordinat y dari nol sampai dua. Sekarang sisi bawah, tempat y sama dengan nol, tidak termasuk, dan tiga sisi lainnya termasuk. Kita lihat kedua persegi bersama-sama: keduanya berbeda, karena tidak menempati tempat yang sama di bidang.", "L": [["txt", "Ini persegi bersisi 2:  x antara −1 dan 1,  y antara 0 dan 2"], ["txt", "Sisi y = 0: tidak termasuk.  Tiga sisi lainnya: termasuk."], ["txt", "<svg viewBox='0 0 380 380' width='100%' style='max-width:340px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='157.5' y='147.5' width='170' height='170' fill='#7cc4ff' fill-opacity='.22' stroke='none'/><line x1='157.5' y1='317.5' x2='157.5' y2='147.5' stroke='#7cc4ff' stroke-width='3' stroke-dasharray='6 5'/><line x1='327.5' y1='317.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='317.5' x2='327.5' y2='317.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='147.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><rect x='72.5' y='62.5' width='170' height='170' fill='#ffd166' fill-opacity='.22' stroke='none'/><line x1='72.5' y1='232.5' x2='72.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='242.5' y1='232.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='72.5' y1='232.5' x2='242.5' y2='232.5' stroke='#ffd166' stroke-width='3' stroke-dasharray='6 5'/><line x1='72.5' y1='62.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='10' y1='232.5' x2='370' y2='232.5' stroke='#9fb3aa'/><line x1='157.5' y1='10' x2='157.5' y2='370' stroke='#9fb3aa'/><text x='72.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>-1</text><text x='149.5' y='322.5' fill='#9fb3aa' font-size='14' text-anchor='end'>-1</text><text x='242.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>1</text><text x='149.5' y='152.5' fill='#9fb3aa' font-size='14' text-anchor='end'>1</text><text x='327.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>2</text><text x='149.5' y='67.5' fill='#9fb3aa' font-size='14' text-anchor='end'>2</text><text x='362' y='226' fill='#9fb3aa' font-size='15'>x</text><text x='165' y='22' fill='#9fb3aa' font-size='15'>y</text><text x='242.5' y='283.5' fill='#7cc4ff' font-size='20' text-anchor='middle'>A×B</text><text x='157.5' y='100.75' fill='#ffd166' font-size='20' text-anchor='middle'>B×A</text></svg>"]]},
+
+{"title": "b) A × B ≠ B × A", "clear": 1, "say": "Bagian b. Kita ingin membuktikan bahwa A kali B berbeda dari B kali A. Cukup menemukan satu titik yang menjadi anggota salah satu himpunan dan bukan anggota yang lain. Kita pilih titik dua, nol.", "L": [["goal", "Buktikan:  A × B ≠ B × A"], ["txt", "Cukup satu titik yang ada di salah satu dan tidak di yang lain."], ["hyp", "Kita pilih titik  (2, 0)"]]},
+
+{"say": "Pertama, kita lihat bahwa dua, nol anggota A kali B. Menurut definisi hasil kali Kartesius, harus dicek bahwa koordinat pertama, dua, anggota A, dan koordinat kedua, nol, anggota B. Dua anggota A, karena nol lebih kecil dari dua, dan dua lebih kecil atau sama dengan dua. Dan nol anggota B, karena minus satu lebih kecil atau sama dengan nol, dan nol lebih kecil atau sama dengan satu.", "L": [["txt", "(2, 0) ∈ A × B ?   Harus dicek:  2 ∈ A  dan  0 ∈ B"], ["sub", "2 ∈ A  karena  0 &lt; 2 ≤ 2"], ["sub", "0 ∈ B  karena  −1 ≤ 0 ≤ 1"], ["res", "(2, 0) ∈ A × B"]]},
+
+{"say": "Kedua, kita lihat bahwa dua, nol bukan anggota B kali A. Menurut definisi hasil kali Kartesius, koordinat pertama, dua, harus menjadi anggota B. Tetapi dua bukan anggota B, karena dua lebih besar dari satu. Cukup satu syarat yang gagal, jadi dua, nol bukan anggota B kali A.", "L": [["txt", "(2, 0) ∈ B × A ?   Diperlukan:  2 ∈ B"], ["warn", "2 ∉ B  karena  2 &gt; 1"], ["res", "(2, 0) ∉ B × A"], ["txt", "<svg viewBox='0 0 380 380' width='100%' style='max-width:340px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='157.5' y='147.5' width='170' height='170' fill='#7cc4ff' fill-opacity='.22' stroke='none'/><line x1='157.5' y1='317.5' x2='157.5' y2='147.5' stroke='#7cc4ff' stroke-width='3' stroke-dasharray='6 5'/><line x1='327.5' y1='317.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='317.5' x2='327.5' y2='317.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='147.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><rect x='72.5' y='62.5' width='170' height='170' fill='#ffd166' fill-opacity='.22' stroke='none'/><line x1='72.5' y1='232.5' x2='72.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='242.5' y1='232.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='72.5' y1='232.5' x2='242.5' y2='232.5' stroke='#ffd166' stroke-width='3' stroke-dasharray='6 5'/><line x1='72.5' y1='62.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='10' y1='232.5' x2='370' y2='232.5' stroke='#9fb3aa'/><line x1='157.5' y1='10' x2='157.5' y2='370' stroke='#9fb3aa'/><text x='72.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>-1</text><text x='149.5' y='322.5' fill='#9fb3aa' font-size='14' text-anchor='end'>-1</text><text x='242.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>1</text><text x='149.5' y='152.5' fill='#9fb3aa' font-size='14' text-anchor='end'>1</text><text x='327.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>2</text><text x='149.5' y='67.5' fill='#9fb3aa' font-size='14' text-anchor='end'>2</text><text x='362' y='226' fill='#9fb3aa' font-size='15'>x</text><text x='165' y='22' fill='#9fb3aa' font-size='15'>y</text><text x='242.5' y='283.5' fill='#7cc4ff' font-size='20' text-anchor='middle'>A×B</text><text x='157.5' y='100.75' fill='#ffd166' font-size='20' text-anchor='middle'>B×A</text><circle cx='327.5' cy='232.5' r='6' fill='#ff8a7a'/><text x='336.5' y='223.5' fill='#ff8a7a' font-size='15'>(2, 0)</text></svg>"]]},
+
+{"say": "Jadi, titik dua, nol ada di A kali B, dan tidak ada di B kali A. Maka kedua himpunan itu tidak mungkin sama. Kita simpulkan bahwa A kali B berbeda dari B kali A.", "L": [["txt", "(2, 0) ∈ A × B   dan   (2, 0) ∉ B × A"], ["res", "A × B ≠ B × A"]]},
+
+{"clear": 1, "say": "Sebuah catatan geometris. Jika kita menukar koordinat suatu titik, yaitu dari x, y menjadi y, x, kita mencerminkan titik itu terhadap garis y sama dengan x, yang kita gambar dengan warna hijau, putus-putus. Misalnya, titik dua, nol dicerminkan menjadi titik nol, dua, yang memang ada di B kali A, karena nol anggota B dan dua anggota A. Jadi, B kali A diperoleh dari A kali B dengan mencerminkannya terhadap garis itu. Tetapi keduanya bukan himpunan yang sama, karena masing-masing adalah cerminan yang lain, bukan dirinya sendiri.", "L": [["txt", "(x, y)  ⟼  (y, x)   adalah pencerminan terhadap garis  y = x"], ["txt", "(2, 0) ∈ A × B   ⟼   (0, 2) ∈ B × A      karena  0 ∈ B  dan  2 ∈ A"], ["txt", "B × A adalah cerminan A × B terhadap  y = x"], ["txt", "<svg viewBox='0 0 380 380' width='100%' style='max-width:340px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='157.5' y='147.5' width='170' height='170' fill='#7cc4ff' fill-opacity='.22' stroke='none'/><line x1='157.5' y1='317.5' x2='157.5' y2='147.5' stroke='#7cc4ff' stroke-width='3' stroke-dasharray='6 5'/><line x1='327.5' y1='317.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='317.5' x2='327.5' y2='317.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='147.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><rect x='72.5' y='62.5' width='170' height='170' fill='#ffd166' fill-opacity='.22' stroke='none'/><line x1='72.5' y1='232.5' x2='72.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='242.5' y1='232.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='72.5' y1='232.5' x2='242.5' y2='232.5' stroke='#ffd166' stroke-width='3' stroke-dasharray='6 5'/><line x1='72.5' y1='62.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='10' y1='232.5' x2='370' y2='232.5' stroke='#9fb3aa'/><line x1='157.5' y1='10' x2='157.5' y2='370' stroke='#9fb3aa'/><text x='72.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>-1</text><text x='149.5' y='322.5' fill='#9fb3aa' font-size='14' text-anchor='end'>-1</text><text x='242.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>1</text><text x='149.5' y='152.5' fill='#9fb3aa' font-size='14' text-anchor='end'>1</text><text x='327.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>2</text><text x='149.5' y='67.5' fill='#9fb3aa' font-size='14' text-anchor='end'>2</text><text x='362' y='226' fill='#9fb3aa' font-size='15'>x</text><text x='165' y='22' fill='#9fb3aa' font-size='15'>y</text><text x='242.5' y='283.5' fill='#7cc4ff' font-size='20' text-anchor='middle'>A×B</text><text x='157.5' y='100.75' fill='#ffd166' font-size='20' text-anchor='middle'>B×A</text><line x1='30.0' y1='360.0' x2='370.0' y2='20.0' stroke='#7be0a0' stroke-width='2.5' stroke-dasharray='3 5'/><text x='366.0' y='38.0' fill='#7be0a0' font-size='16' text-anchor='end'>y = x</text><circle cx='327.5' cy='232.5' r='6' fill='#ff8a7a'/><text x='336.5' y='223.5' fill='#ff8a7a' font-size='15'>(2, 0)</text><circle cx='157.5' cy='62.5' r='6' fill='#ff8a7a'/><text x='166.5' y='53.5' fill='#ff8a7a' font-size='15'>(0, 2)</text></svg>"]]},
+
+{"title": "Ringkasan", "clear": 1, "say": "Ringkasnya. A kali B adalah persegi berisi titik dengan x lebih besar dari nol dan lebih kecil atau sama dengan dua, dan y antara minus satu dan satu. B kali A adalah persegi berisi titik dengan x antara minus satu dan satu, dan y lebih besar dari nol dan lebih kecil atau sama dengan dua. Keduanya berbeda, karena titik dua, nol ada di yang pertama dan tidak di yang kedua. Terima kasih sudah menonton.", "L": [["res", "A × B = { (x, y) | 0 &lt; x ≤ 2,  −1 ≤ y ≤ 1 }"], ["res", "B × A = { (x, y) | −1 ≤ x ≤ 1,  0 &lt; y ≤ 2 }"], ["res", "A × B ≠ B × A"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' tambah ').replace(/⊙/g,' kali ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Ulangi'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Lanjutkan'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Jeda';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Jeda';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Jeda';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^id/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/ardi|andika|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Hasil kali Kartesius";$('sub').textContent="Latihan · Aljabar himpunan";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

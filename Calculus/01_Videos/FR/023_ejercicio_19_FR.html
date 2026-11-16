@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Produits cartésiens</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>À retenir</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Commencer</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Vitesse <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Mode enregistrement (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"fr-FR",
+"meta":{"nivel": 1, "titulo": "Produits cartésiens", "enunciado": "Soient A = (0, 2] et B = [−1, 1]. (a) Calculer et décrire les produits cartésiens A × B et B × A. (b) Démontrer que :", "tesis": "A × B ≠ B × A", "datos": ["A = (0, 2] = { x ∈ ℝ | 0 < x ≤ 2 }", "B = [−1, 1] = { x ∈ ℝ | −1 ≤ x ≤ 1 }"], "figura": "ultima"},
+"steps":[
+{"title": "Produits cartésiens", "sub": "Exercice · Algèbre des ensembles", "clear": 1, "say": "Bonjour. Dans cette vidéo, nous allons calculer deux produits cartésiens d'intervalles, et démontrer qu'ils ne sont pas égaux. Nous irons très lentement, en écrivant chaque équation et en justifiant chaque étape.", "L": [["txt", "Produits cartésiens A × B et B × A de deux intervalles"]]},
+
+{"say": "Les données. A est l'intervalle ouvert à gauche en zéro, et fermé à droite en deux : les nombres réels x tels que x est supérieur à zéro, et inférieur ou égal à deux. B est l'intervalle fermé de moins un à un : les nombres réels x tels que x est supérieur ou égal à moins un, et inférieur ou égal à un.", "L": [["hyp", "A = (0, 2] = { x ∈ ℝ | 0 &lt; x ≤ 2 }<span class='tag'>Donnée</span>"], ["hyp", "B = [−1, 1] = { x ∈ ℝ | −1 ≤ x ≤ 1 }<span class='tag'>Donnée</span>"]]},
+
+{"clear": 1, "say": "Ce que nous voulons faire. D'abord, la partie a : calculer et décrire les produits cartésiens A croix B, et B croix A. Ensuite, la partie b : démontrer que A croix B est différent de B croix A. Nous rappelons à gauche la définition du produit cartésien, et comment on démontre que deux ensembles sont différents : il suffit de trouver un point qui est dans l'un et pas dans l'autre.", "L": [["goal", "(a)  Calculer et décrire  A × B  et  B × A"], ["goal", "(b)  Démontrer que  A × B ≠ B × A"]], "pin": ["(Déf ×) X × Y = { (x, y) ∈ ℝ² | x ∈ X  et  y ∈ Y }", "(Déf ≠) X ≠ Y  ⟸  il existe un point qui est dans l'un des deux et pas dans l'autre"]},
+
+{"title": "a) Calcul de A × B", "clear": 1, "say": "Partie a. Commençons par A croix B. Par définition du produit cartésien, A croix B est l'ensemble des points x, y du plan tels que x appartient à A, et y appartient à B.", "L": [["sub", "A × B = { (x, y) ∈ ℝ² | x ∈ A,  y ∈ B }<span class='tag'>Définition du produit cartésien</span>"]]},
+
+{"say": "Remplaçons A et B par les intervalles donnés. Que x appartienne à A signifie que x est supérieur à zéro et inférieur ou égal à deux. Et que y appartienne à B signifie que y est supérieur ou égal à moins un, et inférieur ou égal à un.", "L": [["txt", "x ∈ A  ⟺  0 &lt; x ≤ 2          y ∈ B  ⟺  −1 ≤ y ≤ 1"], ["res", "A × B = { (x, y) ∈ ℝ² | 0 &lt; x ≤ 2,  −1 ≤ y ≤ 1 }"]]},
+
+{"say": "Décrivons cet ensemble. C'est un carré de côté deux. La coordonnée x va de zéro à deux, et la coordonnée y va de moins un à un. Le côté gauche, où x vaut zéro, n'est pas inclus, c'est pourquoi il est dessiné en pointillés. Les trois autres côtés sont inclus.", "L": [["txt", "C'est un carré de côté 2 :  x entre 0 et 2,  y entre −1 et 1"], ["txt", "Côté x = 0 : non inclus.  Les trois autres côtés : inclus."], ["txt", "<svg viewBox='0 0 380 380' width='100%' style='max-width:340px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='157.5' y='147.5' width='170' height='170' fill='#7cc4ff' fill-opacity='.22' stroke='none'/><line x1='157.5' y1='317.5' x2='157.5' y2='147.5' stroke='#7cc4ff' stroke-width='3' stroke-dasharray='6 5'/><line x1='327.5' y1='317.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='317.5' x2='327.5' y2='317.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='147.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='10' y1='232.5' x2='370' y2='232.5' stroke='#9fb3aa'/><line x1='157.5' y1='10' x2='157.5' y2='370' stroke='#9fb3aa'/><text x='72.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>-1</text><text x='149.5' y='322.5' fill='#9fb3aa' font-size='14' text-anchor='end'>-1</text><text x='242.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>1</text><text x='149.5' y='152.5' fill='#9fb3aa' font-size='14' text-anchor='end'>1</text><text x='327.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>2</text><text x='149.5' y='67.5' fill='#9fb3aa' font-size='14' text-anchor='end'>2</text><text x='362' y='226' fill='#9fb3aa' font-size='15'>x</text><text x='165' y='22' fill='#9fb3aa' font-size='15'>y</text><text x='242.5' y='283.5' fill='#7cc4ff' font-size='20' text-anchor='middle'>A×B</text></svg>"]]},
+
+{"title": "a) Calcul de B × A", "clear": 1, "say": "Maintenant B croix A. Par définition, B croix A est l'ensemble des points x, y du plan tels que x appartient à B, et y appartient à A.", "L": [["sub", "B × A = { (x, y) ∈ ℝ² | x ∈ B,  y ∈ A }<span class='tag'>Définition du produit cartésien</span>"]]},
+
+{"say": "Remplaçons. Maintenant les rôles sont échangés. Que x appartienne à B signifie que x est supérieur ou égal à moins un, et inférieur ou égal à un. Et que y appartienne à A signifie que y est supérieur à zéro, et inférieur ou égal à deux.", "L": [["txt", "x ∈ B  ⟺  −1 ≤ x ≤ 1          y ∈ A  ⟺  0 &lt; y ≤ 2"], ["res", "B × A = { (x, y) ∈ ℝ² | −1 ≤ x ≤ 1,  0 &lt; y ≤ 2 }"]]},
+
+{"say": "Décrivons cet ensemble. C'est aussi un carré de côté deux. La coordonnée x va de moins un à un, et la coordonnée y va de zéro à deux. Cette fois, le côté inférieur, où y vaut zéro, n'est pas inclus, et les trois autres côtés le sont. Nous voyons les deux carrés ensemble : ils sont différents, car ils n'occupent pas la même place dans le plan.", "L": [["txt", "C'est un carré de côté 2 :  x entre −1 et 1,  y entre 0 et 2"], ["txt", "Côté y = 0 : non inclus.  Les trois autres côtés : inclus."], ["txt", "<svg viewBox='0 0 380 380' width='100%' style='max-width:340px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='157.5' y='147.5' width='170' height='170' fill='#7cc4ff' fill-opacity='.22' stroke='none'/><line x1='157.5' y1='317.5' x2='157.5' y2='147.5' stroke='#7cc4ff' stroke-width='3' stroke-dasharray='6 5'/><line x1='327.5' y1='317.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='317.5' x2='327.5' y2='317.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='147.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><rect x='72.5' y='62.5' width='170' height='170' fill='#ffd166' fill-opacity='.22' stroke='none'/><line x1='72.5' y1='232.5' x2='72.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='242.5' y1='232.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='72.5' y1='232.5' x2='242.5' y2='232.5' stroke='#ffd166' stroke-width='3' stroke-dasharray='6 5'/><line x1='72.5' y1='62.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='10' y1='232.5' x2='370' y2='232.5' stroke='#9fb3aa'/><line x1='157.5' y1='10' x2='157.5' y2='370' stroke='#9fb3aa'/><text x='72.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>-1</text><text x='149.5' y='322.5' fill='#9fb3aa' font-size='14' text-anchor='end'>-1</text><text x='242.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>1</text><text x='149.5' y='152.5' fill='#9fb3aa' font-size='14' text-anchor='end'>1</text><text x='327.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>2</text><text x='149.5' y='67.5' fill='#9fb3aa' font-size='14' text-anchor='end'>2</text><text x='362' y='226' fill='#9fb3aa' font-size='15'>x</text><text x='165' y='22' fill='#9fb3aa' font-size='15'>y</text><text x='242.5' y='283.5' fill='#7cc4ff' font-size='20' text-anchor='middle'>A×B</text><text x='157.5' y='100.75' fill='#ffd166' font-size='20' text-anchor='middle'>B×A</text></svg>"]]},
+
+{"title": "b) A × B ≠ B × A", "clear": 1, "say": "Partie b. Nous voulons démontrer que A croix B est différent de B croix A. Il suffit de trouver un point qui appartient à l'un des ensembles et pas à l'autre. Nous choisissons le point deux, zéro.", "L": [["goal", "Démontrer :  A × B ≠ B × A"], ["txt", "Il suffit d'un point qui soit dans l'un et pas dans l'autre."], ["hyp", "On choisit le point  (2, 0)"]]},
+
+{"say": "D'abord, voyons que deux, zéro appartient à A croix B. Par la définition du produit cartésien, il faut vérifier que la première coordonnée, deux, appartient à A, et que la seconde, zéro, appartient à B. Deux appartient à A, car zéro est inférieur à deux, et deux est inférieur ou égal à deux. Et zéro appartient à B, car moins un est inférieur ou égal à zéro, et zéro est inférieur ou égal à un.", "L": [["txt", "(2, 0) ∈ A × B ?   Il faut vérifier :  2 ∈ A  et  0 ∈ B"], ["sub", "2 ∈ A  car  0 &lt; 2 ≤ 2"], ["sub", "0 ∈ B  car  −1 ≤ 0 ≤ 1"], ["res", "(2, 0) ∈ A × B"]]},
+
+{"say": "Ensuite, voyons que deux, zéro n'appartient pas à B croix A. Par la définition du produit cartésien, il faudrait que la première coordonnée, deux, appartienne à B. Mais deux n'appartient pas à B, car deux est supérieur à un. Il suffit qu'une des conditions échoue, donc deux, zéro n'appartient pas à B croix A.", "L": [["txt", "(2, 0) ∈ B × A ?   Il faudrait :  2 ∈ B"], ["warn", "2 ∉ B  car  2 &gt; 1"], ["res", "(2, 0) ∉ B × A"], ["txt", "<svg viewBox='0 0 380 380' width='100%' style='max-width:340px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='157.5' y='147.5' width='170' height='170' fill='#7cc4ff' fill-opacity='.22' stroke='none'/><line x1='157.5' y1='317.5' x2='157.5' y2='147.5' stroke='#7cc4ff' stroke-width='3' stroke-dasharray='6 5'/><line x1='327.5' y1='317.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='317.5' x2='327.5' y2='317.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='147.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><rect x='72.5' y='62.5' width='170' height='170' fill='#ffd166' fill-opacity='.22' stroke='none'/><line x1='72.5' y1='232.5' x2='72.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='242.5' y1='232.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='72.5' y1='232.5' x2='242.5' y2='232.5' stroke='#ffd166' stroke-width='3' stroke-dasharray='6 5'/><line x1='72.5' y1='62.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='10' y1='232.5' x2='370' y2='232.5' stroke='#9fb3aa'/><line x1='157.5' y1='10' x2='157.5' y2='370' stroke='#9fb3aa'/><text x='72.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>-1</text><text x='149.5' y='322.5' fill='#9fb3aa' font-size='14' text-anchor='end'>-1</text><text x='242.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>1</text><text x='149.5' y='152.5' fill='#9fb3aa' font-size='14' text-anchor='end'>1</text><text x='327.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>2</text><text x='149.5' y='67.5' fill='#9fb3aa' font-size='14' text-anchor='end'>2</text><text x='362' y='226' fill='#9fb3aa' font-size='15'>x</text><text x='165' y='22' fill='#9fb3aa' font-size='15'>y</text><text x='242.5' y='283.5' fill='#7cc4ff' font-size='20' text-anchor='middle'>A×B</text><text x='157.5' y='100.75' fill='#ffd166' font-size='20' text-anchor='middle'>B×A</text><circle cx='327.5' cy='232.5' r='6' fill='#ff8a7a'/><text x='336.5' y='223.5' fill='#ff8a7a' font-size='15'>(2, 0)</text></svg>"]]},
+
+{"say": "Par conséquent, le point deux, zéro est dans A croix B, et n'est pas dans B croix A. Donc les deux ensembles ne peuvent pas être égaux. Nous concluons que A croix B est différent de B croix A.", "L": [["txt", "(2, 0) ∈ A × B   et   (2, 0) ∉ B × A"], ["res", "A × B ≠ B × A"]]},
+
+{"clear": 1, "say": "Une remarque géométrique. Si on échange les coordonnées d'un point, c'est-à-dire si on passe de x, y à y, x, on fait la symétrie du point par rapport à la droite y égale x, que nous dessinons en vert, en pointillés. Par exemple, le point deux, zéro a pour symétrique le point zéro, deux, qui est bien dans B croix A, car zéro appartient à B et deux appartient à A. Ainsi, B croix A s'obtient à partir de A croix B par symétrie par rapport à cette droite. Mais ce n'est pas le même ensemble, car chacun est le symétrique de l'autre, et non de lui-même.", "L": [["txt", "(x, y)  ⟼  (y, x)   est la symétrie par rapport à la droite  y = x"], ["txt", "(2, 0) ∈ A × B   ⟼   (0, 2) ∈ B × A      car  0 ∈ B  et  2 ∈ A"], ["txt", "B × A est le symétrique de A × B par rapport à  y = x"], ["txt", "<svg viewBox='0 0 380 380' width='100%' style='max-width:340px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='157.5' y='147.5' width='170' height='170' fill='#7cc4ff' fill-opacity='.22' stroke='none'/><line x1='157.5' y1='317.5' x2='157.5' y2='147.5' stroke='#7cc4ff' stroke-width='3' stroke-dasharray='6 5'/><line x1='327.5' y1='317.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='317.5' x2='327.5' y2='317.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='147.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><rect x='72.5' y='62.5' width='170' height='170' fill='#ffd166' fill-opacity='.22' stroke='none'/><line x1='72.5' y1='232.5' x2='72.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='242.5' y1='232.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='72.5' y1='232.5' x2='242.5' y2='232.5' stroke='#ffd166' stroke-width='3' stroke-dasharray='6 5'/><line x1='72.5' y1='62.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='10' y1='232.5' x2='370' y2='232.5' stroke='#9fb3aa'/><line x1='157.5' y1='10' x2='157.5' y2='370' stroke='#9fb3aa'/><text x='72.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>-1</text><text x='149.5' y='322.5' fill='#9fb3aa' font-size='14' text-anchor='end'>-1</text><text x='242.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>1</text><text x='149.5' y='152.5' fill='#9fb3aa' font-size='14' text-anchor='end'>1</text><text x='327.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>2</text><text x='149.5' y='67.5' fill='#9fb3aa' font-size='14' text-anchor='end'>2</text><text x='362' y='226' fill='#9fb3aa' font-size='15'>x</text><text x='165' y='22' fill='#9fb3aa' font-size='15'>y</text><text x='242.5' y='283.5' fill='#7cc4ff' font-size='20' text-anchor='middle'>A×B</text><text x='157.5' y='100.75' fill='#ffd166' font-size='20' text-anchor='middle'>B×A</text><line x1='30.0' y1='360.0' x2='370.0' y2='20.0' stroke='#7be0a0' stroke-width='2.5' stroke-dasharray='3 5'/><text x='366.0' y='38.0' fill='#7be0a0' font-size='16' text-anchor='end'>y = x</text><circle cx='327.5' cy='232.5' r='6' fill='#ff8a7a'/><text x='336.5' y='223.5' fill='#ff8a7a' font-size='15'>(2, 0)</text><circle cx='157.5' cy='62.5' r='6' fill='#ff8a7a'/><text x='166.5' y='53.5' fill='#ff8a7a' font-size='15'>(0, 2)</text></svg>"]]},
+
+{"title": "Résumé", "clear": 1, "say": "En résumé. A croix B est le carré des points avec x supérieur à zéro et inférieur ou égal à deux, et y entre moins un et un. B croix A est le carré des points avec x entre moins un et un, et y supérieur à zéro et inférieur ou égal à deux. Ils sont différents, car le point deux, zéro est dans le premier et pas dans le second. Merci d'avoir regardé.", "L": [["res", "A × B = { (x, y) | 0 &lt; x ≤ 2,  −1 ≤ y ≤ 1 }"], ["res", "B × A = { (x, y) | −1 ≤ x ≤ 1,  0 &lt; y ≤ 2 }"], ["res", "A × B ≠ B × A"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' plus ').replace(/⊙/g,' fois ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Rejouer'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Reprendre'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pause';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^fr/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/henri|paul|claude|remy|rémy|male|google français$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Produits cartésiens";$('sub').textContent="Exercice · Algèbre des ensembles";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

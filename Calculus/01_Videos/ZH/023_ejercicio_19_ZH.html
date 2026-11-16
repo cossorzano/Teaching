@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>笛卡尔积</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>备忘</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ 开始</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>语速 <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">录制模式 (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"zh-CN",
+"meta":{"nivel": 1, "titulo": "笛卡尔积", "enunciado": "设 A = (0, 2]，B = [−1, 1]。(a) 计算并描述笛卡尔积 A × B 和 B × A。(b) 证明：", "tesis": "A × B ≠ B × A", "datos": ["A = (0, 2] = { x ∈ ℝ | 0 < x ≤ 2 }", "B = [−1, 1] = { x ∈ ℝ | −1 ≤ x ≤ 1 }"], "figura": "ultima"},
+"steps":[
+{"title": "笛卡尔积", "sub": "练习 · 集合代数", "clear": 1, "say": "大家好。在这个视频中，我们来计算两个区间的笛卡尔积，并证明它们不相等。我们会讲得很慢，写出每一个等式，并说明每一步的理由。", "L": [["txt", "两个区间的笛卡尔积 A × B 与 B × A"]]},
+
+{"say": "已知条件。A 是左端在零处开、右端在二处闭的区间：满足 x 大于零、并且小于等于二的实数 x。B 是从负一到一的闭区间：满足 x 大于等于负一、并且小于等于一的实数 x。", "L": [["hyp", "A = (0, 2] = { x ∈ ℝ | 0 &lt; x ≤ 2 }<span class='tag'>已知</span>"], ["hyp", "B = [−1, 1] = { x ∈ ℝ | −1 ≤ x ≤ 1 }<span class='tag'>已知</span>"]]},
+
+{"clear": 1, "say": "我们要做的事。第一，(a) 小题：计算并描述笛卡尔积 A 乘 B 和 B 乘 A。第二，(b) 小题：证明 A 乘 B 不等于 B 乘 A。我们在左边列出笛卡尔积的定义，以及如何证明两个集合不相等：只需找到一个点，它属于其中一个集合，而不属于另一个。", "L": [["goal", "(a)  计算并描述  A × B  和  B × A"], ["goal", "(b)  证明  A × B ≠ B × A"]], "pin": ["（× 定义） X × Y = { (x, y) ∈ ℝ² | x ∈ X  且  y ∈ Y }", "（≠ 定义） X ≠ Y  ⟸  存在一个点属于其中一个而不属于另一个"]},
+
+{"title": "a) 计算 A × B", "clear": 1, "say": "(a) 小题。先看 A 乘 B。根据笛卡尔积的定义，A 乘 B 是平面上满足 x 属于 A、并且 y 属于 B 的点 x, y 构成的集合。", "L": [["sub", "A × B = { (x, y) ∈ ℝ² | x ∈ A,  y ∈ B }<span class='tag'>笛卡尔积的定义</span>"]]},
+
+{"say": "把 A 和 B 换成给定的区间。x 属于 A，意思是 x 大于零并且小于等于二。y 属于 B，意思是 y 大于等于负一，并且小于等于一。", "L": [["txt", "x ∈ A  ⟺  0 &lt; x ≤ 2          y ∈ B  ⟺  −1 ≤ y ≤ 1"], ["res", "A × B = { (x, y) ∈ ℝ² | 0 &lt; x ≤ 2,  −1 ≤ y ≤ 1 }"]]},
+
+{"say": "我们来描述这个集合。它是一个边长为二的正方形。x 坐标从零到二，y 坐标从负一到一。左边那条边，也就是 x 等于零的地方，不包含在内，所以用虚线画出。其余三条边都包含在内。", "L": [["txt", "这是边长为 2 的正方形：  x 在 0 和 2 之间，  y 在 −1 和 1 之间"], ["txt", "边 x = 0：不包含。  其余三条边：包含。"], ["txt", "<svg viewBox='0 0 380 380' width='100%' style='max-width:340px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='157.5' y='147.5' width='170' height='170' fill='#7cc4ff' fill-opacity='.22' stroke='none'/><line x1='157.5' y1='317.5' x2='157.5' y2='147.5' stroke='#7cc4ff' stroke-width='3' stroke-dasharray='6 5'/><line x1='327.5' y1='317.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='317.5' x2='327.5' y2='317.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='147.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='10' y1='232.5' x2='370' y2='232.5' stroke='#9fb3aa'/><line x1='157.5' y1='10' x2='157.5' y2='370' stroke='#9fb3aa'/><text x='72.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>-1</text><text x='149.5' y='322.5' fill='#9fb3aa' font-size='14' text-anchor='end'>-1</text><text x='242.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>1</text><text x='149.5' y='152.5' fill='#9fb3aa' font-size='14' text-anchor='end'>1</text><text x='327.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>2</text><text x='149.5' y='67.5' fill='#9fb3aa' font-size='14' text-anchor='end'>2</text><text x='362' y='226' fill='#9fb3aa' font-size='15'>x</text><text x='165' y='22' fill='#9fb3aa' font-size='15'>y</text><text x='242.5' y='283.5' fill='#7cc4ff' font-size='20' text-anchor='middle'>A×B</text></svg>"]]},
+
+{"title": "a) 计算 B × A", "clear": 1, "say": "现在看 B 乘 A。根据定义，B 乘 A 是平面上满足 x 属于 B、并且 y 属于 A 的点 x, y 构成的集合。", "L": [["sub", "B × A = { (x, y) ∈ ℝ² | x ∈ B,  y ∈ A }<span class='tag'>笛卡尔积的定义</span>"]]},
+
+{"say": "代入。现在两者的角色互换了。x 属于 B，意思是 x 大于等于负一，并且小于等于一。y 属于 A，意思是 y 大于零，并且小于等于二。", "L": [["txt", "x ∈ B  ⟺  −1 ≤ x ≤ 1          y ∈ A  ⟺  0 &lt; y ≤ 2"], ["res", "B × A = { (x, y) ∈ ℝ² | −1 ≤ x ≤ 1,  0 &lt; y ≤ 2 }"]]},
+
+{"say": "我们来描述这个集合。它也是一个边长为二的正方形。x 坐标从负一到一，y 坐标从零到二。这一次，下面那条边，也就是 y 等于零的地方，不包含在内，其余三条边都包含在内。我们把两个正方形放在一起看：它们是不同的，因为它们在平面上占据的位置不一样。", "L": [["txt", "这是边长为 2 的正方形：  x 在 −1 和 1 之间，  y 在 0 和 2 之间"], ["txt", "边 y = 0：不包含。  其余三条边：包含。"], ["txt", "<svg viewBox='0 0 380 380' width='100%' style='max-width:340px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='157.5' y='147.5' width='170' height='170' fill='#7cc4ff' fill-opacity='.22' stroke='none'/><line x1='157.5' y1='317.5' x2='157.5' y2='147.5' stroke='#7cc4ff' stroke-width='3' stroke-dasharray='6 5'/><line x1='327.5' y1='317.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='317.5' x2='327.5' y2='317.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='147.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><rect x='72.5' y='62.5' width='170' height='170' fill='#ffd166' fill-opacity='.22' stroke='none'/><line x1='72.5' y1='232.5' x2='72.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='242.5' y1='232.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='72.5' y1='232.5' x2='242.5' y2='232.5' stroke='#ffd166' stroke-width='3' stroke-dasharray='6 5'/><line x1='72.5' y1='62.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='10' y1='232.5' x2='370' y2='232.5' stroke='#9fb3aa'/><line x1='157.5' y1='10' x2='157.5' y2='370' stroke='#9fb3aa'/><text x='72.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>-1</text><text x='149.5' y='322.5' fill='#9fb3aa' font-size='14' text-anchor='end'>-1</text><text x='242.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>1</text><text x='149.5' y='152.5' fill='#9fb3aa' font-size='14' text-anchor='end'>1</text><text x='327.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>2</text><text x='149.5' y='67.5' fill='#9fb3aa' font-size='14' text-anchor='end'>2</text><text x='362' y='226' fill='#9fb3aa' font-size='15'>x</text><text x='165' y='22' fill='#9fb3aa' font-size='15'>y</text><text x='242.5' y='283.5' fill='#7cc4ff' font-size='20' text-anchor='middle'>A×B</text><text x='157.5' y='100.75' fill='#ffd166' font-size='20' text-anchor='middle'>B×A</text></svg>"]]},
+
+{"title": "b) A × B ≠ B × A", "clear": 1, "say": "(b) 小题。我们要证明 A 乘 B 不等于 B 乘 A。只需找到一个点，它属于其中一个集合而不属于另一个。我们取点二, 零。", "L": [["goal", "证明：  A × B ≠ B × A"], ["txt", "只需找到一个属于其中一个、不属于另一个的点。"], ["hyp", "取点  (2, 0)"]]},
+
+{"say": "首先，看点二, 零属于 A 乘 B。根据笛卡尔积的定义，要验证第一个坐标二属于 A，第二个坐标零属于 B。二属于 A，因为零小于二，并且二小于等于二。零属于 B，因为负一小于等于零，并且零小于等于一。", "L": [["txt", "(2, 0) ∈ A × B ？   需要验证：  2 ∈ A  且  0 ∈ B"], ["sub", "2 ∈ A  因为  0 &lt; 2 ≤ 2"], ["sub", "0 ∈ B  因为  −1 ≤ 0 ≤ 1"], ["res", "(2, 0) ∈ A × B"]]},
+
+{"say": "其次，看点二, 零不属于 B 乘 A。根据笛卡尔积的定义，需要第一个坐标二属于 B。但是二不属于 B，因为二大于一。只要有一个条件不成立就够了，所以点二, 零不属于 B 乘 A。", "L": [["txt", "(2, 0) ∈ B × A ？   需要：  2 ∈ B"], ["warn", "2 ∉ B  因为  2 &gt; 1"], ["res", "(2, 0) ∉ B × A"], ["txt", "<svg viewBox='0 0 380 380' width='100%' style='max-width:340px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='157.5' y='147.5' width='170' height='170' fill='#7cc4ff' fill-opacity='.22' stroke='none'/><line x1='157.5' y1='317.5' x2='157.5' y2='147.5' stroke='#7cc4ff' stroke-width='3' stroke-dasharray='6 5'/><line x1='327.5' y1='317.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='317.5' x2='327.5' y2='317.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='147.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><rect x='72.5' y='62.5' width='170' height='170' fill='#ffd166' fill-opacity='.22' stroke='none'/><line x1='72.5' y1='232.5' x2='72.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='242.5' y1='232.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='72.5' y1='232.5' x2='242.5' y2='232.5' stroke='#ffd166' stroke-width='3' stroke-dasharray='6 5'/><line x1='72.5' y1='62.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='10' y1='232.5' x2='370' y2='232.5' stroke='#9fb3aa'/><line x1='157.5' y1='10' x2='157.5' y2='370' stroke='#9fb3aa'/><text x='72.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>-1</text><text x='149.5' y='322.5' fill='#9fb3aa' font-size='14' text-anchor='end'>-1</text><text x='242.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>1</text><text x='149.5' y='152.5' fill='#9fb3aa' font-size='14' text-anchor='end'>1</text><text x='327.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>2</text><text x='149.5' y='67.5' fill='#9fb3aa' font-size='14' text-anchor='end'>2</text><text x='362' y='226' fill='#9fb3aa' font-size='15'>x</text><text x='165' y='22' fill='#9fb3aa' font-size='15'>y</text><text x='242.5' y='283.5' fill='#7cc4ff' font-size='20' text-anchor='middle'>A×B</text><text x='157.5' y='100.75' fill='#ffd166' font-size='20' text-anchor='middle'>B×A</text><circle cx='327.5' cy='232.5' r='6' fill='#ff8a7a'/><text x='336.5' y='223.5' fill='#ff8a7a' font-size='15'>(2, 0)</text></svg>"]]},
+
+{"say": "因此，点二, 零在 A 乘 B 中，而不在 B 乘 A 中。所以这两个集合不可能相等。我们得出结论：A 乘 B 不等于 B 乘 A。", "L": [["txt", "(2, 0) ∈ A × B   且   (2, 0) ∉ B × A"], ["res", "A × B ≠ B × A"]]},
+
+{"clear": 1, "say": "一个几何上的说明。如果交换一个点的两个坐标，也就是从 x, y 变成 y, x，就相当于把这个点关于直线 y 等于 x 作对称，这条直线用绿色虚线画出。例如，点二, 零的对称点是零, 二，它确实属于 B 乘 A，因为零属于 B，二属于 A。所以，B 乘 A 是把 A 乘 B 关于这条直线作对称得到的。但它们不是同一个集合，因为每一个都是另一个的对称图形，而不是它自己。", "L": [["txt", "(x, y)  ⟼  (y, x)   是关于直线  y = x  的对称"], ["txt", "(2, 0) ∈ A × B   ⟼   (0, 2) ∈ B × A      因为  0 ∈ B  且  2 ∈ A"], ["txt", "B × A 是 A × B 关于  y = x  的对称图形"], ["txt", "<svg viewBox='0 0 380 380' width='100%' style='max-width:340px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='157.5' y='147.5' width='170' height='170' fill='#7cc4ff' fill-opacity='.22' stroke='none'/><line x1='157.5' y1='317.5' x2='157.5' y2='147.5' stroke='#7cc4ff' stroke-width='3' stroke-dasharray='6 5'/><line x1='327.5' y1='317.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='317.5' x2='327.5' y2='317.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='147.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><rect x='72.5' y='62.5' width='170' height='170' fill='#ffd166' fill-opacity='.22' stroke='none'/><line x1='72.5' y1='232.5' x2='72.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='242.5' y1='232.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='72.5' y1='232.5' x2='242.5' y2='232.5' stroke='#ffd166' stroke-width='3' stroke-dasharray='6 5'/><line x1='72.5' y1='62.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='10' y1='232.5' x2='370' y2='232.5' stroke='#9fb3aa'/><line x1='157.5' y1='10' x2='157.5' y2='370' stroke='#9fb3aa'/><text x='72.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>-1</text><text x='149.5' y='322.5' fill='#9fb3aa' font-size='14' text-anchor='end'>-1</text><text x='242.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>1</text><text x='149.5' y='152.5' fill='#9fb3aa' font-size='14' text-anchor='end'>1</text><text x='327.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>2</text><text x='149.5' y='67.5' fill='#9fb3aa' font-size='14' text-anchor='end'>2</text><text x='362' y='226' fill='#9fb3aa' font-size='15'>x</text><text x='165' y='22' fill='#9fb3aa' font-size='15'>y</text><text x='242.5' y='283.5' fill='#7cc4ff' font-size='20' text-anchor='middle'>A×B</text><text x='157.5' y='100.75' fill='#ffd166' font-size='20' text-anchor='middle'>B×A</text><line x1='30.0' y1='360.0' x2='370.0' y2='20.0' stroke='#7be0a0' stroke-width='2.5' stroke-dasharray='3 5'/><text x='366.0' y='38.0' fill='#7be0a0' font-size='16' text-anchor='end'>y = x</text><circle cx='327.5' cy='232.5' r='6' fill='#ff8a7a'/><text x='336.5' y='223.5' fill='#ff8a7a' font-size='15'>(2, 0)</text><circle cx='157.5' cy='62.5' r='6' fill='#ff8a7a'/><text x='166.5' y='53.5' fill='#ff8a7a' font-size='15'>(0, 2)</text></svg>"]]},
+
+{"title": "小结", "clear": 1, "say": "小结。A 乘 B 是由 x 大于零且小于等于二、y 在负一和一之间的点构成的正方形。B 乘 A 是由 x 在负一和一之间、y 大于零且小于等于二的点构成的正方形。它们不相等，因为点二, 零在第一个中，而不在第二个中。感谢观看。", "L": [["res", "A × B = { (x, y) | 0 &lt; x ≤ 2,  −1 ≤ y ≤ 1 }"], ["res", "B × A = { (x, y) | −1 ≤ x ≤ 1,  0 &lt; y ≤ 2 }"], ["res", "A × B ≠ B × A"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' 加 ').replace(/⊙/g,' 乘 ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ 重播'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ 继续'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ 暂停';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^zh/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/yunyang|yunxi|yunjian|kangkang|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="笛卡尔积";$('sub').textContent="练习 · 集合代数";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

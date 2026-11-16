@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cartesian products</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Remember</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Start</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Speed <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Recording mode (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"en-US",
+"meta":{"nivel": 1, "titulo": "Cartesian products", "enunciado": "Let A = (0, 2] and B = [−1, 1]. (a) Compute and describe the Cartesian products A × B and B × A. (b) Prove that:", "tesis": "A × B ≠ B × A", "datos": ["A = (0, 2] = { x ∈ ℝ | 0 < x ≤ 2 }", "B = [−1, 1] = { x ∈ ℝ | −1 ≤ x ≤ 1 }"], "figura": "ultima"},
+"steps":[
+{"title": "Cartesian products", "sub": "Exercise · Algebra of sets", "clear": 1, "say": "Hello. In this video we are going to compute two Cartesian products of intervals, and prove that they are not equal. We will go very slowly, writing every equation and justifying every step.", "L": [["txt", "Cartesian products A × B and B × A of two intervals"]]},
+
+{"say": "The data. A is the interval open on the left at zero, and closed on the right at two: the real numbers x such that x is greater than zero, and less than or equal to two. B is the closed interval from minus one to one: the real numbers x such that x is greater than or equal to minus one, and less than or equal to one.", "L": [["hyp", "A = (0, 2] = { x ∈ ℝ | 0 &lt; x ≤ 2 }<span class='tag'>Data</span>"], ["hyp", "B = [−1, 1] = { x ∈ ℝ | −1 ≤ x ≤ 1 }<span class='tag'>Data</span>"]]},
+
+{"clear": 1, "say": "What we want to do. First, part a: compute and describe the Cartesian products A cross B, and B cross A. Second, part b: prove that A cross B is different from B cross A. On the left we recall the definition of Cartesian product, and how to prove that two sets are different: it is enough to find a point that is in one and not in the other.", "L": [["goal", "(a)  Compute and describe  A × B  and  B × A"], ["goal", "(b)  Prove that  A × B ≠ B × A"]], "pin": ["(Def ×) X × Y = { (x, y) ∈ ℝ² | x ∈ X  and  y ∈ Y }", "(Def ≠) X ≠ Y  ⟸  there is a point that is in one of the two and not in the other"]},
+
+{"title": "a) Computing A × B", "clear": 1, "say": "Part a. We start with A cross B. By the definition of Cartesian product, A cross B is the set of points x, y of the plane such that x belongs to A, and y belongs to B.", "L": [["sub", "A × B = { (x, y) ∈ ℝ² | x ∈ A,  y ∈ B }<span class='tag'>Definition of Cartesian product</span>"]]},
+
+{"say": "We substitute A and B by the given intervals. That x belongs to A means that x is greater than zero and less than or equal to two. And that y belongs to B means that y is greater than or equal to minus one, and less than or equal to one.", "L": [["txt", "x ∈ A  ⟺  0 &lt; x ≤ 2          y ∈ B  ⟺  −1 ≤ y ≤ 1"], ["res", "A × B = { (x, y) ∈ ℝ² | 0 &lt; x ≤ 2,  −1 ≤ y ≤ 1 }"]]},
+
+{"say": "We describe this set. It is a square of side two. The x coordinate goes from zero to two, and the y coordinate goes from minus one to one. The left side, where x equals zero, is not included, and that is why it is drawn with a dashed line. The other three sides are included.", "L": [["txt", "It is a square of side 2:  x between 0 and 2,  y between −1 and 1"], ["txt", "Side x = 0: not included.  The other three sides: included."], ["txt", "<svg viewBox='0 0 380 380' width='100%' style='max-width:340px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='157.5' y='147.5' width='170' height='170' fill='#7cc4ff' fill-opacity='.22' stroke='none'/><line x1='157.5' y1='317.5' x2='157.5' y2='147.5' stroke='#7cc4ff' stroke-width='3' stroke-dasharray='6 5'/><line x1='327.5' y1='317.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='317.5' x2='327.5' y2='317.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='147.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='10' y1='232.5' x2='370' y2='232.5' stroke='#9fb3aa'/><line x1='157.5' y1='10' x2='157.5' y2='370' stroke='#9fb3aa'/><text x='72.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>-1</text><text x='149.5' y='322.5' fill='#9fb3aa' font-size='14' text-anchor='end'>-1</text><text x='242.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>1</text><text x='149.5' y='152.5' fill='#9fb3aa' font-size='14' text-anchor='end'>1</text><text x='327.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>2</text><text x='149.5' y='67.5' fill='#9fb3aa' font-size='14' text-anchor='end'>2</text><text x='362' y='226' fill='#9fb3aa' font-size='15'>x</text><text x='165' y='22' fill='#9fb3aa' font-size='15'>y</text><text x='242.5' y='283.5' fill='#7cc4ff' font-size='20' text-anchor='middle'>A×B</text></svg>"]]},
+
+{"title": "a) Computing B × A", "clear": 1, "say": "Now B cross A. By definition, B cross A is the set of points x, y of the plane such that x belongs to B, and y belongs to A.", "L": [["sub", "B × A = { (x, y) ∈ ℝ² | x ∈ B,  y ∈ A }<span class='tag'>Definition of Cartesian product</span>"]]},
+
+{"say": "We substitute. Now the roles are swapped. That x belongs to B means that x is greater than or equal to minus one, and less than or equal to one. And that y belongs to A means that y is greater than zero, and less than or equal to two.", "L": [["txt", "x ∈ B  ⟺  −1 ≤ x ≤ 1          y ∈ A  ⟺  0 &lt; y ≤ 2"], ["res", "B × A = { (x, y) ∈ ℝ² | −1 ≤ x ≤ 1,  0 &lt; y ≤ 2 }"]]},
+
+{"say": "We describe this set. It is also a square of side two. The x coordinate goes from minus one to one, and the y coordinate goes from zero to two. Now the bottom side, where y equals zero, is not included, and the other three sides are. We see the two squares together: they are different, because they do not occupy the same place in the plane.", "L": [["txt", "It is a square of side 2:  x between −1 and 1,  y between 0 and 2"], ["txt", "Side y = 0: not included.  The other three sides: included."], ["txt", "<svg viewBox='0 0 380 380' width='100%' style='max-width:340px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='157.5' y='147.5' width='170' height='170' fill='#7cc4ff' fill-opacity='.22' stroke='none'/><line x1='157.5' y1='317.5' x2='157.5' y2='147.5' stroke='#7cc4ff' stroke-width='3' stroke-dasharray='6 5'/><line x1='327.5' y1='317.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='317.5' x2='327.5' y2='317.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='147.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><rect x='72.5' y='62.5' width='170' height='170' fill='#ffd166' fill-opacity='.22' stroke='none'/><line x1='72.5' y1='232.5' x2='72.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='242.5' y1='232.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='72.5' y1='232.5' x2='242.5' y2='232.5' stroke='#ffd166' stroke-width='3' stroke-dasharray='6 5'/><line x1='72.5' y1='62.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='10' y1='232.5' x2='370' y2='232.5' stroke='#9fb3aa'/><line x1='157.5' y1='10' x2='157.5' y2='370' stroke='#9fb3aa'/><text x='72.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>-1</text><text x='149.5' y='322.5' fill='#9fb3aa' font-size='14' text-anchor='end'>-1</text><text x='242.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>1</text><text x='149.5' y='152.5' fill='#9fb3aa' font-size='14' text-anchor='end'>1</text><text x='327.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>2</text><text x='149.5' y='67.5' fill='#9fb3aa' font-size='14' text-anchor='end'>2</text><text x='362' y='226' fill='#9fb3aa' font-size='15'>x</text><text x='165' y='22' fill='#9fb3aa' font-size='15'>y</text><text x='242.5' y='283.5' fill='#7cc4ff' font-size='20' text-anchor='middle'>A×B</text><text x='157.5' y='100.75' fill='#ffd166' font-size='20' text-anchor='middle'>B×A</text></svg>"]]},
+
+{"title": "b) A × B ≠ B × A", "clear": 1, "say": "Part b. We want to prove that A cross B is different from B cross A. It is enough to find a point that belongs to one of the sets and not to the other. We choose the point two, zero.", "L": [["goal", "Prove:  A × B ≠ B × A"], ["txt", "One point that is in one and not in the other is enough."], ["hyp", "We choose the point  (2, 0)"]]},
+
+{"say": "First, let us see that two, zero belongs to A cross B. By the definition of Cartesian product, we must check that the first coordinate, two, belongs to A, and that the second, zero, belongs to B. Two belongs to A, because zero is less than two, and two is less than or equal to two. And zero belongs to B, because minus one is less than or equal to zero, and zero is less than or equal to one.", "L": [["txt", "(2, 0) ∈ A × B ?   We must check:  2 ∈ A  and  0 ∈ B"], ["sub", "2 ∈ A  because  0 &lt; 2 ≤ 2"], ["sub", "0 ∈ B  because  −1 ≤ 0 ≤ 1"], ["res", "(2, 0) ∈ A × B"]]},
+
+{"say": "Second, let us see that two, zero does not belong to B cross A. By the definition of Cartesian product, the first coordinate, two, would have to belong to B. But two does not belong to B, because two is greater than one. It is enough for one of the conditions to fail, so two, zero does not belong to B cross A.", "L": [["txt", "(2, 0) ∈ B × A ?   It would require:  2 ∈ B"], ["warn", "2 ∉ B  because  2 &gt; 1"], ["res", "(2, 0) ∉ B × A"], ["txt", "<svg viewBox='0 0 380 380' width='100%' style='max-width:340px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='157.5' y='147.5' width='170' height='170' fill='#7cc4ff' fill-opacity='.22' stroke='none'/><line x1='157.5' y1='317.5' x2='157.5' y2='147.5' stroke='#7cc4ff' stroke-width='3' stroke-dasharray='6 5'/><line x1='327.5' y1='317.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='317.5' x2='327.5' y2='317.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='147.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><rect x='72.5' y='62.5' width='170' height='170' fill='#ffd166' fill-opacity='.22' stroke='none'/><line x1='72.5' y1='232.5' x2='72.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='242.5' y1='232.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='72.5' y1='232.5' x2='242.5' y2='232.5' stroke='#ffd166' stroke-width='3' stroke-dasharray='6 5'/><line x1='72.5' y1='62.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='10' y1='232.5' x2='370' y2='232.5' stroke='#9fb3aa'/><line x1='157.5' y1='10' x2='157.5' y2='370' stroke='#9fb3aa'/><text x='72.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>-1</text><text x='149.5' y='322.5' fill='#9fb3aa' font-size='14' text-anchor='end'>-1</text><text x='242.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>1</text><text x='149.5' y='152.5' fill='#9fb3aa' font-size='14' text-anchor='end'>1</text><text x='327.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>2</text><text x='149.5' y='67.5' fill='#9fb3aa' font-size='14' text-anchor='end'>2</text><text x='362' y='226' fill='#9fb3aa' font-size='15'>x</text><text x='165' y='22' fill='#9fb3aa' font-size='15'>y</text><text x='242.5' y='283.5' fill='#7cc4ff' font-size='20' text-anchor='middle'>A×B</text><text x='157.5' y='100.75' fill='#ffd166' font-size='20' text-anchor='middle'>B×A</text><circle cx='327.5' cy='232.5' r='6' fill='#ff8a7a'/><text x='336.5' y='223.5' fill='#ff8a7a' font-size='15'>(2, 0)</text></svg>"]]},
+
+{"say": "Therefore, the point two, zero is in A cross B, and is not in B cross A. So the two sets cannot be equal. We conclude that A cross B is different from B cross A.", "L": [["txt", "(2, 0) ∈ A × B   and   (2, 0) ∉ B × A"], ["res", "A × B ≠ B × A"]]},
+
+{"clear": 1, "say": "A geometric remark. If we swap the coordinates of a point, that is, we go from x, y to y, x, we are reflecting the point across the line y equals x, which we draw in green, dashed. For example, the point two, zero is reflected to the point zero, two, which does belong to B cross A, because zero belongs to B and two belongs to A. So B cross A is obtained from A cross B by reflecting it across that line. But they are not the same set, because each one is the reflection of the other, not itself.", "L": [["txt", "(x, y)  ⟼  (y, x)   is the reflection across the line  y = x"], ["txt", "(2, 0) ∈ A × B   ⟼   (0, 2) ∈ B × A      because  0 ∈ B  and  2 ∈ A"], ["txt", "B × A is the reflection of A × B across  y = x"], ["txt", "<svg viewBox='0 0 380 380' width='100%' style='max-width:340px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='157.5' y='147.5' width='170' height='170' fill='#7cc4ff' fill-opacity='.22' stroke='none'/><line x1='157.5' y1='317.5' x2='157.5' y2='147.5' stroke='#7cc4ff' stroke-width='3' stroke-dasharray='6 5'/><line x1='327.5' y1='317.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='317.5' x2='327.5' y2='317.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='147.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><rect x='72.5' y='62.5' width='170' height='170' fill='#ffd166' fill-opacity='.22' stroke='none'/><line x1='72.5' y1='232.5' x2='72.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='242.5' y1='232.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='72.5' y1='232.5' x2='242.5' y2='232.5' stroke='#ffd166' stroke-width='3' stroke-dasharray='6 5'/><line x1='72.5' y1='62.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='10' y1='232.5' x2='370' y2='232.5' stroke='#9fb3aa'/><line x1='157.5' y1='10' x2='157.5' y2='370' stroke='#9fb3aa'/><text x='72.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>-1</text><text x='149.5' y='322.5' fill='#9fb3aa' font-size='14' text-anchor='end'>-1</text><text x='242.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>1</text><text x='149.5' y='152.5' fill='#9fb3aa' font-size='14' text-anchor='end'>1</text><text x='327.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>2</text><text x='149.5' y='67.5' fill='#9fb3aa' font-size='14' text-anchor='end'>2</text><text x='362' y='226' fill='#9fb3aa' font-size='15'>x</text><text x='165' y='22' fill='#9fb3aa' font-size='15'>y</text><text x='242.5' y='283.5' fill='#7cc4ff' font-size='20' text-anchor='middle'>A×B</text><text x='157.5' y='100.75' fill='#ffd166' font-size='20' text-anchor='middle'>B×A</text><line x1='30.0' y1='360.0' x2='370.0' y2='20.0' stroke='#7be0a0' stroke-width='2.5' stroke-dasharray='3 5'/><text x='366.0' y='38.0' fill='#7be0a0' font-size='16' text-anchor='end'>y = x</text><circle cx='327.5' cy='232.5' r='6' fill='#ff8a7a'/><text x='336.5' y='223.5' fill='#ff8a7a' font-size='15'>(2, 0)</text><circle cx='157.5' cy='62.5' r='6' fill='#ff8a7a'/><text x='166.5' y='53.5' fill='#ff8a7a' font-size='15'>(0, 2)</text></svg>"]]},
+
+{"title": "Summary", "clear": 1, "say": "To sum up. A cross B is the square of the points with x greater than zero and less than or equal to two, and y between minus one and one. B cross A is the square of the points with x between minus one and one, and y greater than zero and less than or equal to two. They are different, because the point two, zero is in the first and not in the second. Thanks for watching.", "L": [["res", "A × B = { (x, y) | 0 &lt; x ≤ 2,  −1 ≤ y ≤ 1 }"], ["res", "B × A = { (x, y) | −1 ≤ x ≤ 1,  0 &lt; y ≤ 2 }"], ["res", "A × B ≠ B × A"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' plus ').replace(/⊙/g,' times ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Replay'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Resume'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pause';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/andrew|guy|brian|christopher|eric|david|mark|male|google us english$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Cartesian products";$('sub').textContent="Exercise · Algebra of sets";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

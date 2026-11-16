@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>الجداءات الديكارتية</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-inline-end:2px dashed #3d5a50;padding-inline-end:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-inline-start:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+span[dir='ltr']{white-space:nowrap}
+svg{direction:ltr}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>تذكّر</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ ابدأ</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>السرعة <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">وضع التسجيل (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ar-SA",
+"meta":{"nivel": 1, "titulo": "الجداءات الديكارتية", "enunciado": "لتكن <span dir='ltr'>A = (0, 2]</span> و <span dir='ltr'>B = [−1, 1]</span>؛ أ) احسب وصِف الجداءين الديكارتيين <span dir='ltr'>A × B</span> و <span dir='ltr'>B × A</span>؛ ب) أثبت أن:", "tesis": "A × B ≠ B × A", "datos": ["<span dir='ltr'>A = (0, 2] = { x ∈ ℝ | 2 ≥ x > 0 }</span>", "<span dir='ltr'>B = [−1, 1] = { x ∈ ℝ | −1 ≤ x ≤ 1 }</span>"], "figura": "ultima"},
+"steps":[
+{"title": "الجداءات الديكارتية", "sub": "تمرين · جبر المجموعات", "clear": 1, "say": "مرحبًا. في هذا الفيديو سنحسب جداءين ديكارتيين لفترتين، ونثبت أنهما غير متساويين. سنتقدم ببطء شديد، فنكتب كل معادلة ونبرر كل خطوة.", "L": [["txt", "الجداءان الديكارتيان  <span dir='ltr'>A × B</span>  و  <span dir='ltr'>B × A</span>  لفترتين"]]},
+
+{"say": "المعطيات. A هي الفترة المفتوحة من اليسار عند الصفر، والمغلقة من اليمين عند الاثنين: الأعداد الحقيقية x التي يكون فيها x أكبر من صفر، وأصغر من أو يساوي اثنين. و B هي الفترة المغلقة من سالب واحد إلى واحد: الأعداد الحقيقية x التي يكون فيها x أكبر من أو يساوي سالب واحد، وأصغر من أو يساوي واحدًا.", "L": [["hyp", "<span dir='ltr'>A = (0, 2] = { x ∈ ℝ | 0 &lt; x ≤ 2 }</span><span class='tag'>معطى</span>"], ["hyp", "<span dir='ltr'>B = [−1, 1] = { x ∈ ℝ | −1 ≤ x ≤ 1 }</span><span class='tag'>معطى</span>"]]},
+
+{"clear": 1, "say": "ما نريد فعله. أولًا، الفقرة أ: حساب الجداءين الديكارتيين A ضرب B، و B ضرب A، ووصفهما. ثانيًا، الفقرة ب: إثبات أن A ضرب B يختلف عن B ضرب A. نتذكر على الجانب تعريف الجداء الديكارتي، وكيف نثبت أن مجموعتين مختلفتان: يكفي أن نجد نقطة تنتمي إلى إحداهما ولا تنتمي إلى الأخرى.", "L": [["goal", "أ)  احسب وصِف  <span dir='ltr'>A × B</span>  و  <span dir='ltr'>B × A</span>"], ["goal", "ب)  أثبت أن  <span dir='ltr'>A × B ≠ B × A</span>"]], "pin": ["تعريف الجداء الديكارتي: <span dir='ltr'>X × Y = { (x, y) ∈ ℝ² | x ∈ X ∧ y ∈ Y }</span>", "تعريف الاختلاف: <span dir='ltr'>X ≠ Y</span>  ⟸  توجد نقطة في إحداهما وليست في الأخرى"]},
+
+{"title": "أ) حساب A ضرب B", "clear": 1, "say": "الفقرة أ. نبدأ بـ A ضرب B. بحسب تعريف الجداء الديكارتي، A ضرب B هي مجموعة نقاط المستوى x، y التي يكون فيها x منتميًا إلى A، و y منتميًا إلى B.", "L": [["sub", "<span dir='ltr'>A × B = { (x, y) ∈ ℝ² | x ∈ A,  y ∈ B }</span><span class='tag'>تعريف الجداء الديكارتي</span>"]]},
+
+{"say": "نعوّض عن A و B بالفترتين المعطاتين. انتماء x إلى A يعني أن x أكبر من صفر وأصغر من أو يساوي اثنين. وانتماء y إلى B يعني أن y أكبر من أو يساوي سالب واحد، وأصغر من أو يساوي واحدًا.", "L": [["txt", "<span dir='ltr'>x ∈ A  ⟺  0 &lt; x ≤ 2          y ∈ B  ⟺  −1 ≤ y ≤ 1</span>"], ["res", "<span dir='ltr'>A × B = { (x, y) ∈ ℝ² | 0 &lt; x ≤ 2,  −1 ≤ y ≤ 1 }</span>"]]},
+
+{"say": "نصف هذه المجموعة. إنها مربع طول ضلعه اثنان. الإحداثي x يمتد من صفر إلى اثنين، والإحداثي y يمتد من سالب واحد إلى واحد. الضلع الأيسر، حيث x يساوي صفرًا، غير مشمول، ولذلك رُسم بخط متقطع. أما الأضلاع الثلاثة الأخرى فمشمولة.", "L": [["txt", "مربع طول ضلعه <span dir='ltr'>2</span>،  حيث <span dir='ltr'>x</span> بين <span dir='ltr'>0</span> و <span dir='ltr'>2</span>،  و <span dir='ltr'>y</span> بين <span dir='ltr'>−1</span> و <span dir='ltr'>1</span>"], ["txt", "الضلع <span dir='ltr'>x = 0</span>: غير مشمول.  الأضلاع الثلاثة الأخرى: مشمولة."], ["txt", "<svg dir='ltr' viewBox='0 0 380 380' width='100%' style='max-width:340px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='157.5' y='147.5' width='170' height='170' fill='#7cc4ff' fill-opacity='.22' stroke='none'/><line x1='157.5' y1='317.5' x2='157.5' y2='147.5' stroke='#7cc4ff' stroke-width='3' stroke-dasharray='6 5'/><line x1='327.5' y1='317.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='317.5' x2='327.5' y2='317.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='147.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='10' y1='232.5' x2='370' y2='232.5' stroke='#9fb3aa'/><line x1='157.5' y1='10' x2='157.5' y2='370' stroke='#9fb3aa'/><text x='72.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>-1</text><text x='149.5' y='322.5' fill='#9fb3aa' font-size='14' text-anchor='end'>-1</text><text x='242.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>1</text><text x='149.5' y='152.5' fill='#9fb3aa' font-size='14' text-anchor='end'>1</text><text x='327.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>2</text><text x='149.5' y='67.5' fill='#9fb3aa' font-size='14' text-anchor='end'>2</text><text x='362' y='226' fill='#9fb3aa' font-size='15'>x</text><text x='165' y='22' fill='#9fb3aa' font-size='15'>y</text><text x='242.5' y='283.5' fill='#7cc4ff' font-size='20' text-anchor='middle'>A×B</text></svg>"]]},
+
+{"title": "أ) حساب B ضرب A", "clear": 1, "say": "الآن B ضرب A. بالتعريف، B ضرب A هي مجموعة نقاط المستوى x، y التي يكون فيها x منتميًا إلى B، و y منتميًا إلى A.", "L": [["sub", "<span dir='ltr'>B × A = { (x, y) ∈ ℝ² | x ∈ B,  y ∈ A }</span><span class='tag'>تعريف الجداء الديكارتي</span>"]]},
+
+{"say": "نعوّض. الآن تبادلت الأدوار. انتماء x إلى B يعني أن x أكبر من أو يساوي سالب واحد، وأصغر من أو يساوي واحدًا. وانتماء y إلى A يعني أن y أكبر من صفر، وأصغر من أو يساوي اثنين.", "L": [["txt", "<span dir='ltr'>x ∈ B  ⟺  −1 ≤ x ≤ 1          y ∈ A  ⟺  0 &lt; y ≤ 2</span>"], ["res", "<span dir='ltr'>B × A = { (x, y) ∈ ℝ² | −1 ≤ x ≤ 1,  0 &lt; y ≤ 2 }</span>"]]},
+
+{"say": "نصف هذه المجموعة. إنها أيضًا مربع طول ضلعه اثنان. الإحداثي x يمتد من سالب واحد إلى واحد، والإحداثي y يمتد من صفر إلى اثنين. والآن الضلع السفلي، حيث y يساوي صفرًا، غير مشمول، والأضلاع الثلاثة الأخرى مشمولة. نرى المربعين معًا: إنهما مختلفان، لأنهما لا يشغلان المكان نفسه في المستوى.", "L": [["txt", "مربع طول ضلعه <span dir='ltr'>2</span>،  حيث <span dir='ltr'>x</span> بين <span dir='ltr'>−1</span> و <span dir='ltr'>1</span>،  و <span dir='ltr'>y</span> بين <span dir='ltr'>0</span> و <span dir='ltr'>2</span>"], ["txt", "الضلع <span dir='ltr'>y = 0</span>: غير مشمول.  الأضلاع الثلاثة الأخرى: مشمولة."], ["txt", "<svg dir='ltr' viewBox='0 0 380 380' width='100%' style='max-width:340px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='157.5' y='147.5' width='170' height='170' fill='#7cc4ff' fill-opacity='.22' stroke='none'/><line x1='157.5' y1='317.5' x2='157.5' y2='147.5' stroke='#7cc4ff' stroke-width='3' stroke-dasharray='6 5'/><line x1='327.5' y1='317.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='317.5' x2='327.5' y2='317.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='147.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><rect x='72.5' y='62.5' width='170' height='170' fill='#ffd166' fill-opacity='.22' stroke='none'/><line x1='72.5' y1='232.5' x2='72.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='242.5' y1='232.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='72.5' y1='232.5' x2='242.5' y2='232.5' stroke='#ffd166' stroke-width='3' stroke-dasharray='6 5'/><line x1='72.5' y1='62.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='10' y1='232.5' x2='370' y2='232.5' stroke='#9fb3aa'/><line x1='157.5' y1='10' x2='157.5' y2='370' stroke='#9fb3aa'/><text x='72.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>-1</text><text x='149.5' y='322.5' fill='#9fb3aa' font-size='14' text-anchor='end'>-1</text><text x='242.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>1</text><text x='149.5' y='152.5' fill='#9fb3aa' font-size='14' text-anchor='end'>1</text><text x='327.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>2</text><text x='149.5' y='67.5' fill='#9fb3aa' font-size='14' text-anchor='end'>2</text><text x='362' y='226' fill='#9fb3aa' font-size='15'>x</text><text x='165' y='22' fill='#9fb3aa' font-size='15'>y</text><text x='242.5' y='283.5' fill='#7cc4ff' font-size='20' text-anchor='middle'>A×B</text><text x='157.5' y='100.75' fill='#ffd166' font-size='20' text-anchor='middle'>B×A</text></svg>"]]},
+
+{"title": "ب) A ضرب B يختلف عن B ضرب A", "clear": 1, "say": "الفقرة ب. نريد أن نثبت أن A ضرب B يختلف عن B ضرب A. يكفي أن نجد نقطة تنتمي إلى إحدى المجموعتين ولا تنتمي إلى الأخرى. نختار النقطة اثنان، صفر.", "L": [["goal", "أثبت:  <span dir='ltr'>A × B ≠ B × A</span>"], ["txt", "تكفي نقطة واحدة تكون في إحداهما وليست في الأخرى."], ["hyp", "نختار النقطة  <span dir='ltr'>(2, 0)</span>"]]},
+
+{"say": "أولًا، نرى أن النقطة اثنان، صفر تنتمي إلى A ضرب B. بحسب تعريف الجداء الديكارتي، يجب أن نتحقق من أن الإحداثي الأول، اثنان، ينتمي إلى A، وأن الثاني، صفر، ينتمي إلى B. الاثنان ينتمي إلى A، لأن الصفر أصغر من اثنين، والاثنان أصغر من أو يساوي اثنين. والصفر ينتمي إلى B، لأن سالب واحد أصغر من أو يساوي صفرًا، والصفر أصغر من أو يساوي واحدًا.", "L": [["txt", "هل <span dir='ltr'>(2, 0) ∈ A × B</span> ؟   يجب التحقق من:  <span dir='ltr'>2 ∈ A ∧ 0 ∈ B</span>"], ["sub", "<span dir='ltr'>2 ∈ A</span>  لأن  <span dir='ltr'>0 &lt; 2 ≤ 2</span>"], ["sub", "<span dir='ltr'>0 ∈ B</span>  لأن  <span dir='ltr'>−1 ≤ 0 ≤ 1</span>"], ["res", "<span dir='ltr'>(2, 0) ∈ A × B</span>"]]},
+
+{"say": "ثانيًا، نرى أن النقطة اثنان، صفر لا تنتمي إلى B ضرب A. بحسب تعريف الجداء الديكارتي، يلزم أن ينتمي الإحداثي الأول، اثنان، إلى B. لكن الاثنين لا ينتمي إلى B، لأن الاثنين أكبر من واحد. ويكفي أن يختل شرط واحد، إذن النقطة اثنان، صفر لا تنتمي إلى B ضرب A.", "L": [["txt", "هل <span dir='ltr'>(2, 0) ∈ B × A</span> ؟   يلزم:  <span dir='ltr'>2 ∈ B</span>"], ["warn", "<span dir='ltr'>2 ∉ B</span>  لأن  <span dir='ltr'>2 &gt; 1</span>"], ["res", "<span dir='ltr'>(2, 0) ∉ B × A</span>"], ["txt", "<svg dir='ltr' viewBox='0 0 380 380' width='100%' style='max-width:340px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='157.5' y='147.5' width='170' height='170' fill='#7cc4ff' fill-opacity='.22' stroke='none'/><line x1='157.5' y1='317.5' x2='157.5' y2='147.5' stroke='#7cc4ff' stroke-width='3' stroke-dasharray='6 5'/><line x1='327.5' y1='317.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='317.5' x2='327.5' y2='317.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='147.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><rect x='72.5' y='62.5' width='170' height='170' fill='#ffd166' fill-opacity='.22' stroke='none'/><line x1='72.5' y1='232.5' x2='72.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='242.5' y1='232.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='72.5' y1='232.5' x2='242.5' y2='232.5' stroke='#ffd166' stroke-width='3' stroke-dasharray='6 5'/><line x1='72.5' y1='62.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='10' y1='232.5' x2='370' y2='232.5' stroke='#9fb3aa'/><line x1='157.5' y1='10' x2='157.5' y2='370' stroke='#9fb3aa'/><text x='72.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>-1</text><text x='149.5' y='322.5' fill='#9fb3aa' font-size='14' text-anchor='end'>-1</text><text x='242.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>1</text><text x='149.5' y='152.5' fill='#9fb3aa' font-size='14' text-anchor='end'>1</text><text x='327.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>2</text><text x='149.5' y='67.5' fill='#9fb3aa' font-size='14' text-anchor='end'>2</text><text x='362' y='226' fill='#9fb3aa' font-size='15'>x</text><text x='165' y='22' fill='#9fb3aa' font-size='15'>y</text><text x='242.5' y='283.5' fill='#7cc4ff' font-size='20' text-anchor='middle'>A×B</text><text x='157.5' y='100.75' fill='#ffd166' font-size='20' text-anchor='middle'>B×A</text><circle cx='327.5' cy='232.5' r='6' fill='#ff8a7a'/><text x='336.5' y='223.5' fill='#ff8a7a' font-size='15'>(2, 0)</text></svg>"]]},
+
+{"say": "إذن، النقطة اثنان، صفر موجودة في A ضرب B، وليست موجودة في B ضرب A. لذلك لا يمكن أن تكون المجموعتان متساويتين. نستنتج أن A ضرب B يختلف عن B ضرب A.", "L": [["txt", "<span dir='ltr'>(2, 0) ∈ A × B   ∧   (2, 0) ∉ B × A</span>"], ["res", "<span dir='ltr'>A × B ≠ B × A</span>"]]},
+
+{"clear": 1, "say": "ملاحظة هندسية. إذا بادلنا إحداثيي نقطة، أي انتقلنا من x، y إلى y، x، فإننا نأخذ نظير النقطة بالنسبة إلى المستقيم y يساوي x، الذي نرسمه بالأخضر وبخط متقطع. مثلًا، نظير النقطة اثنان، صفر هو النقطة صفر، اثنان، وهي تنتمي فعلًا إلى B ضرب A، لأن الصفر ينتمي إلى B والاثنين ينتمي إلى A. وهكذا نحصل على B ضرب A من A ضرب B بأخذ نظيره بالنسبة إلى هذا المستقيم. لكنهما ليسا المجموعة نفسها، لأن كل واحدة منهما نظير الأخرى، لا نظير نفسها.", "L": [["txt", "<span dir='ltr'>(x, y)  ⟼  (y, x)</span>   هو التناظر بالنسبة إلى المستقيم  <span dir='ltr'>y = x</span>"], ["txt", "<span dir='ltr'>(2, 0) ∈ A × B   ⟼   (0, 2) ∈ B × A</span>      لأن  <span dir='ltr'>0 ∈ B ∧ 2 ∈ A</span>"], ["txt", "<span dir='ltr'>B × A</span> هو نظير <span dir='ltr'>A × B</span> بالنسبة إلى  <span dir='ltr'>y = x</span>"], ["txt", "<svg dir='ltr' viewBox='0 0 380 380' width='100%' style='max-width:340px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='157.5' y='147.5' width='170' height='170' fill='#7cc4ff' fill-opacity='.22' stroke='none'/><line x1='157.5' y1='317.5' x2='157.5' y2='147.5' stroke='#7cc4ff' stroke-width='3' stroke-dasharray='6 5'/><line x1='327.5' y1='317.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='317.5' x2='327.5' y2='317.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='147.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><rect x='72.5' y='62.5' width='170' height='170' fill='#ffd166' fill-opacity='.22' stroke='none'/><line x1='72.5' y1='232.5' x2='72.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='242.5' y1='232.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='72.5' y1='232.5' x2='242.5' y2='232.5' stroke='#ffd166' stroke-width='3' stroke-dasharray='6 5'/><line x1='72.5' y1='62.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='10' y1='232.5' x2='370' y2='232.5' stroke='#9fb3aa'/><line x1='157.5' y1='10' x2='157.5' y2='370' stroke='#9fb3aa'/><text x='72.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>-1</text><text x='149.5' y='322.5' fill='#9fb3aa' font-size='14' text-anchor='end'>-1</text><text x='242.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>1</text><text x='149.5' y='152.5' fill='#9fb3aa' font-size='14' text-anchor='end'>1</text><text x='327.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>2</text><text x='149.5' y='67.5' fill='#9fb3aa' font-size='14' text-anchor='end'>2</text><text x='362' y='226' fill='#9fb3aa' font-size='15'>x</text><text x='165' y='22' fill='#9fb3aa' font-size='15'>y</text><text x='242.5' y='283.5' fill='#7cc4ff' font-size='20' text-anchor='middle'>A×B</text><text x='157.5' y='100.75' fill='#ffd166' font-size='20' text-anchor='middle'>B×A</text><line x1='30.0' y1='360.0' x2='370.0' y2='20.0' stroke='#7be0a0' stroke-width='2.5' stroke-dasharray='3 5'/><text x='366.0' y='38.0' fill='#7be0a0' font-size='16' text-anchor='end'>y = x</text><circle cx='327.5' cy='232.5' r='6' fill='#ff8a7a'/><text x='336.5' y='223.5' fill='#ff8a7a' font-size='15'>(2, 0)</text><circle cx='157.5' cy='62.5' r='6' fill='#ff8a7a'/><text x='166.5' y='53.5' fill='#ff8a7a' font-size='15'>(0, 2)</text></svg>"]]},
+
+{"title": "الخلاصة", "clear": 1, "say": "الخلاصة. A ضرب B هي المربع المكوّن من النقاط التي يكون فيها x أكبر من صفر وأصغر من أو يساوي اثنين، و y بين سالب واحد وواحد. و B ضرب A هي المربع المكوّن من النقاط التي يكون فيها x بين سالب واحد وواحد، و y أكبر من صفر وأصغر من أو يساوي اثنين. وهما مختلفتان، لأن النقطة اثنان، صفر موجودة في الأولى وليست في الثانية. شكرًا على المشاهدة.", "L": [["res", "<span dir='ltr'>A × B = { (x, y) | 0 &lt; x ≤ 2,  −1 ≤ y ≤ 1 }</span>"], ["res", "<span dir='ltr'>B × A = { (x, y) | −1 ≤ x ≤ 1,  0 &lt; y ≤ 2 }</span>"], ["res", "<span dir='ltr'>A × B ≠ B × A</span>"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' زائد ').replace(/⊙/g,' ضرب ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ إعادة'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ متابعة'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ إيقاف مؤقت';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ إيقاف مؤقت';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ إيقاف مؤقت';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ar/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/hamed|shakir|naayf|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="الجداءات الديكارتية";$('sub').textContent="تمرين · جبر المجموعات";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

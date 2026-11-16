@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Produtos cartesianos</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Lembre-se</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Começar</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Velocidade <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Modo gravação (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"pt-BR",
+"meta":{"nivel": 1, "titulo": "Produtos cartesianos", "enunciado": "Sejam A = (0, 2] e B = [−1, 1]. (a) Calcular e descrever os produtos cartesianos A × B e B × A. (b) Demonstrar que:", "tesis": "A × B ≠ B × A", "datos": ["A = (0, 2] = { x ∈ ℝ | 0 < x ≤ 2 }", "B = [−1, 1] = { x ∈ ℝ | −1 ≤ x ≤ 1 }"], "figura": "ultima"},
+"steps":[
+{"title": "Produtos cartesianos", "sub": "Exercício · Álgebra de conjuntos", "clear": 1, "say": "Olá. Neste vídeo vamos calcular dois produtos cartesianos de intervalos, e demonstrar que não são iguais. Vamos muito devagar, escrevendo cada equação e justificando cada passo.", "L": [["txt", "Produtos cartesianos A × B e B × A de dois intervalos"]]},
+
+{"say": "Os dados. A é o intervalo aberto à esquerda em zero, e fechado à direita em dois: os números reais x tais que x é maior que zero, e menor ou igual a dois. B é o intervalo fechado de menos um a um: os números reais x tais que x é maior ou igual a menos um, e menor ou igual a um.", "L": [["hyp", "A = (0, 2] = { x ∈ ℝ | 0 &lt; x ≤ 2 }<span class='tag'>Dado</span>"], ["hyp", "B = [−1, 1] = { x ∈ ℝ | −1 ≤ x ≤ 1 }<span class='tag'>Dado</span>"]]},
+
+{"clear": 1, "say": "O que queremos fazer. Primeiro, a alínea a: calcular e descrever os produtos cartesianos A vezes B, e B vezes A. Segundo, a alínea b: demonstrar que A vezes B é diferente de B vezes A. Recordamos à esquerda a definição de produto cartesiano, e como se demonstra que dois conjuntos são diferentes: basta encontrar um ponto que está num e não no outro.", "L": [["goal", "(a)  Calcular e descrever  A × B  e  B × A"], ["goal", "(b)  Demonstrar que  A × B ≠ B × A"]], "pin": ["(Def ×) X × Y = { (x, y) ∈ ℝ² | x ∈ X  e  y ∈ Y }", "(Def ≠) X ≠ Y  ⟸  existe um ponto que está num dos dois e não no outro"]},
+
+{"title": "a) Cálculo de A × B", "clear": 1, "say": "Alínea a. Começamos por A vezes B. Pela definição de produto cartesiano, A vezes B é o conjunto dos pontos x, y do plano tais que x pertence a A, e y pertence a B.", "L": [["sub", "A × B = { (x, y) ∈ ℝ² | x ∈ A,  y ∈ B }<span class='tag'>Definição de produto cartesiano</span>"]]},
+
+{"say": "Substituímos A e B pelos intervalos dados. Que x pertença a A quer dizer que x é maior que zero e menor ou igual a dois. E que y pertença a B quer dizer que y é maior ou igual a menos um, e menor ou igual a um.", "L": [["txt", "x ∈ A  ⟺  0 &lt; x ≤ 2          y ∈ B  ⟺  −1 ≤ y ≤ 1"], ["res", "A × B = { (x, y) ∈ ℝ² | 0 &lt; x ≤ 2,  −1 ≤ y ≤ 1 }"]]},
+
+{"say": "Descrevemos este conjunto. É um quadrado de lado dois. A coordenada x vai de zero a dois, e a coordenada y vai de menos um a um. O lado esquerdo, onde x vale zero, não está incluído, e por isso está desenhado com linha tracejada. Os outros três lados estão incluídos.", "L": [["txt", "É um quadrado de lado 2:  x entre 0 e 2,  y entre −1 e 1"], ["txt", "Lado x = 0: não incluído.  Os outros três lados: incluídos."], ["txt", "<svg viewBox='0 0 380 380' width='100%' style='max-width:340px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='157.5' y='147.5' width='170' height='170' fill='#7cc4ff' fill-opacity='.22' stroke='none'/><line x1='157.5' y1='317.5' x2='157.5' y2='147.5' stroke='#7cc4ff' stroke-width='3' stroke-dasharray='6 5'/><line x1='327.5' y1='317.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='317.5' x2='327.5' y2='317.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='147.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='10' y1='232.5' x2='370' y2='232.5' stroke='#9fb3aa'/><line x1='157.5' y1='10' x2='157.5' y2='370' stroke='#9fb3aa'/><text x='72.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>-1</text><text x='149.5' y='322.5' fill='#9fb3aa' font-size='14' text-anchor='end'>-1</text><text x='242.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>1</text><text x='149.5' y='152.5' fill='#9fb3aa' font-size='14' text-anchor='end'>1</text><text x='327.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>2</text><text x='149.5' y='67.5' fill='#9fb3aa' font-size='14' text-anchor='end'>2</text><text x='362' y='226' fill='#9fb3aa' font-size='15'>x</text><text x='165' y='22' fill='#9fb3aa' font-size='15'>y</text><text x='242.5' y='283.5' fill='#7cc4ff' font-size='20' text-anchor='middle'>A×B</text></svg>"]]},
+
+{"title": "a) Cálculo de B × A", "clear": 1, "say": "Agora B vezes A. Por definição, B vezes A é o conjunto dos pontos x, y do plano tais que x pertence a B, e y pertence a A.", "L": [["sub", "B × A = { (x, y) ∈ ℝ² | x ∈ B,  y ∈ A }<span class='tag'>Definição de produto cartesiano</span>"]]},
+
+{"say": "Substituímos. Agora os papéis estão trocados. Que x pertença a B quer dizer que x é maior ou igual a menos um, e menor ou igual a um. E que y pertença a A quer dizer que y é maior que zero, e menor ou igual a dois.", "L": [["txt", "x ∈ B  ⟺  −1 ≤ x ≤ 1          y ∈ A  ⟺  0 &lt; y ≤ 2"], ["res", "B × A = { (x, y) ∈ ℝ² | −1 ≤ x ≤ 1,  0 &lt; y ≤ 2 }"]]},
+
+{"say": "Descrevemos este conjunto. Também é um quadrado de lado dois. A coordenada x vai de menos um a um, e a coordenada y vai de zero a dois. Agora o lado inferior, onde y vale zero, não está incluído, e os outros três lados estão. Vemos os dois quadrados juntos: são diferentes, porque não ocupam o mesmo lugar do plano.", "L": [["txt", "É um quadrado de lado 2:  x entre −1 e 1,  y entre 0 e 2"], ["txt", "Lado y = 0: não incluído.  Os outros três lados: incluídos."], ["txt", "<svg viewBox='0 0 380 380' width='100%' style='max-width:340px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='157.5' y='147.5' width='170' height='170' fill='#7cc4ff' fill-opacity='.22' stroke='none'/><line x1='157.5' y1='317.5' x2='157.5' y2='147.5' stroke='#7cc4ff' stroke-width='3' stroke-dasharray='6 5'/><line x1='327.5' y1='317.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='317.5' x2='327.5' y2='317.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='147.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><rect x='72.5' y='62.5' width='170' height='170' fill='#ffd166' fill-opacity='.22' stroke='none'/><line x1='72.5' y1='232.5' x2='72.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='242.5' y1='232.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='72.5' y1='232.5' x2='242.5' y2='232.5' stroke='#ffd166' stroke-width='3' stroke-dasharray='6 5'/><line x1='72.5' y1='62.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='10' y1='232.5' x2='370' y2='232.5' stroke='#9fb3aa'/><line x1='157.5' y1='10' x2='157.5' y2='370' stroke='#9fb3aa'/><text x='72.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>-1</text><text x='149.5' y='322.5' fill='#9fb3aa' font-size='14' text-anchor='end'>-1</text><text x='242.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>1</text><text x='149.5' y='152.5' fill='#9fb3aa' font-size='14' text-anchor='end'>1</text><text x='327.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>2</text><text x='149.5' y='67.5' fill='#9fb3aa' font-size='14' text-anchor='end'>2</text><text x='362' y='226' fill='#9fb3aa' font-size='15'>x</text><text x='165' y='22' fill='#9fb3aa' font-size='15'>y</text><text x='242.5' y='283.5' fill='#7cc4ff' font-size='20' text-anchor='middle'>A×B</text><text x='157.5' y='100.75' fill='#ffd166' font-size='20' text-anchor='middle'>B×A</text></svg>"]]},
+
+{"title": "b) A × B ≠ B × A", "clear": 1, "say": "Alínea b. Queremos demonstrar que A vezes B é diferente de B vezes A. Basta encontrar um ponto que pertença a um dos conjuntos e não ao outro. Escolhemos o ponto dois, zero.", "L": [["goal", "Demonstrar:  A × B ≠ B × A"], ["txt", "Basta um ponto que esteja num e não no outro."], ["hyp", "Escolhemos o ponto  (2, 0)"]]},
+
+{"say": "Primeiro, vejamos que dois, zero pertence a A vezes B. Pela definição de produto cartesiano, é preciso verificar que a primeira coordenada, dois, pertence a A, e que a segunda, zero, pertence a B. Dois pertence a A, porque zero é menor que dois, e dois é menor ou igual a dois. E zero pertence a B, porque menos um é menor ou igual a zero, e zero é menor ou igual a um.", "L": [["txt", "(2, 0) ∈ A × B ?   É preciso ver:  2 ∈ A  e  0 ∈ B"], ["sub", "2 ∈ A  porque  0 &lt; 2 ≤ 2"], ["sub", "0 ∈ B  porque  −1 ≤ 0 ≤ 1"], ["res", "(2, 0) ∈ A × B"]]},
+
+{"say": "Segundo, vejamos que dois, zero não pertence a B vezes A. Pela definição de produto cartesiano, seria preciso que a primeira coordenada, dois, pertencesse a B. Mas dois não pertence a B, porque dois é maior que um. Basta que falhe uma das condições, portanto dois, zero não pertence a B vezes A.", "L": [["txt", "(2, 0) ∈ B × A ?   Seria preciso:  2 ∈ B"], ["warn", "2 ∉ B  porque  2 &gt; 1"], ["res", "(2, 0) ∉ B × A"], ["txt", "<svg viewBox='0 0 380 380' width='100%' style='max-width:340px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='157.5' y='147.5' width='170' height='170' fill='#7cc4ff' fill-opacity='.22' stroke='none'/><line x1='157.5' y1='317.5' x2='157.5' y2='147.5' stroke='#7cc4ff' stroke-width='3' stroke-dasharray='6 5'/><line x1='327.5' y1='317.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='317.5' x2='327.5' y2='317.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='147.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><rect x='72.5' y='62.5' width='170' height='170' fill='#ffd166' fill-opacity='.22' stroke='none'/><line x1='72.5' y1='232.5' x2='72.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='242.5' y1='232.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='72.5' y1='232.5' x2='242.5' y2='232.5' stroke='#ffd166' stroke-width='3' stroke-dasharray='6 5'/><line x1='72.5' y1='62.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='10' y1='232.5' x2='370' y2='232.5' stroke='#9fb3aa'/><line x1='157.5' y1='10' x2='157.5' y2='370' stroke='#9fb3aa'/><text x='72.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>-1</text><text x='149.5' y='322.5' fill='#9fb3aa' font-size='14' text-anchor='end'>-1</text><text x='242.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>1</text><text x='149.5' y='152.5' fill='#9fb3aa' font-size='14' text-anchor='end'>1</text><text x='327.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>2</text><text x='149.5' y='67.5' fill='#9fb3aa' font-size='14' text-anchor='end'>2</text><text x='362' y='226' fill='#9fb3aa' font-size='15'>x</text><text x='165' y='22' fill='#9fb3aa' font-size='15'>y</text><text x='242.5' y='283.5' fill='#7cc4ff' font-size='20' text-anchor='middle'>A×B</text><text x='157.5' y='100.75' fill='#ffd166' font-size='20' text-anchor='middle'>B×A</text><circle cx='327.5' cy='232.5' r='6' fill='#ff8a7a'/><text x='336.5' y='223.5' fill='#ff8a7a' font-size='15'>(2, 0)</text></svg>"]]},
+
+{"say": "Portanto, o ponto dois, zero está em A vezes B, e não está em B vezes A. Logo os dois conjuntos não podem ser iguais. Concluímos que A vezes B é diferente de B vezes A.", "L": [["txt", "(2, 0) ∈ A × B   e   (2, 0) ∉ B × A"], ["res", "A × B ≠ B × A"]]},
+
+{"clear": 1, "say": "Uma observação geométrica. Se trocarmos as coordenadas de um ponto, ou seja, se passarmos de x, y para y, x, estamos a refletir o ponto em relação à reta y igual a x, que desenhamos a verde, tracejada. Por exemplo, o ponto dois, zero reflete-se no ponto zero, dois, que está em B vezes A, porque zero pertence a B e dois pertence a A. Assim, B vezes A obtém-se a partir de A vezes B refletindo-o em relação a essa reta. Mas não são o mesmo conjunto, porque cada um é o reflexo do outro, e não de si próprio.", "L": [["txt", "(x, y)  ⟼  (y, x)   é a simetria em relação à reta  y = x"], ["txt", "(2, 0) ∈ A × B   ⟼   (0, 2) ∈ B × A      porque  0 ∈ B  e  2 ∈ A"], ["txt", "B × A é o simétrico de A × B em relação a  y = x"], ["txt", "<svg viewBox='0 0 380 380' width='100%' style='max-width:340px;display:block' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif'><rect x='157.5' y='147.5' width='170' height='170' fill='#7cc4ff' fill-opacity='.22' stroke='none'/><line x1='157.5' y1='317.5' x2='157.5' y2='147.5' stroke='#7cc4ff' stroke-width='3' stroke-dasharray='6 5'/><line x1='327.5' y1='317.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='317.5' x2='327.5' y2='317.5' stroke='#7cc4ff' stroke-width='3'/><line x1='157.5' y1='147.5' x2='327.5' y2='147.5' stroke='#7cc4ff' stroke-width='3'/><rect x='72.5' y='62.5' width='170' height='170' fill='#ffd166' fill-opacity='.22' stroke='none'/><line x1='72.5' y1='232.5' x2='72.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='242.5' y1='232.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='72.5' y1='232.5' x2='242.5' y2='232.5' stroke='#ffd166' stroke-width='3' stroke-dasharray='6 5'/><line x1='72.5' y1='62.5' x2='242.5' y2='62.5' stroke='#ffd166' stroke-width='3'/><line x1='10' y1='232.5' x2='370' y2='232.5' stroke='#9fb3aa'/><line x1='157.5' y1='10' x2='157.5' y2='370' stroke='#9fb3aa'/><text x='72.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>-1</text><text x='149.5' y='322.5' fill='#9fb3aa' font-size='14' text-anchor='end'>-1</text><text x='242.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>1</text><text x='149.5' y='152.5' fill='#9fb3aa' font-size='14' text-anchor='end'>1</text><text x='327.5' y='248.5' fill='#9fb3aa' font-size='14' text-anchor='middle'>2</text><text x='149.5' y='67.5' fill='#9fb3aa' font-size='14' text-anchor='end'>2</text><text x='362' y='226' fill='#9fb3aa' font-size='15'>x</text><text x='165' y='22' fill='#9fb3aa' font-size='15'>y</text><text x='242.5' y='283.5' fill='#7cc4ff' font-size='20' text-anchor='middle'>A×B</text><text x='157.5' y='100.75' fill='#ffd166' font-size='20' text-anchor='middle'>B×A</text><line x1='30.0' y1='360.0' x2='370.0' y2='20.0' stroke='#7be0a0' stroke-width='2.5' stroke-dasharray='3 5'/><text x='366.0' y='38.0' fill='#7be0a0' font-size='16' text-anchor='end'>y = x</text><circle cx='327.5' cy='232.5' r='6' fill='#ff8a7a'/><text x='336.5' y='223.5' fill='#ff8a7a' font-size='15'>(2, 0)</text><circle cx='157.5' cy='62.5' r='6' fill='#ff8a7a'/><text x='166.5' y='53.5' fill='#ff8a7a' font-size='15'>(0, 2)</text></svg>"]]},
+
+{"title": "Resumo", "clear": 1, "say": "Resumindo. A vezes B é o quadrado dos pontos com x maior que zero e menor ou igual a dois, e y entre menos um e um. B vezes A é o quadrado dos pontos com x entre menos um e um, e y maior que zero e menor ou igual a dois. São diferentes, porque o ponto dois, zero está no primeiro e não no segundo. Obrigado por ver o vídeo.", "L": [["res", "A × B = { (x, y) | 0 &lt; x ≤ 2,  −1 ≤ y ≤ 1 }"], ["res", "B × A = { (x, y) | −1 ≤ x ≤ 1,  0 &lt; y ≤ 2 }"], ["res", "A × B ≠ B × A"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' mais ').replace(/⊙/g,' vezes ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Repetir'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Continuar'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pausa';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^pt/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/antonio|antônio|donato|fabio|duarte|male|google português$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Produtos cartesianos";$('sub').textContent="Exercício · Álgebra de conjuntos";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
