@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>متناظر فرق</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-inline-end:2px dashed #3d5a50;padding-inline-end:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-inline-start:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+span[dir='ltr']{white-space:nowrap}
+svg{direction:ltr}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>یاد رکھیں</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ شروع کریں</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>رفتار <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">ریکارڈنگ موڈ (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ur-PK",
+"meta":{"nivel": 2, "titulo": "متناظر فرق", "enunciado": "ثابت کریں کہ کسی بھی سیٹ <span dir='ltr'>A</span> اور <span dir='ltr'>B</span> کے لیے:", "tesis": "A △ B = (A ∪ B) ∖ (A ∩ B)", "datos": ["متناظر فرق کی تعریف:  <span dir='ltr'>A △ B = (A ∖ B) ∪ (B ∖ A)</span>"]},
+"steps":[
+{"title": "متناظر فرق", "sub": "مشق · سیٹوں کا الجبرا", "clear": 1, "say": "السلام علیکم۔ اس ویڈیو میں ہم ثابت کریں گے کہ دو سیٹوں کا متناظر فرق، اتصال منفی تقاطع کی شکل میں لکھا جا سکتا ہے۔ ہم رکن بہ رکن استدلال کریں گے، بہت آہستہ، ہر مساوات لکھیں گے اور ہر قدم کی وجہ بتائیں گے۔", "L": [["txt", "ثابت کریں کہ  <span dir='ltr'>A △ B = (A ∪ B) ∖ (A ∩ B)</span>"]]},
+
+{"say": "ہم کیا ثابت کرنا چاہتے ہیں۔ کسی بھی سیٹ A اور B کے لیے، A اور B کا متناظر فرق، A اور B کے اتصال منفی A اور B کے تقاطع کے برابر ہے۔ ہم ایک طرف وہ تعریفیں یاد کرتے ہیں جو ہم استعمال کریں گے: متناظر فرق، A منفی B اور B منفی A کا اتصال ہے؛ ارکان کے ذریعے فرق، اتصال اور تقاطع؛ اور یہ کہ دو سیٹ برابر ہوتے ہیں جب ہر ایک دوسرے میں شامل ہو۔", "L": [["goal", "<span dir='ltr'>A △ B = (A ∪ B) ∖ (A ∩ B)</span><span class='tag'>کسی بھی <span dir='ltr'>A</span> اور <span dir='ltr'>B</span> کے لیے ثابت کریں</span>"]], "pin": ["متناظر فرق کی تعریف: <span dir='ltr'>A △ B = (A ∖ B) ∪ (B ∖ A)</span>", "فرق کی تعریف: <span dir='ltr'>x ∈ X ∖ Y  ⟺  x ∈ X ∧ x ∉ Y</span>", "اتصال کی تعریف: <span dir='ltr'>x ∈ X ∪ Y  ⟺  x ∈ X ∨ x ∈ Y</span>", "تقاطع کی تعریف: <span dir='ltr'>x ∈ X ∩ Y  ⟺  x ∈ X ∧ x ∈ Y</span>", "شمولیت کی تعریف: <span dir='ltr'>X ⊆ Y</span>  ⟺  ہر <span dir='ltr'>x ∈ X</span> کے لیے <span dir='ltr'>x ∈ Y</span>", "برابری کی تعریف: <span dir='ltr'>X = Y  ⟺  X ⊆ Y ∧ Y ⊆ X</span>"]},
+
+{"title": "منصوبہ: دوہری شمولیت", "clear": 1, "say": "ہم رکن بہ رکن استدلال کریں گے۔ برابری کی تعریف کے مطابق، ہمیں دو شمولیتیں ثابت کرنی ہیں۔ پہلی: A اور B کا متناظر فرق، اتصال منفی تقاطع میں شامل ہے۔ دوسری: اتصال منفی تقاطع، A اور B کے متناظر فرق میں شامل ہے۔", "L": [["goal", "<span dir='ltr'>(1)  A △ B ⊆ (A ∪ B) ∖ (A ∩ B)</span>"], ["goal", "<span dir='ltr'>(2)  (A ∪ B) ∖ (A ∩ B) ⊆ A △ B</span>"]]},
+
+{"title": "(۱) پہلی شمولیت", "clear": 1, "say": "پہلی شمولیت۔ شمولیت کی تعریف کے مطابق، ہم A اور B کے متناظر فرق کا کوئی بھی رکن x لیتے ہیں، اور ہمیں ثابت کرنا ہے کہ وہ اتصال منفی تقاطع میں ہے۔", "L": [["hyp", "فرض کریں <span dir='ltr'>x ∈ A △ B</span>"], ["goal", "ہمیں چاہیے:  <span dir='ltr'>x ∈ (A ∪ B) ∖ (A ∩ B)</span>"]]},
+
+{"say": "متناظر فرق کی تعریف کے مطابق، x، A منفی B اور B منفی A کے اتصال میں ہے۔ اور اتصال کی تعریف کے مطابق، اس کا مطلب ہے کہ x، A منفی B میں ہے، یا x، B منفی A میں ہے۔ لہٰذا، دو امکانات میں سے کم از کم ایک درست ہے، جن کا ہم الگ الگ مطالعہ کرتے ہیں۔", "L": [["txt", "متناظر فرق کی تعریف سے:"], ["sub", "<span dir='ltr'>x ∈ (A ∖ B) ∪ (B ∖ A)</span>"], ["txt", "اتصال کی تعریف سے:"], ["hyp", "پہلی صورت:  <span dir='ltr'>x ∈ A ∖ B</span>"], ["hyp", "دوسری صورت:  <span dir='ltr'>x ∈ B ∖ A</span>"]]},
+
+{"clear": 1, "say": "پہلی صورت: x، A منفی B میں ہے۔ فرق کی تعریف کے مطابق، اس کا مطلب ہے کہ x، A میں ہے، اور x، B میں نہیں ہے۔", "L": [["hyp", "پہلی صورت:  <span dir='ltr'>x ∈ A ∖ B</span>"], ["txt", "فرق کی تعریف سے:"], ["sub", "<span dir='ltr'>x ∈ A   ∧   x ∉ B</span>"]]},
+
+{"say": "چونکہ x، A میں ہے، خاص طور پر x، A میں ہے، یا x، B میں ہے۔ اتصال کی تعریف کے مطابق، x، A اور B کے اتصال میں ہے۔", "L": [["txt", "<span dir='ltr'>x ∈ A  ⟹  x ∈ A  ∨  x ∈ B</span>،  لہٰذا اتصال کی تعریف سے:"], ["res", "<span dir='ltr'>x ∈ A ∪ B</span>"]]},
+
+{"say": "مزید یہ کہ، چونکہ x، B میں نہیں ہے، یہ نہیں ہو سکتا کہ x ایک ساتھ A میں اور B میں ہو۔ تقاطع کی تعریف کے مطابق، x، A اور B کے تقاطع میں نہیں ہے۔", "L": [["txt", "<span dir='ltr'>x ∉ B</span>  ⟹  یہ درست نہیں کہ  <span dir='ltr'>x ∈ A  ∧  x ∈ B</span>،  لہٰذا تقاطع کی تعریف سے:"], ["res", "<span dir='ltr'>x ∉ A ∩ B</span>"]]},
+
+{"say": "تو x اتصال میں ہے، اور x تقاطع میں نہیں ہے۔ فرق کی تعریف کے مطابق، جہاں پہلا سیٹ A اتصال B اور دوسرا A تقاطع B ہے، x اتصال منفی تقاطع میں ہے۔", "L": [["txt", "<span dir='ltr'>x ∈ A ∪ B   ∧   x ∉ A ∩ B</span>،  لہٰذا فرق کی تعریف سے:"], ["res", "<span dir='ltr'>x ∈ (A ∪ B) ∖ (A ∩ B)</span>"]]},
+
+{"clear": 1, "say": "دوسری صورت: x، B منفی A میں ہے۔ فرق کی تعریف کے مطابق، اس کا مطلب ہے کہ x، B میں ہے، اور x، A میں نہیں ہے۔", "L": [["hyp", "دوسری صورت:  <span dir='ltr'>x ∈ B ∖ A</span>"], ["txt", "فرق کی تعریف سے:"], ["sub", "<span dir='ltr'>x ∈ B   ∧   x ∉ A</span>"]]},
+
+{"say": "چونکہ x، B میں ہے، خاص طور پر x، A میں ہے، یا x، B میں ہے۔ اتصال کی تعریف کے مطابق، x، A اور B کے اتصال میں ہے۔", "L": [["txt", "<span dir='ltr'>x ∈ B  ⟹  x ∈ A  ∨  x ∈ B</span>،  لہٰذا اتصال کی تعریف سے:"], ["res", "<span dir='ltr'>x ∈ A ∪ B</span>"]]},
+
+{"say": "مزید یہ کہ، چونکہ x، A میں نہیں ہے، یہ نہیں ہو سکتا کہ x ایک ساتھ A میں اور B میں ہو۔ تقاطع کی تعریف کے مطابق، x، A اور B کے تقاطع میں نہیں ہے۔", "L": [["txt", "<span dir='ltr'>x ∉ A</span>  ⟹  یہ درست نہیں کہ  <span dir='ltr'>x ∈ A  ∧  x ∈ B</span>،  لہٰذا تقاطع کی تعریف سے:"], ["res", "<span dir='ltr'>x ∉ A ∩ B</span>"]]},
+
+{"say": "تو x اتصال میں ہے، اور x تقاطع میں نہیں ہے۔ فرق کی تعریف کے مطابق، x اتصال منفی تقاطع میں ہے۔", "L": [["txt", "<span dir='ltr'>x ∈ A ∪ B   ∧   x ∉ A ∩ B</span>،  لہٰذا فرق کی تعریف سے:"], ["res", "<span dir='ltr'>x ∈ (A ∪ B) ∖ (A ∩ B)</span>"]]},
+
+{"clear": 1, "say": "دونوں صورتوں میں، x اتصال منفی تقاطع میں ہے۔ چونکہ x، A اور B کے متناظر فرق کا کوئی بھی رکن تھا، پہلی شمولیت ثابت ہو گئی۔", "L": [["txt", "دونوں صورتوں میں  <span dir='ltr'>x ∈ (A ∪ B) ∖ (A ∩ B)</span>،  لہٰذا:"], ["res", "<span dir='ltr'>A △ B ⊆ (A ∪ B) ∖ (A ∩ B)</span>"]]},
+
+{"title": "(۲) دوسری شمولیت", "clear": 1, "say": "دوسری شمولیت۔ ہم اتصال منفی تقاطع کا کوئی بھی رکن x لیتے ہیں، اور ہمیں ثابت کرنا ہے کہ وہ A اور B کے متناظر فرق میں ہے۔", "L": [["hyp", "فرض کریں <span dir='ltr'>x ∈ (A ∪ B) ∖ (A ∩ B)</span>"], ["goal", "ہمیں چاہیے:  <span dir='ltr'>x ∈ A △ B</span>"]]},
+
+{"say": "فرق کی تعریف کے مطابق، x، A اور B کے اتصال میں ہے، اور x، A اور B کے تقاطع میں نہیں ہے۔", "L": [["txt", "فرق کی تعریف سے:"], ["sub", "<span dir='ltr'>x ∈ A ∪ B   ∧   x ∉ A ∩ B</span>"]]},
+
+{"say": "پہلی شرط، اتصال کی تعریف کے مطابق، کہتی ہے کہ x، A میں ہے، یا x، B میں ہے۔ دوسری شرط، تقاطع کی تعریف کے مطابق، کہتی ہے کہ یہ درست نہیں کہ x ایک ساتھ A میں اور B میں ہو۔", "L": [["txt", "اتصال کی تعریف سے:  <span dir='ltr'>x ∈ A ∪ B</span>  کا مطلب ہے"], ["sub", "<span dir='ltr'>x ∈ A   ∨   x ∈ B</span>"], ["txt", "تقاطع کی تعریف سے:  <span dir='ltr'>x ∉ A ∩ B</span>  کا مطلب ہے"], ["sub", "نہیں <span dir='ltr'>(x ∈ A  ∧  x ∈ B)</span>"]]},
+
+{"clear": 1, "say": "دونوں شرطوں کو ملا کر، دو امکانات میں سے بالکل ایک واقع ہوتا ہے۔ اگر x، A میں ہے، تو چونکہ وہ ایک ساتھ A میں اور B میں نہیں ہو سکتا، x، B میں نہیں ہے۔ اور اگر x، B میں ہے، تو اسی وجہ سے، x، A میں نہیں ہے۔ ہم دونوں صورتوں کا الگ الگ مطالعہ کرتے ہیں۔", "L": [["hyp", "پہلی صورت:  <span dir='ltr'>x ∈ A   ∧   x ∉ B</span>"], ["hyp", "دوسری صورت:  <span dir='ltr'>x ∈ B   ∧   x ∉ A</span>"]]},
+
+{"clear": 1, "say": "پہلی صورت: x، A میں ہے، اور x، B میں نہیں ہے۔ فرق کی تعریف کے مطابق، x، A منفی B میں ہے۔ اور اتصال کی تعریف کے مطابق، x، A منفی B اور B منفی A کے اتصال میں ہے، جو تعریف کے مطابق A اور B کا متناظر فرق ہے۔", "L": [["hyp", "پہلی صورت:  <span dir='ltr'>x ∈ A   ∧   x ∉ B</span>"], ["txt", "فرق کی تعریف سے:"], ["sub", "<span dir='ltr'>x ∈ A ∖ B</span>"], ["txt", "اتصال کی تعریف اور متناظر فرق کی تعریف سے:"], ["res", "<span dir='ltr'>x ∈ (A ∖ B) ∪ (B ∖ A) = A △ B</span>"]]},
+
+{"clear": 1, "say": "دوسری صورت: x، B میں ہے، اور x، A میں نہیں ہے۔ فرق کی تعریف کے مطابق، x، B منفی A میں ہے۔ اور اتصال کی تعریف کے مطابق، x، A منفی B اور B منفی A کے اتصال میں ہے، جو تعریف کے مطابق A اور B کا متناظر فرق ہے۔", "L": [["hyp", "دوسری صورت:  <span dir='ltr'>x ∈ B   ∧   x ∉ A</span>"], ["txt", "فرق کی تعریف سے:"], ["sub", "<span dir='ltr'>x ∈ B ∖ A</span>"], ["txt", "اتصال کی تعریف اور متناظر فرق کی تعریف سے:"], ["res", "<span dir='ltr'>x ∈ (A ∖ B) ∪ (B ∖ A) = A △ B</span>"]]},
+
+{"clear": 1, "say": "دونوں صورتوں میں، x، A اور B کے متناظر فرق میں ہے۔ چونکہ x اتصال منفی تقاطع کا کوئی بھی رکن تھا، دوسری شمولیت ثابت ہو گئی۔", "L": [["txt", "دونوں صورتوں میں  <span dir='ltr'>x ∈ A △ B</span>،  لہٰذا:"], ["res", "<span dir='ltr'>(A ∪ B) ∖ (A ∩ B) ⊆ A △ B</span>"]]},
+
+{"title": "نتیجہ", "clear": 1, "say": "نتیجہ۔ چونکہ دونوں شمولیتیں درست ہیں، برابری کی تعریف کے مطابق، A اور B کا متناظر فرق، A اور B کے اتصال منفی A اور B کے تقاطع کے برابر ہے۔ دیکھنے کا شکریہ۔", "L": [["txt", "<span dir='ltr'>(1)  A △ B ⊆ (A ∪ B) ∖ (A ∩ B)</span>"], ["txt", "<span dir='ltr'>(2)  (A ∪ B) ∖ (A ∩ B) ⊆ A △ B</span>"], ["res", "<span dir='ltr'>A △ B = (A ∪ B) ∖ (A ∩ B)</span>"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' جمع ').replace(/⊙/g,' ضرب ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ دوبارہ چلائیں'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ جاری رکھیں'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ وقفہ';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ وقفہ';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ وقفہ';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ur/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/asad|salman|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="متناظر فرق";$('sub').textContent="مشق · سیٹوں کا الجبرا";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

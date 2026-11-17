@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Différence symétrique</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>À retenir</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Commencer</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Vitesse <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Mode enregistrement (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"fr-FR",
+"meta":{"nivel": 2, "titulo": "Différence symétrique", "enunciado": "Démontrer que, pour tous ensembles A et B, on a :", "tesis": "A △ B = (A ∪ B) ∖ (A ∩ B)", "datos": ["(Déf △)  A △ B = (A ∖ B) ∪ (B ∖ A)"]},
+"steps":[
+{"title": "Différence symétrique", "sub": "Exercice · Algèbre des ensembles", "clear": 1, "say": "Bonjour. Dans cette vidéo, nous allons démontrer que la différence symétrique de deux ensembles peut s'écrire comme la réunion moins l'intersection. Nous raisonnerons élément par élément, très lentement, en écrivant chaque équation et en justifiant chaque étape.", "L": [["txt", "Démontrer que  A △ B = (A ∪ B) ∖ (A ∩ B)"]]},
+
+{"say": "Ce que nous voulons démontrer. Pour tous ensembles A et B, A différence symétrique B est égal à la réunion de A et B, moins l'intersection de A et B. Nous rappelons à gauche les définitions que nous allons utiliser : la différence symétrique est la réunion de A moins B avec B moins A ; la différence, la réunion et l'intersection avec les éléments ; et le fait que deux ensembles sont égaux quand chacun est inclus dans l'autre.", "L": [["goal", "A △ B = (A ∪ B) ∖ (A ∩ B)<span class='tag'>Démontrer, pour tous A et B</span>"]], "pin": ["(Déf △) A △ B = (A ∖ B) ∪ (B ∖ A)", "(Déf ∖) x ∈ X ∖ Y  ⟺  x ∈ X  et  x ∉ Y", "(Déf ∪) x ∈ X ∪ Y  ⟺  x ∈ X  ou  x ∈ Y", "(Déf ∩) x ∈ X ∩ Y  ⟺  x ∈ X  et  x ∈ Y", "(Déf ⊆) X ⊆ Y  ⟺  tout x ∈ X vérifie x ∈ Y", "(Déf =) X = Y  ⟺  X ⊆ Y  et  Y ⊆ X"]},
+
+{"title": "Plan : double inclusion", "clear": 1, "say": "Nous raisonnerons élément par élément. Par la définition de l'égalité, nous devons démontrer deux inclusions. La première : A différence symétrique B est inclus dans la réunion moins l'intersection. La seconde : la réunion moins l'intersection est incluse dans A différence symétrique B.", "L": [["goal", "(1)  A △ B ⊆ (A ∪ B) ∖ (A ∩ B)"], ["goal", "(2)  (A ∪ B) ∖ (A ∩ B) ⊆ A △ B"]]},
+
+{"title": "(1) A △ B ⊆ (A ∪ B) ∖ (A ∩ B)", "clear": 1, "say": "Première inclusion. Par la définition de l'inclusion, nous prenons un élément quelconque x de A différence symétrique B, et nous devons prouver qu'il appartient à la réunion moins l'intersection.", "L": [["hyp", "Soit x ∈ A △ B"], ["goal", "On veut :  x ∈ (A ∪ B) ∖ (A ∩ B)"]]},
+
+{"say": "Par la définition de la différence symétrique, x appartient à la réunion de A moins B, avec B moins A. Et par la définition de la réunion, cela signifie que x appartient à A moins B, ou x appartient à B moins A. Donc au moins une de deux possibilités est vraie, et nous les étudions séparément.", "L": [["txt", "Par (Déf △) :"], ["sub", "x ∈ (A ∖ B) ∪ (B ∖ A)"], ["txt", "Par (Déf ∪) :"], ["hyp", "Cas (i) :  x ∈ A ∖ B"], ["hyp", "Cas (ii) :  x ∈ B ∖ A"]]},
+
+{"clear": 1, "say": "Cas un : x appartient à A moins B. Par la définition de la différence, cela signifie que x appartient à A, et x n'appartient pas à B.", "L": [["hyp", "Cas (i) :  x ∈ A ∖ B"], ["txt", "Par (Déf ∖) :"], ["sub", "x ∈ A   et   x ∉ B"]]},
+
+{"say": "Comme x appartient à A, en particulier x appartient à A, ou x appartient à B. Par la définition de la réunion, x appartient à la réunion de A et B.", "L": [["txt", "x ∈ A  ⟹  x ∈ A  ou  x ∈ B,  donc par (Déf ∪) :"], ["res", "x ∈ A ∪ B"]]},
+
+{"say": "De plus, comme x n'appartient pas à B, il ne peut pas arriver que x appartienne à A et à B à la fois. Par la définition de l'intersection, x n'appartient pas à l'intersection de A et B.", "L": [["txt", "x ∉ B  ⟹  il est faux que  x ∈ A  et  x ∈ B,  donc par (Déf ∩) :"], ["res", "x ∉ A ∩ B"]]},
+
+{"say": "Nous avons donc que x appartient à la réunion, et x n'appartient pas à l'intersection. Par la définition de la différence, avec X égal à A union B, et Y égal à A inter B, x appartient à la réunion moins l'intersection.", "L": [["txt", "x ∈ A ∪ B   et   x ∉ A ∩ B,  donc par (Déf ∖) :"], ["res", "x ∈ (A ∪ B) ∖ (A ∩ B)"]]},
+
+{"clear": 1, "say": "Cas deux : x appartient à B moins A. Par la définition de la différence, cela signifie que x appartient à B, et x n'appartient pas à A.", "L": [["hyp", "Cas (ii) :  x ∈ B ∖ A"], ["txt", "Par (Déf ∖) :"], ["sub", "x ∈ B   et   x ∉ A"]]},
+
+{"say": "Comme x appartient à B, en particulier x appartient à A, ou x appartient à B. Par la définition de la réunion, x appartient à la réunion de A et B.", "L": [["txt", "x ∈ B  ⟹  x ∈ A  ou  x ∈ B,  donc par (Déf ∪) :"], ["res", "x ∈ A ∪ B"]]},
+
+{"say": "De plus, comme x n'appartient pas à A, il ne peut pas arriver que x appartienne à A et à B à la fois. Par la définition de l'intersection, x n'appartient pas à l'intersection de A et B.", "L": [["txt", "x ∉ A  ⟹  il est faux que  x ∈ A  et  x ∈ B,  donc par (Déf ∩) :"], ["res", "x ∉ A ∩ B"]]},
+
+{"say": "Nous avons donc que x appartient à la réunion, et x n'appartient pas à l'intersection. Par la définition de la différence, x appartient à la réunion moins l'intersection.", "L": [["txt", "x ∈ A ∪ B   et   x ∉ A ∩ B,  donc par (Déf ∖) :"], ["res", "x ∈ (A ∪ B) ∖ (A ∩ B)"]]},
+
+{"clear": 1, "say": "Dans les deux cas, x appartient à la réunion moins l'intersection. Comme x était un élément quelconque de A différence symétrique B, nous concluons la première inclusion.", "L": [["txt", "Dans les deux cas  x ∈ (A ∪ B) ∖ (A ∩ B),  donc :"], ["res", "A △ B ⊆ (A ∪ B) ∖ (A ∩ B)"]]},
+
+{"title": "(2) (A ∪ B) ∖ (A ∩ B) ⊆ A △ B", "clear": 1, "say": "Seconde inclusion. Nous prenons un élément quelconque x de la réunion moins l'intersection, et nous devons prouver qu'il appartient à A différence symétrique B.", "L": [["hyp", "Soit x ∈ (A ∪ B) ∖ (A ∩ B)"], ["goal", "On veut :  x ∈ A △ B"]]},
+
+{"say": "Par la définition de la différence, x appartient à la réunion de A et B, et x n'appartient pas à l'intersection de A et B.", "L": [["txt", "Par (Déf ∖) :"], ["sub", "x ∈ A ∪ B   et   x ∉ A ∩ B"]]},
+
+{"say": "La première condition, par la définition de la réunion, dit que x appartient à A, ou x appartient à B. La seconde condition, par la définition de l'intersection, dit qu'il est faux que x appartienne à A et à B à la fois.", "L": [["txt", "Par (Déf ∪) :  x ∈ A ∪ B  signifie"], ["sub", "x ∈ A   ou   x ∈ B"], ["txt", "Par (Déf ∩) :  x ∉ A ∩ B  signifie"], ["sub", "non (x ∈ A  et  x ∈ B)"]]},
+
+{"clear": 1, "say": "En combinant les deux conditions, il se produit exactement une de deux possibilités. Si x appartient à A, comme il ne peut pas appartenir à A et à B à la fois, x n'appartient pas à B. Et si x appartient à B, pour la même raison, x n'appartient pas à A. Nous étudions les deux cas séparément.", "L": [["hyp", "Cas (i) :  x ∈ A   et   x ∉ B"], ["hyp", "Cas (ii) :  x ∈ B   et   x ∉ A"]]},
+
+{"clear": 1, "say": "Cas un : x appartient à A, et x n'appartient pas à B. Par la définition de la différence, x appartient à A moins B. Et par la définition de la réunion, avec X égal à A moins B, x appartient à la réunion de A moins B avec B moins A, qui est, par définition, A différence symétrique B.", "L": [["hyp", "Cas (i) :  x ∈ A   et   x ∉ B"], ["txt", "Par (Déf ∖) :"], ["sub", "x ∈ A ∖ B"], ["txt", "Par (Déf ∪) et (Déf △) :"], ["res", "x ∈ (A ∖ B) ∪ (B ∖ A) = A △ B"]]},
+
+{"clear": 1, "say": "Cas deux : x appartient à B, et x n'appartient pas à A. Par la définition de la différence, x appartient à B moins A. Et par la définition de la réunion, x appartient à la réunion de A moins B avec B moins A, qui est, par définition, A différence symétrique B.", "L": [["hyp", "Cas (ii) :  x ∈ B   et   x ∉ A"], ["txt", "Par (Déf ∖) :"], ["sub", "x ∈ B ∖ A"], ["txt", "Par (Déf ∪) et (Déf △) :"], ["res", "x ∈ (A ∖ B) ∪ (B ∖ A) = A △ B"]]},
+
+{"clear": 1, "say": "Dans les deux cas, x appartient à A différence symétrique B. Comme x était un élément quelconque de la réunion moins l'intersection, nous concluons la seconde inclusion.", "L": [["txt", "Dans les deux cas  x ∈ A △ B,  donc :"], ["res", "(A ∪ B) ∖ (A ∩ B) ⊆ A △ B"]]},
+
+{"title": "Conclusion", "clear": 1, "say": "Conclusion. Comme les deux inclusions sont vraies, par la définition de l'égalité, A différence symétrique B est égal à la réunion de A et B, moins l'intersection de A et B. Merci d'avoir regardé.", "L": [["txt", "(1)  A △ B ⊆ (A ∪ B) ∖ (A ∩ B)"], ["txt", "(2)  (A ∪ B) ∖ (A ∩ B) ⊆ A △ B"], ["res", "A △ B = (A ∪ B) ∖ (A ∩ B)"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' plus ').replace(/⊙/g,' fois ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Rejouer'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Reprendre'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pause';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^fr/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/henri|paul|claude|remy|rémy|male|google français$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Différence symétrique";$('sub').textContent="Exercice · Algèbre des ensembles";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
