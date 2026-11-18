@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>अंतर और सममित अंतर</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>याद रखें</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ शुरू करें</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>गति <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">रिकॉर्डिंग मोड (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"hi-IN",
+"meta":{"nivel": 2, "titulo": "अंतर और सममित अंतर", "enunciado": "सिद्ध कीजिए कि किन्हीं भी समुच्चयों A और B के लिए:", "tesis": "A ∖ B = A △ (A ∩ B)", "datos": ["(△ परिभाषा)  X △ Y = (X ∖ Y) ∪ (Y ∖ X)"]},
+"steps":[
+{"title": "A ∖ B = A △ (A ∩ B)", "sub": "अभ्यास · समुच्चयों का बीजगणित", "clear": 1, "say": "नमस्ते। इस वीडियो में हम सिद्ध करेंगे कि A ऋण B, A और A तथा B के सर्वनिष्ठ के सममित अंतर के बराबर है। हम अवयव दर अवयव तर्क करेंगे, बहुत धीरे, हर समीकरण लिखेंगे और हर चरण का कारण बताएँगे।", "L": [["txt", "सिद्ध करें कि  A ∖ B = A △ (A ∩ B)"]]},
+
+{"say": "हम क्या सिद्ध करना चाहते हैं। किन्हीं भी समुच्चयों A और B के लिए, A ऋण B, A और A सर्वनिष्ठ B के सममित अंतर के बराबर है। बाईं ओर हम वे परिभाषाएँ याद करते हैं जिनका हम उपयोग करेंगे: अवयवों के द्वारा सममित अंतर, अंतर, सर्वनिष्ठ और सम्मिलन; यह कि रिक्त समुच्चय में कोई अवयव नहीं होता; और यह कि दो समुच्चय बराबर होते हैं जब हर एक दूसरे में अंतर्विष्ट हो।", "L": [["goal", "A ∖ B = A △ (A ∩ B)<span class='tag'>किन्हीं भी A और B के लिए सिद्ध करें</span>"]], "pin": ["(△ परिभाषा) X △ Y = (X ∖ Y) ∪ (Y ∖ X)", "(∖ परिभाषा) x ∈ X ∖ Y  ⟺  x ∈ X  और  x ∉ Y", "(∩ परिभाषा) x ∈ X ∩ Y  ⟺  x ∈ X  और  x ∈ Y", "(∪ परिभाषा) x ∈ X ∪ Y  ⟺  x ∈ X  या  x ∈ Y", "(∅ परिभाषा) कोई x ऐसा नहीं कि  x ∈ ∅", "(= परिभाषा) X = Y  ⟺  X ⊆ Y  और  Y ⊆ X"]},
+
+{"title": "प्रारंभिक बिंदु", "clear": 1, "say": "पहले, हम सममित अंतर की परिभाषा याद करते हैं: X सममित अंतर Y, X ऋण Y और Y ऋण X का सम्मिलन है। अब हम इसे अपनी स्थिति पर लागू करते हैं, X बराबर A, और Y बराबर A और B का सर्वनिष्ठ लेकर। हम X की जगह A, और Y की जगह A सर्वनिष्ठ B रखते हैं।", "L": [["txt", "(△ परिभाषा) से:"], ["sub", "X △ Y = (X ∖ Y) ∪ (Y ∖ X)"], ["txt", "हम लेते हैं  X = A  और  Y = A ∩ B:"], ["sub", "A △ (A ∩ B) = ( A ∖ <mark>(A ∩ B)</mark> ) ∪ ( <mark>(A ∩ B)</mark> ∖ A )<span class='tag'>(★)</span>"]]},
+
+{"title": "योजना", "clear": 1, "say": "अब हम इस सम्मिलन के दोनों भागों को सरल करेंगे। भाग एक में, हम देखेंगे कि A और B का सर्वनिष्ठ ऋण A, रिक्त समुच्चय है। भाग दो में, हम देखेंगे कि A ऋण, A और B का सर्वनिष्ठ, A ऋण B के बराबर है। और भाग तीन में, हम निष्कर्ष निकालेंगे।", "L": [["goal", "(1)  (A ∩ B) ∖ A = ∅"], ["goal", "(2)  A ∖ (A ∩ B) = A ∖ B"], ["goal", "(3)  (★) में रखकर निष्कर्ष"]]},
+
+{"title": "(1) (A ∩ B) ∖ A = ∅", "clear": 1, "say": "भाग एक। हम दिखाना चाहते हैं कि A और B का सर्वनिष्ठ ऋण A में कोई अवयव नहीं है। मान लेते हैं कि x उस समुच्चय का एक अवयव है, और हम एक विरोधाभास तक पहुँचेंगे।", "L": [["hyp", "मान लीजिए x ∈ (A ∩ B) ∖ A"], ["goal", "हमें चाहिए:  विरोधाभास तक पहुँचना"]]},
+
+{"say": "अंतर की परिभाषा के अनुसार, x, A और B के सर्वनिष्ठ में है, और x, A में नहीं है।", "L": [["txt", "(∖ परिभाषा) से:"], ["sub", "x ∈ A ∩ B   और   x ∉ A"]]},
+
+{"say": "सर्वनिष्ठ की परिभाषा के अनुसार, x का A और B के सर्वनिष्ठ में होना, इसका अर्थ है कि x, A में है, और x, B में है। विशेष रूप से, x, A में है।", "L": [["txt", "(∩ परिभाषा) से:  x ∈ A ∩ B  का अर्थ है  x ∈ A  और  x ∈ B।  विशेष रूप से:"], ["sub", "x ∈ A"]]},
+
+{"say": "पर हमने पाया था कि x, A में नहीं है। तब x एक साथ A में है और A में नहीं है। यह एक विरोधाभास है।", "L": [["warn", "x ∈ A   और   x ∉ A      →   विरोधाभास"]]},
+
+{"say": "अतः, A और B के सर्वनिष्ठ ऋण A में कोई अवयव x नहीं है। जिस समुच्चय में कोई अवयव न हो, वह रिक्त समुच्चय है। इसलिए A और B का सर्वनिष्ठ ऋण A, रिक्त समुच्चय है।", "L": [["txt", "कोई x इसमें नहीं हो सकता:  (A ∩ B) ∖ A,  अतः:"], ["res", "(A ∩ B) ∖ A = ∅"]]},
+
+{"title": "(2) A ∖ (A ∩ B) = A ∖ B", "clear": 1, "say": "भाग दो। हम दिखाना चाहते हैं कि A ऋण, A और B का सर्वनिष्ठ, A ऋण B के बराबर है। समता की परिभाषा के अनुसार, हम दो अंतर्विष्टियाँ सिद्ध करते हैं। पहली, A ऋण, A और B का सर्वनिष्ठ, A ऋण B में अंतर्विष्ट है। दूसरी, A ऋण B, A ऋण, A और B के सर्वनिष्ठ में अंतर्विष्ट है।", "L": [["goal", "(2a)  A ∖ (A ∩ B) ⊆ A ∖ B"], ["goal", "(2b)  A ∖ B ⊆ A ∖ (A ∩ B)"]]},
+
+{"title": "(2a) A ∖ (A ∩ B) ⊆ A ∖ B", "clear": 1, "say": "मान लीजिए x, A ऋण, A और B के सर्वनिष्ठ का कोई भी अवयव है। अंतर की परिभाषा के अनुसार, x, A में है, और x, A और B के सर्वनिष्ठ में नहीं है।", "L": [["hyp", "मान लीजिए x ∈ A ∖ (A ∩ B)"], ["goal", "हमें चाहिए:  x ∈ A ∖ B"], ["txt", "(∖ परिभाषा) से:"], ["sub", "x ∈ A   और   x ∉ A ∩ B"]]},
+
+{"say": "सर्वनिष्ठ की परिभाषा के अनुसार, x का A और B के सर्वनिष्ठ में न होना, इसका अर्थ है कि यह सत्य नहीं कि x एक साथ A में और B में हो। चूँकि हम जानते हैं कि x, A में है, दोनों के एक साथ सत्य न होने का एकमात्र तरीका यह है कि x, B में न हो।", "L": [["txt", "(∩ परिभाषा) से:  x ∉ A ∩ B  का अर्थ है"], ["sub", "नहीं (x ∈ A  और  x ∈ B)"], ["txt", "चूँकि  x ∈ A,  अवश्य:"], ["sub", "x ∉ B"]]},
+
+{"say": "तो x, A में है, और x, B में नहीं है। अंतर की परिभाषा के अनुसार, x, A ऋण B में है। यह पहली अंतर्विष्टि सिद्ध करता है।", "L": [["txt", "x ∈ A  और  x ∉ B,  अतः (∖ परिभाषा) से:"], ["res", "x ∈ A ∖ B"], ["res", "A ∖ (A ∩ B) ⊆ A ∖ B"]]},
+
+{"title": "(2b) A ∖ B ⊆ A ∖ (A ∩ B)", "clear": 1, "say": "अब विपरीत अंतर्विष्टि। मान लीजिए x, A ऋण B का कोई भी अवयव है। अंतर की परिभाषा के अनुसार, x, A में है, और x, B में नहीं है।", "L": [["hyp", "मान लीजिए x ∈ A ∖ B"], ["goal", "हमें चाहिए:  x ∈ A ∖ (A ∩ B)"], ["txt", "(∖ परिभाषा) से:"], ["sub", "x ∈ A   और   x ∉ B"]]},
+
+{"say": "चूँकि x, B में नहीं है, ऐसा नहीं हो सकता कि x एक साथ A में और B में हो। सर्वनिष्ठ की परिभाषा के अनुसार, x, A और B के सर्वनिष्ठ में नहीं है।", "L": [["txt", "x ∉ B  ⟹  नहीं (x ∈ A  और  x ∈ B),  अतः (∩ परिभाषा) से:"], ["sub", "x ∉ A ∩ B"]]},
+
+{"say": "तो x, A में है, और x, A और B के सर्वनिष्ठ में नहीं है। अंतर की परिभाषा के अनुसार, x, A ऋण, A और B के सर्वनिष्ठ में है। यह दूसरी अंतर्विष्टि सिद्ध करता है।", "L": [["txt", "x ∈ A  और  x ∉ A ∩ B,  अतः (∖ परिभाषा) से:"], ["res", "x ∈ A ∖ (A ∩ B)"], ["res", "A ∖ B ⊆ A ∖ (A ∩ B)"]]},
+
+{"title": "(2) निष्कर्ष", "clear": 1, "say": "चूँकि दोनों अंतर्विष्टियाँ सत्य हैं, समता की परिभाषा के अनुसार, हम निष्कर्ष निकालते हैं कि A ऋण, A और B का सर्वनिष्ठ, A ऋण B के बराबर है।", "L": [["txt", "(2a)  A ∖ (A ∩ B) ⊆ A ∖ B"], ["txt", "(2b)  A ∖ B ⊆ A ∖ (A ∩ B)"], ["res", "A ∖ (A ∩ B) = A ∖ B"]]},
+
+{"title": "(3) निष्कर्ष", "clear": 1, "say": "भाग तीन। हम प्रारंभिक व्यंजक पर लौटते हैं। A और A सर्वनिष्ठ B का सममित अंतर, A ऋण सर्वनिष्ठ, और सर्वनिष्ठ ऋण A का सम्मिलन है।", "L": [["txt", "(★) से शुरू करते हैं:"], ["sub", "A △ (A ∩ B) = ( A ∖ (A ∩ B) ) ∪ ( (A ∩ B) ∖ A )"]]},
+
+{"say": "भाग एक के परिणाम का उपयोग करके, हम दूसरे भाग की जगह रिक्त समुच्चय रखते हैं।", "L": [["txt", "(1) से,  (A ∩ B) ∖ A = ∅ :"], ["sub", "A △ (A ∩ B) = ( A ∖ (A ∩ B) ) ∪ <mark>∅</mark>"]]},
+
+{"say": "किसी समुच्चय का रिक्त समुच्चय के साथ सम्मिलन उस समुच्चय को नहीं बदलता। वास्तव में, x किसी समुच्चय X और रिक्त समुच्चय के सम्मिलन में है, यदि और केवल यदि x, X में है, या x रिक्त समुच्चय में है। पर कोई भी अवयव रिक्त समुच्चय में नहीं होता, इसलिए यह x के X में होने के तुल्य है। हम इसे X बराबर A ऋण, A और B का सर्वनिष्ठ, लेकर लागू करते हैं।", "L": [["txt", "(∪ परिभाषा) और (∅ परिभाषा) से:  x ∈ X ∪ ∅  ⟺  x ∈ X  या  x ∈ ∅  ⟺  x ∈ X"], ["txt", "लेकर  X = A ∖ (A ∩ B):"], ["sub", "A △ (A ∩ B) = A ∖ (A ∩ B)"]]},
+
+{"say": "अंत में, भाग दो के परिणाम का उपयोग करके, हम A ऋण, A और B के सर्वनिष्ठ की जगह A ऋण B रखते हैं।", "L": [["txt", "(2) से,  A ∖ (A ∩ B) = A ∖ B :"], ["res", "A △ (A ∩ B) = A ∖ B"]]},
+
+{"title": "निष्कर्ष", "clear": 1, "say": "निष्कर्ष। हमने सिद्ध किया कि किन्हीं भी समुच्चयों A और B के लिए, A ऋण B, A और A सर्वनिष्ठ B के सममित अंतर के बराबर है। देखने के लिए धन्यवाद।", "L": [["txt", "A △ (A ∩ B) = ( A ∖ (A ∩ B) ) ∪ ∅ = A ∖ (A ∩ B) = A ∖ B"], ["res", "A ∖ B = A △ (A ∩ B)"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' प्लस ').replace(/⊙/g,' गुणा ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ फिर से चलाएँ'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ जारी रखें'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ रोकें';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^hi/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/madhur|hemant|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="अंतर और सममित अंतर";$('sub').textContent="अभ्यास · समुच्चयों का बीजगणित";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

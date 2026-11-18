@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>অন্তর ও প্রতিসম অন্তর</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>মনে রাখুন</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ শুরু</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>গতি <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">রেকর্ডিং মোড (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"bn-BD",
+"meta":{"nivel": 2, "titulo": "অন্তর ও প্রতিসম অন্তর", "enunciado": "প্রমাণ করুন যে, যেকোনো সেট A ও B এর জন্য:", "tesis": "A ∖ B = A △ (A ∩ B)", "datos": ["(△ সংজ্ঞা)  X △ Y = (X ∖ Y) ∪ (Y ∖ X)"]},
+"steps":[
+{"title": "A ∖ B = A △ (A ∩ B)", "sub": "অনুশীলনী · সেটের বীজগণিত", "clear": 1, "say": "নমস্কার। এই ভিডিওতে আমরা প্রমাণ করব যে A বিয়োগ B সমান A এবং A ও B এর ছেদের প্রতিসম অন্তর। আমরা উপাদান ধরে ধরে যুক্তি দেব, খুব ধীরে, প্রতিটি সমীকরণ লিখব এবং প্রতিটি ধাপের যুক্তি দেব।", "L": [["txt", "প্রমাণ করুন যে  A ∖ B = A △ (A ∩ B)"]]},
+
+{"say": "আমরা কী প্রমাণ করতে চাই। যেকোনো সেট A ও B এর জন্য, A বিয়োগ B সমান A এবং A ছেদ B এর প্রতিসম অন্তর। বাম দিকে আমরা সেই সংজ্ঞাগুলো মনে করিয়ে দিই যা ব্যবহার করব: উপাদান দিয়ে প্রতিসম অন্তর, অন্তর, ছেদ ও সংযোগ; ফাঁকা সেটের কোনো উপাদান নেই; এবং দুটি সেট সমান হয় যখন প্রতিটি অন্যটির অন্তর্ভুক্ত।", "L": [["goal", "A ∖ B = A △ (A ∩ B)<span class='tag'>যেকোনো A ও B এর জন্য প্রমাণ করুন</span>"]], "pin": ["(△ সংজ্ঞা) X △ Y = (X ∖ Y) ∪ (Y ∖ X)", "(∖ সংজ্ঞা) x ∈ X ∖ Y  ⟺  x ∈ X  এবং  x ∉ Y", "(∩ সংজ্ঞা) x ∈ X ∩ Y  ⟺  x ∈ X  এবং  x ∈ Y", "(∪ সংজ্ঞা) x ∈ X ∪ Y  ⟺  x ∈ X  অথবা  x ∈ Y", "(∅ সংজ্ঞা) কোনো x এর জন্য  x ∈ ∅  নয়", "(= সংজ্ঞা) X = Y  ⟺  X ⊆ Y  এবং  Y ⊆ X"]},
+
+{"title": "শুরুর বিন্দু", "clear": 1, "say": "প্রথমে, আমরা প্রতিসম অন্তরের সংজ্ঞা মনে করি: X প্রতিসম অন্তর Y হলো X বিয়োগ Y ও Y বিয়োগ X এর সংযোগ। এবার আমরা এটি আমাদের ক্ষেত্রে প্রয়োগ করি, X সমান A, এবং Y সমান A ও B এর ছেদ নিয়ে। আমরা X এর জায়গায় A, এবং Y এর জায়গায় A ছেদ B বসাই।", "L": [["txt", "(△ সংজ্ঞা) অনুযায়ী:"], ["sub", "X △ Y = (X ∖ Y) ∪ (Y ∖ X)"], ["txt", "আমরা নিই  X = A  এবং  Y = A ∩ B:"], ["sub", "A △ (A ∩ B) = ( A ∖ <mark>(A ∩ B)</mark> ) ∪ ( <mark>(A ∩ B)</mark> ∖ A )<span class='tag'>(★)</span>"]]},
+
+{"title": "পরিকল্পনা", "clear": 1, "say": "এবার আমরা এই সংযোগের দুটি অংশের প্রতিটিকে সরল করব। অংশ এক এ, আমরা দেখব যে A ও B এর ছেদ বিয়োগ A হলো ফাঁকা সেট। অংশ দুই এ, আমরা দেখব যে A বিয়োগ, A ও B এর ছেদ, সমান A বিয়োগ B। আর অংশ তিন এ, আমরা উপসংহার টানব।", "L": [["goal", "(1)  (A ∩ B) ∖ A = ∅"], ["goal", "(2)  A ∖ (A ∩ B) = A ∖ B"], ["goal", "(3)  (★) এ বসিয়ে উপসংহার"]]},
+
+{"title": "(1) (A ∩ B) ∖ A = ∅", "clear": 1, "say": "অংশ এক। আমরা দেখাতে চাই যে A ও B এর ছেদ বিয়োগ A এর কোনো উপাদান নেই। ধরি x ওই সেটের একটি উপাদান, এবং আমরা একটি বিরোধে পৌঁছাব।", "L": [["hyp", "ধরা যাক x ∈ (A ∩ B) ∖ A"], ["goal", "আমরা চাই:  একটি বিরোধে পৌঁছানো"]]},
+
+{"say": "অন্তরের সংজ্ঞা অনুযায়ী, x, A ও B এর ছেদে আছে, এবং x, A তে নেই।", "L": [["txt", "(∖ সংজ্ঞা) অনুযায়ী:"], ["sub", "x ∈ A ∩ B   এবং   x ∉ A"]]},
+
+{"say": "ছেদের সংজ্ঞা অনুযায়ী, x, A ও B এর ছেদে থাকার অর্থ x, A তে আছে, এবং x, B তে আছে। বিশেষভাবে, x, A তে আছে।", "L": [["txt", "(∩ সংজ্ঞা) অনুযায়ী:  x ∈ A ∩ B  এর অর্থ  x ∈ A  এবং  x ∈ B।  বিশেষভাবে:"], ["sub", "x ∈ A"]]},
+
+{"say": "কিন্তু আমরা পেয়েছিলাম যে x, A তে নেই। তাহলে x একই সাথে A তে আছে এবং A তে নেই। এটি একটি বিরোধ।", "L": [["warn", "x ∈ A   এবং   x ∉ A      →   বিরোধ"]]},
+
+{"say": "সুতরাং, A ও B এর ছেদ বিয়োগ A তে কোনো উপাদান x নেই। যে সেটের কোনো উপাদান নেই সেটি ফাঁকা সেট। তাই A ও B এর ছেদ বিয়োগ A হলো ফাঁকা সেট।", "L": [["txt", "কোনো x এতে থাকতে পারে না:  (A ∩ B) ∖ A,  সুতরাং:"], ["res", "(A ∩ B) ∖ A = ∅"]]},
+
+{"title": "(2) A ∖ (A ∩ B) = A ∖ B", "clear": 1, "say": "অংশ দুই। আমরা দেখাতে চাই যে A বিয়োগ, A ও B এর ছেদ, সমান A বিয়োগ B। সমতার সংজ্ঞা অনুযায়ী, আমরা দুটি অন্তর্ভুক্তি প্রমাণ করি। প্রথমত, A বিয়োগ, A ও B এর ছেদ, A বিয়োগ B এর অন্তর্ভুক্ত। দ্বিতীয়ত, A বিয়োগ B, A বিয়োগ, A ও B এর ছেদ এর অন্তর্ভুক্ত।", "L": [["goal", "(2a)  A ∖ (A ∩ B) ⊆ A ∖ B"], ["goal", "(2b)  A ∖ B ⊆ A ∖ (A ∩ B)"]]},
+
+{"title": "(2a) A ∖ (A ∩ B) ⊆ A ∖ B", "clear": 1, "say": "ধরা যাক x হলো A বিয়োগ, A ও B এর ছেদ এর যেকোনো উপাদান। অন্তরের সংজ্ঞা অনুযায়ী, x, A তে আছে, এবং x, A ও B এর ছেদে নেই।", "L": [["hyp", "ধরা যাক x ∈ A ∖ (A ∩ B)"], ["goal", "আমরা চাই:  x ∈ A ∖ B"], ["txt", "(∖ সংজ্ঞা) অনুযায়ী:"], ["sub", "x ∈ A   এবং   x ∉ A ∩ B"]]},
+
+{"say": "ছেদের সংজ্ঞা অনুযায়ী, x, A ও B এর ছেদে না থাকার অর্থ এটি সত্য নয় যে x একই সাথে A তে ও B তে আছে। যেহেতু আমরা জানি x, A তে আছে, দুটি একসাথে সত্য না হওয়ার একমাত্র উপায় হলো x, B তে না থাকা।", "L": [["txt", "(∩ সংজ্ঞা) অনুযায়ী:  x ∉ A ∩ B  এর অর্থ"], ["sub", "নয় (x ∈ A  এবং  x ∈ B)"], ["txt", "যেহেতু  x ∈ A,  অবশ্যই:"], ["sub", "x ∉ B"]]},
+
+{"say": "তাহলে x, A তে আছে, এবং x, B তে নেই। অন্তরের সংজ্ঞা অনুযায়ী, x, A বিয়োগ B তে আছে। এটি প্রথম অন্তর্ভুক্তি প্রমাণ করে।", "L": [["txt", "x ∈ A  এবং  x ∉ B,  সুতরাং (∖ সংজ্ঞা) অনুযায়ী:"], ["res", "x ∈ A ∖ B"], ["res", "A ∖ (A ∩ B) ⊆ A ∖ B"]]},
+
+{"title": "(2b) A ∖ B ⊆ A ∖ (A ∩ B)", "clear": 1, "say": "এবার বিপরীত অন্তর্ভুক্তি। ধরা যাক x হলো A বিয়োগ B এর যেকোনো উপাদান। অন্তরের সংজ্ঞা অনুযায়ী, x, A তে আছে, এবং x, B তে নেই।", "L": [["hyp", "ধরা যাক x ∈ A ∖ B"], ["goal", "আমরা চাই:  x ∈ A ∖ (A ∩ B)"], ["txt", "(∖ সংজ্ঞা) অনুযায়ী:"], ["sub", "x ∈ A   এবং   x ∉ B"]]},
+
+{"say": "যেহেতু x, B তে নেই, তাই x একই সাথে A তে ও B তে থাকতে পারে না। ছেদের সংজ্ঞা অনুযায়ী, x, A ও B এর ছেদে নেই।", "L": [["txt", "x ∉ B  ⟹  নয় (x ∈ A  এবং  x ∈ B),  সুতরাং (∩ সংজ্ঞা) অনুযায়ী:"], ["sub", "x ∉ A ∩ B"]]},
+
+{"say": "তাহলে x, A তে আছে, এবং x, A ও B এর ছেদে নেই। অন্তরের সংজ্ঞা অনুযায়ী, x, A বিয়োগ, A ও B এর ছেদ এ আছে। এটি দ্বিতীয় অন্তর্ভুক্তি প্রমাণ করে।", "L": [["txt", "x ∈ A  এবং  x ∉ A ∩ B,  সুতরাং (∖ সংজ্ঞা) অনুযায়ী:"], ["res", "x ∈ A ∖ (A ∩ B)"], ["res", "A ∖ B ⊆ A ∖ (A ∩ B)"]]},
+
+{"title": "(2) উপসংহার", "clear": 1, "say": "যেহেতু দুটি অন্তর্ভুক্তিই সত্য, সমতার সংজ্ঞা অনুযায়ী, আমরা সিদ্ধান্তে আসি যে A বিয়োগ, A ও B এর ছেদ, সমান A বিয়োগ B।", "L": [["txt", "(2a)  A ∖ (A ∩ B) ⊆ A ∖ B"], ["txt", "(2b)  A ∖ B ⊆ A ∖ (A ∩ B)"], ["res", "A ∖ (A ∩ B) = A ∖ B"]]},
+
+{"title": "(3) উপসংহার", "clear": 1, "say": "অংশ তিন। আমরা শুরুর রাশিতে ফিরে যাই। A এবং A ছেদ B এর প্রতিসম অন্তর হলো A বিয়োগ ছেদ, ও ছেদ বিয়োগ A এর সংযোগ।", "L": [["txt", "(★) থেকে শুরু করি:"], ["sub", "A △ (A ∩ B) = ( A ∖ (A ∩ B) ) ∪ ( (A ∩ B) ∖ A )"]]},
+
+{"say": "অংশ এক এর ফলাফল ব্যবহার করে, আমরা দ্বিতীয় অংশের জায়গায় ফাঁকা সেট বসাই।", "L": [["txt", "(1) অনুযায়ী,  (A ∩ B) ∖ A = ∅ :"], ["sub", "A △ (A ∩ B) = ( A ∖ (A ∩ B) ) ∪ <mark>∅</mark>"]]},
+
+{"say": "কোনো সেটের সাথে ফাঁকা সেটের সংযোগ সেটটিকে বদলায় না। আসলে, x কোনো সেট X ও ফাঁকা সেটের সংযোগে আছে, যদি এবং কেবল যদি x, X এ আছে, অথবা x ফাঁকা সেটে আছে। কিন্তু কোনো উপাদানই ফাঁকা সেটে নেই, তাই এটি x এর X এ থাকার সমতুল্য। আমরা এটি X সমান A বিয়োগ, A ও B এর ছেদ, নিয়ে প্রয়োগ করি।", "L": [["txt", "(∪ সংজ্ঞা) ও (∅ সংজ্ঞা) অনুযায়ী:  x ∈ X ∪ ∅  ⟺  x ∈ X  অথবা  x ∈ ∅  ⟺  x ∈ X"], ["txt", "নিয়ে  X = A ∖ (A ∩ B):"], ["sub", "A △ (A ∩ B) = A ∖ (A ∩ B)"]]},
+
+{"say": "সবশেষে, অংশ দুই এর ফলাফল ব্যবহার করে, আমরা A বিয়োগ, A ও B এর ছেদ এর জায়গায় A বিয়োগ B বসাই।", "L": [["txt", "(2) অনুযায়ী,  A ∖ (A ∩ B) = A ∖ B :"], ["res", "A △ (A ∩ B) = A ∖ B"]]},
+
+{"title": "উপসংহার", "clear": 1, "say": "উপসংহার। আমরা প্রমাণ করেছি যে, যেকোনো সেট A ও B এর জন্য, A বিয়োগ B সমান A এবং A ছেদ B এর প্রতিসম অন্তর। দেখার জন্য ধন্যবাদ।", "L": [["txt", "A △ (A ∩ B) = ( A ∖ (A ∩ B) ) ∪ ∅ = A ∖ (A ∩ B) = A ∖ B"], ["res", "A ∖ B = A △ (A ∩ B)"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' প্লাস ').replace(/⊙/g,' গুণ ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ আবার চালান'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ চালিয়ে যান'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ বিরতি';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^bn/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/pradeep|bashkar|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="অন্তর ও প্রতিসম অন্তর";$('sub').textContent="অনুশীলনী · সেটের বীজগণিত";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

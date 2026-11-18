@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>A menos B y diferencia simétrica</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Recuerda</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Empezar</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Velocidad <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Modo grabación (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"es-ES",
+"meta":{"nivel": 2, "titulo": "Diferencia y diferencia simétrica", "enunciado": "Demostrar que, para cualesquiera conjuntos A y B, se cumple:", "tesis": "A ∖ B = A △ (A ∩ B)", "datos": ["(Def △)  X △ Y = (X ∖ Y) ∪ (Y ∖ X)"]},
+"steps":[
+{"title": "A ∖ B = A △ (A ∩ B)", "sub": "Ejercicio · Álgebra de conjuntos", "clear": 1, "say": "Hola. En este vídeo vamos a demostrar que A menos B es igual a la diferencia simétrica de A con la intersección de A y B. Razonaremos elemento a elemento, muy despacio, escribiendo cada ecuación y justificando cada paso.", "L": [["txt", "Demostrar que  A ∖ B = A △ (A ∩ B)"]]},
+{"say": "Lo que queremos demostrar. Para cualesquiera conjuntos A y B, A menos B es igual a A diferencia simétrica, la intersección de A y B. Recordamos a la izquierda las definiciones que vamos a usar: la diferencia simétrica, la diferencia, la intersección y la unión con elementos; que el conjunto vacío no tiene elementos; y que dos conjuntos son iguales cuando cada uno está incluido en el otro.", "L": [["goal", "A ∖ B = A △ (A ∩ B)<span class='tag'>Demostrar, para cualesquiera A y B</span>"]], "pin": ["(Def △) X △ Y = (X ∖ Y) ∪ (Y ∖ X)", "(Def ∖) x ∈ X ∖ Y  ⟺  x ∈ X  y  x ∉ Y", "(Def ∩) x ∈ X ∩ Y  ⟺  x ∈ X  y  x ∈ Y", "(Def ∪) x ∈ X ∪ Y  ⟺  x ∈ X  o  x ∈ Y", "(Def ∅) ningún x cumple  x ∈ ∅", "(Def =) X = Y  ⟺  X ⊆ Y  y  Y ⊆ X"]},
+{"title": "Punto de partida", "clear": 1, "say": "Primero, recordamos la definición de diferencia simétrica: X diferencia simétrica Y es la unión de X menos Y, con Y menos X. Ahora la aplicamos a nuestro caso, tomando X igual a A, e Y igual a la intersección de A y B. Sustituimos X por A, e Y por A intersección B.", "L": [["txt", "Por (Def △):"], ["sub", "X △ Y = (X ∖ Y) ∪ (Y ∖ X)"], ["txt", "Tomamos  X = A  e  Y = A ∩ B:"], ["sub", "A △ (A ∩ B) = ( A ∖ <mark>(A ∩ B)</mark> ) ∪ ( <mark>(A ∩ B)</mark> ∖ A )<span class='tag'>(★)</span>"]]},
+{"title": "Plan", "clear": 1, "say": "Ahora vamos a simplificar cada uno de los dos trozos de esta unión. En el apartado uno, veremos que la intersección de A y B, menos A, es el conjunto vacío. En el apartado dos, veremos que A menos la intersección de A y B, es igual a A menos B. Y en el apartado tres, concluiremos.", "L": [["goal", "(1)  (A ∩ B) ∖ A = ∅"], ["goal", "(2)  A ∖ (A ∩ B) = A ∖ B"], ["goal", "(3)  Concluir sustituyendo en (★)"]]},
+{"title": "(1) (A ∩ B) ∖ A = ∅", "clear": 1, "say": "Apartado uno. Queremos ver que la intersección de A y B, menos A, no tiene ningún elemento. Suponemos que x es un elemento de ese conjunto, y llegaremos a una contradicción.", "L": [["hyp", "Sea x ∈ (A ∩ B) ∖ A"], ["goal", "Queremos:  llegar a una contradicción"]]},
+{"say": "Por la definición de diferencia, x pertenece a la intersección de A y B, y x no pertenece a A.", "L": [["txt", "Por (Def ∖):"], ["sub", "x ∈ A ∩ B   y   x ∉ A"]]},
+{"say": "Por la definición de intersección, x pertenece a la intersección de A y B significa que x pertenece a A, y x pertenece a B. En particular, x pertenece a A.", "L": [["txt", "Por (Def ∩):  x ∈ A ∩ B  significa  x ∈ A  y  x ∈ B.  En particular:"], ["sub", "x ∈ A"]]},
+{"say": "Pero habíamos obtenido que x no pertenece a A. Entonces x pertenece a A, y x no pertenece a A a la vez. Esto es una contradicción.", "L": [["warn", "x ∈ A   y   x ∉ A      →   contradicción"]]},
+{"say": "Por tanto, no existe ningún elemento x en la intersección de A y B, menos A. Un conjunto sin elementos es el conjunto vacío. Luego la intersección de A y B, menos A, es el conjunto vacío.", "L": [["txt", "Ningún x puede pertenecer a  (A ∩ B) ∖ A,  luego:"], ["res", "(A ∩ B) ∖ A = ∅"]]},
+{"title": "(2) A ∖ (A ∩ B) = A ∖ B", "clear": 1, "say": "Apartado dos. Queremos ver que A menos la intersección de A y B, es igual a A menos B. Por la definición de igualdad, demostramos dos inclusiones. Primero, A menos la intersección de A y B, está incluido en A menos B. Segundo, A menos B está incluido en A menos la intersección de A y B.", "L": [["goal", "(2a)  A ∖ (A ∩ B) ⊆ A ∖ B"], ["goal", "(2b)  A ∖ B ⊆ A ∖ (A ∩ B)"]]},
+{"title": "(2a) A ∖ (A ∩ B) ⊆ A ∖ B", "clear": 1, "say": "Sea x un elemento cualquiera de A menos la intersección de A y B. Por la definición de diferencia, x pertenece a A, y x no pertenece a la intersección de A y B.", "L": [["hyp", "Sea x ∈ A ∖ (A ∩ B)"], ["goal", "Queremos:  x ∈ A ∖ B"], ["txt", "Por (Def ∖):"], ["sub", "x ∈ A   y   x ∉ A ∩ B"]]},
+{"say": "Por la definición de intersección, x no pertenece a la intersección de A y B significa que no se cumple que x pertenezca a A y a B a la vez. Como sabemos que x pertenece a A, la única forma de que no se cumplan las dos a la vez es que x no pertenezca a B.", "L": [["txt", "Por (Def ∩):  x ∉ A ∩ B  significa"], ["sub", "no (x ∈ A  y  x ∈ B)"], ["txt", "Como  x ∈ A,  debe ser:"], ["sub", "x ∉ B"]]},
+{"say": "Tenemos entonces que x pertenece a A, y x no pertenece a B. Por la definición de diferencia, x pertenece a A menos B. Esto demuestra la primera inclusión.", "L": [["txt", "x ∈ A  y  x ∉ B,  luego por (Def ∖):"], ["res", "x ∈ A ∖ B"], ["res", "A ∖ (A ∩ B) ⊆ A ∖ B"]]},
+{"title": "(2b) A ∖ B ⊆ A ∖ (A ∩ B)", "clear": 1, "say": "Ahora la inclusión recíproca. Sea x un elemento cualquiera de A menos B. Por la definición de diferencia, x pertenece a A, y x no pertenece a B.", "L": [["hyp", "Sea x ∈ A ∖ B"], ["goal", "Queremos:  x ∈ A ∖ (A ∩ B)"], ["txt", "Por (Def ∖):"], ["sub", "x ∈ A   y   x ∉ B"]]},
+{"say": "Como x no pertenece a B, no puede ocurrir que x pertenezca a A y a B a la vez. Por la definición de intersección, x no pertenece a la intersección de A y B.", "L": [["txt", "x ∉ B  ⟹  no (x ∈ A  y  x ∈ B),  luego por (Def ∩):"], ["sub", "x ∉ A ∩ B"]]},
+{"say": "Tenemos entonces que x pertenece a A, y x no pertenece a la intersección de A y B. Por la definición de diferencia, x pertenece a A menos la intersección de A y B. Esto demuestra la segunda inclusión.", "L": [["txt", "x ∈ A  y  x ∉ A ∩ B,  luego por (Def ∖):"], ["res", "x ∈ A ∖ (A ∩ B)"], ["res", "A ∖ B ⊆ A ∖ (A ∩ B)"]]},
+{"title": "(2) Conclusión", "clear": 1, "say": "Como se cumplen las dos inclusiones, por la definición de igualdad, concluimos que A menos la intersección de A y B, es igual a A menos B.", "L": [["txt", "(2a)  A ∖ (A ∩ B) ⊆ A ∖ B"], ["txt", "(2b)  A ∖ B ⊆ A ∖ (A ∩ B)"], ["res", "A ∖ (A ∩ B) = A ∖ B"]]},
+{"title": "(3) Conclusión", "clear": 1, "say": "Apartado tres. Volvemos a la expresión de partida. A diferencia simétrica, la intersección de A y B, es la unión de A menos la intersección, con la intersección menos A.", "L": [["txt", "Partimos de (★):"], ["sub", "A △ (A ∩ B) = ( A ∖ (A ∩ B) ) ∪ ( (A ∩ B) ∖ A )"]]},
+{"say": "Sustituimos el segundo trozo por el conjunto vacío, usando el resultado del apartado uno.", "L": [["txt", "Por (1),  (A ∩ B) ∖ A = ∅ :"], ["sub", "A △ (A ∩ B) = ( A ∖ (A ∩ B) ) ∪ <mark>∅</mark>"]]},
+{"say": "Unir un conjunto con el conjunto vacío no cambia el conjunto. En efecto, x pertenece a la unión de un conjunto X con el vacío, si y solo si x pertenece a X, o x pertenece al vacío. Pero ningún elemento pertenece al vacío, así que esto equivale a que x pertenezca a X. Aplicamos esto con X igual a A menos la intersección de A y B.", "L": [["txt", "Por (Def ∪) y (Def ∅):  x ∈ X ∪ ∅  ⟺  x ∈ X  o  x ∈ ∅  ⟺  x ∈ X"], ["txt", "Con  X = A ∖ (A ∩ B):"], ["sub", "A △ (A ∩ B) = A ∖ (A ∩ B)"]]},
+{"say": "Por último, sustituimos A menos la intersección de A y B por A menos B, usando el resultado del apartado dos.", "L": [["txt", "Por (2),  A ∖ (A ∩ B) = A ∖ B :"], ["res", "A △ (A ∩ B) = A ∖ B"]]},
+{"title": "Conclusión", "clear": 1, "say": "Conclusión. Hemos demostrado que, para cualesquiera conjuntos A y B, A menos B es igual a A diferencia simétrica, la intersección de A y B. Gracias por ver el vídeo.", "L": [["txt", "A △ (A ∩ B) = ( A ∖ (A ∩ B) ) ∪ ∅ = A ∖ (A ∩ B) = A ∖ B"], ["res", "A ∖ B = A △ (A ∩ B)"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' más ').replace(/⊙/g,' por ').replace(/∼/g,' complementario de ').replace(/≤/g,' menor o igual que ').replace(/[()]/g,', ').replace(/\b1\b/g,' uno ').replace(/\b0\b/g,' cero ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Repetir'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Continuar'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pausa';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^es/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/pablo|jorge|diego|enrique|miguel|alvaro|álvaro|male|google español$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent='Diferencia simétrica';$('sub').textContent='Ejercicio · Álgebra de conjuntos';
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
