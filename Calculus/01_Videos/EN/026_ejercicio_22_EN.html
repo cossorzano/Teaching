@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cartesian product and intersection</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Remember</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Start</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Speed <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Recording mode (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"en-US",
+"meta":{"nivel": 2, "titulo": "Cartesian product and intersection", "enunciado": "Prove that, for any sets A, B, C, D:", "tesis": "(A ∩ B) × (C ∩ D) = (A × C) ∩ (B × D)", "datos": ["(Def ×)  (x, y) ∈ X × Y  ⟺  x ∈ X  and  y ∈ Y"]},
+"steps":[
+{"title": "Cartesian product and intersection", "sub": "Exercise · Algebra of sets", "clear": 1, "say": "Hello. In this video we are going to prove that the Cartesian product of two intersections is the intersection of two Cartesian products. We will reason element by element, very slowly, writing every equation and justifying every step.", "L": [["txt", "Prove that  (A ∩ B) × (C ∩ D) = (A × C) ∩ (B × D)"]]},
+
+{"say": "What we want to prove. For any sets A, B, C and D, the intersection of A and B, cross the intersection of C and D, equals the intersection of A cross C, with B cross D. On the left we recall the definitions we are going to use: Cartesian product, intersection, inclusion and equality of sets.", "L": [["goal", "(A ∩ B) × (C ∩ D) = (A × C) ∩ (B × D)<span class='tag'>Prove, for any A, B, C, D</span>"]], "pin": ["(Def ×) (x, y) ∈ X × Y  ⟺  x ∈ X  and  y ∈ Y", "(Def ∩) p ∈ X ∩ Y  ⟺  p ∈ X  and  p ∈ Y", "(Def ⊆) X ⊆ Y  ⟺  every p ∈ X satisfies p ∈ Y", "(Def =) X = Y  ⟺  X ⊆ Y  and  Y ⊆ X"]},
+
+{"title": "Plan: double inclusion", "clear": 1, "say": "We will reason element by element. By the definition of equality, we have to prove two inclusions. The first, the intersection of A and B, cross the intersection of C and D, is included in the intersection of A cross C with B cross D. The second, the reverse inclusion.", "L": [["goal", "(1)  (A ∩ B) × (C ∩ D) ⊆ (A × C) ∩ (B × D)"], ["goal", "(2)  (A × C) ∩ (B × D) ⊆ (A ∩ B) × (C ∩ D)"]]},
+
+{"title": "(1) (A ∩ B) × (C ∩ D) ⊆ (A × C) ∩ (B × D)", "clear": 1, "say": "First inclusion. By the definition of inclusion, we take an arbitrary element x, y of the first set, and we have to prove that it belongs to the second.", "L": [["hyp", "Let (x, y) ∈ (A ∩ B) × (C ∩ D)"], ["goal", "We want:  (x, y) ∈ (A × C) ∩ (B × D)"]]},
+
+{"say": "By the definition of Cartesian product, with X equal to A intersection B, and Y equal to C intersection D, the first coordinate x belongs to A intersection B, and the second coordinate y belongs to C intersection D.", "L": [["txt", "By (Def ×) with  X = A ∩ B,  Y = C ∩ D:"], ["sub", "x ∈ A ∩ B   and   y ∈ C ∩ D"]]},
+
+{"say": "By the definition of intersection, x belonging to A intersection B means that x belongs to A, and x belongs to B. And y belonging to C intersection D means that y belongs to C, and y belongs to D.", "L": [["txt", "By (Def ∩):"], ["sub", "x ∈ A  and  x ∈ B"], ["sub", "y ∈ C  and  y ∈ D"]]},
+
+{"clear": 1, "say": "Now we regroup in a different way. Since x belongs to A, and y belongs to C, by the definition of Cartesian product, x, y belongs to A cross C. And since x belongs to B, and y belongs to D, x, y belongs to B cross D.", "L": [["txt", "We regroup:  x ∈ A  and  y ∈ C,  so by (Def ×):"], ["sub", "(x, y) ∈ A × C"], ["txt", "And also:  x ∈ B  and  y ∈ D,  so by (Def ×):"], ["sub", "(x, y) ∈ B × D"]]},
+
+{"say": "By the definition of intersection, with X equal to A cross C, and Y equal to B cross D, x, y belongs to the intersection of A cross C with B cross D.", "L": [["txt", "(x, y) ∈ A × C   and   (x, y) ∈ B × D,  so by (Def ∩):"], ["res", "(x, y) ∈ (A × C) ∩ (B × D)"]]},
+
+{"say": "Since x, y was an arbitrary element of the intersection of A and B, cross the intersection of C and D, we conclude the first inclusion.", "L": [["res", "(A ∩ B) × (C ∩ D) ⊆ (A × C) ∩ (B × D)"]]},
+
+{"title": "(2) (A × C) ∩ (B × D) ⊆ (A ∩ B) × (C ∩ D)", "clear": 1, "say": "Second inclusion. We take an arbitrary element x, y of the intersection of A cross C with B cross D, and we have to prove that it belongs to the intersection of A and B, cross the intersection of C and D.", "L": [["hyp", "Let (x, y) ∈ (A × C) ∩ (B × D)"], ["goal", "We want:  (x, y) ∈ (A ∩ B) × (C ∩ D)"]]},
+
+{"say": "By the definition of intersection, x, y belongs to A cross C, and x, y belongs to B cross D.", "L": [["txt", "By (Def ∩):"], ["sub", "(x, y) ∈ A × C   and   (x, y) ∈ B × D"]]},
+
+{"say": "By the definition of Cartesian product, x, y belonging to A cross C means that x belongs to A, and y belongs to C. And x, y belonging to B cross D means that x belongs to B, and y belongs to D.", "L": [["txt", "By (Def ×):"], ["sub", "x ∈ A  and  y ∈ C"], ["sub", "x ∈ B  and  y ∈ D"]]},
+
+{"clear": 1, "say": "Now we regroup in a different way. Since x belongs to A, and x belongs to B, by the definition of intersection, x belongs to A intersection B. And since y belongs to C, and y belongs to D, y belongs to C intersection D.", "L": [["txt", "We regroup:  x ∈ A  and  x ∈ B,  so by (Def ∩):"], ["sub", "x ∈ A ∩ B"], ["txt", "And also:  y ∈ C  and  y ∈ D,  so by (Def ∩):"], ["sub", "y ∈ C ∩ D"]]},
+
+{"say": "By the definition of Cartesian product, with X equal to A intersection B, and Y equal to C intersection D, x, y belongs to the intersection of A and B, cross the intersection of C and D.", "L": [["txt", "x ∈ A ∩ B  and  y ∈ C ∩ D,  so by (Def ×):"], ["res", "(x, y) ∈ (A ∩ B) × (C ∩ D)"]]},
+
+{"say": "Since x, y was an arbitrary element of the intersection of A cross C with B cross D, we conclude the second inclusion.", "L": [["res", "(A × C) ∩ (B × D) ⊆ (A ∩ B) × (C ∩ D)"]]},
+
+{"title": "Conclusion", "clear": 1, "say": "Conclusion. Since both inclusions hold, by the definition of equality, the intersection of A and B, cross the intersection of C and D, equals the intersection of A cross C with B cross D. Thanks for watching.", "L": [["txt", "(1)  (A ∩ B) × (C ∩ D) ⊆ (A × C) ∩ (B × D)"], ["txt", "(2)  (A × C) ∩ (B × D) ⊆ (A ∩ B) × (C ∩ D)"], ["res", "(A ∩ B) × (C ∩ D) = (A × C) ∩ (B × D)"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' plus ').replace(/⊙/g,' times ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Replay'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Resume'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pause';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/andrew|guy|brian|christopher|eric|david|mark|male|google us english$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Cartesian product and intersection";$('sub').textContent="Exercise · Algebra of sets";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

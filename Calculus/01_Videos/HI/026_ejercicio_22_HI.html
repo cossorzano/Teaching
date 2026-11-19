@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>कार्तीय गुणनफल और सर्वनिष्ठ</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>याद रखें</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ शुरू करें</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>गति <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">रिकॉर्डिंग मोड (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"hi-IN",
+"meta":{"nivel": 2, "titulo": "कार्तीय गुणनफल और सर्वनिष्ठ", "enunciado": "सिद्ध कीजिए कि किन्हीं भी समुच्चयों A, B, C, D के लिए:", "tesis": "(A ∩ B) × (C ∩ D) = (A × C) ∩ (B × D)", "datos": ["(× परिभाषा)  (x, y) ∈ X × Y  ⟺  x ∈ X  और  y ∈ Y"]},
+"steps":[
+{"title": "कार्तीय गुणनफल और सर्वनिष्ठ", "sub": "अभ्यास · समुच्चयों का बीजगणित", "clear": 1, "say": "नमस्ते। इस वीडियो में हम सिद्ध करेंगे कि दो सर्वनिष्ठों का कार्तीय गुणनफल, दो कार्तीय गुणनफलों का सर्वनिष्ठ है। हम अवयव दर अवयव तर्क करेंगे, बहुत धीरे, हर समीकरण लिखेंगे और हर चरण का कारण बताएँगे।", "L": [["txt", "सिद्ध करें कि  (A ∩ B) × (C ∩ D) = (A × C) ∩ (B × D)"]]},
+
+{"say": "हम क्या सिद्ध करना चाहते हैं। किन्हीं भी समुच्चयों A, B, C और D के लिए, A और B का सर्वनिष्ठ, क्रॉस C और D का सर्वनिष्ठ, A क्रॉस C और B क्रॉस D के सर्वनिष्ठ के बराबर है। बाईं ओर हम वे परिभाषाएँ याद करते हैं जिनका हम उपयोग करेंगे: कार्तीय गुणनफल, सर्वनिष्ठ, अंतर्विष्टि और समुच्चयों की समता।", "L": [["goal", "(A ∩ B) × (C ∩ D) = (A × C) ∩ (B × D)<span class='tag'>किन्हीं भी A, B, C, D के लिए सिद्ध करें</span>"]], "pin": ["(× परिभाषा) (x, y) ∈ X × Y  ⟺  x ∈ X  और  y ∈ Y", "(∩ परिभाषा) p ∈ X ∩ Y  ⟺  p ∈ X  और  p ∈ Y", "(⊆ परिभाषा) X ⊆ Y  ⟺  हर p ∈ X के लिए p ∈ Y", "(= परिभाषा) X = Y  ⟺  X ⊆ Y  और  Y ⊆ X"]},
+
+{"title": "योजना: दोहरी अंतर्विष्टि", "clear": 1, "say": "हम अवयव दर अवयव तर्क करेंगे। समता की परिभाषा के अनुसार, हमें दो अंतर्विष्टियाँ सिद्ध करनी हैं। पहली, A और B का सर्वनिष्ठ, क्रॉस C और D का सर्वनिष्ठ, A क्रॉस C और B क्रॉस D के सर्वनिष्ठ में अंतर्विष्ट है। दूसरी, उलटी अंतर्विष्टि।", "L": [["goal", "(1)  (A ∩ B) × (C ∩ D) ⊆ (A × C) ∩ (B × D)"], ["goal", "(2)  (A × C) ∩ (B × D) ⊆ (A ∩ B) × (C ∩ D)"]]},
+
+{"title": "(1) (A ∩ B) × (C ∩ D) ⊆ (A × C) ∩ (B × D)", "clear": 1, "say": "पहली अंतर्विष्टि। अंतर्विष्टि की परिभाषा के अनुसार, हम पहले समुच्चय का कोई भी अवयव x, y लेते हैं, और हमें सिद्ध करना है कि वह दूसरे समुच्चय में है।", "L": [["hyp", "मान लीजिए (x, y) ∈ (A ∩ B) × (C ∩ D)"], ["goal", "हमें चाहिए:  (x, y) ∈ (A × C) ∩ (B × D)"]]},
+
+{"say": "कार्तीय गुणनफल की परिभाषा के अनुसार, X बराबर A सर्वनिष्ठ B, और Y बराबर C सर्वनिष्ठ D लेकर, पहला निर्देशांक x, A सर्वनिष्ठ B में है, और दूसरा निर्देशांक y, C सर्वनिष्ठ D में है।", "L": [["txt", "(× परिभाषा) से,  X = A ∩ B,  Y = C ∩ D  लेकर:"], ["sub", "x ∈ A ∩ B   और   y ∈ C ∩ D"]]},
+
+{"say": "सर्वनिष्ठ की परिभाषा के अनुसार, x का A सर्वनिष्ठ B में होना, इसका अर्थ है कि x, A में है, और x, B में है। और y का C सर्वनिष्ठ D में होना, इसका अर्थ है कि y, C में है, और y, D में है।", "L": [["txt", "(∩ परिभाषा) से:"], ["sub", "x ∈ A  और  x ∈ B"], ["sub", "y ∈ C  और  y ∈ D"]]},
+
+{"clear": 1, "say": "अब हम दूसरे ढंग से समूह बनाते हैं। चूँकि x, A में है, और y, C में है, कार्तीय गुणनफल की परिभाषा के अनुसार, x, y, A क्रॉस C में है। और चूँकि x, B में है, और y, D में है, x, y, B क्रॉस D में है।", "L": [["txt", "दूसरे ढंग से समूह:  x ∈ A  और  y ∈ C,  अतः (× परिभाषा) से:"], ["sub", "(x, y) ∈ A × C"], ["txt", "और साथ ही:  x ∈ B  और  y ∈ D,  अतः (× परिभाषा) से:"], ["sub", "(x, y) ∈ B × D"]]},
+
+{"say": "सर्वनिष्ठ की परिभाषा के अनुसार, X बराबर A क्रॉस C, और Y बराबर B क्रॉस D लेकर, x, y, A क्रॉस C और B क्रॉस D के सर्वनिष्ठ में है।", "L": [["txt", "(x, y) ∈ A × C   और   (x, y) ∈ B × D,  अतः (∩ परिभाषा) से:"], ["res", "(x, y) ∈ (A × C) ∩ (B × D)"]]},
+
+{"say": "चूँकि x, y, A और B के सर्वनिष्ठ क्रॉस C और D के सर्वनिष्ठ का कोई भी अवयव था, पहली अंतर्विष्टि सिद्ध हुई।", "L": [["res", "(A ∩ B) × (C ∩ D) ⊆ (A × C) ∩ (B × D)"]]},
+
+{"title": "(2) (A × C) ∩ (B × D) ⊆ (A ∩ B) × (C ∩ D)", "clear": 1, "say": "दूसरी अंतर्विष्टि। हम A क्रॉस C और B क्रॉस D के सर्वनिष्ठ का कोई भी अवयव x, y लेते हैं, और हमें सिद्ध करना है कि वह A और B के सर्वनिष्ठ, क्रॉस C और D के सर्वनिष्ठ में है।", "L": [["hyp", "मान लीजिए (x, y) ∈ (A × C) ∩ (B × D)"], ["goal", "हमें चाहिए:  (x, y) ∈ (A ∩ B) × (C ∩ D)"]]},
+
+{"say": "सर्वनिष्ठ की परिभाषा के अनुसार, x, y, A क्रॉस C में है, और x, y, B क्रॉस D में है।", "L": [["txt", "(∩ परिभाषा) से:"], ["sub", "(x, y) ∈ A × C   और   (x, y) ∈ B × D"]]},
+
+{"say": "कार्तीय गुणनफल की परिभाषा के अनुसार, x, y का A क्रॉस C में होना, इसका अर्थ है कि x, A में है, और y, C में है। और x, y का B क्रॉस D में होना, इसका अर्थ है कि x, B में है, और y, D में है।", "L": [["txt", "(× परिभाषा) से:"], ["sub", "x ∈ A  और  y ∈ C"], ["sub", "x ∈ B  और  y ∈ D"]]},
+
+{"clear": 1, "say": "अब हम दूसरे ढंग से समूह बनाते हैं। चूँकि x, A में है, और x, B में है, सर्वनिष्ठ की परिभाषा के अनुसार, x, A सर्वनिष्ठ B में है। और चूँकि y, C में है, और y, D में है, y, C सर्वनिष्ठ D में है।", "L": [["txt", "दूसरे ढंग से समूह:  x ∈ A  और  x ∈ B,  अतः (∩ परिभाषा) से:"], ["sub", "x ∈ A ∩ B"], ["txt", "और साथ ही:  y ∈ C  और  y ∈ D,  अतः (∩ परिभाषा) से:"], ["sub", "y ∈ C ∩ D"]]},
+
+{"say": "कार्तीय गुणनफल की परिभाषा के अनुसार, X बराबर A सर्वनिष्ठ B, और Y बराबर C सर्वनिष्ठ D लेकर, x, y, A और B के सर्वनिष्ठ, क्रॉस C और D के सर्वनिष्ठ में है।", "L": [["txt", "x ∈ A ∩ B  और  y ∈ C ∩ D,  अतः (× परिभाषा) से:"], ["res", "(x, y) ∈ (A ∩ B) × (C ∩ D)"]]},
+
+{"say": "चूँकि x, y, A क्रॉस C और B क्रॉस D के सर्वनिष्ठ का कोई भी अवयव था, दूसरी अंतर्विष्टि सिद्ध हुई।", "L": [["res", "(A × C) ∩ (B × D) ⊆ (A ∩ B) × (C ∩ D)"]]},
+
+{"title": "निष्कर्ष", "clear": 1, "say": "निष्कर्ष। चूँकि दोनों अंतर्विष्टियाँ सत्य हैं, समता की परिभाषा के अनुसार, A और B का सर्वनिष्ठ, क्रॉस C और D का सर्वनिष्ठ, A क्रॉस C और B क्रॉस D के सर्वनिष्ठ के बराबर है। देखने के लिए धन्यवाद।", "L": [["txt", "(1)  (A ∩ B) × (C ∩ D) ⊆ (A × C) ∩ (B × D)"], ["txt", "(2)  (A × C) ∩ (B × D) ⊆ (A ∩ B) × (C ∩ D)"], ["res", "(A ∩ B) × (C ∩ D) = (A × C) ∩ (B × D)"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' प्लस ').replace(/⊙/g,' गुणा ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ फिर से चलाएँ'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ जारी रखें'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ रोकें';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^hi/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/madhur|hemant|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="कार्तीय गुणनफल और सर्वनिष्ठ";$('sub').textContent="अभ्यास · समुच्चयों का बीजगणित";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
