@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Distributividade em relação à interseção</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Lembre-se</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Começar</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Velocidade <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Modo gravação (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"pt-BR",
+"meta":{"nivel": 2, "titulo": "Distributividade em relação à interseção", "enunciado": "Sejam A, B, C conjuntos. Demonstrar que o produto cartesiano é distributivo em relação à interseção:", "tesis": "<span dir='ltr'>(A ∩ B) × C = (A × C) ∩ (B × C)</span><br><span dir='ltr'>A × (B ∩ C) = (A × B) ∩ (A × C)</span>", "datos": ["(Def ×)  (x, y) ∈ X × Y  ⟺  x ∈ X  e  y ∈ Y"]},
+"steps":[
+{"title": "Distributividade em relação à interseção", "sub": "Exercício · Álgebra de conjuntos", "clear": 1, "say": "Olá. Neste vídeo vamos demonstrar que o produto cartesiano é distributivo em relação à interseção. Vamos raciocinar elemento a elemento, muito devagar, escrevendo cada equação e justificando cada passo.", "L": [["txt", "Demonstrar que o produto cartesiano é distributivo em relação à interseção"]]},
+
+{"clear": 1, "say": "O que queremos demonstrar. Para quaisquer conjuntos A, B e C, verificam-se duas igualdades. A primeira: A interseção B, vezes C, é igual a A vezes C, interseção B vezes C. A segunda: A vezes, B interseção C, é igual a A vezes B, interseção A vezes C. Recordamos à esquerda as definições que vamos usar: produto cartesiano, interseção, inclusão e igualdade de conjuntos.", "L": [["goal", "(1)  (A ∩ B) × C = (A × C) ∩ (B × C)"], ["goal", "(2)  A × (B ∩ C) = (A × B) ∩ (A × C)"]], "pin": ["(Def ×) (x, y) ∈ X × Y  ⟺  x ∈ X  e  y ∈ Y", "(Def ∩) p ∈ X ∩ Y  ⟺  p ∈ X  e  p ∈ Y", "(Def ⊆) X ⊆ Y  ⟺  todo p ∈ X cumpre p ∈ Y", "(Def =) X = Y  ⟺  X ⊆ Y  e  Y ⊆ X"]},
+
+{"title": "(1) (A ∩ B) × C = (A × C) ∩ (B × C)", "clear": 1, "say": "Igualdade número 1. Pela definição de igualdade, demonstramos duas inclusões: primeiro, o membro da esquerda está contido no da direita, e segundo, a inclusão contrária.", "L": [["goal", "(i)   (A ∩ B) × C ⊆ (A × C) ∩ (B × C)"], ["goal", "(ii)  (A × C) ∩ (B × C) ⊆ (A ∩ B) × C"]]},
+
+{"title": "(1-i) (A ∩ B) × C ⊆ (A × C) ∩ (B × C)", "clear": 1, "say": "Inclusão i. Tomamos um elemento qualquer x, y do primeiro conjunto, e temos de provar que pertence ao segundo.", "L": [["hyp", "Seja (x, y) ∈ (A ∩ B) × C"], ["goal", "Queremos:  (x, y) ∈ (A × C) ∩ (B × C)"]]},
+
+{"say": "Pela definição de produto cartesiano, x pertence a A interseção B, e y pertence a C.", "L": [["txt", "Por (Def ×):"], ["sub", "x ∈ A ∩ B  e  y ∈ C"]]},
+
+{"say": "Pela definição de interseção, x pertencer a A interseção B significa que x pertence a A, e x pertence a B.", "L": [["txt", "Por (Def ∩):  x ∈ A ∩ B  significa"], ["sub", "x ∈ A  e  x ∈ B"]]},
+
+{"clear": 1, "say": "Como x pertence a A, e y pertence a C, pela definição de produto cartesiano, x, y pertence a A vezes C. E como x pertence a B, e y pertence a C, x, y pertence a B vezes C.", "L": [["txt", "x ∈ A  e  y ∈ C,  logo por (Def ×):"], ["sub", "(x, y) ∈ A × C"], ["txt", "x ∈ B  e  y ∈ C,  logo por (Def ×):"], ["sub", "(x, y) ∈ B × C"]]},
+
+{"say": "Pela definição de interseção, x, y pertence a A vezes C, e x, y pertence a B vezes C, logo pertence à interseção de ambos.", "L": [["txt", "Por (Def ∩):"], ["res", "(x, y) ∈ (A × C) ∩ (B × C)"]]},
+
+{"clear": 1, "say": "Como x, y era um elemento qualquer, concluímos a primeira inclusão.", "L": [["res", "(A ∩ B) × C ⊆ (A × C) ∩ (B × C)"]]},
+
+{"title": "(1-ii) (A × C) ∩ (B × C) ⊆ (A ∩ B) × C", "clear": 1, "say": "Inclusão ii. Tomamos um elemento qualquer x, y de A vezes C, interseção B vezes C, e temos de provar que pertence a A interseção B, vezes C.", "L": [["hyp", "Seja (x, y) ∈ (A × C) ∩ (B × C)"], ["goal", "Queremos:  (x, y) ∈ (A ∩ B) × C"]]},
+
+{"say": "Pela definição de interseção, x, y pertence a A vezes C, e x, y pertence a B vezes C.", "L": [["txt", "Por (Def ∩):"], ["sub", "(x, y) ∈ A × C   e   (x, y) ∈ B × C"]]},
+
+{"say": "Pela definição de produto cartesiano, aplicada a cada uma das duas condições, x pertence a A, e y pertence a C. E também, x pertence a B, e y pertence a C.", "L": [["txt", "Por (Def ×):"], ["sub", "x ∈ A  e  y ∈ C"], ["sub", "x ∈ B  e  y ∈ C"]]},
+
+{"say": "Em particular, x pertence a A, e x pertence a B. Pela definição de interseção, x pertence a A interseção B. Além disso, y pertence a C.", "L": [["txt", "Em particular:"], ["sub", "x ∈ A  e  x ∈ B   ⟹   por (Def ∩):  x ∈ A ∩ B"], ["sub", "y ∈ C"]]},
+
+{"clear": 1, "say": "Portanto, x pertence a A interseção B, e y pertence a C. Pela definição de produto cartesiano, x, y pertence a A interseção B, vezes C. Isto demonstra a segunda inclusão. Como se verificam as duas inclusões, pela definição de igualdade, fica provada a igualdade número 1.", "L": [["txt", "x ∈ A ∩ B  e  y ∈ C,  logo por (Def ×):"], ["res", "(x, y) ∈ (A ∩ B) × C"], ["res", "(A × C) ∩ (B × C) ⊆ (A ∩ B) × C"], ["res", "(A ∩ B) × C = (A × C) ∩ (B × C)"]]},
+
+{"title": "(2) A × (B ∩ C) = (A × B) ∩ (A × C)", "clear": 1, "say": "Igualdade número 2. Pela definição de igualdade, demonstramos duas inclusões: primeiro, o membro da esquerda está contido no da direita, e segundo, a inclusão contrária.", "L": [["goal", "(i)   A × (B ∩ C) ⊆ (A × B) ∩ (A × C)"], ["goal", "(ii)  (A × B) ∩ (A × C) ⊆ A × (B ∩ C)"]]},
+
+{"title": "(2-i) A × (B ∩ C) ⊆ (A × B) ∩ (A × C)", "clear": 1, "say": "Inclusão i. Tomamos um elemento qualquer x, y do primeiro conjunto, e temos de provar que pertence ao segundo.", "L": [["hyp", "Seja (x, y) ∈ A × (B ∩ C)"], ["goal", "Queremos:  (x, y) ∈ (A × B) ∩ (A × C)"]]},
+
+{"say": "Pela definição de produto cartesiano, x pertence a A, e y pertence a B interseção C.", "L": [["txt", "Por (Def ×):"], ["sub", "x ∈ A  e  y ∈ B ∩ C"]]},
+
+{"say": "Pela definição de interseção, y pertencer a B interseção C significa que y pertence a B, e y pertence a C.", "L": [["txt", "Por (Def ∩):  y ∈ B ∩ C  significa"], ["sub", "y ∈ B  e  y ∈ C"]]},
+
+{"clear": 1, "say": "Como y pertence a B, e x pertence a A, pela definição de produto cartesiano, x, y pertence a A vezes B. E como y pertence a C, e x pertence a A, x, y pertence a A vezes C.", "L": [["txt", "y ∈ B  e  x ∈ A,  logo por (Def ×):"], ["sub", "(x, y) ∈ A × B"], ["txt", "y ∈ C  e  x ∈ A,  logo por (Def ×):"], ["sub", "(x, y) ∈ A × C"]]},
+
+{"say": "Pela definição de interseção, x, y pertence a A vezes B, e x, y pertence a A vezes C, logo pertence à interseção de ambos.", "L": [["txt", "Por (Def ∩):"], ["res", "(x, y) ∈ (A × B) ∩ (A × C)"]]},
+
+{"clear": 1, "say": "Como x, y era um elemento qualquer, concluímos a primeira inclusão.", "L": [["res", "A × (B ∩ C) ⊆ (A × B) ∩ (A × C)"]]},
+
+{"title": "(2-ii) (A × B) ∩ (A × C) ⊆ A × (B ∩ C)", "clear": 1, "say": "Inclusão ii. Tomamos um elemento qualquer x, y de A vezes B, interseção A vezes C, e temos de provar que pertence a A vezes, B interseção C.", "L": [["hyp", "Seja (x, y) ∈ (A × B) ∩ (A × C)"], ["goal", "Queremos:  (x, y) ∈ A × (B ∩ C)"]]},
+
+{"say": "Pela definição de interseção, x, y pertence a A vezes B, e x, y pertence a A vezes C.", "L": [["txt", "Por (Def ∩):"], ["sub", "(x, y) ∈ A × B   e   (x, y) ∈ A × C"]]},
+
+{"say": "Pela definição de produto cartesiano, aplicada a cada uma das duas condições, x pertence a A, e y pertence a B. E também, x pertence a A, e y pertence a C.", "L": [["txt", "Por (Def ×):"], ["sub", "x ∈ A  e  y ∈ B"], ["sub", "x ∈ A  e  y ∈ C"]]},
+
+{"say": "Em particular, y pertence a B, e y pertence a C. Pela definição de interseção, y pertence a B interseção C. Além disso, x pertence a A.", "L": [["txt", "Em particular:"], ["sub", "y ∈ B  e  y ∈ C   ⟹   por (Def ∩):  y ∈ B ∩ C"], ["sub", "x ∈ A"]]},
+
+{"clear": 1, "say": "Portanto, y pertence a B interseção C, e x pertence a A. Pela definição de produto cartesiano, x, y pertence a A vezes, B interseção C. Isto demonstra a segunda inclusão. Como se verificam as duas inclusões, pela definição de igualdade, fica provada a igualdade número 2.", "L": [["txt", "y ∈ B ∩ C  e  x ∈ A,  logo por (Def ×):"], ["res", "(x, y) ∈ A × (B ∩ C)"], ["res", "(A × B) ∩ (A × C) ⊆ A × (B ∩ C)"], ["res", "A × (B ∩ C) = (A × B) ∩ (A × C)"]]},
+
+{"title": "Conclusão", "clear": 1, "say": "Conclusão. Demonstrámos as duas igualdades. Ou seja, o produto cartesiano é distributivo em relação à interseção, tanto à esquerda como à direita. Obrigado por ver o vídeo.", "L": [["res", "(1)  (A ∩ B) × C = (A × C) ∩ (B × C)"], ["res", "(2)  A × (B ∩ C) = (A × B) ∩ (A × C)"], ["txt", "O produto cartesiano é distributivo em relação à interseção"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' mais ').replace(/⊙/g,' vezes ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Repetir'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Continuar'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pausa';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^pt/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/antonio|antônio|donato|fabio|duarte|male|google português$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Distributividade em relação à interseção";$('sub').textContent="Exercício · Álgebra de conjuntos";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
