@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>对差集的分配律</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>备忘</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ 开始</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>语速 <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">录制模式 (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"zh-CN",
+"meta":{"nivel": 2, "titulo": "对差集的分配律", "enunciado": "设 A, B, C 为集合。证明笛卡尔积对差集满足分配律：", "tesis": "<span dir='ltr'>(A ∖ B) × C = (A × C) ∖ (B × C)</span><br><span dir='ltr'>A × (B ∖ C) = (A × B) ∖ (A × C)</span>", "datos": ["（× 的定义）  (x, y) ∈ X × Y  ⟺  x ∈ X  且  y ∈ Y"]},
+"steps":[
+{"title": "对差集的分配律", "sub": "练习 · 集合代数", "clear": 1, "say": "大家好。在这个视频中，我们要证明笛卡尔积对差集满足分配律。我们将逐个元素地推理，讲得很慢，写出每一个等式，并说明每一步的理由。", "L": [["txt", "证明笛卡尔积对差集满足分配律"]]},
+
+{"clear": 1, "say": "我们要证明的是：对任意集合 A、B 和 C，有两个等式成立。第一个：A 减 B 再乘 C，等于 A 乘 C 减去 B 乘 C。第二个：A 乘以 B 减 C，等于 A 乘 B 减去 A 乘 C。我们在左边列出要用到的定义：笛卡尔积、差集、包含以及集合的相等。", "L": [["goal", "(1)  (A ∖ B) × C = (A × C) ∖ (B × C)"], ["goal", "(2)  A × (B ∖ C) = (A × B) ∖ (A × C)"]], "pin": ["（× 定义） (x, y) ∈ X × Y  ⟺  x ∈ X  且  y ∈ Y", "（∖ 定义） p ∈ X ∖ Y  ⟺  p ∈ X  且  p ∉ Y", "（⊆ 定义） X ⊆ Y  ⟺  每个 p ∈ X 都满足 p ∈ Y", "（= 定义） X = Y  ⟺  X ⊆ Y  且  Y ⊆ X"]},
+
+{"title": "(1) (A ∖ B) × C = (A × C) ∖ (B × C)", "clear": 1, "say": "第一个等式。根据相等的定义，我们证明两个包含关系：先证左边包含于右边，再证反方向的包含关系。", "L": [["goal", "(i)   (A ∖ B) × C ⊆ (A × C) ∖ (B × C)"], ["goal", "(ii)  (A × C) ∖ (B × C) ⊆ (A ∖ B) × C"]]},
+
+{"title": "(1-i) (A ∖ B) × C ⊆ (A × C) ∖ (B × C)", "clear": 1, "say": "包含关系 i。我们在第一个集合中任取一个元素 x, y，需要证明它属于第二个集合。", "L": [["hyp", "设 (x, y) ∈ (A ∖ B) × C"], ["goal", "要证：  (x, y) ∈ (A × C) ∖ (B × C)"]]},
+
+{"say": "根据笛卡尔积的定义，x 属于 A 减 B，并且 y 属于 C。", "L": [["txt", "由（× 定义）："], ["sub", "x ∈ A ∖ B  且  y ∈ C"]]},
+
+{"say": "根据差集的定义，x 属于 A 减 B，意味着 x 属于 A，并且 x 不属于 B。", "L": [["txt", "由（∖ 定义）：  x ∈ A ∖ B  意味着"], ["sub", "x ∈ A  且  x ∉ B"]]},
+
+{"clear": 1, "say": "首先，因为 x 属于 A，并且 y 属于 C，根据笛卡尔积的定义，x, y 属于 A 乘 C。", "L": [["txt", "x ∈ A  且  y ∈ C，  所以由（× 定义）："], ["sub", "(x, y) ∈ A × C"]]},
+
+{"say": "其次，我们来说明 x, y 不属于 B 乘 C。如果属于，根据笛卡尔积的定义，x 就属于 B。但我们知道 x 不属于 B。这是矛盾，所以 x, y 不属于 B 乘 C。", "L": [["txt", "若  (x, y) ∈ B × C，  则由（× 定义）  x ∈ B。"], ["warn", "但  x ∉ B   →   矛盾"], ["sub", "(x, y) ∉ B × C"]]},
+
+{"say": "根据差集的定义，x, y 属于 A 乘 C，并且不属于 B 乘 C。所以 x, y 属于 A 乘 C 减去 B 乘 C。", "L": [["txt", "由（∖ 定义）："], ["res", "(x, y) ∈ (A × C) ∖ (B × C)"], ["res", "(A ∖ B) × C ⊆ (A × C) ∖ (B × C)"]]},
+
+{"title": "(1-ii) (A × C) ∖ (B × C) ⊆ (A ∖ B) × C", "clear": 1, "say": "包含关系 ii。我们在 A 乘 C 减去 B 乘 C 中任取一个元素 x, y，需要证明它属于 A 减 B 再乘 C。", "L": [["hyp", "设 (x, y) ∈ (A × C) ∖ (B × C)"], ["goal", "要证：  (x, y) ∈ (A ∖ B) × C"]]},
+
+{"say": "根据差集的定义，x, y 属于 A 乘 C，并且 x, y 不属于 B 乘 C。", "L": [["txt", "由（∖ 定义）："], ["sub", "(x, y) ∈ A × C   且   (x, y) ∉ B × C"]]},
+
+{"say": "第一个条件，根据笛卡尔积的定义，是说 x 属于 A，并且 y 属于 C。", "L": [["txt", "第一个条件，由（× 定义）："], ["sub", "x ∈ A  且  y ∈ C"]]},
+
+{"say": "第二个条件，根据笛卡尔积的定义，是说并非 x 属于 B 且 y 属于 C 同时成立。", "L": [["txt", "第二个条件，由（× 定义）："], ["sub", "并非 (x ∈ B  且  y ∈ C)"]]},
+
+{"say": "但我们已经知道 y 属于 C。因此，为了使两者不同时成立，x 必然不属于 B。", "L": [["txt", "因为  y ∈ C:"], ["sub", "x ∉ B"]]},
+
+{"clear": 1, "say": "于是 x 属于 A，并且 x 不属于 B。根据差集的定义，x 属于 A 减 B。而且 y 属于 C。", "L": [["txt", "x ∈ A  且  x ∉ B，  所以由（∖ 定义）："], ["sub", "x ∈ A ∖ B"], ["sub", "y ∈ C"]]},
+
+{"say": "根据笛卡尔积的定义，x, y 属于 A 减 B 再乘 C。这就证明了第二个包含关系。两个包含关系都成立，根据相等的定义，第一个等式得证。", "L": [["txt", "由（× 定义）："], ["res", "(x, y) ∈ (A ∖ B) × C"], ["res", "(A × C) ∖ (B × C) ⊆ (A ∖ B) × C"], ["res", "(A ∖ B) × C = (A × C) ∖ (B × C)"]]},
+
+{"title": "(2) A × (B ∖ C) = (A × B) ∖ (A × C)", "clear": 1, "say": "第二个等式。根据相等的定义，我们证明两个包含关系：先证左边包含于右边，再证反方向的包含关系。", "L": [["goal", "(i)   A × (B ∖ C) ⊆ (A × B) ∖ (A × C)"], ["goal", "(ii)  (A × B) ∖ (A × C) ⊆ A × (B ∖ C)"]]},
+
+{"title": "(2-i) A × (B ∖ C) ⊆ (A × B) ∖ (A × C)", "clear": 1, "say": "包含关系 i。我们在第一个集合中任取一个元素 x, y，需要证明它属于第二个集合。", "L": [["hyp", "设 (x, y) ∈ A × (B ∖ C)"], ["goal", "要证：  (x, y) ∈ (A × B) ∖ (A × C)"]]},
+
+{"say": "根据笛卡尔积的定义，x 属于 A，并且 y 属于 B 减 C。", "L": [["txt", "由（× 定义）："], ["sub", "x ∈ A  且  y ∈ B ∖ C"]]},
+
+{"say": "根据差集的定义，y 属于 B 减 C，意味着 y 属于 B，并且 y 不属于 C。", "L": [["txt", "由（∖ 定义）：  y ∈ B ∖ C  意味着"], ["sub", "y ∈ B  且  y ∉ C"]]},
+
+{"clear": 1, "say": "首先，因为 y 属于 B，并且 x 属于 A，根据笛卡尔积的定义，x, y 属于 A 乘 B。", "L": [["txt", "y ∈ B  且  x ∈ A，  所以由（× 定义）："], ["sub", "(x, y) ∈ A × B"]]},
+
+{"say": "其次，我们来说明 x, y 不属于 A 乘 C。如果属于，根据笛卡尔积的定义，y 就属于 C。但我们知道 y 不属于 C。这是矛盾，所以 x, y 不属于 A 乘 C。", "L": [["txt", "若  (x, y) ∈ A × C，  则由（× 定义）  y ∈ C。"], ["warn", "但  y ∉ C   →   矛盾"], ["sub", "(x, y) ∉ A × C"]]},
+
+{"say": "根据差集的定义，x, y 属于 A 乘 B，并且不属于 A 乘 C。所以 x, y 属于 A 乘 B 减去 A 乘 C。", "L": [["txt", "由（∖ 定义）："], ["res", "(x, y) ∈ (A × B) ∖ (A × C)"], ["res", "A × (B ∖ C) ⊆ (A × B) ∖ (A × C)"]]},
+
+{"title": "(2-ii) (A × B) ∖ (A × C) ⊆ A × (B ∖ C)", "clear": 1, "say": "包含关系 ii。我们在 A 乘 B 减去 A 乘 C 中任取一个元素 x, y，需要证明它属于 A 乘以 B 减 C。", "L": [["hyp", "设 (x, y) ∈ (A × B) ∖ (A × C)"], ["goal", "要证：  (x, y) ∈ A × (B ∖ C)"]]},
+
+{"say": "根据差集的定义，x, y 属于 A 乘 B，并且 x, y 不属于 A 乘 C。", "L": [["txt", "由（∖ 定义）："], ["sub", "(x, y) ∈ A × B   且   (x, y) ∉ A × C"]]},
+
+{"say": "第一个条件，根据笛卡尔积的定义，是说 x 属于 A，并且 y 属于 B。", "L": [["txt", "第一个条件，由（× 定义）："], ["sub", "x ∈ A  且  y ∈ B"]]},
+
+{"say": "第二个条件，根据笛卡尔积的定义，是说并非 x 属于 A 且 y 属于 C 同时成立。", "L": [["txt", "第二个条件，由（× 定义）："], ["sub", "并非 (x ∈ A  且  y ∈ C)"]]},
+
+{"say": "但我们已经知道 x 属于 A。因此，为了使两者不同时成立，y 必然不属于 C。", "L": [["txt", "因为  x ∈ A:"], ["sub", "y ∉ C"]]},
+
+{"clear": 1, "say": "于是 y 属于 B，并且 y 不属于 C。根据差集的定义，y 属于 B 减 C。而且 x 属于 A。", "L": [["txt", "y ∈ B  且  y ∉ C，  所以由（∖ 定义）："], ["sub", "y ∈ B ∖ C"], ["sub", "x ∈ A"]]},
+
+{"say": "根据笛卡尔积的定义，x, y 属于 A 乘以 B 减 C。这就证明了第二个包含关系。两个包含关系都成立，根据相等的定义，第二个等式得证。", "L": [["txt", "由（× 定义）："], ["res", "(x, y) ∈ A × (B ∖ C)"], ["res", "(A × B) ∖ (A × C) ⊆ A × (B ∖ C)"], ["res", "A × (B ∖ C) = (A × B) ∖ (A × C)"]]},
+
+{"title": "结论", "clear": 1, "say": "结论。我们证明了这两个等式。也就是说，笛卡尔积对差集满足分配律，无论是左分配还是右分配。感谢观看。", "L": [["res", "(1)  (A ∖ B) × C = (A × C) ∖ (B × C)"], ["res", "(2)  A × (B ∖ C) = (A × B) ∖ (A × C)"], ["txt", "笛卡尔积对差集满足分配律"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' 加 ').replace(/⊙/g,' 乘 ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ 重播'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ 继续'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ 暂停';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^zh/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/yunyang|yunxi|yunjian|kangkang|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="对差集的分配律";$('sub').textContent="练习 · 集合代数";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
