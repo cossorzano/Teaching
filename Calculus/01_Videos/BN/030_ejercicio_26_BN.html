@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>দুটি সংযোগের গুণফল</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>মনে রাখুন</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ শুরু</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>গতি <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">রেকর্ডিং মোড (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"bn-BD",
+"meta":{"nivel": 2, "titulo": "দুটি সংযোগের গুণফল", "enunciado": "ধরা যাক A, B, C, D সেট। কার্তেসীয় গুণফলের সংযোগ হিসেবে বিস্তার করুন:", "tesis": "<span dir='ltr'>(A ∪ B) × (C ∪ D)</span>", "datos": ["(D1)  X × (Y ∪ Z) = (X × Y) ∪ (X × Z)", "(D2)  (X ∪ Y) × Z = (X × Z) ∪ (Y × Z)"]},
+"steps":[
+{"title": "দুটি সংযোগের গুণফল", "sub": "অনুশীলনী · সেটের বীজগণিত", "clear": 1, "say": "নমস্কার। এই ভিডিওতে আমরা দুটি সংযোগের কার্তেসীয় গুণফলকে কার্তেসীয় গুণফলগুলোর সংযোগ হিসেবে বিস্তার করব। আমরা খুব ধীরে এগোব, প্রতিটি সমীকরণ লিখব এবং প্রতিটি ধাপের যুক্তি দেব।", "L": [["txt", "(A ∪ B) × (C ∪ D)  কে কার্তেসীয় গুণফলের সংযোগ হিসেবে বিস্তার"]]},
+
+{"clear": 1, "say": "আমরা কী করতে চাই। ধরা যাক A, B, C ও D যেকোনো সেট। আমরা A সংযোগ B, ক্রস, C সংযোগ D কে কার্তেসীয় গুণফলগুলোর সংযোগ হিসেবে লিখতে চাই। এর জন্য আমরা সংযোগের উপর কার্তেসীয় গুণফলের বণ্টনের দুটি ধর্ম ব্যবহার করব, যা বাম দিকে মনে করিয়ে দেওয়া আছে। প্রথমটি: X ক্রস, Y সংযোগ Z, সমান X ক্রস Y, সংযোগ X ক্রস Z। দ্বিতীয়টি: X সংযোগ Y, ক্রস Z, সমান X ক্রস Z, সংযোগ Y ক্রস Z।", "L": [["goal", "বিস্তার করুন:   (A ∪ B) × (C ∪ D)<span class='tag'>কার্তেসীয় গুণফলের সংযোগ হিসেবে</span>"]], "pin": ["(D1) X × (Y ∪ Z) = (X × Y) ∪ (X × Z)", "(D2) (X ∪ Y) × Z = (X × Z) ∪ (Y × Z)"]},
+
+{"title": "1) (D1) প্রয়োগ করি", "clear": 1, "say": "ধাপ এক। আমরা ধর্ম D1 প্রয়োগ করি। আমরা X সমান A সংযোগ B, Y সমান C, এবং Z সমান D নিই। অর্থাৎ, X এর জায়গায় A সংযোগ B, Y এর জায়গায় C, এবং Z এর জায়গায় D বসাই।", "L": [["txt", "(D1),  X = A ∪ B,  Y = C,  Z = D  নিয়ে:"], ["sub", "<mark>(A ∪ B)</mark> × (<mark>C</mark> ∪ <mark>D</mark>)"], ["sub", "= ( <mark>(A ∪ B)</mark> × <mark>C</mark> ) ∪ ( <mark>(A ∪ B)</mark> × <mark>D</mark> )"]]},
+
+{"say": "ফলাফল হলো, A সংযোগ B, ক্রস, C সংযোগ D, দুটি পদের সংযোগের সমান: A সংযোগ B, ক্রস C, এবং A সংযোগ B, ক্রস D। আমরা এটিকে তারকা সমতা হিসেবে লিখে রাখি।", "L": [["res", "(A ∪ B) × (C ∪ D) = ( (A ∪ B) × C ) ∪ ( (A ∪ B) × D )<span class='tag'>(★)</span>"]]},
+
+{"title": "2) প্রতিটি পদে (D2) প্রয়োগ করি", "clear": 1, "say": "ধাপ দুই। এবার আমরা ধর্ম D2 দিয়ে প্রতিটি পদ আলাদাভাবে বিস্তার করি। প্রথমটি দিয়ে শুরু করি, A সংযোগ B, ক্রস C। আমরা X সমান A, Y সমান B, এবং Z সমান C নিই। অর্থাৎ, X এর জায়গায় A, Y এর জায়গায় B, এবং Z এর জায়গায় C বসাই।", "L": [["txt", "(D2),  X = A,  Y = B,  Z = C  নিয়ে:"], ["sub", "(<mark>A</mark> ∪ <mark>B</mark>) × <mark>C</mark> = (<mark>A</mark> × <mark>C</mark>) ∪ (<mark>B</mark> × <mark>C</mark>)<span class='tag'>(★★)</span>"]]},
+
+{"say": "এবার দ্বিতীয় পদ, A সংযোগ B, ক্রস D। আমরা ধর্ম D2 প্রয়োগ করি, X সমান A, Y সমান B, এবং Z সমান D নিয়ে। অর্থাৎ, X এর জায়গায় A, Y এর জায়গায় B, এবং Z এর জায়গায় D বসাই।", "L": [["txt", "(D2),  X = A,  Y = B,  Z = D  নিয়ে:"], ["sub", "(<mark>A</mark> ∪ <mark>B</mark>) × <mark>D</mark> = (<mark>A</mark> × <mark>D</mark>) ∪ (<mark>B</mark> × <mark>D</mark>)<span class='tag'>(★★★)</span>"]]},
+
+{"title": "3) বসাই", "clear": 1, "say": "ধাপ তিন। আমরা বসাই। তারকা সমতায় ফিরে যাই। সেখানে প্রথম পদ, A সংযোগ B, ক্রস C, এর জায়গায় দ্বিগুণ তারকা সমতায় পাওয়া ফলাফল বসাই। আর দ্বিতীয় পদ, A সংযোগ B, ক্রস D, এর জায়গায় তিনগুণ তারকা সমতায় পাওয়া ফলাফল বসাই।", "L": [["txt", "(★) এ (★★) ও (★★★) বসাই:"], ["sub", "(A ∪ B) × (C ∪ D) = ( <mark>(A × C) ∪ (B × C)</mark> ) ∪ ( <mark>(A × D) ∪ (B × D)</mark> )"]]},
+
+{"say": "সবশেষে, যেহেতু সংযোগ সহযোজী, আমরা বন্ধনী তুলে দিতে পারি। আমরা পাই যে A সংযোগ B, ক্রস, C সংযোগ D, চারটি কার্তেসীয় গুণফলের সংযোগ: A ক্রস C, B ক্রস C, A ক্রস D, এবং B ক্রস D।", "L": [["txt", "সংযোগ সহযোজী, তাই বন্ধনী তুলে দিই:"], ["res", "(A ∪ B) × (C ∪ D) = (A × C) ∪ (B × C) ∪ (A × D) ∪ (B × D)"]]},
+
+{"title": "উপসংহার", "clear": 1, "say": "উপসংহার। আমরা A সংযোগ B, ক্রস, C সংযোগ D কে চারটি কার্তেসীয় গুণফল A ক্রস C, B ক্রস C, A ক্রস D, এবং B ক্রস D এর সংযোগ হিসেবে বিস্তার করেছি। দেখার জন্য ধন্যবাদ।", "L": [["res", "(A ∪ B) × (C ∪ D) = (A × C) ∪ (B × C) ∪ (A × D) ∪ (B × D)"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' প্লাস ').replace(/⊙/g,' গুণ ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ আবার চালান'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ চালিয়ে যান'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ বিরতি';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^bn/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/pradeep|bashkar|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="দুটি সংযোগের গুণফল";$('sub').textContent="অনুশীলনী · সেটের বীজগণিত";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

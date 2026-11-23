@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Producto de dos uniones</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Recuerda</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Empezar</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Velocidad <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Modo grabación (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"es-ES",
+"meta":{"nivel": 2, "titulo": "Producto de dos uniones", "enunciado": "Sean A, B, C, D conjuntos. Desarrollar como unión de productos cartesianos:", "tesis": "<span dir='ltr'>(A ∪ B) × (C ∪ D)</span>", "datos": ["(D1)  X × (Y ∪ Z) = (X × Y) ∪ (X × Z)", "(D2)  (X ∪ Y) × Z = (X × Z) ∪ (Y × Z)"]},
+"steps":[
+{"title": "Producto de dos uniones", "sub": "Ejercicio · Álgebra de conjuntos", "clear": 1, "say": "Hola. En este vídeo vamos a desarrollar el producto cartesiano de dos uniones como una unión de productos cartesianos. Iremos muy despacio, escribiendo cada ecuación y justificando cada paso.", "L": [["txt", "Desarrollar  (A ∪ B) × (C ∪ D)  como unión de productos cartesianos"]]},
+{"clear": 1, "say": "Lo que queremos hacer. Sean A, B, C y D conjuntos cualesquiera. Queremos escribir A unión B, por, C unión D, como una unión de productos cartesianos. Para ello usaremos dos propiedades de distributividad del producto cartesiano con respecto a la unión, que recordamos a la izquierda. La primera: X por, Y unión Z, es igual a X por Y, unión X por Z. La segunda: X unión Y, por Z, es igual a X por Z, unión Y por Z.", "L": [["goal", "Desarrollar:   (A ∪ B) × (C ∪ D)<span class='tag'>Como unión de productos cartesianos</span>"]], "pin": ["(D1) X × (Y ∪ Z) = (X × Y) ∪ (X × Z)", "(D2) (X ∪ Y) × Z = (X × Z) ∪ (Y × Z)"]},
+{"title": "1) Aplicamos (D1)", "clear": 1, "say": "Paso uno. Aplicamos la propiedad D1. Tomamos X igual a A unión B, Y igual a C, y Z igual a D. Es decir, sustituimos X por A unión B, Y por C, y Z por D.", "L": [["txt", "(D1) con  X = A ∪ B,  Y = C,  Z = D :"], ["sub", "<mark>(A ∪ B)</mark> × (<mark>C</mark> ∪ <mark>D</mark>)"], ["sub", "= ( <mark>(A ∪ B)</mark> × <mark>C</mark> ) ∪ ( <mark>(A ∪ B)</mark> × <mark>D</mark> )"]]},
+{"say": "El resultado es que A unión B, por, C unión D, es igual a la unión de dos términos: A unión B, por C, y A unión B, por D. Lo anotamos como la igualdad estrella.", "L": [["res", "(A ∪ B) × (C ∪ D) = ( (A ∪ B) × C ) ∪ ( (A ∪ B) × D )<span class='tag'>(★)</span>"]]},
+{"title": "2) Aplicamos (D2) a cada término", "clear": 1, "say": "Paso dos. Ahora desarrollamos cada término por separado, con la propiedad D2. Empezamos con el primero, A unión B, por C. Tomamos X igual a A, Y igual a B, y Z igual a C. Es decir, sustituimos X por A, Y por B, y Z por C.", "L": [["txt", "(D2) con  X = A,  Y = B,  Z = C :"], ["sub", "(<mark>A</mark> ∪ <mark>B</mark>) × <mark>C</mark> = (<mark>A</mark> × <mark>C</mark>) ∪ (<mark>B</mark> × <mark>C</mark>)<span class='tag'>(★★)</span>"]]},
+{"say": "Ahora el segundo término, A unión B, por D. Aplicamos la propiedad D2 con X igual a A, Y igual a B, y Z igual a D. Es decir, sustituimos X por A, Y por B, y Z por D.", "L": [["txt", "(D2) con  X = A,  Y = B,  Z = D :"], ["sub", "(<mark>A</mark> ∪ <mark>B</mark>) × <mark>D</mark> = (<mark>A</mark> × <mark>D</mark>) ∪ (<mark>B</mark> × <mark>D</mark>)<span class='tag'>(★★★)</span>"]]},
+{"title": "3) Sustituimos", "clear": 1, "say": "Paso tres. Sustituimos. Volvemos a la igualdad estrella. En ella, reemplazamos el primer término, A unión B, por C, por lo que obtuvimos en la igualdad doble estrella. Y reemplazamos el segundo término, A unión B, por D, por lo que obtuvimos en la igualdad triple estrella.", "L": [["txt", "En (★) sustituimos (★★) y (★★★):"], ["sub", "(A ∪ B) × (C ∪ D) = ( <mark>(A × C) ∪ (B × C)</mark> ) ∪ ( <mark>(A × D) ∪ (B × D)</mark> )"]]},
+{"say": "Por último, como la unión es asociativa, podemos quitar los paréntesis. Obtenemos que A unión B, por, C unión D, es la unión de cuatro productos cartesianos: A por C, B por C, A por D, y B por D.", "L": [["txt", "La unión es asociativa, luego quitamos los paréntesis:"], ["res", "(A ∪ B) × (C ∪ D) = (A × C) ∪ (B × C) ∪ (A × D) ∪ (B × D)"]]},
+{"title": "Conclusión", "clear": 1, "say": "Conclusión. Hemos desarrollado A unión B, por, C unión D, como la unión de los cuatro productos cartesianos A por C, B por C, A por D, y B por D. Gracias por ver el vídeo.", "L": [["res", "(A ∪ B) × (C ∪ D) = (A × C) ∪ (B × C) ∪ (A × D) ∪ (B × D)"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' más ').replace(/⊙/g,' por ').replace(/∼/g,' complementario de ').replace(/≤/g,' menor o igual que ').replace(/[()]/g,', ').replace(/\b1\b/g,' uno ').replace(/\b0\b/g,' cero ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Repetir'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Continuar'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pausa';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^es/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/pablo|jorge|diego|enrique|miguel|alvaro|álvaro|male|google español$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent='Producto de dos uniones';$('sub').textContent='Ejercicio · Álgebra de conjuntos';
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
