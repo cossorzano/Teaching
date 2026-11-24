@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>فروق ثلاث مجموعات</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-inline-end:2px dashed #3d5a50;padding-inline-end:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-inline-start:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+span[dir='ltr']{white-space:nowrap}
+svg{direction:ltr}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>تذكّر</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ ابدأ</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>السرعة <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">وضع التسجيل (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ar-SA",
+"meta":{"nivel": 2, "titulo": "فروق ثلاث مجموعات", "enunciado": "أ) أثبت أن إحدى الصيغتين التاليتين صحيحة دائمًا وأن الأخرى خاطئة أحيانًا؛ ب) أوجد شرطًا إضافيًا لازمًا وكافيًا لتكون الصيغة الخاطئة صحيحة دائمًا.", "tesis": "<span dir='ltr'>(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C</span><br><span dir='ltr'>(ii)  (A ∖ B) ∖ C = A ∖ (B ∪ C)</span>", "datos": ["تعريف الفرق:  <span dir='ltr'>x ∈ X ∖ Y  ⟺  x ∈ X ∧ x ∉ Y</span>"]},
+"steps":[
+{"title": "فروق ثلاث مجموعات", "sub": "تمرين · جبر المجموعات", "clear": 1, "say": "مرحبًا. في هذا الفيديو سندرس صيغتين لفروق ثلاث مجموعات: إحداهما صحيحة دائمًا، والأخرى خاطئة أحيانًا. ثم سنبحث عن شرط يجعل الصيغة الخاطئة صحيحة دائمًا. سنتقدم ببطء شديد، فنكتب كل معادلة ونبرر كل خطوة.", "L": [["txt", "صيغتان لفروق ثلاث مجموعات"]]},
+
+{"clear": 1, "say": "ما نريد فعله. في الفقرة أ، لدينا صيغتان. الصيغة الأولى: A ناقص، B ناقص C، يساوي، A ناقص B، اتحاد C. والصيغة الثانية: A ناقص B، ناقص C، يساوي A ناقص، اتحاد B و C. علينا أن نثبت أن إحداهما صحيحة دائمًا، وأن الأخرى خاطئة أحيانًا. وفي الفقرة ب، علينا أن نجد شرطًا إضافيًا لازمًا وكافيًا يجعل الصيغة الخاطئة صحيحة دائمًا. نتذكر على الجانب التعريفات بالعناصر التي سنستخدمها.", "L": [["goal", "أ)  إحدى الصيغتين صحيحة دائمًا والأخرى خاطئة أحيانًا:"], ["txt", "<span dir='ltr'>(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C</span>"], ["txt", "<span dir='ltr'>(ii)  (A ∖ B) ∖ C = A ∖ (B ∪ C)</span>"], ["goal", "ب)  شرط لازم وكافٍ لتكون الصيغة الخاطئة صحيحة دائمًا"]], "pin": ["تعريف الفرق: <span dir='ltr'>x ∈ X ∖ Y  ⟺  x ∈ X ∧ x ∉ Y</span>", "تعريف الاتحاد: <span dir='ltr'>x ∈ X ∪ Y  ⟺  x ∈ X ∨ x ∈ Y</span>", "تعريف التقاطع: <span dir='ltr'>x ∈ X ∩ Y  ⟺  x ∈ X ∧ x ∈ Y</span>"]},
+
+{"title": "أ) تحليل الصيغة الأولى", "clear": 1, "say": "الفقرة أ، تحليل الصيغة الأولى. سنرى أنها ليست صحيحة عمومًا. ولإثبات أن صيغة ليست صحيحة دائمًا، يكفي أن نجد مثالًا مضادًا: مجموعات محددة لا تتحقق من أجلها.", "L": [["goal", "<span dir='ltr'>(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C</span>   ليست صحيحة عمومًا"], ["txt", "يكفي مثال مضاد واحد"]]},
+
+{"say": "نختار A مساوية للمجموعة الخالية، و B مساوية للمجموعة الخالية، و C مساوية للمجموعة التي عنصرها الوحيد هو الصفر.", "L": [["hyp", "<span dir='ltr'>A = ∅</span>"], ["hyp", "<span dir='ltr'>B = ∅</span>"], ["hyp", "<span dir='ltr'>C = { 0 }</span>"]]},
+
+{"clear": 1, "say": "نحسب الطرف الأيسر. أولًا، B ناقص C هي المجموعة الخالية ناقص المجموعة التي تحوي الصفر. وبما أن المجموعة الخالية ليس فيها عناصر، فلا يمكن أن تحوي عناصر ليست في C. إذن B ناقص C خالية.", "L": [["txt", "الطرف الأيسر.  أولًا:"], ["sub", "<span dir='ltr'>B ∖ C = ∅ ∖ { 0 } = ∅</span>"]]},
+
+{"say": "والآن، A ناقص، B ناقص C، هي الخالية ناقص الخالية، وهي خالية مرة أخرى. إذن، الطرف الأيسر هو المجموعة الخالية.", "L": [["sub", "<span dir='ltr'>A ∖ (B ∖ C) = ∅ ∖ ∅ = ∅</span>"]]},
+
+{"say": "نحسب الطرف الأيمن. A ناقص B هي الخالية ناقص الخالية، وهي خالية. واتحاد الخالية مع المجموعة التي تحوي الصفر هو المجموعة التي تحوي الصفر. إذن، الطرف الأيمن هو المجموعة التي تحوي الصفر.", "L": [["txt", "الطرف الأيمن:"], ["sub", "<span dir='ltr'>A ∖ B = ∅ ∖ ∅ = ∅</span>"], ["sub", "<span dir='ltr'>(A ∖ B) ∪ C = ∅ ∪ { 0 } = { 0 }</span>"]]},
+
+{"clear": 1, "say": "نقارن. الطرف الأيسر خالٍ، والطرف الأيمن هو المجموعة التي تحوي الصفر. وهما غير متساويين، لأن الصفر ينتمي إلى الثانية، ولا ينتمي إلى الأولى. إذن الصيغة الأولى لا تتحقق لهذه المجموعات، فهي خاطئة أحيانًا.", "L": [["warn", "<span dir='ltr'>∅ ≠ { 0 }</span>   لأن  <span dir='ltr'>0 ∈ { 0 }  ∧  0 ∉ ∅</span>"], ["res", "الصيغة <span dir='ltr'>(i)</span> خاطئة أحيانًا"]]},
+
+{"title": "أ) تحليل الصيغة الثانية", "clear": 1, "say": "الفقرة أ، تحليل الصيغة الثانية. سنثبت أن A ناقص اتحاد B و C، يساوي، A ناقص B، ناقص C، لأي مجموعات A و B و C. نأخذ عنصرًا كيفيًا x، ونكتب سلسلة من التكافؤات. وبما أن كل خطوة تكافؤ، يمكن قراءتها في الاتجاهين، وهذا يثبت الاحتواءين معًا.", "L": [["hyp", "ليكن <span dir='ltr'>x</span> عنصرًا كيفيًا"], ["goal", "نريد:  <span dir='ltr'>x ∈ A ∖ (B ∪ C)  ⟺  x ∈ (A ∖ B) ∖ C</span>"]]},
+
+{"clear": 1, "say": "نبدأ بالعبارة: x ينتمي إلى A ناقص اتحاد B و C.", "L": [["sub", "<span dir='ltr'>x ∈ A ∖ (B ∪ C)</span>"]]},
+
+{"say": "بحسب تعريف الفرق، حيث المجموعة الأولى هي A، والثانية هي اتحاد B و C، فهذا يكافئ أن x ينتمي إلى A، و x لا ينتمي إلى اتحاد B و C.", "L": [["sub", "⟺  <span dir='ltr'>x ∈ A  ∧  x ∉ B ∪ C</span><span class='tag'>تعريف الفرق</span>"]]},
+
+{"say": "والآن، عدم انتماء x إلى اتحاد B و C يعني أنه ليس صحيحًا أن x ينتمي إلى B، أو أن x ينتمي إلى C. وهذا يحدث عندما لا ينتمي x إلى B، ولا ينتمي x إلى C.", "L": [["sub", "⟺  <span dir='ltr'>x ∈ A  ∧  ( x ∉ B  ∧  x ∉ C )</span><span class='tag'>نفي تعريف الاتحاد</span>"]]},
+
+{"say": "نعيد التجميع بطريقة أخرى، مستخدمين تجميعية الوصل: أولًا، x ينتمي إلى A ولا ينتمي إلى B، كل ذلك، و x لا ينتمي إلى C.", "L": [["sub", "⟺  <span dir='ltr'>( x ∈ A  ∧  x ∉ B )  ∧  x ∉ C</span><span class='tag'>تجميعية الوصل</span>"]]},
+
+{"say": "بحسب تعريف الفرق، حيث المجموعة الأولى هي A، والثانية هي B، فإن انتماء x إلى A وعدم انتمائه إلى B يكافئ انتماء x إلى A ناقص B.", "L": [["sub", "⟺  <span dir='ltr'>x ∈ A ∖ B  ∧  x ∉ C</span><span class='tag'>تعريف الفرق</span>"]]},
+
+{"say": "ومرة أخرى بحسب تعريف الفرق، حيث المجموعة الأولى الآن هي A ناقص B، والثانية هي C، فهذا يكافئ انتماء x إلى A ناقص B، ناقص C.", "L": [["sub", "⟺  <span dir='ltr'>x ∈ (A ∖ B) ∖ C</span><span class='tag'>تعريف الفرق</span>"]]},
+
+{"clear": 1, "say": "بما أن x كان كيفيًا، فالعبارتان الطرفيتان متكافئتان لكل x. إذن المجموعتان متساويتان، والصيغة الثانية صحيحة لأي مجموعات A و B و C.", "L": [["res", "<span dir='ltr'>A ∖ (B ∪ C) = (A ∖ B) ∖ C</span>"], ["res", "الصيغة <span dir='ltr'>(ii)</span> صحيحة دائمًا"]]},
+
+{"title": "ب) شرط صحة الصيغة الأولى", "clear": 1, "say": "الفقرة ب. نريد شرطًا لازمًا وكافيًا لتكون الصيغة الأولى صحيحة دائمًا. أولًا، نبسّط الطرف الأيسر باستخدام المتممات. نتذكر على الجانب أربع خواص سنستخدمها: الفرق كتقاطع مع المتممة، وقانونا دي مورغان، وأن متممة المتممة هي المجموعة نفسها، والتوزيع.", "L": [["goal", "نبحث عن شرط لصحة  <span dir='ltr'>A ∖ (B ∖ C) = (A ∖ B) ∪ C</span>"], ["txt", "أولًا، نبسّط الطرف الأيسر"]], "pin": ["<span dir='ltr'>(Dif) X ∖ Y = X ∩ Yᶜ</span>", "<span dir='ltr'>(De Morgan) (X ∩ Y)ᶜ = Xᶜ ∪ Yᶜ</span>", "<span dir='ltr'>(Invol) (Xᶜ)ᶜ = X</span>", "<span dir='ltr'>(Distrib) X ∩ (Y ∪ Z) = (X ∩ Y) ∪ (X ∩ Z)</span>"]},
+
+{"clear": 1, "say": "نبدأ بـ A ناقص، B ناقص C.", "L": [["sub", "<span dir='ltr'>A ∖ (B ∖ C)</span>"]]},
+
+{"say": "بحسب الخاصية Dif، حيث المجموعة الأولى هي A، والثانية هي B ناقص C، فإن A ناقص، B ناقص C، هو تقاطع A مع متممة B ناقص C.", "L": [["sub", "<span dir='ltr'>=  A ∩ (B ∖ C)ᶜ</span><span class='tag'><span dir='ltr'>(Dif)</span></span>"]]},
+
+{"say": "ومرة أخرى بحسب الخاصية Dif، حيث المجموعة الأولى الآن هي B، والثانية هي C، فإن B ناقص C هو تقاطع B مع متممة C.", "L": [["sub", "<span dir='ltr'>=  A ∩ (B ∩ Cᶜ)ᶜ</span><span class='tag'><span dir='ltr'>(Dif)</span></span>"]]},
+
+{"say": "بحسب قانوني دي مورغان، حيث المجموعة الأولى هي B، والثانية هي متممة C، فإن متممة تقاطع B مع متممة C، هي اتحاد متممة B مع متممة متممة C.", "L": [["sub", "<span dir='ltr'>=  A ∩ ( Bᶜ ∪ (Cᶜ)ᶜ )</span><span class='tag'><span dir='ltr'>(De Morgan)</span></span>"]]},
+
+{"say": "وبما أن متممة متممة C هي C، فبحسب الخاصية Invol، يبقى تقاطع A مع اتحاد متممة B و C.", "L": [["sub", "<span dir='ltr'>=  A ∩ ( Bᶜ ∪ C )</span><span class='tag'><span dir='ltr'>(Invol)</span></span>"]]},
+
+{"say": "بحسب التوزيع، حيث المجموعة الأولى هي A، والثانية متممة B، والثالثة C، فهذا هو اتحاد تقاطع A مع متممة B، مع تقاطع A و C.", "L": [["sub", "<span dir='ltr'>=  (A ∩ Bᶜ) ∪ (A ∩ C)</span><span class='tag'><span dir='ltr'>(Distrib)</span></span>"]]},
+
+{"say": "وبحسب الخاصية Dif، تقاطع A مع متممة B هو A ناقص B.", "L": [["res", "<span dir='ltr'>=  (A ∖ B) ∪ (A ∩ C)</span><span class='tag'><span dir='ltr'>(Dif)</span></span>"]]},
+
+{"clear": 1, "say": "إذن، الصيغة الأولى تكافئ أن يكون اتحاد A ناقص B مع تقاطع A و C، مساويًا لاتحاد A ناقص B مع C. نسجل هذه المساواة على أنها المساواة النجمة. والطرفان لا يختلفان إلا في أن الطرف الأيسر فيه تقاطع A و C، والطرف الأيمن فيه C.", "L": [["txt", "الصيغة <span dir='ltr'>(i)</span> تكافئ:"], ["goal", "<span dir='ltr'>(A ∖ B) ∪ (A ∩ C) = (A ∖ B) ∪ C</span><span class='tag'><span dir='ltr'>(★)</span></span>"]]},
+
+{"title": "ب) الشرط اللازم والكافي", "clear": 1, "say": "نؤكد أن المساواة النجمة تتحقق إذا وفقط إذا كانت C محتواة في A. ونثبت ذلك في الاتجاهين.", "L": [["goal", "<span dir='ltr'>(★)   ⟺   C ⊆ A</span>"], ["txt", "<span dir='ltr'>(⟸)</span>  نفترض <span dir='ltr'>C ⊆ A</span> ونثبت <span dir='ltr'>(★)</span>"], ["txt", "<span dir='ltr'>(⟹)</span>  نفترض <span dir='ltr'>(★)</span> ونثبت <span dir='ltr'>C ⊆ A</span>"]]},
+
+{"clear": 1, "say": "أولًا، الاتجاه من اليمين إلى اليسار. نفترض أن C محتواة في A. عندئذ تقاطع A و C يساوي C. فعلًا، تقاطع A و C محتوى دائمًا في C. وبالعكس، إذا كان x ينتمي إلى C، فبما أن C محتواة في A، فإن x ينتمي إلى A، إذن x ينتمي إلى A وإلى C، أي إلى تقاطع A و C.", "L": [["hyp", "نفترض  <span dir='ltr'>C ⊆ A</span>"], ["txt", "<span dir='ltr'>A ∩ C ⊆ C</span>  دائمًا؛  وإذا كان  <span dir='ltr'>x ∈ C</span>،  فبما أن  <span dir='ltr'>C ⊆ A</span>،  يكون  <span dir='ltr'>x ∈ A</span>؛  إذن  <span dir='ltr'>x ∈ A ∩ C</span>"], ["sub", "<span dir='ltr'>A ∩ C = C</span>"]]},
+
+{"say": "نعوّض عن تقاطع A و C بـ C في الطرف الأيسر من المساواة النجمة. فنحصل على اتحاد A ناقص B مع C في الطرفين. إذن المساواة النجمة متحققة.", "L": [["txt", "بالتعويض بـ  <span dir='ltr'>A ∩ C = C</span>  في <span dir='ltr'>(★)</span>:"], ["res", "<span dir='ltr'>(A ∖ B) ∪ C = (A ∖ B) ∪ C</span>"], ["res", "<span dir='ltr'>C ⊆ A  ⟹  (★)</span>"]]},
+
+{"clear": 1, "say": "ثانيًا، الاتجاه من اليسار إلى اليمين. نفترض أن المساواة النجمة متحققة، وعلينا أن نثبت أن C محتواة في A. ليكن x عنصرًا كيفيًا من C.", "L": [["hyp", "نفترض <span dir='ltr'>(★)</span>"], ["hyp", "ليكن  <span dir='ltr'>x ∈ C</span>"], ["goal", "نريد:  <span dir='ltr'>x ∈ A</span>"]]},
+
+{"say": "بما أن x ينتمي إلى C، فبحسب تعريف الاتحاد، x ينتمي إلى اتحاد A ناقص B مع C. وبحسب المساواة النجمة، x ينتمي أيضًا إلى اتحاد A ناقص B مع تقاطع A و C.", "L": [["txt", "<span dir='ltr'>x ∈ C  ⟹  x ∈ (A ∖ B) ∪ C</span>   حسب تعريف الاتحاد"], ["txt", "حسب <span dir='ltr'>(★)</span>:"], ["sub", "<span dir='ltr'>x ∈ (A ∖ B) ∪ (A ∩ C)</span>"]]},
+
+{"say": "بحسب تعريف الاتحاد، هذا يعني أن x ينتمي إلى A ناقص B، أو أن x ينتمي إلى تقاطع A و C. ندرس الحالتين.", "L": [["txt", "حسب تعريف الاتحاد:"], ["hyp", "الحالة الأولى:  <span dir='ltr'>x ∈ A ∖ B</span>"], ["hyp", "الحالة الثانية:  <span dir='ltr'>x ∈ A ∩ C</span>"]]},
+
+{"say": "في الحالة الأولى، بحسب تعريف الفرق، x ينتمي إلى A، و x لا ينتمي إلى B. وبالخصوص، x ينتمي إلى A. وفي الحالة الثانية، بحسب تعريف التقاطع، x ينتمي إلى A، و x ينتمي إلى C. وبالخصوص، x ينتمي إلى A.", "L": [["sub", "الحالة الأولى:  حسب تعريف الفرق،  <span dir='ltr'>x ∈ A  ∧  x ∉ B   ⟹   x ∈ A</span>"], ["sub", "الحالة الثانية:  حسب تعريف التقاطع،  <span dir='ltr'>x ∈ A  ∧  x ∈ C   ⟹   x ∈ A</span>"]]},
+
+{"clear": 1, "say": "في الحالتين، x ينتمي إلى A. وبما أن x كان عنصرًا كيفيًا من C، نستنتج أن C محتواة في A.", "L": [["res", "<span dir='ltr'>x ∈ A</span>"], ["res", "<span dir='ltr'>(★)  ⟹  C ⊆ A</span>"]]},
+
+{"title": "الخاتمة", "clear": 1, "say": "خاتمة الفقرة ب. الصيغة الأولى صحيحة إذا وفقط إذا كانت C محتواة في A. نتحقق من ذلك بالمثال المضاد من الفقرة أ: كانت C هي المجموعة التي تحوي الصفر، وكانت A خالية، إذن لم تكن C محتواة في A، ففشلت الصيغة.", "L": [["res", "<span dir='ltr'>A ∖ (B ∖ C) = (A ∖ B) ∪ C   ⟺   C ⊆ A</span>"], ["txt", "مثال مضاد:  <span dir='ltr'>C = { 0 } ⊄ ∅ = A   ⟹   (i)</span> خاطئة"]]},
+
+{"title": "الخلاصة", "clear": 1, "say": "الخلاصة. الصيغة الثانية صحيحة دائمًا. والصيغة الأولى خاطئة أحيانًا، وتكون صحيحة بالضبط عندما تكون C محتواة في A. شكرًا على المشاهدة.", "L": [["res", "<span dir='ltr'>(ii)  (A ∖ B) ∖ C = A ∖ (B ∪ C)</span>   دائمًا"], ["res", "<span dir='ltr'>(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C   ⟺   C ⊆ A</span>"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' زائد ').replace(/⊙/g,' ضرب ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ إعادة'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ متابعة'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ إيقاف مؤقت';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ إيقاف مؤقت';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ إيقاف مؤقت';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ar/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/hamed|shakir|naayf|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="فروق ثلاث مجموعات";$('sub').textContent="تمرين · جبر المجموعات";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Differences of three sets</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Remember</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Start</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Speed <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Recording mode (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"en-US",
+"meta":{"nivel": 2, "titulo": "Differences of three sets", "enunciado": "(a) Prove that one of the following two formulas is always correct and the other is sometimes false. (b) Find an additional necessary and sufficient condition for the incorrect formula to always hold.", "tesis": "<span dir='ltr'>(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C</span><br><span dir='ltr'>(ii)  (A ∖ B) ∖ C = A ∖ (B ∪ C)</span>", "datos": ["(Def ∖)  x ∈ X ∖ Y  ⟺  x ∈ X  and  x ∉ Y"]},
+"steps":[
+{"title": "Differences of three sets", "sub": "Exercise · Algebra of sets", "clear": 1, "say": "Hello. In this video we are going to study two formulas with differences of three sets: one of them is always correct, and the other is sometimes false. Then, we will look for a condition for the incorrect one to always hold. We will go very slowly, writing every equation and justifying every step.", "L": [["txt", "Two formulas with differences of three sets"]]},
+
+{"clear": 1, "say": "What we want to do. In part a, we have two formulas. Formula i: A minus, B minus C, equals, A minus B, union C. Formula ii: A minus B, minus C, equals A minus, B union C. We have to prove that one is always correct, and that the other is sometimes false. In part b, we have to find an additional necessary and sufficient condition for the incorrect formula to always hold. On the left we recall the definitions in terms of elements that we are going to use.", "L": [["goal", "(a)  One formula is always correct and the other is sometimes false:"], ["txt", "(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C"], ["txt", "(ii)  (A ∖ B) ∖ C = A ∖ (B ∪ C)"], ["goal", "(b)  Necessary and sufficient condition for the incorrect one to always hold"]], "pin": ["(Def ∖) x ∈ X ∖ Y  ⟺  x ∈ X  and  x ∉ Y", "(Def ∪) x ∈ X ∪ Y  ⟺  x ∈ X  or  x ∈ Y", "(Def ∩) x ∈ X ∩ Y  ⟺  x ∈ X  and  x ∈ Y"]},
+
+{"title": "(a) Analysis of (i)", "clear": 1, "say": "Part a, analysis of formula i. We are going to see that it does not hold in general. To prove that a formula is not always true, it is enough to find a counterexample: some specific sets for which it fails.", "L": [["goal", "(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C   does not hold in general"], ["txt", "One counterexample is enough"]]},
+
+{"say": "We choose A equal to the empty set, B equal to the empty set, and C equal to the set whose only element is zero.", "L": [["hyp", "A = ∅"], ["hyp", "B = ∅"], ["hyp", "C = { 0 }"]]},
+
+{"clear": 1, "say": "We compute the left-hand side. First, B minus C is the empty set minus the set containing zero. Since the empty set has no elements, it cannot have elements that are not in C. So B minus C is empty.", "L": [["txt", "Left-hand side.  First:"], ["sub", "B ∖ C = ∅ ∖ { 0 } = ∅"]]},
+
+{"say": "Now, A minus, B minus C, is the empty set minus the empty set, which is again empty. Therefore, the left-hand side is the empty set.", "L": [["sub", "A ∖ (B ∖ C) = ∅ ∖ ∅ = ∅"]]},
+
+{"say": "We compute the right-hand side. A minus B is the empty set minus the empty set, which is empty. And the empty set union the set containing zero is the set containing zero. Therefore, the right-hand side is the set containing zero.", "L": [["txt", "Right-hand side:"], ["sub", "A ∖ B = ∅ ∖ ∅ = ∅"], ["sub", "(A ∖ B) ∪ C = ∅ ∪ { 0 } = { 0 }"]]},
+
+{"clear": 1, "say": "We compare. The left-hand side is empty, and the right-hand side is the set containing zero. They are not equal, because zero belongs to the second one, and does not belong to the first. So formula i fails for these sets, and it is sometimes false.", "L": [["warn", "∅ ≠ { 0 }   because  0 ∈ { 0 }  and  0 ∉ ∅"], ["res", "(i) is sometimes false"]]},
+
+{"title": "(a) Analysis of (ii)", "clear": 1, "say": "Part a, analysis of formula ii. We are going to prove that A minus, B union C, equals, A minus B, minus C, for any sets A, B and C. We take an arbitrary element x, and we are going to write a chain of equivalences. Since each step is an equivalence, it can be read in both directions, and this proves both inclusions at once.", "L": [["hyp", "Let x be an arbitrary element"], ["goal", "We want:  x ∈ A ∖ (B ∪ C)  ⟺  x ∈ (A ∖ B) ∖ C"]]},
+
+{"clear": 1, "say": "We start with the statement x belongs to A minus, B union C.", "L": [["sub", "x ∈ A ∖ (B ∪ C)"]]},
+
+{"say": "By the definition of difference, with X equal to A, and Y equal to B union C, this is equivalent to x belonging to A, and x not belonging to B union C.", "L": [["sub", "⟺  x ∈ A  and  x ∉ B ∪ C<span class='tag'>(Def ∖)</span>"]]},
+
+{"say": "Now, x not belonging to B union C means that it is not true that x belongs to B, or x belongs to C. And this happens when x does not belong to B, and x does not belong to C.", "L": [["sub", "⟺  x ∈ A  and  ( x ∉ B  and  x ∉ C )<span class='tag'>(Def ∪), negated</span>"]]},
+
+{"say": "We regroup in a different way, using that the conjunction is associative: first, x belongs to A, and x does not belong to B, all of that, and x does not belong to C.", "L": [["sub", "⟺  ( x ∈ A  and  x ∉ B )  and  x ∉ C<span class='tag'>Associativity of «and»</span>"]]},
+
+{"say": "By the definition of difference, with X equal to A, and Y equal to B, x belonging to A and not belonging to B is equivalent to x belonging to A minus B.", "L": [["sub", "⟺  x ∈ A ∖ B  and  x ∉ C<span class='tag'>(Def ∖)</span>"]]},
+
+{"say": "And again by the definition of difference, now with X equal to A minus B, and Y equal to C, this is equivalent to x belonging to A minus B, minus C.", "L": [["sub", "⟺  x ∈ (A ∖ B) ∖ C<span class='tag'>(Def ∖)</span>"]]},
+
+{"clear": 1, "say": "Since x was arbitrary, the two extreme statements are equivalent for every x. Therefore, the two sets are equal, and formula ii holds for any sets A, B and C.", "L": [["res", "A ∖ (B ∪ C) = (A ∖ B) ∖ C"], ["res", "(ii) is always correct"]]},
+
+{"title": "(b) Condition for (i) to hold", "clear": 1, "say": "Part b. We want a necessary and sufficient condition for formula i to always hold. First, we simplify the left-hand side, using complements. On the left we recall four properties we are going to use: the difference as an intersection with the complement, De Morgan's laws, that the complement of the complement is the set itself, and distributivity.", "L": [["goal", "We seek a condition for  A ∖ (B ∖ C) = (A ∖ B) ∪ C  to hold"], ["txt", "First, we simplify the left-hand side"]], "pin": ["(Dif) X ∖ Y = X ∩ Yᶜ", "(De Morgan) (X ∩ Y)ᶜ = Xᶜ ∪ Yᶜ", "(Invol) (Xᶜ)ᶜ = X", "(Distrib) X ∩ (Y ∪ Z) = (X ∩ Y) ∪ (X ∩ Z)"]},
+
+{"clear": 1, "say": "We start with A minus, B minus C.", "L": [["sub", "A ∖ (B ∖ C)"]]},
+
+{"say": "By property Dif, with X equal to A, and Y equal to B minus C, A minus, B minus C, is A intersection, the complement of B minus C.", "L": [["sub", "=  A ∩ (B ∖ C)ᶜ<span class='tag'>(Dif)</span>"]]},
+
+{"say": "Again by property Dif, now with X equal to B, and Y equal to C, B minus C is B intersection, the complement of C.", "L": [["sub", "=  A ∩ (B ∩ Cᶜ)ᶜ<span class='tag'>(Dif)</span>"]]},
+
+{"say": "By De Morgan's laws, with X equal to B, and Y equal to the complement of C, the complement of B intersection the complement of C, is the complement of B, union the complement of the complement of C.", "L": [["sub", "=  A ∩ ( Bᶜ ∪ (Cᶜ)ᶜ )<span class='tag'>(De Morgan)</span>"]]},
+
+{"say": "And since the complement of the complement of C is C, by property Invol, we get A intersection, the complement of B union C.", "L": [["sub", "=  A ∩ ( Bᶜ ∪ C )<span class='tag'>(Invol)</span>"]]},
+
+{"say": "By distributivity, with X equal to A, Y equal to the complement of B, and Z equal to C, this is A intersection the complement of B, union A intersection C.", "L": [["sub", "=  (A ∩ Bᶜ) ∪ (A ∩ C)<span class='tag'>(Distrib)</span>"]]},
+
+{"say": "And by property Dif, A intersection the complement of B is A minus B.", "L": [["res", "=  (A ∖ B) ∪ (A ∩ C)<span class='tag'>(Dif)</span>"]]},
+
+{"clear": 1, "say": "Therefore, equality i is equivalent to A minus B, union A intersection C, being equal to A minus B, union C. We record this equality as star. The two sides differ only in that A intersection C appears on the left, and C appears on the right.", "L": [["txt", "(i)  is equivalent to:"], ["goal", "(A ∖ B) ∪ (A ∩ C) = (A ∖ B) ∪ C<span class='tag'>(★)</span>"]]},
+
+{"title": "(b) (★) ⟺ C ⊆ A", "clear": 1, "say": "We claim that the star equality holds if and only if C is included in A. We prove it in both directions.", "L": [["goal", "(★)   ⟺   C ⊆ A"], ["txt", "(⟸)  We assume C ⊆ A and prove (★)"], ["txt", "(⟹)  We assume (★) and prove C ⊆ A"]]},
+
+{"clear": 1, "say": "First, the right-to-left direction. We assume that C is included in A. Then A intersection C equals C. Indeed, A intersection C is always included in C. And conversely, if x belongs to C, since C is included in A, x belongs to A, so x belongs to A and to C, that is, to A intersection C.", "L": [["hyp", "We assume  C ⊆ A"], ["txt", "A ∩ C ⊆ C  always.  And if  x ∈ C,  since  C ⊆ A,  x ∈ A:  so  x ∈ A ∩ C"], ["sub", "A ∩ C = C"]]},
+
+{"say": "We substitute A intersection C by C on the left-hand side of the star equality. We get A minus B, union C, on both sides. Therefore, the star equality holds.", "L": [["txt", "Substituting  A ∩ C = C  in (★):"], ["res", "(A ∖ B) ∪ C = (A ∖ B) ∪ C"], ["res", "C ⊆ A  ⟹  (★)"]]},
+
+{"clear": 1, "say": "Second, the left-to-right direction. We assume that the star equality holds, and we have to prove that C is included in A. Let x be an arbitrary element of C.", "L": [["hyp", "We assume (★)"], ["hyp", "Let  x ∈ C"], ["goal", "We want:  x ∈ A"]]},
+
+{"say": "Since x belongs to C, by the definition of union, x belongs to A minus B, union C. And by the star equality, x also belongs to A minus B, union A intersection C.", "L": [["txt", "x ∈ C  ⟹  x ∈ (A ∖ B) ∪ C   by (Def ∪)"], ["txt", "By (★):"], ["sub", "x ∈ (A ∖ B) ∪ (A ∩ C)"]]},
+
+{"say": "By the definition of union, this means that x belongs to A minus B, or x belongs to A intersection C. We study the two cases.", "L": [["txt", "By (Def ∪):"], ["hyp", "Case 1:  x ∈ A ∖ B"], ["hyp", "Case 2:  x ∈ A ∩ C"]]},
+
+{"say": "In case one, by the definition of difference, x belongs to A, and x does not belong to B. In particular, x belongs to A. In case two, by the definition of intersection, x belongs to A, and x belongs to C. In particular, x belongs to A.", "L": [["sub", "Case 1:  by (Def ∖),  x ∈ A  and  x ∉ B   ⟹   x ∈ A"], ["sub", "Case 2:  by (Def ∩),  x ∈ A  and  x ∈ C   ⟹   x ∈ A"]]},
+
+{"clear": 1, "say": "In both cases, x belongs to A. Since x was an arbitrary element of C, we conclude that C is included in A.", "L": [["res", "x ∈ A"], ["res", "(★)  ⟹  C ⊆ A"]]},
+
+{"title": "Conclusion", "clear": 1, "say": "Conclusion of part b. Formula i holds if and only if C is included in A. We check it with the counterexample from part a: C was the set containing zero, and A was the empty set, so C was not included in A, and the formula failed.", "L": [["res", "A ∖ (B ∖ C) = (A ∖ B) ∪ C   ⟺   C ⊆ A"], ["txt", "Counterexample:  C = { 0 } ⊄ ∅ = A   ⟹   (i) fails"]]},
+
+{"title": "Summary", "clear": 1, "say": "To sum up. Formula ii is always correct. Formula i is sometimes false, and it holds exactly when C is included in A. Thanks for watching.", "L": [["res", "(ii)  (A ∖ B) ∖ C = A ∖ (B ∪ C)   always"], ["res", "(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C   ⟺   C ⊆ A"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' plus ').replace(/⊙/g,' times ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Replay'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Resume'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pause';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/andrew|guy|brian|christopher|eric|david|mark|male|google us english$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Differences of three sets";$('sub').textContent="Exercise · Algebra of sets";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

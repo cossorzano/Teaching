@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Selisih tiga himpunan</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Ingat</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Mulai</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Kecepatan <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Mode rekam (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"id-ID",
+"meta":{"nivel": 2, "titulo": "Selisih tiga himpunan", "enunciado": "(a) Buktikan bahwa salah satu dari dua rumus berikut selalu benar dan yang lain kadang-kadang salah. (b) Tentukan syarat perlu dan cukup tambahan agar rumus yang salah selalu berlaku.", "tesis": "<span dir='ltr'>(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C</span><br><span dir='ltr'>(ii)  (A ∖ B) ∖ C = A ∖ (B ∪ C)</span>", "datos": ["(Def ∖)  x ∈ X ∖ Y  ⟺  x ∈ X  dan  x ∉ Y"]},
+"steps":[
+{"title": "Selisih tiga himpunan", "sub": "Latihan · Aljabar himpunan", "clear": 1, "say": "Halo. Dalam video ini kita akan mempelajari dua rumus dengan selisih tiga himpunan: salah satunya selalu benar, dan yang lain kadang-kadang salah. Lalu, kita akan mencari syarat agar rumus yang salah selalu berlaku. Kita akan berjalan sangat perlahan, menuliskan setiap persamaan dan memberikan alasan untuk setiap langkah.", "L": [["txt", "Dua rumus dengan selisih tiga himpunan"]]},
+
+{"clear": 1, "say": "Yang ingin kita lakukan. Pada bagian a, ada dua rumus. Rumus i: A kurang, B kurang C, sama dengan, A kurang B, gabung C. Rumus ii: A kurang B, kurang C, sama dengan A kurang, B gabung C. Kita harus membuktikan bahwa yang satu selalu benar, dan yang lain kadang-kadang salah. Pada bagian b, kita harus menemukan syarat perlu dan cukup tambahan agar rumus yang salah selalu berlaku. Di sebelah kiri kita ingat definisi dengan unsur yang akan kita pakai.", "L": [["goal", "(a)  Satu rumus selalu benar dan yang lain kadang-kadang salah:"], ["txt", "(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C"], ["txt", "(ii)  (A ∖ B) ∖ C = A ∖ (B ∪ C)"], ["goal", "(b)  Syarat perlu dan cukup agar rumus yang salah selalu berlaku"]], "pin": ["(Def ∖) x ∈ X ∖ Y  ⟺  x ∈ X  dan  x ∉ Y", "(Def ∪) x ∈ X ∪ Y  ⟺  x ∈ X  atau  x ∈ Y", "(Def ∩) x ∈ X ∩ Y  ⟺  x ∈ X  dan  x ∈ Y"]},
+
+{"title": "(a) Analisis (i)", "clear": 1, "say": "Bagian a, analisis rumus i. Kita akan melihat bahwa rumus ini tidak berlaku secara umum. Untuk membuktikan bahwa suatu rumus tidak selalu benar, cukup menemukan satu contoh penyangkal: himpunan-himpunan tertentu yang membuat rumus itu salah.", "L": [["goal", "(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C   tidak berlaku secara umum"], ["txt", "Cukup satu contoh penyangkal"]]},
+
+{"say": "Kita pilih A sama dengan himpunan kosong, B sama dengan himpunan kosong, dan C sama dengan himpunan yang satu-satunya unsurnya adalah nol.", "L": [["hyp", "A = ∅"], ["hyp", "B = ∅"], ["hyp", "C = { 0 }"]]},
+
+{"clear": 1, "say": "Kita hitung ruas kiri. Pertama, B kurang C adalah himpunan kosong kurang himpunan yang berisi nol. Karena himpunan kosong tidak mempunyai unsur, ia tidak mungkin mempunyai unsur yang tidak ada di C. Jadi B kurang C adalah himpunan kosong.", "L": [["txt", "Ruas kiri.  Pertama:"], ["sub", "B ∖ C = ∅ ∖ { 0 } = ∅"]]},
+
+{"say": "Sekarang, A kurang, B kurang C, adalah himpunan kosong kurang himpunan kosong, yang kembali kosong. Jadi, ruas kiri adalah himpunan kosong.", "L": [["sub", "A ∖ (B ∖ C) = ∅ ∖ ∅ = ∅"]]},
+
+{"say": "Kita hitung ruas kanan. A kurang B adalah himpunan kosong kurang himpunan kosong, yaitu kosong. Dan himpunan kosong gabung himpunan yang berisi nol adalah himpunan yang berisi nol. Jadi, ruas kanan adalah himpunan yang berisi nol.", "L": [["txt", "Ruas kanan:"], ["sub", "A ∖ B = ∅ ∖ ∅ = ∅"], ["sub", "(A ∖ B) ∪ C = ∅ ∪ { 0 } = { 0 }"]]},
+
+{"clear": 1, "say": "Kita bandingkan. Ruas kiri kosong, dan ruas kanan adalah himpunan yang berisi nol. Keduanya tidak sama, karena nol anggota himpunan kedua, dan bukan anggota himpunan pertama. Jadi rumus i tidak berlaku untuk himpunan-himpunan ini, dan kadang-kadang salah.", "L": [["warn", "∅ ≠ { 0 }   karena  0 ∈ { 0 }  dan  0 ∉ ∅"], ["res", "(i) kadang-kadang salah"]]},
+
+{"title": "(a) Analisis (ii)", "clear": 1, "say": "Bagian a, analisis rumus ii. Kita akan membuktikan bahwa A kurang, B gabung C, sama dengan, A kurang B, kurang C, untuk sebarang himpunan A, B, dan C. Kita ambil sebarang unsur x, dan kita tulis sebuah rantai kesetaraan. Karena setiap langkah adalah kesetaraan, rantai ini dapat dibaca dua arah, dan ini membuktikan kedua inklusi sekaligus.", "L": [["hyp", "Misalkan x sebarang unsur"], ["goal", "Ingin ditunjukkan:  x ∈ A ∖ (B ∪ C)  ⟺  x ∈ (A ∖ B) ∖ C"]]},
+
+{"clear": 1, "say": "Kita mulai dari pernyataan x anggota A kurang, B gabung C.", "L": [["sub", "x ∈ A ∖ (B ∪ C)"]]},
+
+{"say": "Menurut definisi selisih, dengan X sama dengan A, dan Y sama dengan B gabung C, ini setara dengan x anggota A, dan x bukan anggota B gabung C.", "L": [["sub", "⟺  x ∈ A  dan  x ∉ B ∪ C<span class='tag'>(Def ∖)</span>"]]},
+
+{"say": "Sekarang, x bukan anggota B gabung C berarti tidak benar bahwa x anggota B, atau x anggota C. Dan ini terjadi jika x bukan anggota B, dan x bukan anggota C.", "L": [["sub", "⟺  x ∈ A  dan  ( x ∉ B  dan  x ∉ C )<span class='tag'>(Def ∪), dinegasikan</span>"]]},
+
+{"say": "Kita kelompokkan dengan cara lain, memakai sifat asosiatif konjungsi: pertama, x anggota A dan x bukan anggota B, semuanya itu, dan x bukan anggota C.", "L": [["sub", "⟺  ( x ∈ A  dan  x ∉ B )  dan  x ∉ C<span class='tag'>Asosiativitas «dan»</span>"]]},
+
+{"say": "Menurut definisi selisih, dengan X sama dengan A, dan Y sama dengan B, x anggota A dan bukan anggota B setara dengan x anggota A kurang B.", "L": [["sub", "⟺  x ∈ A ∖ B  dan  x ∉ C<span class='tag'>(Def ∖)</span>"]]},
+
+{"say": "Dan sekali lagi menurut definisi selisih, sekarang dengan X sama dengan A kurang B, dan Y sama dengan C, ini setara dengan x anggota A kurang B, kurang C.", "L": [["sub", "⟺  x ∈ (A ∖ B) ∖ C<span class='tag'>(Def ∖)</span>"]]},
+
+{"clear": 1, "say": "Karena x sebarang, kedua pernyataan ujung setara untuk setiap x. Jadi, kedua himpunan sama, dan rumus ii berlaku untuk sebarang himpunan A, B, dan C.", "L": [["res", "A ∖ (B ∪ C) = (A ∖ B) ∖ C"], ["res", "(ii) selalu benar"]]},
+
+{"title": "(b) Syarat agar (i) berlaku", "clear": 1, "say": "Bagian b. Kita ingin syarat perlu dan cukup agar rumus i selalu berlaku. Pertama, kita sederhanakan ruas kiri dengan memakai komplemen. Di sebelah kiri kita ingat empat sifat yang akan kita pakai: selisih sebagai irisan dengan komplemen, hukum De Morgan, bahwa komplemen dari komplemen adalah himpunan itu sendiri, dan sifat distributif.", "L": [["goal", "Kita cari syarat agar  A ∖ (B ∖ C) = (A ∖ B) ∪ C  berlaku"], ["txt", "Pertama, kita sederhanakan ruas kiri"]], "pin": ["(Dif) X ∖ Y = X ∩ Yᶜ", "(De Morgan) (X ∩ Y)ᶜ = Xᶜ ∪ Yᶜ", "(Invol) (Xᶜ)ᶜ = X", "(Distrib) X ∩ (Y ∪ Z) = (X ∩ Y) ∪ (X ∩ Z)"]},
+
+{"clear": 1, "say": "Kita mulai dari A kurang, B kurang C.", "L": [["sub", "A ∖ (B ∖ C)"]]},
+
+{"say": "Dengan sifat Dif, dengan X sama dengan A, dan Y sama dengan B kurang C, A kurang, B kurang C, adalah A irisan, komplemen dari B kurang C.", "L": [["sub", "=  A ∩ (B ∖ C)ᶜ<span class='tag'>(Dif)</span>"]]},
+
+{"say": "Sekali lagi dengan sifat Dif, sekarang dengan X sama dengan B, dan Y sama dengan C, B kurang C adalah B irisan, komplemen C.", "L": [["sub", "=  A ∩ (B ∩ Cᶜ)ᶜ<span class='tag'>(Dif)</span>"]]},
+
+{"say": "Dengan hukum De Morgan, dengan X sama dengan B, dan Y sama dengan komplemen C, komplemen dari B irisan komplemen C, adalah komplemen B, gabung komplemen dari komplemen C.", "L": [["sub", "=  A ∩ ( Bᶜ ∪ (Cᶜ)ᶜ )<span class='tag'>(De Morgan)</span>"]]},
+
+{"say": "Dan karena komplemen dari komplemen C adalah C, dengan sifat Invol, tersisa A irisan, komplemen B gabung C.", "L": [["sub", "=  A ∩ ( Bᶜ ∪ C )<span class='tag'>(Invol)</span>"]]},
+
+{"say": "Dengan sifat distributif, dengan X sama dengan A, Y sama dengan komplemen B, dan Z sama dengan C, ini adalah A irisan komplemen B, gabung A irisan C.", "L": [["sub", "=  (A ∩ Bᶜ) ∪ (A ∩ C)<span class='tag'>(Distrib)</span>"]]},
+
+{"say": "Dan dengan sifat Dif, A irisan komplemen B adalah A kurang B.", "L": [["res", "=  (A ∖ B) ∪ (A ∩ C)<span class='tag'>(Dif)</span>"]]},
+
+{"clear": 1, "say": "Jadi, kesamaan i setara dengan A kurang B, gabung A irisan C, sama dengan A kurang B, gabung C. Kita catat kesamaan ini sebagai bintang. Kedua ruas hanya berbeda karena di kiri muncul A irisan C, dan di kanan muncul C.", "L": [["txt", "(i)  setara dengan:"], ["goal", "(A ∖ B) ∪ (A ∩ C) = (A ∖ B) ∪ C<span class='tag'>(★)</span>"]]},
+
+{"title": "(b) (★) ⟺ C ⊆ A", "clear": 1, "say": "Kita nyatakan bahwa kesamaan bintang berlaku jika dan hanya jika C termuat dalam A. Kita buktikan dalam dua arah.", "L": [["goal", "(★)   ⟺   C ⊆ A"], ["txt", "(⟸)  Kita andaikan C ⊆ A dan buktikan (★)"], ["txt", "(⟹)  Kita andaikan (★) dan buktikan C ⊆ A"]]},
+
+{"clear": 1, "say": "Pertama, arah dari kanan ke kiri. Kita andaikan C termuat dalam A. Maka A irisan C sama dengan C. Memang, A irisan C selalu termuat dalam C. Dan sebaliknya, jika x anggota C, karena C termuat dalam A, x anggota A, jadi x anggota A dan C, yaitu anggota A irisan C.", "L": [["hyp", "Kita andaikan  C ⊆ A"], ["txt", "A ∩ C ⊆ C  selalu.  Dan jika  x ∈ C,  karena  C ⊆ A,  x ∈ A:  jadi  x ∈ A ∩ C"], ["sub", "A ∩ C = C"]]},
+
+{"say": "Kita ganti A irisan C dengan C di ruas kiri kesamaan bintang. Kita peroleh A kurang B, gabung C, di kedua ruas. Jadi, kesamaan bintang berlaku.", "L": [["txt", "Dengan mensubstitusi  A ∩ C = C  ke (★):"], ["res", "(A ∖ B) ∪ C = (A ∖ B) ∪ C"], ["res", "C ⊆ A  ⟹  (★)"]]},
+
+{"clear": 1, "say": "Kedua, arah dari kiri ke kanan. Kita andaikan kesamaan bintang berlaku, dan kita harus membuktikan bahwa C termuat dalam A. Misalkan x sebarang unsur dari C.", "L": [["hyp", "Kita andaikan (★)"], ["hyp", "Misalkan  x ∈ C"], ["goal", "Ingin ditunjukkan:  x ∈ A"]]},
+
+{"say": "Karena x anggota C, menurut definisi gabungan, x anggota A kurang B, gabung C. Dan menurut kesamaan bintang, x juga anggota A kurang B, gabung A irisan C.", "L": [["txt", "x ∈ C  ⟹  x ∈ (A ∖ B) ∪ C   dengan (Def ∪)"], ["txt", "Dengan (★):"], ["sub", "x ∈ (A ∖ B) ∪ (A ∩ C)"]]},
+
+{"say": "Menurut definisi gabungan, ini berarti x anggota A kurang B, atau x anggota A irisan C. Kita pelajari kedua kasus.", "L": [["txt", "Dengan (Def ∪):"], ["hyp", "Kasus 1:  x ∈ A ∖ B"], ["hyp", "Kasus 2:  x ∈ A ∩ C"]]},
+
+{"say": "Pada kasus satu, menurut definisi selisih, x anggota A, dan x bukan anggota B. Khususnya, x anggota A. Pada kasus dua, menurut definisi irisan, x anggota A, dan x anggota C. Khususnya, x anggota A.", "L": [["sub", "Kasus 1:  dengan (Def ∖),  x ∈ A  dan  x ∉ B   ⟹   x ∈ A"], ["sub", "Kasus 2:  dengan (Def ∩),  x ∈ A  dan  x ∈ C   ⟹   x ∈ A"]]},
+
+{"clear": 1, "say": "Pada kedua kasus, x anggota A. Karena x adalah sebarang unsur C, kita simpulkan bahwa C termuat dalam A.", "L": [["res", "x ∈ A"], ["res", "(★)  ⟹  C ⊆ A"]]},
+
+{"title": "Kesimpulan", "clear": 1, "say": "Kesimpulan bagian b. Rumus i berlaku jika dan hanya jika C termuat dalam A. Kita periksa dengan contoh penyangkal dari bagian a: C adalah himpunan yang berisi nol, dan A adalah himpunan kosong, jadi C tidak termuat dalam A, dan rumusnya gagal.", "L": [["res", "A ∖ (B ∖ C) = (A ∖ B) ∪ C   ⟺   C ⊆ A"], ["txt", "Contoh penyangkal:  C = { 0 } ⊄ ∅ = A   ⟹   (i) gagal"]]},
+
+{"title": "Ringkasan", "clear": 1, "say": "Ringkasnya. Rumus ii selalu benar. Rumus i kadang-kadang salah, dan berlaku tepat ketika C termuat dalam A. Terima kasih sudah menonton.", "L": [["res", "(ii)  (A ∖ B) ∖ C = A ∖ (B ∪ C)   selalu"], ["res", "(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C   ⟺   C ⊆ A"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' tambah ').replace(/⊙/g,' kali ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Ulangi'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Lanjutkan'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Jeda';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Jeda';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Jeda';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^id/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/ardi|andika|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Selisih tiga himpunan";$('sub').textContent="Latihan · Aljabar himpunan";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

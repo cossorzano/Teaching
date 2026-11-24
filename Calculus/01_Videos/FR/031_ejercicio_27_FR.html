@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Différences de trois ensembles</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>À retenir</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Commencer</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Vitesse <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Mode enregistrement (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"fr-FR",
+"meta":{"nivel": 2, "titulo": "Différences de trois ensembles", "enunciado": "(a) Démontrer que l'une des deux formules suivantes est toujours correcte et que l'autre est parfois fausse. (b) Établir une condition nécessaire et suffisante supplémentaire pour que la formule incorrecte soit toujours valide.", "tesis": "<span dir='ltr'>(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C</span><br><span dir='ltr'>(ii)  (A ∖ B) ∖ C = A ∖ (B ∪ C)</span>", "datos": ["(Déf ∖)  x ∈ X ∖ Y  ⟺  x ∈ X  et  x ∉ Y"]},
+"steps":[
+{"title": "Différences de trois ensembles", "sub": "Exercice · Algèbre des ensembles", "clear": 1, "say": "Bonjour. Dans cette vidéo, nous allons étudier deux formules avec des différences de trois ensembles : l'une est toujours correcte, et l'autre est parfois fausse. Ensuite, nous chercherons une condition pour que la formule incorrecte soit toujours valide. Nous irons très lentement, en écrivant chaque équation et en justifiant chaque étape.", "L": [["txt", "Deux formules avec des différences de trois ensembles"]]},
+
+{"clear": 1, "say": "Ce que nous voulons faire. Dans la partie a, nous avons deux formules. La formule i : A moins, B moins C, est égal à, A moins B, union C. La formule ii : A moins B, moins C, est égal à A moins, B union C. Il faut démontrer que l'une est toujours correcte, et que l'autre est parfois fausse. Dans la partie b, il faut trouver une condition nécessaire et suffisante supplémentaire pour que la formule incorrecte soit toujours valide. Nous rappelons à gauche les définitions avec les éléments que nous allons utiliser.", "L": [["goal", "(a)  Une formule est toujours correcte et l'autre est parfois fausse :"], ["txt", "(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C"], ["txt", "(ii)  (A ∖ B) ∖ C = A ∖ (B ∪ C)"], ["goal", "(b)  Condition nécessaire et suffisante pour que la formule incorrecte soit toujours valide"]], "pin": ["(Déf ∖) x ∈ X ∖ Y  ⟺  x ∈ X  et  x ∉ Y", "(Déf ∪) x ∈ X ∪ Y  ⟺  x ∈ X  ou  x ∈ Y", "(Déf ∩) x ∈ X ∩ Y  ⟺  x ∈ X  et  x ∈ Y"]},
+
+{"title": "(a) Analyse de (i)", "clear": 1, "say": "Partie a, analyse de la formule i. Nous allons voir qu'elle n'est pas valide en général. Pour démontrer qu'une formule n'est pas toujours vraie, il suffit de trouver un contre-exemple : des ensembles particuliers pour lesquels elle est fausse.", "L": [["goal", "(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C   n'est pas valide en général"], ["txt", "Un contre-exemple suffit"]]},
+
+{"say": "Nous choisissons A égal à l'ensemble vide, B égal à l'ensemble vide, et C égal à l'ensemble dont le seul élément est zéro.", "L": [["hyp", "A = ∅"], ["hyp", "B = ∅"], ["hyp", "C = { 0 }"]]},
+
+{"clear": 1, "say": "Calculons le membre de gauche. D'abord, B moins C est l'ensemble vide moins l'ensemble contenant zéro. Comme l'ensemble vide n'a pas d'éléments, il ne peut pas avoir d'éléments qui ne soient pas dans C. Donc B moins C est vide.", "L": [["txt", "Membre de gauche.  D'abord :"], ["sub", "B ∖ C = ∅ ∖ { 0 } = ∅"]]},
+
+{"say": "Maintenant, A moins, B moins C, est le vide moins le vide, qui est encore le vide. Par conséquent, le membre de gauche est l'ensemble vide.", "L": [["sub", "A ∖ (B ∖ C) = ∅ ∖ ∅ = ∅"]]},
+
+{"say": "Calculons le membre de droite. A moins B est le vide moins le vide, qui est le vide. Et le vide union l'ensemble contenant zéro est l'ensemble contenant zéro. Par conséquent, le membre de droite est l'ensemble contenant zéro.", "L": [["txt", "Membre de droite :"], ["sub", "A ∖ B = ∅ ∖ ∅ = ∅"], ["sub", "(A ∖ B) ∪ C = ∅ ∪ { 0 } = { 0 }"]]},
+
+{"clear": 1, "say": "Comparons. Le membre de gauche est vide, et le membre de droite est l'ensemble contenant zéro. Ils ne sont pas égaux, car zéro appartient au second et n'appartient pas au premier. Donc la formule i n'est pas vérifiée pour ces ensembles, et elle est parfois fausse.", "L": [["warn", "∅ ≠ { 0 }   car  0 ∈ { 0 }  et  0 ∉ ∅"], ["res", "(i) est parfois fausse"]]},
+
+{"title": "(a) Analyse de (ii)", "clear": 1, "say": "Partie a, analyse de la formule ii. Nous allons démontrer que A moins, B union C, est égal à, A moins B, moins C, pour tous ensembles A, B et C. Nous prenons un élément arbitraire x, et nous allons écrire une chaîne d'équivalences. Comme chaque étape est une équivalence, elle se lit dans les deux sens, et cela démontre les deux inclusions à la fois.", "L": [["hyp", "Soit x un élément arbitraire"], ["goal", "On veut :  x ∈ A ∖ (B ∪ C)  ⟺  x ∈ (A ∖ B) ∖ C"]]},
+
+{"clear": 1, "say": "Nous partons de l'affirmation x appartient à A moins, B union C.", "L": [["sub", "x ∈ A ∖ (B ∪ C)"]]},
+
+{"say": "Par la définition de la différence, avec X égal à A, et Y égal à B union C, cela équivaut à ce que x appartienne à A, et que x n'appartienne pas à B union C.", "L": [["sub", "⟺  x ∈ A  et  x ∉ B ∪ C<span class='tag'>(Déf ∖)</span>"]]},
+
+{"say": "Maintenant, que x n'appartienne pas à B union C signifie qu'il est faux que x appartienne à B, ou que x appartienne à C. Et cela se produit quand x n'appartient pas à B, et x n'appartient pas à C.", "L": [["sub", "⟺  x ∈ A  et  ( x ∉ B  et  x ∉ C )<span class='tag'>(Déf ∪), niée</span>"]]},
+
+{"say": "Nous regroupons autrement, en utilisant que la conjonction est associative : d'abord, x appartient à A, et x n'appartient pas à B, le tout, et x n'appartient pas à C.", "L": [["sub", "⟺  ( x ∈ A  et  x ∉ B )  et  x ∉ C<span class='tag'>Associativité de « et »</span>"]]},
+
+{"say": "Par la définition de la différence, avec X égal à A, et Y égal à B, x appartient à A et n'appartient pas à B équivaut à x appartient à A moins B.", "L": [["sub", "⟺  x ∈ A ∖ B  et  x ∉ C<span class='tag'>(Déf ∖)</span>"]]},
+
+{"say": "Et de nouveau par la définition de la différence, maintenant avec X égal à A moins B, et Y égal à C, cela équivaut à x appartient à A moins B, moins C.", "L": [["sub", "⟺  x ∈ (A ∖ B) ∖ C<span class='tag'>(Déf ∖)</span>"]]},
+
+{"clear": 1, "say": "Comme x était arbitraire, les deux affirmations extrêmes sont équivalentes pour tout x. Par conséquent, les deux ensembles sont égaux, et la formule ii est valide pour tous ensembles A, B et C.", "L": [["res", "A ∖ (B ∪ C) = (A ∖ B) ∖ C"], ["res", "(ii) est toujours correcte"]]},
+
+{"title": "(b) Condition pour que (i) soit valide", "clear": 1, "say": "Partie b. Nous voulons une condition nécessaire et suffisante pour que la formule i soit toujours valide. D'abord, nous simplifions le membre de gauche, en utilisant les complémentaires. Nous rappelons à gauche quatre propriétés que nous allons utiliser : la différence comme intersection avec le complémentaire, les lois de De Morgan, le fait que le complémentaire du complémentaire est l'ensemble lui-même, et la distributivité.", "L": [["goal", "On cherche une condition pour que  A ∖ (B ∖ C) = (A ∖ B) ∪ C  soit valide"], ["txt", "D'abord, on simplifie le membre de gauche"]], "pin": ["(Dif) X ∖ Y = X ∩ Yᶜ", "(De Morgan) (X ∩ Y)ᶜ = Xᶜ ∪ Yᶜ", "(Invol) (Xᶜ)ᶜ = X", "(Distrib) X ∩ (Y ∪ Z) = (X ∩ Y) ∪ (X ∩ Z)"]},
+
+{"clear": 1, "say": "Nous partons de A moins, B moins C.", "L": [["sub", "A ∖ (B ∖ C)"]]},
+
+{"say": "Par la propriété Dif, avec X égal à A, et Y égal à B moins C, A moins, B moins C, est A inter, le complémentaire de B moins C.", "L": [["sub", "=  A ∩ (B ∖ C)ᶜ<span class='tag'>(Dif)</span>"]]},
+
+{"say": "De nouveau par la propriété Dif, maintenant avec X égal à B, et Y égal à C, B moins C est B inter, le complémentaire de C.", "L": [["sub", "=  A ∩ (B ∩ Cᶜ)ᶜ<span class='tag'>(Dif)</span>"]]},
+
+{"say": "Par les lois de De Morgan, avec X égal à B, et Y égal au complémentaire de C, le complémentaire de B inter le complémentaire de C, est le complémentaire de B, union le complémentaire du complémentaire de C.", "L": [["sub", "=  A ∩ ( Bᶜ ∪ (Cᶜ)ᶜ )<span class='tag'>(De Morgan)</span>"]]},
+
+{"say": "Et comme le complémentaire du complémentaire de C est C, par la propriété Invol, il reste A inter, le complémentaire de B union C.", "L": [["sub", "=  A ∩ ( Bᶜ ∪ C )<span class='tag'>(Invol)</span>"]]},
+
+{"say": "Par la distributivité, avec X égal à A, Y égal au complémentaire de B, et Z égal à C, cela donne A inter le complémentaire de B, union A inter C.", "L": [["sub", "=  (A ∩ Bᶜ) ∪ (A ∩ C)<span class='tag'>(Distrib)</span>"]]},
+
+{"say": "Et par la propriété Dif, A inter le complémentaire de B est A moins B.", "L": [["res", "=  (A ∖ B) ∪ (A ∩ C)<span class='tag'>(Dif)</span>"]]},
+
+{"clear": 1, "say": "Par conséquent, l'égalité i équivaut à ce que A moins B, union A inter C, soit égal à A moins B, union C. Nous notons cette égalité étoile. Les deux membres ne diffèrent que par le fait qu'à gauche apparaît A inter C, et à droite apparaît C.", "L": [["txt", "(i)  équivaut à :"], ["goal", "(A ∖ B) ∪ (A ∩ C) = (A ∖ B) ∪ C<span class='tag'>(★)</span>"]]},
+
+{"title": "(b) (★) ⟺ C ⊆ A", "clear": 1, "say": "Nous affirmons que l'égalité étoile est vraie si et seulement si C est inclus dans A. Nous le démontrons dans les deux sens.", "L": [["goal", "(★)   ⟺   C ⊆ A"], ["txt", "(⟸)  On suppose C ⊆ A et on prouve (★)"], ["txt", "(⟹)  On suppose (★) et on prouve C ⊆ A"]]},
+
+{"clear": 1, "say": "D'abord, le sens de droite à gauche. Nous supposons que C est inclus dans A. Alors A inter C est égal à C. En effet, A inter C est toujours inclus dans C. Et réciproquement, si x appartient à C, comme C est inclus dans A, x appartient à A, donc x appartient à A et à C, c'est-à-dire à A inter C.", "L": [["hyp", "On suppose  C ⊆ A"], ["txt", "A ∩ C ⊆ C  toujours.  Et si  x ∈ C,  comme  C ⊆ A,  x ∈ A :  donc  x ∈ A ∩ C"], ["sub", "A ∩ C = C"]]},
+
+{"say": "Nous remplaçons A inter C par C dans le membre de gauche de l'égalité étoile. Nous obtenons A moins B, union C, des deux côtés. Par conséquent, l'égalité étoile est vraie.", "L": [["txt", "En remplaçant  A ∩ C = C  dans (★) :"], ["res", "(A ∖ B) ∪ C = (A ∖ B) ∪ C"], ["res", "C ⊆ A  ⟹  (★)"]]},
+
+{"clear": 1, "say": "Ensuite, le sens de gauche à droite. Nous supposons que l'égalité étoile est vraie, et nous devons prouver que C est inclus dans A. Soit x un élément quelconque de C.", "L": [["hyp", "On suppose (★)"], ["hyp", "Soit  x ∈ C"], ["goal", "On veut :  x ∈ A"]]},
+
+{"say": "Comme x appartient à C, par la définition de la réunion, x appartient à A moins B, union C. Et par l'égalité étoile, x appartient aussi à A moins B, union A inter C.", "L": [["txt", "x ∈ C  ⟹  x ∈ (A ∖ B) ∪ C   par (Déf ∪)"], ["txt", "Par (★) :"], ["sub", "x ∈ (A ∖ B) ∪ (A ∩ C)"]]},
+
+{"say": "Par la définition de la réunion, cela signifie que x appartient à A moins B, ou x appartient à A inter C. Nous étudions les deux cas.", "L": [["txt", "Par (Déf ∪) :"], ["hyp", "Cas 1 :  x ∈ A ∖ B"], ["hyp", "Cas 2 :  x ∈ A ∩ C"]]},
+
+{"say": "Dans le cas un, par la définition de la différence, x appartient à A, et x n'appartient pas à B. En particulier, x appartient à A. Dans le cas deux, par la définition de l'intersection, x appartient à A, et x appartient à C. En particulier, x appartient à A.", "L": [["sub", "Cas 1 :  par (Déf ∖),  x ∈ A  et  x ∉ B   ⟹   x ∈ A"], ["sub", "Cas 2 :  par (Déf ∩),  x ∈ A  et  x ∈ C   ⟹   x ∈ A"]]},
+
+{"clear": 1, "say": "Dans les deux cas, x appartient à A. Comme x était un élément quelconque de C, nous concluons que C est inclus dans A.", "L": [["res", "x ∈ A"], ["res", "(★)  ⟹  C ⊆ A"]]},
+
+{"title": "Conclusion", "clear": 1, "say": "Conclusion de la partie b. La formule i est valide si et seulement si C est inclus dans A. Vérifions-le avec le contre-exemple de la partie a : C était l'ensemble contenant zéro, et A était le vide, donc C n'était pas inclus dans A, et la formule échouait.", "L": [["res", "A ∖ (B ∖ C) = (A ∖ B) ∪ C   ⟺   C ⊆ A"], ["txt", "Contre-exemple :  C = { 0 } ⊄ ∅ = A   ⟹   (i) échoue"]]},
+
+{"title": "Résumé", "clear": 1, "say": "En résumé. La formule ii est toujours correcte. La formule i est parfois fausse, et elle est valide exactement quand C est inclus dans A. Merci d'avoir regardé.", "L": [["res", "(ii)  (A ∖ B) ∖ C = A ∖ (B ∪ C)   toujours"], ["res", "(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C   ⟺   C ⊆ A"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' plus ').replace(/⊙/g,' fois ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Rejouer'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Reprendre'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pause';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^fr/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/henri|paul|claude|remy|rémy|male|google français$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Différences de trois ensembles";$('sub').textContent="Exercice · Algèbre des ensembles";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

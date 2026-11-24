@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>تین سیٹوں کے فرق</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-inline-end:2px dashed #3d5a50;padding-inline-end:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-inline-start:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+span[dir='ltr']{white-space:nowrap}
+svg{direction:ltr}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>یاد رکھیں</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ شروع کریں</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>رفتار <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">ریکارڈنگ موڈ (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ur-PK",
+"meta":{"nivel": 2, "titulo": "تین سیٹوں کے فرق", "enunciado": "الف) ثابت کریں کہ درج ذیل دو فارمولوں میں سے ایک ہمیشہ درست ہے اور دوسرا کبھی کبھی غلط ہے؛ ب) ایک اضافی لازمی اور کافی شرط معلوم کریں جس سے غلط فارمولا ہمیشہ درست ہو۔", "tesis": "<span dir='ltr'>(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C</span><br><span dir='ltr'>(ii)  (A ∖ B) ∖ C = A ∖ (B ∪ C)</span>", "datos": ["فرق کی تعریف:  <span dir='ltr'>x ∈ X ∖ Y  ⟺  x ∈ X ∧ x ∉ Y</span>"]},
+"steps":[
+{"title": "تین سیٹوں کے فرق", "sub": "مشق · سیٹوں کا الجبرا", "clear": 1, "say": "السلام علیکم۔ اس ویڈیو میں ہم تین سیٹوں کے فرق والے دو فارمولوں کا مطالعہ کریں گے: ان میں سے ایک ہمیشہ درست ہے، اور دوسرا کبھی کبھی غلط ہے۔ پھر، ہم ایک ایسی شرط ڈھونڈیں گے جس سے غلط فارمولا ہمیشہ درست ہو۔ ہم بہت آہستہ چلیں گے، ہر مساوات لکھیں گے اور ہر قدم کی وجہ بتائیں گے۔", "L": [["txt", "تین سیٹوں کے فرق والے دو فارمولے"]]},
+
+{"clear": 1, "say": "ہمیں کیا کرنا ہے۔ حصہ الف میں، دو فارمولے ہیں۔ پہلا فارمولا: A منفی، B منفی C، برابر ہے، A منفی B، اتصال C کے۔ دوسرا فارمولا: A منفی B، منفی C، برابر ہے A منفی، B اتصال C کے۔ ہمیں ثابت کرنا ہے کہ ایک ہمیشہ درست ہے، اور دوسرا کبھی کبھی غلط ہے۔ حصہ ب میں، ہمیں ایک اضافی لازمی اور کافی شرط معلوم کرنی ہے جس سے غلط فارمولا ہمیشہ درست ہو۔ ہم ایک طرف ارکان کے ذریعے وہ تعریفیں یاد کرتے ہیں جو ہم استعمال کریں گے۔", "L": [["goal", "الف)  ایک فارمولا ہمیشہ درست ہے اور دوسرا کبھی کبھی غلط ہے:"], ["txt", "<span dir='ltr'>(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C</span>"], ["txt", "<span dir='ltr'>(ii)  (A ∖ B) ∖ C = A ∖ (B ∪ C)</span>"], ["goal", "ب)  غلط فارمولے کے ہمیشہ درست ہونے کی لازمی اور کافی شرط"]], "pin": ["فرق کی تعریف: <span dir='ltr'>x ∈ X ∖ Y  ⟺  x ∈ X ∧ x ∉ Y</span>", "اتصال کی تعریف: <span dir='ltr'>x ∈ X ∪ Y  ⟺  x ∈ X ∨ x ∈ Y</span>", "تقاطع کی تعریف: <span dir='ltr'>x ∈ X ∩ Y  ⟺  x ∈ X ∧ x ∈ Y</span>"]},
+
+{"title": "الف) پہلے فارمولے کا تجزیہ", "clear": 1, "say": "حصہ الف، پہلے فارمولے کا تجزیہ۔ ہم دیکھیں گے کہ یہ عمومی طور پر درست نہیں۔ یہ ثابت کرنے کے لیے کہ کوئی فارمولا ہمیشہ درست نہیں، ایک جوابی مثال ڈھونڈنا کافی ہے: کچھ خاص سیٹ جن کے لیے وہ درست نہ ہو۔", "L": [["goal", "<span dir='ltr'>(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C</span>   عمومی طور پر درست نہیں"], ["txt", "ایک جوابی مثال کافی ہے"]]},
+
+{"say": "ہم A برابر خالی سیٹ، B برابر خالی سیٹ، اور C برابر وہ سیٹ لیتے ہیں جس کا واحد رکن صفر ہے۔", "L": [["hyp", "<span dir='ltr'>A = ∅</span>"], ["hyp", "<span dir='ltr'>B = ∅</span>"], ["hyp", "<span dir='ltr'>C = { 0 }</span>"]]},
+
+{"clear": 1, "say": "ہم بایاں طرف نکالتے ہیں۔ پہلے، B منفی C، خالی سیٹ منفی صفر والا سیٹ ہے۔ چونکہ خالی سیٹ میں کوئی رکن نہیں، اس میں ایسے ارکان نہیں ہو سکتے جو C میں نہ ہوں۔ لہٰذا B منفی C خالی ہے۔", "L": [["txt", "بایاں طرف۔  پہلے:"], ["sub", "<span dir='ltr'>B ∖ C = ∅ ∖ { 0 } = ∅</span>"]]},
+
+{"say": "اب، A منفی، B منفی C، خالی منفی خالی ہے، جو پھر خالی ہے۔ لہٰذا، بایاں طرف خالی سیٹ ہے۔", "L": [["sub", "<span dir='ltr'>A ∖ (B ∖ C) = ∅ ∖ ∅ = ∅</span>"]]},
+
+{"say": "ہم دایاں طرف نکالتے ہیں۔ A منفی B، خالی منفی خالی ہے، جو خالی ہے۔ اور خالی اتصال صفر والا سیٹ، صفر والا سیٹ ہے۔ لہٰذا، دایاں طرف صفر والا سیٹ ہے۔", "L": [["txt", "دایاں طرف:"], ["sub", "<span dir='ltr'>A ∖ B = ∅ ∖ ∅ = ∅</span>"], ["sub", "<span dir='ltr'>(A ∖ B) ∪ C = ∅ ∪ { 0 } = { 0 }</span>"]]},
+
+{"clear": 1, "say": "ہم موازنہ کرتے ہیں۔ بایاں طرف خالی ہے، اور دایاں طرف صفر والا سیٹ ہے۔ یہ برابر نہیں، کیونکہ صفر دوسرے میں ہے، اور پہلے میں نہیں۔ لہٰذا ان سیٹوں کے لیے پہلا فارمولا درست نہیں، اور یہ کبھی کبھی غلط ہے۔", "L": [["warn", "<span dir='ltr'>∅ ≠ { 0 }</span>   کیونکہ  <span dir='ltr'>0 ∈ { 0 }  ∧  0 ∉ ∅</span>"], ["res", "فارمولا <span dir='ltr'>(i)</span> کبھی کبھی غلط ہے"]]},
+
+{"title": "الف) دوسرے فارمولے کا تجزیہ", "clear": 1, "say": "حصہ الف، دوسرے فارمولے کا تجزیہ۔ ہم ثابت کریں گے کہ کسی بھی سیٹ A، B اور C کے لیے، A منفی، B اتصال C، برابر ہے، A منفی B، منفی C کے۔ ہم کوئی بھی رکن x لیتے ہیں، اور مساوات کی ایک زنجیر لکھتے ہیں۔ چونکہ ہر قدم ایک مساوات ہے، اسے دونوں طرف سے پڑھا جا سکتا ہے، اور اس سے دونوں شمولیتیں ایک ساتھ ثابت ہوتی ہیں۔", "L": [["hyp", "فرض کریں <span dir='ltr'>x</span> کوئی بھی رکن ہے"], ["goal", "ہمیں چاہیے:  <span dir='ltr'>x ∈ A ∖ (B ∪ C)  ⟺  x ∈ (A ∖ B) ∖ C</span>"]]},
+
+{"clear": 1, "say": "ہم اس بیان سے شروع کرتے ہیں کہ x، A منفی، B اتصال C میں ہے۔", "L": [["sub", "<span dir='ltr'>x ∈ A ∖ (B ∪ C)</span>"]]},
+
+{"say": "فرق کی تعریف کے مطابق، جہاں پہلا سیٹ A اور دوسرا B اتصال C ہے، یہ اس کے مساوی ہے کہ x، A میں ہے، اور x، B اتصال C میں نہیں ہے۔", "L": [["sub", "⟺  <span dir='ltr'>x ∈ A  ∧  x ∉ B ∪ C</span><span class='tag'>فرق کی تعریف</span>"]]},
+
+{"say": "اب، x کا B اتصال C میں نہ ہونا، اس کا مطلب ہے کہ یہ درست نہیں کہ x، B میں ہے، یا x، C میں ہے۔ اور ایسا تب ہوتا ہے جب x، B میں نہیں، اور x، C میں نہیں۔", "L": [["sub", "⟺  <span dir='ltr'>x ∈ A  ∧  ( x ∉ B  ∧  x ∉ C )</span><span class='tag'>اتصال کی تعریف کی نفی</span>"]]},
+
+{"say": "ہم «اور» کی تلازمی خاصیت استعمال کر کے دوسرے طریقے سے ترتیب دیتے ہیں: پہلے، x، A میں ہے اور B میں نہیں، یہ سب، اور x، C میں نہیں۔", "L": [["sub", "⟺  <span dir='ltr'>( x ∈ A  ∧  x ∉ B )  ∧  x ∉ C</span><span class='tag'><span dir='ltr'>«</span>اور<span dir='ltr'>»</span> کی تلازمی خاصیت</span>"]]},
+
+{"say": "فرق کی تعریف کے مطابق، جہاں پہلا سیٹ A اور دوسرا B ہے، x کا A میں ہونا اور B میں نہ ہونا، x کے A منفی B میں ہونے کے مساوی ہے۔", "L": [["sub", "⟺  <span dir='ltr'>x ∈ A ∖ B  ∧  x ∉ C</span><span class='tag'>فرق کی تعریف</span>"]]},
+
+{"say": "اور پھر فرق کی تعریف کے مطابق، جہاں اب پہلا سیٹ A منفی B اور دوسرا C ہے، یہ x کے A منفی B، منفی C میں ہونے کے مساوی ہے۔", "L": [["sub", "⟺  <span dir='ltr'>x ∈ (A ∖ B) ∖ C</span><span class='tag'>فرق کی تعریف</span>"]]},
+
+{"clear": 1, "say": "چونکہ x کوئی بھی تھا، دونوں سروں کے بیان ہر x کے لیے مساوی ہیں۔ لہٰذا، دونوں سیٹ برابر ہیں، اور دوسرا فارمولا کسی بھی سیٹ A، B اور C کے لیے درست ہے۔", "L": [["res", "<span dir='ltr'>A ∖ (B ∪ C) = (A ∖ B) ∖ C</span>"], ["res", "فارمولا <span dir='ltr'>(ii)</span> ہمیشہ درست ہے"]]},
+
+{"title": "ب) پہلے فارمولے کے درست ہونے کی شرط", "clear": 1, "say": "حصہ ب۔ ہم ایک لازمی اور کافی شرط چاہتے ہیں جس سے پہلا فارمولا ہمیشہ درست ہو۔ پہلے، ہم متمم استعمال کر کے بائیں طرف کو سادہ کرتے ہیں۔ ہم ایک طرف چار خاصیتیں یاد کرتے ہیں جو ہم استعمال کریں گے: فرق کو متمم کے ساتھ تقاطع کے طور پر لکھنا، ڈی مورگن کے قوانین، یہ کہ متمم کا متمم خود سیٹ ہے، اور تقسیمی خاصیت۔", "L": [["goal", "ہم  <span dir='ltr'>A ∖ (B ∖ C) = (A ∖ B) ∪ C</span>  کے درست ہونے کی شرط ڈھونڈتے ہیں"], ["txt", "پہلے، بائیں طرف کو سادہ کرتے ہیں"]], "pin": ["<span dir='ltr'>(Dif) X ∖ Y = X ∩ Yᶜ</span>", "<span dir='ltr'>(De Morgan) (X ∩ Y)ᶜ = Xᶜ ∪ Yᶜ</span>", "<span dir='ltr'>(Invol) (Xᶜ)ᶜ = X</span>", "<span dir='ltr'>(Distrib) X ∩ (Y ∪ Z) = (X ∩ Y) ∪ (X ∩ Z)</span>"]},
+
+{"clear": 1, "say": "ہم A منفی، B منفی C سے شروع کرتے ہیں۔", "L": [["sub", "<span dir='ltr'>A ∖ (B ∖ C)</span>"]]},
+
+{"say": "خاصیت Dif سے، جہاں پہلا سیٹ A اور دوسرا B منفی C ہے، A منفی، B منفی C، برابر ہے A تقاطع، B منفی C کے متمم کے۔", "L": [["sub", "<span dir='ltr'>=  A ∩ (B ∖ C)ᶜ</span><span class='tag'><span dir='ltr'>(Dif)</span></span>"]]},
+
+{"say": "پھر خاصیت Dif سے، جہاں اب پہلا سیٹ B اور دوسرا C ہے، B منفی C برابر ہے B تقاطع، C کے متمم کے۔", "L": [["sub", "<span dir='ltr'>=  A ∩ (B ∩ Cᶜ)ᶜ</span><span class='tag'><span dir='ltr'>(Dif)</span></span>"]]},
+
+{"say": "ڈی مورگن کے قوانین سے، جہاں پہلا سیٹ B اور دوسرا C کا متمم ہے، B تقاطع C کے متمم کا متمم، برابر ہے B کے متمم، اتصال C کے متمم کے متمم کے۔", "L": [["sub", "<span dir='ltr'>=  A ∩ ( Bᶜ ∪ (Cᶜ)ᶜ )</span><span class='tag'><span dir='ltr'>(De Morgan)</span></span>"]]},
+
+{"say": "اور چونکہ C کے متمم کا متمم C ہے، خاصیت Invol سے، باقی رہتا ہے A تقاطع، B کا متمم اتصال C۔", "L": [["sub", "<span dir='ltr'>=  A ∩ ( Bᶜ ∪ C )</span><span class='tag'><span dir='ltr'>(Invol)</span></span>"]]},
+
+{"say": "تقسیمی خاصیت سے، جہاں پہلا سیٹ A، دوسرا B کا متمم، اور تیسرا C ہے، یہ برابر ہے A تقاطع B کا متمم، اتصال A تقاطع C کے۔", "L": [["sub", "<span dir='ltr'>=  (A ∩ Bᶜ) ∪ (A ∩ C)</span><span class='tag'><span dir='ltr'>(Distrib)</span></span>"]]},
+
+{"say": "اور خاصیت Dif سے، A تقاطع B کا متمم، A منفی B ہے۔", "L": [["res", "<span dir='ltr'>=  (A ∖ B) ∪ (A ∩ C)</span><span class='tag'><span dir='ltr'>(Dif)</span></span>"]]},
+
+{"clear": 1, "say": "لہٰذا، پہلی برابری اس کے مساوی ہے کہ A منفی B، اتصال A تقاطع C، برابر ہو A منفی B، اتصال C کے۔ ہم اس برابری کو ستارہ کے طور پر لکھتے ہیں۔ دونوں طرفوں میں صرف یہ فرق ہے کہ بائیں طرف A تقاطع C ہے، اور دائیں طرف C ہے۔", "L": [["txt", "فارمولا <span dir='ltr'>(i)</span> مساوی ہے:"], ["goal", "<span dir='ltr'>(A ∖ B) ∪ (A ∩ C) = (A ∖ B) ∪ C</span><span class='tag'><span dir='ltr'>(★)</span></span>"]]},
+
+{"title": "ب) لازمی اور کافی شرط", "clear": 1, "say": "ہمارا دعویٰ ہے کہ ستارہ برابری درست ہے اگر اور صرف اگر C، A میں شامل ہو۔ ہم اسے دونوں سمتوں میں ثابت کرتے ہیں۔", "L": [["goal", "<span dir='ltr'>(★)   ⟺   C ⊆ A</span>"], ["txt", "<span dir='ltr'>(⟸)  C ⊆ A</span> فرض کر کے <span dir='ltr'>(★)</span> ثابت کرتے ہیں"], ["txt", "<span dir='ltr'>(⟹)  (★)</span> فرض کر کے <span dir='ltr'>C ⊆ A</span> ثابت کرتے ہیں"]]},
+
+{"clear": 1, "say": "پہلے، دائیں سے بائیں کی سمت۔ فرض کرتے ہیں کہ C، A میں شامل ہے۔ تب A تقاطع C برابر ہے C کے۔ درحقیقت، A تقاطع C ہمیشہ C میں شامل ہے۔ اور الٹ، اگر x، C میں ہے، تو چونکہ C، A میں شامل ہے، x، A میں ہے، لہٰذا x، A میں اور C میں ہے، یعنی A تقاطع C میں ہے۔", "L": [["hyp", "فرض کرتے ہیں  <span dir='ltr'>C ⊆ A</span>"], ["txt", "<span dir='ltr'>A ∩ C ⊆ C</span>  ہمیشہ؛  اور اگر  <span dir='ltr'>x ∈ C</span>،  چونکہ  <span dir='ltr'>C ⊆ A</span>،  تو  <span dir='ltr'>x ∈ A</span>؛  لہٰذا  <span dir='ltr'>x ∈ A ∩ C</span>"], ["sub", "<span dir='ltr'>A ∩ C = C</span>"]]},
+
+{"say": "ہم ستارہ برابری کے بائیں طرف A تقاطع C کی جگہ C رکھتے ہیں۔ دونوں طرف A منفی B، اتصال C ملتا ہے۔ لہٰذا، ستارہ برابری درست ہے۔", "L": [["txt", "<span dir='ltr'>(★)</span> میں  <span dir='ltr'>A ∩ C = C</span>  رکھنے پر:"], ["res", "<span dir='ltr'>(A ∖ B) ∪ C = (A ∖ B) ∪ C</span>"], ["res", "<span dir='ltr'>C ⊆ A  ⟹  (★)</span>"]]},
+
+{"clear": 1, "say": "دوسرے، بائیں سے دائیں کی سمت۔ فرض کرتے ہیں کہ ستارہ برابری درست ہے، اور ہمیں ثابت کرنا ہے کہ C، A میں شامل ہے۔ فرض کریں x، C کا کوئی بھی رکن ہے۔", "L": [["hyp", "<span dir='ltr'>(★)</span> فرض کرتے ہیں"], ["hyp", "فرض کریں  <span dir='ltr'>x ∈ C</span>"], ["goal", "ہمیں چاہیے:  <span dir='ltr'>x ∈ A</span>"]]},
+
+{"say": "چونکہ x، C میں ہے، اتصال کی تعریف کے مطابق، x، A منفی B اتصال C میں ہے۔ اور ستارہ برابری کے مطابق، x، A منفی B اتصال A تقاطع C میں بھی ہے۔", "L": [["txt", "<span dir='ltr'>x ∈ C  ⟹  x ∈ (A ∖ B) ∪ C</span>   اتصال کی تعریف سے"], ["txt", "<span dir='ltr'>(★)</span> سے:"], ["sub", "<span dir='ltr'>x ∈ (A ∖ B) ∪ (A ∩ C)</span>"]]},
+
+{"say": "اتصال کی تعریف کے مطابق، اس کا مطلب ہے کہ x، A منفی B میں ہے، یا x، A تقاطع C میں ہے۔ ہم دونوں صورتوں کا مطالعہ کرتے ہیں۔", "L": [["txt", "اتصال کی تعریف سے:"], ["hyp", "پہلی صورت:  <span dir='ltr'>x ∈ A ∖ B</span>"], ["hyp", "دوسری صورت:  <span dir='ltr'>x ∈ A ∩ C</span>"]]},
+
+{"say": "پہلی صورت میں، فرق کی تعریف کے مطابق، x، A میں ہے، اور x، B میں نہیں۔ خاص طور پر، x، A میں ہے۔ دوسری صورت میں، تقاطع کی تعریف کے مطابق، x، A میں ہے، اور x، C میں ہے۔ خاص طور پر، x، A میں ہے۔", "L": [["sub", "پہلی صورت:  فرق کی تعریف سے،  <span dir='ltr'>x ∈ A  ∧  x ∉ B   ⟹   x ∈ A</span>"], ["sub", "دوسری صورت:  تقاطع کی تعریف سے،  <span dir='ltr'>x ∈ A  ∧  x ∈ C   ⟹   x ∈ A</span>"]]},
+
+{"clear": 1, "say": "دونوں صورتوں میں، x، A میں ہے۔ چونکہ x، C کا کوئی بھی رکن تھا، ہم نتیجہ نکالتے ہیں کہ C، A میں شامل ہے۔", "L": [["res", "<span dir='ltr'>x ∈ A</span>"], ["res", "<span dir='ltr'>(★)  ⟹  C ⊆ A</span>"]]},
+
+{"title": "نتیجہ", "clear": 1, "say": "حصہ ب کا نتیجہ۔ پہلا فارمولا درست ہے اگر اور صرف اگر C، A میں شامل ہو۔ ہم حصہ الف کی جوابی مثال سے جانچتے ہیں: C صفر والا سیٹ تھا، اور A خالی تھا، اس لیے C، A میں شامل نہیں تھا، اور فارمولا غلط نکلا۔", "L": [["res", "<span dir='ltr'>A ∖ (B ∖ C) = (A ∖ B) ∪ C   ⟺   C ⊆ A</span>"], ["txt", "جوابی مثال:  <span dir='ltr'>C = { 0 } ⊄ ∅ = A   ⟹   (i)</span> غلط"]]},
+
+{"title": "خلاصہ", "clear": 1, "say": "خلاصہ۔ دوسرا فارمولا ہمیشہ درست ہے۔ پہلا فارمولا کبھی کبھی غلط ہے، اور ٹھیک اسی وقت درست ہے جب C، A میں شامل ہو۔ دیکھنے کا شکریہ۔", "L": [["res", "<span dir='ltr'>(ii)  (A ∖ B) ∖ C = A ∖ (B ∪ C)</span>   ہمیشہ"], ["res", "<span dir='ltr'>(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C   ⟺   C ⊆ A</span>"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' جمع ').replace(/⊙/g,' ضرب ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ دوبارہ چلائیں'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ جاری رکھیں'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ وقفہ';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ وقفہ';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ وقفہ';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ur/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/asad|salman|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="تین سیٹوں کے فرق";$('sub').textContent="مشق · سیٹوں کا الجبرا";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

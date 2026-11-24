@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>তিনটি সেটের অন্তর</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>মনে রাখুন</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ শুরু</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>গতি <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">রেকর্ডিং মোড (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"bn-BD",
+"meta":{"nivel": 2, "titulo": "তিনটি সেটের অন্তর", "enunciado": "(a) প্রমাণ করুন যে নিচের দুটি সূত্রের একটি সর্বদা সঠিক এবং অন্যটি কখনও কখনও ভুল। (b) একটি অতিরিক্ত প্রয়োজনীয় ও পর্যাপ্ত শর্ত দিন যাতে ভুল সূত্রটি সর্বদা বৈধ হয়।", "tesis": "<span dir='ltr'>(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C</span><br><span dir='ltr'>(ii)  (A ∖ B) ∖ C = A ∖ (B ∪ C)</span>", "datos": ["(∖ সংজ্ঞা)  x ∈ X ∖ Y  ⟺  x ∈ X  এবং  x ∉ Y"]},
+"steps":[
+{"title": "তিনটি সেটের অন্তর", "sub": "অনুশীলনী · সেটের বীজগণিত", "clear": 1, "say": "নমস্কার। এই ভিডিওতে আমরা তিনটি সেটের অন্তর নিয়ে দুটি সূত্র দেখব: এদের একটি সর্বদা সঠিক, এবং অন্যটি কখনও কখনও ভুল। তারপর, আমরা এমন একটি শর্ত খুঁজব যাতে ভুল সূত্রটি সর্বদা বৈধ হয়। আমরা খুব ধীরে এগোব, প্রতিটি সমীকরণ লিখব এবং প্রতিটি ধাপের যুক্তি দেব।", "L": [["txt", "তিনটি সেটের অন্তর নিয়ে দুটি সূত্র"]]},
+
+{"clear": 1, "say": "আমরা কী করতে চাই। অংশ a তে, দুটি সূত্র আছে। সূত্র i: A বিয়োগ, B বিয়োগ C, সমান, A বিয়োগ B, সংযোগ C। সূত্র ii: A বিয়োগ B, বিয়োগ C, সমান A বিয়োগ, B সংযোগ C। প্রমাণ করতে হবে যে একটি সর্বদা সঠিক, এবং অন্যটি কখনও কখনও ভুল। অংশ b তে, একটি অতিরিক্ত প্রয়োজনীয় ও পর্যাপ্ত শর্ত খুঁজতে হবে যাতে ভুল সূত্রটি সর্বদা বৈধ হয়। বাম দিকে আমরা উপাদান দিয়ে সেই সংজ্ঞাগুলো মনে করিয়ে দিই যা ব্যবহার করব।", "L": [["goal", "(a)  একটি সূত্র সর্বদা সঠিক এবং অন্যটি কখনও কখনও ভুল:"], ["txt", "(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C"], ["txt", "(ii)  (A ∖ B) ∖ C = A ∖ (B ∪ C)"], ["goal", "(b)  ভুল সূত্রটি সর্বদা বৈধ হওয়ার প্রয়োজনীয় ও পর্যাপ্ত শর্ত"]], "pin": ["(∖ সংজ্ঞা) x ∈ X ∖ Y  ⟺  x ∈ X  এবং  x ∉ Y", "(∪ সংজ্ঞা) x ∈ X ∪ Y  ⟺  x ∈ X  অথবা  x ∈ Y", "(∩ সংজ্ঞা) x ∈ X ∩ Y  ⟺  x ∈ X  এবং  x ∈ Y"]},
+
+{"title": "(a) (i) এর বিশ্লেষণ", "clear": 1, "say": "অংশ a, সূত্র i এর বিশ্লেষণ। আমরা দেখব যে এটি সাধারণভাবে বৈধ নয়। কোনো সূত্র সর্বদা সত্য নয় তা প্রমাণ করতে, একটি প্রতি-উদাহরণ খুঁজে পাওয়াই যথেষ্ট: কিছু নির্দিষ্ট সেট যাদের জন্য সূত্রটি খাটে না।", "L": [["goal", "(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C   সাধারণভাবে বৈধ নয়"], ["txt", "একটি প্রতি-উদাহরণই যথেষ্ট"]]},
+
+{"say": "আমরা A সমান ফাঁকা সেট, B সমান ফাঁকা সেট, এবং C সমান সেই সেট নিই যার একমাত্র উপাদান শূন্য।", "L": [["hyp", "A = ∅"], ["hyp", "B = ∅"], ["hyp", "C = { 0 }"]]},
+
+{"clear": 1, "say": "আমরা বাম পক্ষ নির্ণয় করি। প্রথমে, B বিয়োগ C হলো ফাঁকা সেট বিয়োগ শূন্য বিশিষ্ট সেট। যেহেতু ফাঁকা সেটের কোনো উপাদান নেই, এতে এমন উপাদান থাকতে পারে না যা C তে নেই। তাই B বিয়োগ C ফাঁকা।", "L": [["txt", "বাম পক্ষ।  প্রথমে:"], ["sub", "B ∖ C = ∅ ∖ { 0 } = ∅"]]},
+
+{"say": "এবার, A বিয়োগ, B বিয়োগ C, হলো ফাঁকা বিয়োগ ফাঁকা, যা আবার ফাঁকা। সুতরাং, বাম পক্ষ ফাঁকা সেট।", "L": [["sub", "A ∖ (B ∖ C) = ∅ ∖ ∅ = ∅"]]},
+
+{"say": "আমরা ডান পক্ষ নির্ণয় করি। A বিয়োগ B হলো ফাঁকা বিয়োগ ফাঁকা, যা ফাঁকা। আর ফাঁকা সংযোগ শূন্য বিশিষ্ট সেট হলো শূন্য বিশিষ্ট সেট। সুতরাং, ডান পক্ষ শূন্য বিশিষ্ট সেট।", "L": [["txt", "ডান পক্ষ:"], ["sub", "A ∖ B = ∅ ∖ ∅ = ∅"], ["sub", "(A ∖ B) ∪ C = ∅ ∪ { 0 } = { 0 }"]]},
+
+{"clear": 1, "say": "আমরা তুলনা করি। বাম পক্ষ ফাঁকা, আর ডান পক্ষ শূন্য বিশিষ্ট সেট। এরা সমান নয়, কারণ শূন্য দ্বিতীয়টিতে আছে, কিন্তু প্রথমটিতে নেই। তাই এই সেটগুলোর জন্য সূত্র i খাটে না, এবং এটি কখনও কখনও ভুল।", "L": [["warn", "∅ ≠ { 0 }   কারণ  0 ∈ { 0 }  এবং  0 ∉ ∅"], ["res", "(i) কখনও কখনও ভুল"]]},
+
+{"title": "(a) (ii) এর বিশ্লেষণ", "clear": 1, "say": "অংশ a, সূত্র ii এর বিশ্লেষণ। আমরা প্রমাণ করব যে যেকোনো সেট A, B ও C এর জন্য, A বিয়োগ, B সংযোগ C, সমান, A বিয়োগ B, বিয়োগ C। আমরা যেকোনো একটি উপাদান x নিই, এবং সমতুল্যতার একটি শৃঙ্খল লিখি। যেহেতু প্রতিটি ধাপ একটি সমতুল্যতা, এটি দুই দিকেই পড়া যায়, এবং এতে দুটি অন্তর্ভুক্তি একসাথে প্রমাণিত হয়।", "L": [["hyp", "ধরা যাক x যেকোনো একটি উপাদান"], ["goal", "আমরা চাই:  x ∈ A ∖ (B ∪ C)  ⟺  x ∈ (A ∖ B) ∖ C"]]},
+
+{"clear": 1, "say": "আমরা এই উক্তি দিয়ে শুরু করি যে x, A বিয়োগ, B সংযোগ C তে আছে।", "L": [["sub", "x ∈ A ∖ (B ∪ C)"]]},
+
+{"say": "অন্তরের সংজ্ঞা অনুযায়ী, X সমান A, এবং Y সমান B সংযোগ C নিয়ে, এটি এর সমতুল্য যে x, A তে আছে, এবং x, B সংযোগ C তে নেই।", "L": [["sub", "⟺  x ∈ A  এবং  x ∉ B ∪ C<span class='tag'>(∖ সংজ্ঞা)</span>"]]},
+
+{"say": "এবার, x, B সংযোগ C তে না থাকার অর্থ এটি সত্য নয় যে x, B তে আছে, অথবা x, C তে আছে। আর এটি ঘটে যখন x, B তে নেই, এবং x, C তে নেই।", "L": [["sub", "⟺  x ∈ A  এবং  ( x ∉ B  এবং  x ∉ C )<span class='tag'>(∪ সংজ্ঞা), নেতিবাচক</span>"]]},
+
+{"say": "সংযোজনের সহযোজ্যতা ব্যবহার করে আমরা অন্যভাবে সাজাই: প্রথমে, x, A তে আছে এবং x, B তে নেই, এই সবটা, এবং x, C তে নেই।", "L": [["sub", "⟺  ( x ∈ A  এবং  x ∉ B )  এবং  x ∉ C<span class='tag'>«এবং» এর সহযোজ্যতা</span>"]]},
+
+{"say": "অন্তরের সংজ্ঞা অনুযায়ী, X সমান A, এবং Y সমান B নিয়ে, x, A তে থাকা এবং B তে না থাকা, x এর A বিয়োগ B তে থাকার সমতুল্য।", "L": [["sub", "⟺  x ∈ A ∖ B  এবং  x ∉ C<span class='tag'>(∖ সংজ্ঞা)</span>"]]},
+
+{"say": "আর আবার অন্তরের সংজ্ঞা অনুযায়ী, এবার X সমান A বিয়োগ B, এবং Y সমান C নিয়ে, এটি x এর A বিয়োগ B, বিয়োগ C তে থাকার সমতুল্য।", "L": [["sub", "⟺  x ∈ (A ∖ B) ∖ C<span class='tag'>(∖ সংজ্ঞা)</span>"]]},
+
+{"clear": 1, "say": "যেহেতু x ছিল যেকোনো উপাদান, দুই প্রান্তের উক্তি প্রতিটি x এর জন্য সমতুল্য। সুতরাং, সেট দুটি সমান, এবং সূত্র ii যেকোনো সেট A, B ও C এর জন্য বৈধ।", "L": [["res", "A ∖ (B ∪ C) = (A ∖ B) ∖ C"], ["res", "(ii) সর্বদা সঠিক"]]},
+
+{"title": "(b) (i) বৈধ হওয়ার শর্ত", "clear": 1, "say": "অংশ b। আমরা একটি প্রয়োজনীয় ও পর্যাপ্ত শর্ত চাই যাতে সূত্র i সর্বদা বৈধ হয়। প্রথমে, আমরা পূরক ব্যবহার করে বাম পক্ষ সরল করি। বাম দিকে আমরা চারটি ধর্ম মনে করিয়ে দিই যা ব্যবহার করব: অন্তরকে পূরকের সাথে ছেদ হিসেবে লেখা, ডি মরগানের সূত্র, পূরকের পূরক হলো সেটটি নিজেই, এবং বণ্টন নিয়ম।", "L": [["goal", "আমরা  A ∖ (B ∖ C) = (A ∖ B) ∪ C  বৈধ হওয়ার শর্ত খুঁজি"], ["txt", "প্রথমে, বাম পক্ষ সরল করি"]], "pin": ["(Dif) X ∖ Y = X ∩ Yᶜ", "(De Morgan) (X ∩ Y)ᶜ = Xᶜ ∪ Yᶜ", "(Invol) (Xᶜ)ᶜ = X", "(Distrib) X ∩ (Y ∪ Z) = (X ∩ Y) ∪ (X ∩ Z)"]},
+
+{"clear": 1, "say": "আমরা A বিয়োগ, B বিয়োগ C দিয়ে শুরু করি।", "L": [["sub", "A ∖ (B ∖ C)"]]},
+
+{"say": "ধর্ম Dif অনুযায়ী, X সমান A, এবং Y সমান B বিয়োগ C নিয়ে, A বিয়োগ, B বিয়োগ C, হলো A ছেদ, B বিয়োগ C এর পূরক।", "L": [["sub", "=  A ∩ (B ∖ C)ᶜ<span class='tag'>(Dif)</span>"]]},
+
+{"say": "আবার ধর্ম Dif অনুযায়ী, এবার X সমান B, এবং Y সমান C নিয়ে, B বিয়োগ C হলো B ছেদ, C এর পূরক।", "L": [["sub", "=  A ∩ (B ∩ Cᶜ)ᶜ<span class='tag'>(Dif)</span>"]]},
+
+{"say": "ডি মরগানের সূত্র অনুযায়ী, X সমান B, এবং Y সমান C এর পূরক নিয়ে, B ছেদ C এর পূরকের পূরক, হলো B এর পূরক, সংযোগ C এর পূরকের পূরক।", "L": [["sub", "=  A ∩ ( Bᶜ ∪ (Cᶜ)ᶜ )<span class='tag'>(De Morgan)</span>"]]},
+
+{"say": "আর যেহেতু C এর পূরকের পূরক হলো C, ধর্ম Invol অনুযায়ী, থাকে A ছেদ, B এর পূরক সংযোগ C।", "L": [["sub", "=  A ∩ ( Bᶜ ∪ C )<span class='tag'>(Invol)</span>"]]},
+
+{"say": "বণ্টন নিয়ম অনুযায়ী, X সমান A, Y সমান B এর পূরক, এবং Z সমান C নিয়ে, এটি হলো A ছেদ B এর পূরক, সংযোগ A ছেদ C।", "L": [["sub", "=  (A ∩ Bᶜ) ∪ (A ∩ C)<span class='tag'>(Distrib)</span>"]]},
+
+{"say": "আর ধর্ম Dif অনুযায়ী, A ছেদ B এর পূরক হলো A বিয়োগ B।", "L": [["res", "=  (A ∖ B) ∪ (A ∩ C)<span class='tag'>(Dif)</span>"]]},
+
+{"clear": 1, "say": "সুতরাং, সমতা i এর সমতুল্য হলো যে A বিয়োগ B, সংযোগ A ছেদ C, সমান A বিয়োগ B, সংযোগ C। আমরা এই সমতাকে তারকা হিসেবে লিখি। দুই পক্ষের পার্থক্য শুধু এই যে বাম দিকে আছে A ছেদ C, আর ডান দিকে আছে C।", "L": [["txt", "(i)  এর সমতুল্য:"], ["goal", "(A ∖ B) ∪ (A ∩ C) = (A ∖ B) ∪ C<span class='tag'>(★)</span>"]]},
+
+{"title": "(b) (★) ⟺ C ⊆ A", "clear": 1, "say": "আমরা দাবি করি যে তারকা সমতা সত্য হয় যদি এবং কেবল যদি C, A এর অন্তর্ভুক্ত হয়। আমরা এটি দুই দিকে প্রমাণ করি।", "L": [["goal", "(★)   ⟺   C ⊆ A"], ["txt", "(⟸)  C ⊆ A ধরে (★) প্রমাণ করি"], ["txt", "(⟹)  (★) ধরে C ⊆ A প্রমাণ করি"]]},
+
+{"clear": 1, "say": "প্রথমে, ডান থেকে বাম দিক। ধরে নিই C, A এর অন্তর্ভুক্ত। তাহলে A ছেদ C সমান C। আসলে, A ছেদ C সর্বদা C এর অন্তর্ভুক্ত। আর উল্টোভাবে, যদি x, C তে থাকে, যেহেতু C, A এর অন্তর্ভুক্ত, x, A তে আছে, তাই x, A তে ও C তে আছে, অর্থাৎ A ছেদ C তে আছে।", "L": [["hyp", "ধরে নিই  C ⊆ A"], ["txt", "A ∩ C ⊆ C  সর্বদা।  আর যদি  x ∈ C,  যেহেতু  C ⊆ A,  x ∈ A:  সুতরাং  x ∈ A ∩ C"], ["sub", "A ∩ C = C"]]},
+
+{"say": "আমরা তারকা সমতার বাম পক্ষে A ছেদ C এর জায়গায় C বসাই। দুই পক্ষেই পাই A বিয়োগ B, সংযোগ C। সুতরাং, তারকা সমতা সত্য।", "L": [["txt", "(★) এ  A ∩ C = C  বসিয়ে:"], ["res", "(A ∖ B) ∪ C = (A ∖ B) ∪ C"], ["res", "C ⊆ A  ⟹  (★)"]]},
+
+{"clear": 1, "say": "দ্বিতীয়ত, বাম থেকে ডান দিক। ধরে নিই তারকা সমতা সত্য, এবং প্রমাণ করতে হবে যে C, A এর অন্তর্ভুক্ত। ধরা যাক x হলো C এর যেকোনো উপাদান।", "L": [["hyp", "(★) ধরে নিই"], ["hyp", "ধরা যাক  x ∈ C"], ["goal", "আমরা চাই:  x ∈ A"]]},
+
+{"say": "যেহেতু x, C তে আছে, সংযোগের সংজ্ঞা অনুযায়ী, x, A বিয়োগ B সংযোগ C তে আছে। আর তারকা সমতা অনুযায়ী, x, A বিয়োগ B সংযোগ A ছেদ C তেও আছে।", "L": [["txt", "x ∈ C  ⟹  x ∈ (A ∖ B) ∪ C   (∪ সংজ্ঞা) অনুযায়ী"], ["txt", "(★) অনুযায়ী:"], ["sub", "x ∈ (A ∖ B) ∪ (A ∩ C)"]]},
+
+{"say": "সংযোগের সংজ্ঞা অনুযায়ী, এর অর্থ x, A বিয়োগ B তে আছে, অথবা x, A ছেদ C তে আছে। আমরা দুটি ক্ষেত্র দেখি।", "L": [["txt", "(∪ সংজ্ঞা) অনুযায়ী:"], ["hyp", "ক্ষেত্র 1:  x ∈ A ∖ B"], ["hyp", "ক্ষেত্র 2:  x ∈ A ∩ C"]]},
+
+{"say": "ক্ষেত্র এক এ, অন্তরের সংজ্ঞা অনুযায়ী, x, A তে আছে, এবং x, B তে নেই। বিশেষভাবে, x, A তে আছে। ক্ষেত্র দুই এ, ছেদের সংজ্ঞা অনুযায়ী, x, A তে আছে, এবং x, C তে আছে। বিশেষভাবে, x, A তে আছে।", "L": [["sub", "ক্ষেত্র 1:  (∖ সংজ্ঞা) অনুযায়ী,  x ∈ A  এবং  x ∉ B   ⟹   x ∈ A"], ["sub", "ক্ষেত্র 2:  (∩ সংজ্ঞা) অনুযায়ী,  x ∈ A  এবং  x ∈ C   ⟹   x ∈ A"]]},
+
+{"clear": 1, "say": "দুই ক্ষেত্রেই, x, A তে আছে। যেহেতু x ছিল C এর যেকোনো উপাদান, আমরা সিদ্ধান্তে আসি যে C, A এর অন্তর্ভুক্ত।", "L": [["res", "x ∈ A"], ["res", "(★)  ⟹  C ⊆ A"]]},
+
+{"title": "উপসংহার", "clear": 1, "say": "অংশ b এর উপসংহার। সূত্র i বৈধ যদি এবং কেবল যদি C, A এর অন্তর্ভুক্ত হয়। অংশ a এর প্রতি-উদাহরণ দিয়ে যাচাই করি: C ছিল শূন্য বিশিষ্ট সেট, আর A ছিল ফাঁকা, তাই C, A এর অন্তর্ভুক্ত ছিল না, এবং সূত্রটি ব্যর্থ হয়েছিল।", "L": [["res", "A ∖ (B ∖ C) = (A ∖ B) ∪ C   ⟺   C ⊆ A"], ["txt", "প্রতি-উদাহরণ:  C = { 0 } ⊄ ∅ = A   ⟹   (i) ব্যর্থ"]]},
+
+{"title": "সারসংক্ষেপ", "clear": 1, "say": "সারসংক্ষেপ। সূত্র ii সর্বদা সঠিক। সূত্র i কখনও কখনও ভুল, এবং এটি ঠিক তখনই বৈধ যখন C, A এর অন্তর্ভুক্ত। দেখার জন্য ধন্যবাদ।", "L": [["res", "(ii)  (A ∖ B) ∖ C = A ∖ (B ∪ C)   সর্বদা"], ["res", "(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C   ⟺   C ⊆ A"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' প্লাস ').replace(/⊙/g,' গুণ ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ আবার চালান'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ চালিয়ে যান'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ বিরতি';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^bn/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/pradeep|bashkar|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="তিনটি সেটের অন্তর";$('sub').textContent="অনুশীলনী · সেটের বীজগণিত";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

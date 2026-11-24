@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>तीन समुच्चयों के अंतर</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>याद रखें</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ शुरू करें</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>गति <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">रिकॉर्डिंग मोड (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"hi-IN",
+"meta":{"nivel": 2, "titulo": "तीन समुच्चयों के अंतर", "enunciado": "(a) सिद्ध कीजिए कि निम्न दो सूत्रों में से एक सदैव सही है और दूसरा कभी कभी गलत है। (b) एक अतिरिक्त आवश्यक और पर्याप्त शर्त दीजिए जिससे गलत सूत्र सदैव मान्य हो।", "tesis": "<span dir='ltr'>(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C</span><br><span dir='ltr'>(ii)  (A ∖ B) ∖ C = A ∖ (B ∪ C)</span>", "datos": ["(∖ परिभाषा)  x ∈ X ∖ Y  ⟺  x ∈ X  और  x ∉ Y"]},
+"steps":[
+{"title": "तीन समुच्चयों के अंतर", "sub": "अभ्यास · समुच्चयों का बीजगणित", "clear": 1, "say": "नमस्ते। इस वीडियो में हम तीन समुच्चयों के अंतरों वाले दो सूत्रों का अध्ययन करेंगे: उनमें से एक सदैव सही है, और दूसरा कभी कभी गलत है। फिर, हम एक ऐसी शर्त ढूँढेंगे जिससे गलत सूत्र सदैव मान्य हो। हम बहुत धीरे चलेंगे, हर समीकरण लिखेंगे और हर चरण का कारण बताएँगे।", "L": [["txt", "तीन समुच्चयों के अंतरों वाले दो सूत्र"]]},
+
+{"clear": 1, "say": "हम क्या करना चाहते हैं। भाग a में, दो सूत्र हैं। सूत्र i: A ऋण, B ऋण C, बराबर है, A ऋण B, सम्मिलन C के। सूत्र ii: A ऋण B, ऋण C, बराबर है A ऋण, B सम्मिलन C के। हमें सिद्ध करना है कि एक सदैव सही है, और दूसरा कभी कभी गलत है। भाग b में, हमें एक अतिरिक्त आवश्यक और पर्याप्त शर्त ढूँढनी है जिससे गलत सूत्र सदैव मान्य हो। बाईं ओर हम अवयवों के द्वारा वे परिभाषाएँ याद करते हैं जिनका हम उपयोग करेंगे।", "L": [["goal", "(a)  एक सूत्र सदैव सही है और दूसरा कभी कभी गलत है:"], ["txt", "(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C"], ["txt", "(ii)  (A ∖ B) ∖ C = A ∖ (B ∪ C)"], ["goal", "(b)  गलत सूत्र के सदैव मान्य होने की आवश्यक और पर्याप्त शर्त"]], "pin": ["(∖ परिभाषा) x ∈ X ∖ Y  ⟺  x ∈ X  और  x ∉ Y", "(∪ परिभाषा) x ∈ X ∪ Y  ⟺  x ∈ X  या  x ∈ Y", "(∩ परिभाषा) x ∈ X ∩ Y  ⟺  x ∈ X  और  x ∈ Y"]},
+
+{"title": "(a) (i) का विश्लेषण", "clear": 1, "say": "भाग a, सूत्र i का विश्लेषण। हम देखेंगे कि यह सामान्यतः मान्य नहीं है। यह सिद्ध करने के लिए कि कोई सूत्र सदैव सत्य नहीं है, एक प्रति-उदाहरण ढूँढना काफ़ी है: कुछ विशेष समुच्चय जिनके लिए वह सत्य नहीं होता।", "L": [["goal", "(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C   सामान्यतः मान्य नहीं है"], ["txt", "एक प्रति-उदाहरण काफ़ी है"]]},
+
+{"say": "हम A बराबर रिक्त समुच्चय, B बराबर रिक्त समुच्चय, और C बराबर वह समुच्चय चुनते हैं जिसका एकमात्र अवयव शून्य है।", "L": [["hyp", "A = ∅"], ["hyp", "B = ∅"], ["hyp", "C = { 0 }"]]},
+
+{"clear": 1, "say": "हम बायाँ पक्ष निकालते हैं। पहले, B ऋण C, रिक्त समुच्चय ऋण शून्य वाला समुच्चय है। चूँकि रिक्त समुच्चय में कोई अवयव नहीं है, उसमें ऐसे अवयव नहीं हो सकते जो C में न हों। इसलिए B ऋण C रिक्त है।", "L": [["txt", "बायाँ पक्ष।  पहले:"], ["sub", "B ∖ C = ∅ ∖ { 0 } = ∅"]]},
+
+{"say": "अब, A ऋण, B ऋण C, रिक्त ऋण रिक्त है, जो फिर से रिक्त है। अतः, बायाँ पक्ष रिक्त समुच्चय है।", "L": [["sub", "A ∖ (B ∖ C) = ∅ ∖ ∅ = ∅"]]},
+
+{"say": "हम दायाँ पक्ष निकालते हैं। A ऋण B, रिक्त ऋण रिक्त है, जो रिक्त है। और रिक्त सम्मिलन शून्य वाला समुच्चय, शून्य वाला समुच्चय है। अतः, दायाँ पक्ष शून्य वाला समुच्चय है।", "L": [["txt", "दायाँ पक्ष:"], ["sub", "A ∖ B = ∅ ∖ ∅ = ∅"], ["sub", "(A ∖ B) ∪ C = ∅ ∪ { 0 } = { 0 }"]]},
+
+{"clear": 1, "say": "हम तुलना करते हैं। बायाँ पक्ष रिक्त है, और दायाँ पक्ष शून्य वाला समुच्चय है। वे बराबर नहीं हैं, क्योंकि शून्य दूसरे में है, और पहले में नहीं है। इसलिए इन समुच्चयों के लिए सूत्र i सत्य नहीं है, और यह कभी कभी गलत है।", "L": [["warn", "∅ ≠ { 0 }   क्योंकि  0 ∈ { 0 }  और  0 ∉ ∅"], ["res", "(i) कभी कभी गलत है"]]},
+
+{"title": "(a) (ii) का विश्लेषण", "clear": 1, "say": "भाग a, सूत्र ii का विश्लेषण। हम सिद्ध करेंगे कि किन्हीं भी समुच्चयों A, B और C के लिए, A ऋण, B सम्मिलन C, बराबर है, A ऋण B, ऋण C के। हम कोई भी अवयव x लेते हैं, और तुल्यताओं की एक श्रृंखला लिखते हैं। चूँकि हर चरण एक तुल्यता है, उसे दोनों दिशाओं में पढ़ा जा सकता है, और इससे दोनों अंतर्विष्टियाँ एक साथ सिद्ध होती हैं।", "L": [["hyp", "मान लीजिए x कोई भी अवयव है"], ["goal", "हमें चाहिए:  x ∈ A ∖ (B ∪ C)  ⟺  x ∈ (A ∖ B) ∖ C"]]},
+
+{"clear": 1, "say": "हम इस कथन से शुरू करते हैं कि x, A ऋण, B सम्मिलन C में है।", "L": [["sub", "x ∈ A ∖ (B ∪ C)"]]},
+
+{"say": "अंतर की परिभाषा के अनुसार, X बराबर A, और Y बराबर B सम्मिलन C लेकर, यह इसके तुल्य है कि x, A में है, और x, B सम्मिलन C में नहीं है।", "L": [["sub", "⟺  x ∈ A  और  x ∉ B ∪ C<span class='tag'>(∖ परिभाषा)</span>"]]},
+
+{"say": "अब, x का B सम्मिलन C में न होना, इसका अर्थ है कि यह सत्य नहीं कि x, B में है, या x, C में है। और ऐसा तब होता है जब x, B में नहीं है, और x, C में नहीं है।", "L": [["sub", "⟺  x ∈ A  और  ( x ∉ B  और  x ∉ C )<span class='tag'>(∪ परिभाषा), निषेध</span>"]]},
+
+{"say": "संयोजन की साहचर्यता का उपयोग करके हम दूसरे ढंग से समूह बनाते हैं: पहले, x, A में है और x, B में नहीं है, यह सब, और x, C में नहीं है।", "L": [["sub", "⟺  ( x ∈ A  और  x ∉ B )  और  x ∉ C<span class='tag'>«और» की साहचर्यता</span>"]]},
+
+{"say": "अंतर की परिभाषा के अनुसार, X बराबर A, और Y बराबर B लेकर, x का A में होना और B में न होना, x के A ऋण B में होने के तुल्य है।", "L": [["sub", "⟺  x ∈ A ∖ B  और  x ∉ C<span class='tag'>(∖ परिभाषा)</span>"]]},
+
+{"say": "और फिर से अंतर की परिभाषा के अनुसार, अब X बराबर A ऋण B, और Y बराबर C लेकर, यह x के A ऋण B, ऋण C में होने के तुल्य है।", "L": [["sub", "⟺  x ∈ (A ∖ B) ∖ C<span class='tag'>(∖ परिभाषा)</span>"]]},
+
+{"clear": 1, "say": "चूँकि x कोई भी था, दोनों छोर के कथन हर x के लिए तुल्य हैं। अतः, दोनों समुच्चय बराबर हैं, और सूत्र ii किन्हीं भी समुच्चयों A, B और C के लिए मान्य है।", "L": [["res", "A ∖ (B ∪ C) = (A ∖ B) ∖ C"], ["res", "(ii) सदैव सही है"]]},
+
+{"title": "(b) (i) के मान्य होने की शर्त", "clear": 1, "say": "भाग b। हम एक आवश्यक और पर्याप्त शर्त चाहते हैं जिससे सूत्र i सदैव मान्य हो। पहले, हम पूरकों का उपयोग करके बाएँ पक्ष को सरल करते हैं। बाईं ओर हम चार गुण याद करते हैं जिनका हम उपयोग करेंगे: अंतर, पूरक के साथ सर्वनिष्ठ के रूप में, डी मॉर्गन के नियम, यह कि पूरक का पूरक स्वयं समुच्चय है, और वितरण नियम।", "L": [["goal", "हम  A ∖ (B ∖ C) = (A ∖ B) ∪ C  के मान्य होने की शर्त ढूँढते हैं"], ["txt", "पहले, बाएँ पक्ष को सरल करते हैं"]], "pin": ["(Dif) X ∖ Y = X ∩ Yᶜ", "(De Morgan) (X ∩ Y)ᶜ = Xᶜ ∪ Yᶜ", "(Invol) (Xᶜ)ᶜ = X", "(Distrib) X ∩ (Y ∪ Z) = (X ∩ Y) ∪ (X ∩ Z)"]},
+
+{"clear": 1, "say": "हम A ऋण, B ऋण C से शुरू करते हैं।", "L": [["sub", "A ∖ (B ∖ C)"]]},
+
+{"say": "गुण Dif से, X बराबर A, और Y बराबर B ऋण C लेकर, A ऋण, B ऋण C, बराबर है A सर्वनिष्ठ, B ऋण C के पूरक के।", "L": [["sub", "=  A ∩ (B ∖ C)ᶜ<span class='tag'>(Dif)</span>"]]},
+
+{"say": "फिर से गुण Dif से, अब X बराबर B, और Y बराबर C लेकर, B ऋण C बराबर है B सर्वनिष्ठ, C के पूरक के।", "L": [["sub", "=  A ∩ (B ∩ Cᶜ)ᶜ<span class='tag'>(Dif)</span>"]]},
+
+{"say": "डी मॉर्गन के नियमों से, X बराबर B, और Y बराबर C का पूरक लेकर, B सर्वनिष्ठ C के पूरक का पूरक, बराबर है B के पूरक, सम्मिलन C के पूरक के पूरक के।", "L": [["sub", "=  A ∩ ( Bᶜ ∪ (Cᶜ)ᶜ )<span class='tag'>(De Morgan)</span>"]]},
+
+{"say": "और चूँकि C के पूरक का पूरक C है, गुण Invol से, बचता है A सर्वनिष्ठ, B का पूरक सम्मिलन C।", "L": [["sub", "=  A ∩ ( Bᶜ ∪ C )<span class='tag'>(Invol)</span>"]]},
+
+{"say": "वितरण नियम से, X बराबर A, Y बराबर B का पूरक, और Z बराबर C लेकर, यह बराबर है A सर्वनिष्ठ B का पूरक, सम्मिलन A सर्वनिष्ठ C के।", "L": [["sub", "=  (A ∩ Bᶜ) ∪ (A ∩ C)<span class='tag'>(Distrib)</span>"]]},
+
+{"say": "और गुण Dif से, A सर्वनिष्ठ B का पूरक, A ऋण B है।", "L": [["res", "=  (A ∖ B) ∪ (A ∩ C)<span class='tag'>(Dif)</span>"]]},
+
+{"clear": 1, "say": "अतः, समता i इसके तुल्य है कि A ऋण B, सम्मिलन A सर्वनिष्ठ C, बराबर हो A ऋण B, सम्मिलन C के। हम इस समता को तारा के रूप में लिखते हैं। दोनों पक्षों में केवल यह अंतर है कि बाईं ओर A सर्वनिष्ठ C है, और दाईं ओर C है।", "L": [["txt", "(i)  तुल्य है:"], ["goal", "(A ∖ B) ∪ (A ∩ C) = (A ∖ B) ∪ C<span class='tag'>(★)</span>"]]},
+
+{"title": "(b) (★) ⟺ C ⊆ A", "clear": 1, "say": "हम दावा करते हैं कि तारा समता तभी और केवल तभी सत्य है जब C, A में अंतर्विष्ट हो। हम इसे दोनों दिशाओं में सिद्ध करते हैं।", "L": [["goal", "(★)   ⟺   C ⊆ A"], ["txt", "(⟸)  C ⊆ A मानकर (★) सिद्ध करते हैं"], ["txt", "(⟹)  (★) मानकर C ⊆ A सिद्ध करते हैं"]]},
+
+{"clear": 1, "say": "पहले, दाएँ से बाएँ की दिशा। मान लेते हैं कि C, A में अंतर्विष्ट है। तब A सर्वनिष्ठ C बराबर है C के। वास्तव में, A सर्वनिष्ठ C सदैव C में अंतर्विष्ट है। और उलटे, यदि x, C में है, तो चूँकि C, A में अंतर्विष्ट है, x, A में है, इसलिए x, A में और C में है, अर्थात A सर्वनिष्ठ C में है।", "L": [["hyp", "मान लेते हैं  C ⊆ A"], ["txt", "A ∩ C ⊆ C  सदैव।  और यदि  x ∈ C,  चूँकि  C ⊆ A,  x ∈ A:  अतः  x ∈ A ∩ C"], ["sub", "A ∩ C = C"]]},
+
+{"say": "हम तारा समता के बाएँ पक्ष में A सर्वनिष्ठ C की जगह C रखते हैं। दोनों पक्षों में A ऋण B, सम्मिलन C मिलता है। अतः, तारा समता सत्य है।", "L": [["txt", "(★) में  A ∩ C = C  रखने पर:"], ["res", "(A ∖ B) ∪ C = (A ∖ B) ∪ C"], ["res", "C ⊆ A  ⟹  (★)"]]},
+
+{"clear": 1, "say": "दूसरे, बाएँ से दाएँ की दिशा। मान लेते हैं कि तारा समता सत्य है, और हमें सिद्ध करना है कि C, A में अंतर्विष्ट है। मान लीजिए x, C का कोई भी अवयव है।", "L": [["hyp", "(★) मान लेते हैं"], ["hyp", "मान लीजिए  x ∈ C"], ["goal", "हमें चाहिए:  x ∈ A"]]},
+
+{"say": "चूँकि x, C में है, सम्मिलन की परिभाषा के अनुसार, x, A ऋण B सम्मिलन C में है। और तारा समता के अनुसार, x, A ऋण B सम्मिलन A सर्वनिष्ठ C में भी है।", "L": [["txt", "x ∈ C  ⟹  x ∈ (A ∖ B) ∪ C   (∪ परिभाषा) से"], ["txt", "(★) से:"], ["sub", "x ∈ (A ∖ B) ∪ (A ∩ C)"]]},
+
+{"say": "सम्मिलन की परिभाषा के अनुसार, इसका अर्थ है कि x, A ऋण B में है, या x, A सर्वनिष्ठ C में है। हम दोनों स्थितियों का अध्ययन करते हैं।", "L": [["txt", "(∪ परिभाषा) से:"], ["hyp", "स्थिति 1:  x ∈ A ∖ B"], ["hyp", "स्थिति 2:  x ∈ A ∩ C"]]},
+
+{"say": "स्थिति एक में, अंतर की परिभाषा के अनुसार, x, A में है, और x, B में नहीं है। विशेष रूप से, x, A में है। स्थिति दो में, सर्वनिष्ठ की परिभाषा के अनुसार, x, A में है, और x, C में है। विशेष रूप से, x, A में है।", "L": [["sub", "स्थिति 1:  (∖ परिभाषा) से,  x ∈ A  और  x ∉ B   ⟹   x ∈ A"], ["sub", "स्थिति 2:  (∩ परिभाषा) से,  x ∈ A  और  x ∈ C   ⟹   x ∈ A"]]},
+
+{"clear": 1, "say": "दोनों स्थितियों में, x, A में है। चूँकि x, C का कोई भी अवयव था, हम निष्कर्ष निकालते हैं कि C, A में अंतर्विष्ट है।", "L": [["res", "x ∈ A"], ["res", "(★)  ⟹  C ⊆ A"]]},
+
+{"title": "निष्कर्ष", "clear": 1, "say": "भाग b का निष्कर्ष। सूत्र i तभी और केवल तभी मान्य है जब C, A में अंतर्विष्ट हो। भाग a के प्रति-उदाहरण से जाँचते हैं: C शून्य वाला समुच्चय था, और A रिक्त था, इसलिए C, A में अंतर्विष्ट नहीं था, और सूत्र असफल हुआ।", "L": [["res", "A ∖ (B ∖ C) = (A ∖ B) ∪ C   ⟺   C ⊆ A"], ["txt", "प्रति-उदाहरण:  C = { 0 } ⊄ ∅ = A   ⟹   (i) असफल"]]},
+
+{"title": "सारांश", "clear": 1, "say": "सारांश। सूत्र ii सदैव सही है। सूत्र i कभी कभी गलत है, और ठीक तब मान्य है जब C, A में अंतर्विष्ट हो। देखने के लिए धन्यवाद।", "L": [["res", "(ii)  (A ∖ B) ∖ C = A ∖ (B ∪ C)   सदैव"], ["res", "(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C   ⟺   C ⊆ A"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' प्लस ').replace(/⊙/g,' गुणा ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ फिर से चलाएँ'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ जारी रखें'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ रोकें';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^hi/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/madhur|hemant|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="तीन समुच्चयों के अंतर";$('sub').textContent="अभ्यास · समुच्चयों का बीजगणित";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Diferenças de três conjuntos</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Lembre-se</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Começar</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Velocidade <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Modo gravação (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"pt-BR",
+"meta":{"nivel": 2, "titulo": "Diferenças de três conjuntos", "enunciado": "(a) Demonstrar que uma das duas fórmulas seguintes é sempre correta e a outra às vezes é falsa. (b) Estabelecer uma condição necessária e suficiente adicional para que a fórmula incorreta seja sempre válida.", "tesis": "<span dir='ltr'>(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C</span><br><span dir='ltr'>(ii)  (A ∖ B) ∖ C = A ∖ (B ∪ C)</span>", "datos": ["(Def ∖)  x ∈ X ∖ Y  ⟺  x ∈ X  e  x ∉ Y"]},
+"steps":[
+{"title": "Diferenças de três conjuntos", "sub": "Exercício · Álgebra de conjuntos", "clear": 1, "say": "Olá. Neste vídeo vamos estudar duas fórmulas com diferenças de três conjuntos: uma delas é sempre correta, e a outra às vezes é falsa. Depois, vamos procurar uma condição para que a incorreta seja sempre válida. Vamos muito devagar, escrevendo cada equação e justificando cada passo.", "L": [["txt", "Duas fórmulas com diferenças de três conjuntos"]]},
+
+{"clear": 1, "say": "O que queremos fazer. Na alínea a, temos duas fórmulas. A fórmula i: A menos, B menos C, é igual a, A menos B, união C. A fórmula ii: A menos B, menos C, é igual a A menos, B união C. É preciso demonstrar que uma é sempre correta, e que a outra às vezes é falsa. Na alínea b, é preciso encontrar uma condição necessária e suficiente adicional para que a fórmula incorreta seja sempre válida. Recordamos à esquerda as definições com elementos que vamos usar.", "L": [["goal", "(a)  Uma fórmula é sempre correta e a outra às vezes é falsa:"], ["txt", "(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C"], ["txt", "(ii)  (A ∖ B) ∖ C = A ∖ (B ∪ C)"], ["goal", "(b)  Condição necessária e suficiente para que a incorreta seja sempre válida"]], "pin": ["(Def ∖) x ∈ X ∖ Y  ⟺  x ∈ X  e  x ∉ Y", "(Def ∪) x ∈ X ∪ Y  ⟺  x ∈ X  ou  x ∈ Y", "(Def ∩) x ∈ X ∩ Y  ⟺  x ∈ X  e  x ∈ Y"]},
+
+{"title": "(a) Análise de (i)", "clear": 1, "say": "Alínea a, análise da fórmula i. Vamos ver que não é válida em geral. Para demonstrar que uma fórmula não é sempre verdadeira, basta encontrar um contraexemplo: uns conjuntos concretos para os quais não se verifica.", "L": [["goal", "(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C   não é válida em geral"], ["txt", "Basta um contraexemplo"]]},
+
+{"say": "Escolhemos A igual ao conjunto vazio, B igual ao conjunto vazio, e C igual ao conjunto cujo único elemento é o zero.", "L": [["hyp", "A = ∅"], ["hyp", "B = ∅"], ["hyp", "C = { 0 }"]]},
+
+{"clear": 1, "say": "Calculamos o lado esquerdo. Primeiro, B menos C é o conjunto vazio menos o conjunto com o zero. Como o vazio não tem elementos, não pode ter elementos que não estejam em C. Logo B menos C é o vazio.", "L": [["txt", "Lado esquerdo.  Primeiro:"], ["sub", "B ∖ C = ∅ ∖ { 0 } = ∅"]]},
+
+{"say": "Agora, A menos, B menos C, é o vazio menos o vazio, que é outra vez o vazio. Portanto, o lado esquerdo é o conjunto vazio.", "L": [["sub", "A ∖ (B ∖ C) = ∅ ∖ ∅ = ∅"]]},
+
+{"say": "Calculamos o lado direito. A menos B é o vazio menos o vazio, que é o vazio. E o vazio união o conjunto com o zero é o conjunto com o zero. Portanto, o lado direito é o conjunto com o zero.", "L": [["txt", "Lado direito:"], ["sub", "A ∖ B = ∅ ∖ ∅ = ∅"], ["sub", "(A ∖ B) ∪ C = ∅ ∪ { 0 } = { 0 }"]]},
+
+{"clear": 1, "say": "Comparamos. O lado esquerdo é o vazio, e o lado direito é o conjunto com o zero. Não são iguais, porque o zero pertence ao segundo, e não pertence ao primeiro. Logo a fórmula i não se verifica para estes conjuntos, e é às vezes falsa.", "L": [["warn", "∅ ≠ { 0 }   porque  0 ∈ { 0 }  e  0 ∉ ∅"], ["res", "(i) é às vezes falsa"]]},
+
+{"title": "(a) Análise de (ii)", "clear": 1, "say": "Alínea a, análise da fórmula ii. Vamos demonstrar que A menos, B união C, é igual a, A menos B, menos C, para quaisquer conjuntos A, B e C. Tomamos um elemento arbitrário x, e vamos escrever uma cadeia de equivalências. Como cada passo é uma equivalência, pode ler-se nos dois sentidos, e isto demonstra as duas inclusões ao mesmo tempo.", "L": [["hyp", "Seja x um elemento arbitrário"], ["goal", "Queremos:  x ∈ A ∖ (B ∪ C)  ⟺  x ∈ (A ∖ B) ∖ C"]]},
+
+{"clear": 1, "say": "Começamos com a afirmação x pertence a A menos, B união C.", "L": [["sub", "x ∈ A ∖ (B ∪ C)"]]},
+
+{"say": "Pela definição de diferença, com X igual a A, e Y igual a B união C, isto equivale a que x pertence a A, e x não pertence a B união C.", "L": [["sub", "⟺  x ∈ A  e  x ∉ B ∪ C<span class='tag'>(Def ∖)</span>"]]},
+
+{"say": "Agora, x não pertencer a B união C significa que não se verifica que x pertença a B, ou que x pertença a C. E isto acontece quando x não pertence a B, e x não pertence a C.", "L": [["sub", "⟺  x ∈ A  e  ( x ∉ B  e  x ∉ C )<span class='tag'>(Def ∪), negada</span>"]]},
+
+{"say": "Agrupamos de outra maneira, usando que a conjunção é associativa: primeiro, x pertence a A, e x não pertence a B, tudo isso, e x não pertence a C.", "L": [["sub", "⟺  ( x ∈ A  e  x ∉ B )  e  x ∉ C<span class='tag'>Associatividade de «e»</span>"]]},
+
+{"say": "Pela definição de diferença, com X igual a A, e Y igual a B, x pertencer a A e não pertencer a B equivale a x pertencer a A menos B.", "L": [["sub", "⟺  x ∈ A ∖ B  e  x ∉ C<span class='tag'>(Def ∖)</span>"]]},
+
+{"say": "E outra vez pela definição de diferença, agora com X igual a A menos B, e Y igual a C, isto equivale a x pertencer a A menos B, menos C.", "L": [["sub", "⟺  x ∈ (A ∖ B) ∖ C<span class='tag'>(Def ∖)</span>"]]},
+
+{"clear": 1, "say": "Como x era arbitrário, as duas afirmações extremas são equivalentes para todo x. Portanto, os dois conjuntos são iguais, e a fórmula ii é válida para quaisquer conjuntos A, B e C.", "L": [["res", "A ∖ (B ∪ C) = (A ∖ B) ∖ C"], ["res", "(ii) é sempre correta"]]},
+
+{"title": "(b) Condição para que (i) seja válida", "clear": 1, "say": "Alínea b. Queremos uma condição necessária e suficiente para que a fórmula i seja sempre válida. Primeiro, simplificamos o lado esquerdo, usando complementares. Recordamos à esquerda quatro propriedades que vamos usar: a diferença como interseção com o complementar, as leis de De Morgan, que o complementar do complementar é o próprio conjunto, e a distributividade.", "L": [["goal", "Procuramos uma condição para que  A ∖ (B ∖ C) = (A ∖ B) ∪ C  seja válida"], ["txt", "Primeiro, simplificamos o lado esquerdo"]], "pin": ["(Dif) X ∖ Y = X ∩ Yᶜ", "(De Morgan) (X ∩ Y)ᶜ = Xᶜ ∪ Yᶜ", "(Invol) (Xᶜ)ᶜ = X", "(Distrib) X ∩ (Y ∪ Z) = (X ∩ Y) ∪ (X ∩ Z)"]},
+
+{"clear": 1, "say": "Começamos com A menos, B menos C.", "L": [["sub", "A ∖ (B ∖ C)"]]},
+
+{"say": "Pela propriedade Dif, com X igual a A, e Y igual a B menos C, A menos, B menos C, é A interseção, o complementar de B menos C.", "L": [["sub", "=  A ∩ (B ∖ C)ᶜ<span class='tag'>(Dif)</span>"]]},
+
+{"say": "Outra vez pela propriedade Dif, agora com X igual a B, e Y igual a C, B menos C é B interseção, o complementar de C.", "L": [["sub", "=  A ∩ (B ∩ Cᶜ)ᶜ<span class='tag'>(Dif)</span>"]]},
+
+{"say": "Pelas leis de De Morgan, com X igual a B, e Y igual ao complementar de C, o complementar de B interseção o complementar de C, é o complementar de B, união o complementar do complementar de C.", "L": [["sub", "=  A ∩ ( Bᶜ ∪ (Cᶜ)ᶜ )<span class='tag'>(De Morgan)</span>"]]},
+
+{"say": "E como o complementar do complementar de C é C, pela propriedade Invol, fica A interseção, o complementar de B união C.", "L": [["sub", "=  A ∩ ( Bᶜ ∪ C )<span class='tag'>(Invol)</span>"]]},
+
+{"say": "Pela distributividade, com X igual a A, Y igual ao complementar de B, e Z igual a C, isto é, A interseção o complementar de B, união A interseção C.", "L": [["sub", "=  (A ∩ Bᶜ) ∪ (A ∩ C)<span class='tag'>(Distrib)</span>"]]},
+
+{"say": "E pela propriedade Dif, A interseção o complementar de B é A menos B.", "L": [["res", "=  (A ∖ B) ∪ (A ∩ C)<span class='tag'>(Dif)</span>"]]},
+
+{"clear": 1, "say": "Portanto, a igualdade i equivale a que A menos B, união A interseção C, seja igual a A menos B, união C. Anotamos esta igualdade como estrela. Os dois lados só diferem em que à esquerda aparece A interseção C, e à direita aparece C.", "L": [["txt", "(i)  equivale a:"], ["goal", "(A ∖ B) ∪ (A ∩ C) = (A ∖ B) ∪ C<span class='tag'>(★)</span>"]]},
+
+{"title": "(b) (★) ⟺ C ⊆ A", "clear": 1, "say": "Afirmamos que a igualdade estrela se verifica se e só se C está contido em A. Demonstramo-lo nos dois sentidos.", "L": [["goal", "(★)   ⟺   C ⊆ A"], ["txt", "(⟸)  Supomos C ⊆ A e provamos (★)"], ["txt", "(⟹)  Supomos (★) e provamos C ⊆ A"]]},
+
+{"clear": 1, "say": "Primeiro, o sentido da direita para a esquerda. Supomos que C está contido em A. Então A interseção C é igual a C. De facto, A interseção C está sempre contido em C. E reciprocamente, se x pertence a C, como C está contido em A, x pertence a A, logo x pertence a A e a C, ou seja, a A interseção C.", "L": [["hyp", "Supomos  C ⊆ A"], ["txt", "A ∩ C ⊆ C  sempre.  E se  x ∈ C,  como  C ⊆ A,  x ∈ A:  logo  x ∈ A ∩ C"], ["sub", "A ∩ C = C"]]},
+
+{"say": "Substituímos A interseção C por C no lado esquerdo da igualdade estrela. Obtemos A menos B, união C, nos dois lados. Portanto, a igualdade estrela verifica-se.", "L": [["txt", "Substituindo  A ∩ C = C  em (★):"], ["res", "(A ∖ B) ∪ C = (A ∖ B) ∪ C"], ["res", "C ⊆ A  ⟹  (★)"]]},
+
+{"clear": 1, "say": "Segundo, o sentido da esquerda para a direita. Supomos que se verifica a igualdade estrela, e temos de provar que C está contido em A. Seja x um elemento qualquer de C.", "L": [["hyp", "Supomos (★)"], ["hyp", "Seja  x ∈ C"], ["goal", "Queremos:  x ∈ A"]]},
+
+{"say": "Como x pertence a C, pela definição de união, x pertence a A menos B, união C. E pela igualdade estrela, x pertence também a A menos B, união A interseção C.", "L": [["txt", "x ∈ C  ⟹  x ∈ (A ∖ B) ∪ C   por (Def ∪)"], ["txt", "Por (★):"], ["sub", "x ∈ (A ∖ B) ∪ (A ∩ C)"]]},
+
+{"say": "Pela definição de união, isto significa que x pertence a A menos B, ou x pertence a A interseção C. Estudamos os dois casos.", "L": [["txt", "Por (Def ∪):"], ["hyp", "Caso 1:  x ∈ A ∖ B"], ["hyp", "Caso 2:  x ∈ A ∩ C"]]},
+
+{"say": "No caso um, pela definição de diferença, x pertence a A, e x não pertence a B. Em particular, x pertence a A. No caso dois, pela definição de interseção, x pertence a A, e x pertence a C. Em particular, x pertence a A.", "L": [["sub", "Caso 1:  por (Def ∖),  x ∈ A  e  x ∉ B   ⟹   x ∈ A"], ["sub", "Caso 2:  por (Def ∩),  x ∈ A  e  x ∈ C   ⟹   x ∈ A"]]},
+
+{"clear": 1, "say": "Nos dois casos, x pertence a A. Como x era um elemento qualquer de C, concluímos que C está contido em A.", "L": [["res", "x ∈ A"], ["res", "(★)  ⟹  C ⊆ A"]]},
+
+{"title": "Conclusão", "clear": 1, "say": "Conclusão da alínea b. A fórmula i é válida se e só se C está contido em A. Verificamos com o contraexemplo da alínea a: C era o conjunto com o zero, e A era o vazio, portanto C não estava contido em A, e a fórmula falhava.", "L": [["res", "A ∖ (B ∖ C) = (A ∖ B) ∪ C   ⟺   C ⊆ A"], ["txt", "Contraexemplo:  C = { 0 } ⊄ ∅ = A   ⟹   (i) falha"]]},
+
+{"title": "Resumo", "clear": 1, "say": "Resumindo. A fórmula ii é sempre correta. A fórmula i é às vezes falsa, e é válida exatamente quando C está contido em A. Obrigado por ver o vídeo.", "L": [["res", "(ii)  (A ∖ B) ∖ C = A ∖ (B ∪ C)   sempre"], ["res", "(i)  A ∖ (B ∖ C) = (A ∖ B) ∪ C   ⟺   C ⊆ A"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' mais ').replace(/⊙/g,' vezes ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Repetir'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Continuar'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pausa';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^pt/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/antonio|antônio|donato|fabio|duarte|male|google português$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Diferenças de três conjuntos";$('sub').textContent="Exercício · Álgebra de conjuntos";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
