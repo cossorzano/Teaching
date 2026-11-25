@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>বাস্তব সংখ্যা</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>মনে রাখুন</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ শুরু</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>গতি <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">রেকর্ডিং মোড (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"bn-BD",
+"meta":{"nivel": 0, "titulo": "বাস্তব সংখ্যা", "enunciado": "সারসংক্ষেপ: ক্ষেত্র, ক্রম, পূর্ণতা, আর্কিমিডীয় ধর্ম, বর্ধিত রেখা ও পরমমান", "datos": ["ক্ষেত্র গঠন", "ক্রম", "পূর্ণতা", "আর্কিমিডীয় ধর্ম", "বর্ধিত বাস্তব রেখা", "পরমমান"]},
+"steps":[
+{"title": "বাস্তব সংখ্যা: সারসংক্ষেপ", "sub": "সারসংক্ষেপ: ক্ষেত্র, ক্রম, পূর্ণতা, আর্কিমিডীয় ধর্ম, বর্ধিত রেখা ও পরমমান", "clear": 1, "say": "নমস্কার। এই ভিডিওতে আমরা বাস্তব সংখ্যার মৌলিক ধর্মগুলোর সারসংক্ষেপ দেখব। এগুলোই সেই ভিত্তি, যার উপর পুরো ক্যালকুলাস গড়ে ওঠে: সীমা, সন্ততা, অন্তরকলনযোগ্যতা ও সমাকলনযোগ্যতা। আমরা ছয়টি ধারণা দেখব: ক্ষেত্র গঠন, ক্রম, পূর্ণতা, আর্কিমিডীয় ধর্ম, বর্ধিত বাস্তব রেখা, এবং পরমমান।", "L": [["txt", "বাস্তব সংখ্যার সেট  ℝ  ক্যালকুলাসের কাঠামো"], ["txt", "সীমা · সন্ততা · অন্তরকলনযোগ্যতা · সমাকলনযোগ্যতা"], ["txt", "এগুলো ℝ-এর গঠনগত ধর্মের উপর নির্ভর করে, শুধু গণনার উপর নয়"]]},
+
+{"title": "1) ক্ষেত্র গঠন", "clear": 1, "say": "প্রথম ধারণা: বীজগাণিতিক গঠন। বাস্তব সংখ্যাগুলো, যোগ ও গুণের সাথে, একটি বিনিময়যোগ্য ক্ষেত্র গঠন করে। এর অর্থ চারটি বিষয়। এক: যোগ ও গুণ অভ্যন্তরীণ, সহযোজ্য ও বিনিময়যোগ্য প্রক্রিয়া। দুই: অভেদ উপাদান আছে, যোগের জন্য শূন্য, আর গুণের জন্য এক। তিন: প্রতিটি বাস্তব সংখ্যা x-এর একটি বিপরীত আছে, ঋণাত্মক x। আর চার: যদি x শূন্য না হয়, তবে তার একটি গুণাত্মক বিপরীতক আছে, x-এর ঘাত ঋণাত্মক এক।", "L": [["goal", "(ℝ, +, ·)  একটি বিনিময়যোগ্য ক্ষেত্র"], ["txt", "যোগ ও গুণ: অভ্যন্তরীণ, সহযোজ্য ও বিনিময়যোগ্য"], ["txt", "অভেদ:  0  এবং  1"], ["txt", "বিপরীত:  প্রতিটি x-এর  −x  আছে"], ["txt", "বিপরীতক:  যদি x ≠ 0,  তবে  x⁻¹  আছে"]], "pin": ["1. ক্ষেত্র: (ℝ, +, ·)"]},
+
+{"clear": 1, "say": "সব বাস্তব সংখ্যা a, b ও c-এর জন্য এই অভেদগুলো সত্য। যোগের সহযোজ্যতা: a যোগ, b যোগ c, সমান, a যোগ b, যোগ c। গুণের সহযোজ্যতা: a গুণ, b গুণ c, সমান, a গুণ b, গুণ c। বণ্টন: a গুণ, b যোগ c, সমান a গুণ b, যোগ a গুণ c। আর অভেদ: a যোগ শূন্য হলো a, এবং a গুণ এক হলো a। এই ধর্মগুলো নিশ্চিত করে যে ক্যালকুলাসের বীজগাণিতিক রূপান্তরগুলো সংগত।", "L": [["res", "a + (b + c) = (a + b) + c"], ["res", "a (b c) = (a b) c"], ["res", "a (b + c) = a b + a c"], ["res", "a + 0 = a,        a · 1 = a"], ["txt", "বীজগাণিতিক রূপান্তরের সংগতি নিশ্চিত করে"]]},
+
+{"title": "2) ক্রম", "clear": 1, "say": "দ্বিতীয় ধারণা: ক্রম। ক্ষেত্র হওয়ার পাশাপাশি, বাস্তব সংখ্যার সেটে একটি পূর্ণ ক্রম সম্পর্ক আছে, ছোট বা সমান, যা প্রক্রিয়াগুলোর সাথে সংগত। পূর্ণ হওয়ার অর্থ, আমরা যেকোনো দুটি বাস্তব সংখ্যার তুলনা করতে পারি।", "L": [["goal", "ℝ-এ একটি পূর্ণ ক্রম  ≤  আছে"], ["txt", "যেকোনো দুটি বাস্তব সংখ্যার তুলনা করা যায়"]], "pin": ["2. পূর্ণ ক্রম ≤"]},
+
+{"say": "যোগের সাথে সংগতি বলে, যদি a, b-এর চেয়ে ছোট বা সমান হয়, তবে প্রতিটি c-এর জন্য, a যোগ c, b যোগ c-এর চেয়ে ছোট বা সমান। গুণের সাথে সংগতি বলে, যদি c শূন্যের চেয়ে বড় বা সমান হয়, এবং a, b-এর চেয়ে ছোট বা সমান হয়, তবে a গুণ c, b গুণ c-এর চেয়ে ছোট বা সমান। সাবধান: c-কে ধনাত্মক বা শূন্য হতে হবে।", "L": [["res", "a ≤ b   ⟹   a + c ≤ b + c"], ["res", "0 ≤ c  এবং  a ≤ b   ⟹   a c ≤ b c"]]},
+
+{"say": "পূর্ণ ক্রম দিয়ে আমরা ব্যবধি সংজ্ঞায়িত করতে পারি: a থেকে b পর্যন্ত খোলা, a থেকে b পর্যন্ত বন্ধ, a থেকে ধনাত্মক অসীম পর্যন্ত, এবং আরও। সীমা ও সন্ততা প্রকাশ করতে ব্যবধিগুলো মৌলিক।", "L": [["txt", "ব্যবধি:   (a, b),    [a, b],    (a, +∞),   …"], ["txt", "সীমা ও সন্ততায় কেন্দ্রীয় ভূমিকা রাখে"]]},
+
+{"title": "3) পূর্ণতা", "clear": 1, "say": "তৃতীয় ধারণা, সবচেয়ে গুরুত্বপূর্ণ: পূর্ণতা। এটি বাস্তব সংখ্যার বৈশিষ্ট্যসূচক ধর্ম। ধরা যাক A হলো বাস্তব সংখ্যার একটি অশূন্য উপসেট, এবং উপরে সীমাবদ্ধ। তাহলে একটি বাস্তব সংখ্যা s আছে, যার দুটি ধর্ম আছে।", "L": [["goal", "A ⊆ ℝ,   A ≠ ∅,   উপরে সীমাবদ্ধ"], ["txt", "তাহলে এমন  s ∈ ℝ  আছে যে:"]], "pin": ["3. পূর্ণতা: sup A"]},
+
+{"say": "প্রথম ধর্ম: A-এর প্রতিটি উপাদান a-এর জন্য, a, s-এর চেয়ে ছোট বা সমান। অর্থাৎ, s হলো A-এর একটি ঊর্ধ্বসীমা।", "L": [["res", "(1)   ∀ a ∈ A,   a ≤ s"], ["txt", "s হলো A-এর একটি ঊর্ধ্বসীমা"]]},
+
+{"say": "দ্বিতীয় ধর্ম: শূন্যের চেয়ে বড় প্রতিটি এপসাইলনের জন্য, A-এর একটি উপাদান a আছে, যাতে s বিয়োগ এপসাইলন, a-এর চেয়ে ছোট। অর্থাৎ, s-এর চেয়ে ছোট কোনো রাশিই ঊর্ধ্বসীমা নয়: s হলো সব ঊর্ধ্বসীমার মধ্যে ক্ষুদ্রতম।", "L": [["res", "(2)   ∀ ε &gt; 0,   ∃ a ∈ A :   s − ε &lt; a"], ["txt", "s-এর চেয়ে ছোট কিছুই ঊর্ধ্বসীমা নয়: s হলো ক্ষুদ্রতম ঊর্ধ্বসীমা"]]},
+
+{"say": "এই সংখ্যা s-কে A-এর সুপ্রিমাম বলে, এবং লেখা হয় sup A। একইভাবে, প্রতিটি অশূন্য ও নিচে সীমাবদ্ধ সেটের একটি ইনফিমাম আছে।", "L": [["res", "s = sup A      (A-এর সুপ্রিমাম)"], ["txt", "একইভাবে: অশূন্য ও নিচে সীমাবদ্ধ  ⟹  inf A  আছে"]]},
+
+{"say": "এই ধর্মগুলো বীজগণিত বা ক্রম থেকে আসে না: এগুলো বাস্তব সংখ্যার নিজস্ব স্বতঃসিদ্ধ। আসলে, মূলদ সংখ্যায় এগুলো মিথ্যা। আর এগুলোই ক্যালকুলাসের যৌক্তিক ভিত্তি: একঘেয়ে সীমাবদ্ধ অনুক্রমের সীমার অস্তিত্ব, আসন্নমান দিয়ে সংজ্ঞায়িত অনুক্রমের অভিসৃতি, এবং সীমার কঠোর সংজ্ঞা, সবই সুপ্রিমাম ও ইনফিমামের অস্তিত্বের উপর নির্ভর করে।", "L": [["txt", "ℝ-এর নিজস্ব স্বতঃসিদ্ধ।  ℚ-এ মিথ্যা"], ["txt", "এটি ভিত্তি:"], ["txt", "· একঘেয়ে সীমাবদ্ধ অনুক্রমের সীমার"], ["txt", "· আসন্নমান দিয়ে সংজ্ঞায়িত অনুক্রমের অভিসৃতির"], ["txt", "· কঠোর সংজ্ঞার:   lim aₙ = L   (n → ∞)"]], "clear": 1},
+
+{"title": "4) আর্কিমিডীয় ধর্ম", "clear": 1, "say": "চতুর্থ ধারণা: আর্কিমিডীয় ধর্ম। এটি বলে, শূন্যের চেয়ে বড় সব সংখ্যা a ও b-এর জন্য, একটি স্বাভাবিক সংখ্যা n আছে, যাতে n গুণ a, b-এর চেয়ে বড়। অর্থাৎ, a যত ছোটই হোক, যথেষ্ট বার যোগ করলে যেকোনো b-কে ছাড়িয়ে যায়।", "L": [["goal", "আর্কিমিডীয় ধর্ম"], ["res", "∀ a, b &gt; 0,   ∃ n ∈ ℕ :   n a &gt; b"]], "pin": ["4. আর্কিমিডীয়"]},
+
+{"say": "এটি নিশ্চিত করে যে স্বাভাবিক সংখ্যাগুলো বাস্তব সংখ্যায় সীমাবদ্ধ নয়, এবং বাস্তব রাশিকে বিচ্ছিন্ন আসন্নমানের সাথে যুক্ত করতে দেয়। অনুমান ও ত্রুটি নিয়ন্ত্রণ সহ প্রমাণে এটি একটি অপরিহার্য হাতিয়ার।", "L": [["txt", "ℕ, ℝ-এ সীমাবদ্ধ নয়"], ["txt", "বাস্তব রাশিকে বিচ্ছিন্ন আসন্নমানের সাথে যুক্ত করে"], ["txt", "অনুমান ও ত্রুটি নিয়ন্ত্রণে উপযোগী"]]},
+
+{"title": "5) বর্ধিত বাস্তব রেখা", "clear": 1, "say": "পঞ্চম ধারণা: বর্ধিত বাস্তব রেখা। বাস্তব সংখ্যার সাথে দুটি প্রতীক, ঋণাত্মক অসীম ও ধনাত্মক অসীম, যোগ করে এটি পাওয়া যায়। এটি অসীমাবদ্ধ আচরণকে একীভূতভাবে বর্ণনা করতে দেয়।", "L": [["goal", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> = ℝ ∪ { −∞, +∞ }"], ["txt", "অসীমাবদ্ধ আচরণকে একীভূতভাবে বর্ণনা করে"]], "pin": ["5. বর্ধিত রেখা <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span>"]},
+
+{"say": "বাস্তব সংখ্যার ক্রম প্রসারিত হয়: প্রতিটি বাস্তব x-এর জন্য, ঋণাত্মক অসীম, x-এর চেয়ে ছোট বা সমান, এবং x, ধনাত্মক অসীমের চেয়ে ছোট বা সমান। তবে, বর্ধিত রেখা ক্ষেত্রও নয়, বলয়ও নয়, কারণ কিছু প্রক্রিয়া কেবল আংশিকভাবে সংজ্ঞায়িত। একে শুধু সহায়ক হাতিয়ার হিসেবে ব্যবহার করা উচিত।", "L": [["res", "∀ x ∈ ℝ :   −∞ ≤ x ≤ +∞"], ["warn", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> ক্ষেত্রও নয়, বলয়ও নয়"], ["txt", "সহায়ক হাতিয়ার"]]},
+
+{"title": "6) পরমমান", "clear": 1, "say": "ষষ্ঠ ধারণা: পরমমান, যা বাস্তব সংখ্যার ক্রমযুক্ত গঠনের সাথে জড়িত। এটি ক্ষেত্রভেদে সংজ্ঞায়িত। x-এর পরমমান x, যদি x শূন্যের চেয়ে বড় বা সমান হয়, আর ঋণাত্মক x, যদি x শূন্যের চেয়ে ছোট হয়।", "L": [["goal", "পরমমান"], ["res", "|x| = x    যদি  x ≥ 0"], ["res", "|x| = −x   যদি  x &lt; 0"]], "pin": ["6. পরমমান |x|"]},
+
+{"say": "এটি দিয়ে দুটি বাস্তব সংখ্যার দূরত্বকে x বিয়োগ y-এর পরমমান দিয়ে প্রকাশ করা যায়, এবং অসমতাগুলো প্রতিসমভাবে লেখা যায়। বিশেষত, x বিয়োগ a-এর পরমমান এপসাইলনের চেয়ে ছোট, যদি এবং কেবল যদি, x থাকে a বিয়োগ এপসাইলন ও a যোগ এপসাইলনের মাঝে।", "L": [["txt", "x ও y-এর দূরত্ব:   |x − y|"], ["res", "|x − a| &lt; ε   ⟺   a − ε &lt; x &lt; a + ε"], ["txt", "সীমা ও সন্ততার সংজ্ঞার কারিগরি ভিত্তি"]]},
+
+{"title": "সারসংক্ষেপ", "clear": 1, "say": "সারসংক্ষেপ। বাস্তব সংখ্যাগুলো একটি বিনিময়যোগ্য ক্ষেত্র গঠন করে, যেখানে প্রক্রিয়াগুলোর সাথে সংগত একটি পূর্ণ ক্রম আছে। এর বৈশিষ্ট্যসূচক ধর্ম হলো পূর্ণতা: প্রতিটি অশূন্য ও উপরে সীমাবদ্ধ সেটের সুপ্রিমাম আছে। এ থেকেই আর্কিমিডীয় ধর্ম আসে। বর্ধিত রেখা একটি সহায়ক হাতিয়ার, আর পরমমান দূরত্ব মাপে। দেখার জন্য ধন্যবাদ।", "L": [["res", "ℝ:  বিনিময়যোগ্য ক্ষেত্র  +  সংগত পূর্ণ ক্রম"], ["res", "পূর্ণতা:  উপরে সীমাবদ্ধ প্রতিটি A ≠ ∅-এর  sup A  আছে"], ["res", "আর্কিমিডীয়:  ∀ a, b &gt; 0,  ∃ n ∈ ℕ :  n a &gt; b"], ["res", "|x − a| &lt; ε  ⟺  a − ε &lt; x &lt; a + ε"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' প্লাস ').replace(/⊙/g,' গুণ ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ আবার চালান'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ চালিয়ে যান'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ বিরতি';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^bn/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/pradeep|bashkar|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="বাস্তব সংখ্যা";$('sub').textContent="সারসংক্ষেপ: ক্ষেত্র, ক্রম, পূর্ণতা, আর্কিমিডীয় ধর্ম, বর্ধিত রেখা ও পরমমান";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

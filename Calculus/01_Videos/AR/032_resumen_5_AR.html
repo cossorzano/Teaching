@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>الأعداد الحقيقية</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-inline-end:2px dashed #3d5a50;padding-inline-end:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-inline-start:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+span[dir='ltr']{white-space:nowrap}
+svg{direction:ltr}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>تذكّر</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ ابدأ</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>السرعة <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">وضع التسجيل (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ar-SA",
+"meta":{"nivel": 0, "titulo": "الأعداد الحقيقية", "enunciado": "ملخص: الحقل، والترتيب، والتمام، وخاصية أرخميدس، والمستقيم الممدد، والقيمة المطلقة", "datos": ["بنية الحقل", "الترتيب", "التمام", "خاصية أرخميدس", "المستقيم الحقيقي الممدد", "القيمة المطلقة"]},
+"steps":[
+{"title": "الأعداد الحقيقية: ملخص", "sub": "ملخص: الحقل، والترتيب، والتمام، وخاصية أرخميدس، والمستقيم الممدد، والقيمة المطلقة", "clear": 1, "say": "مرحبًا. في هذا الفيديو نلخص الخواص الأساسية للأعداد الحقيقية، وهي الأساس الذي يُبنى عليه التفاضل والتكامل كله: النهايات، والاتصال، وقابلية الاشتقاق، وقابلية التكامل. سنرى ست أفكار: بنية الحقل، والترتيب، والتمام، وخاصية أرخميدس، والمستقيم الحقيقي الممدد، والقيمة المطلقة.", "L": [["txt", "مجموعة الأعداد الحقيقية  <span dir='ltr'>ℝ</span>  هي إطار التفاضل والتكامل"], ["txt", "النهاية <span dir='ltr'>·</span> الاتصال <span dir='ltr'>·</span> قابلية الاشتقاق <span dir='ltr'>·</span> قابلية التكامل"], ["txt", "تعتمد على خواص بنيوية لـ <span dir='ltr'>ℝ</span>، لا على الحساب فقط"]]},
+
+{"title": "1) بنية الحقل", "clear": 1, "say": "الفكرة الأولى: البنية الجبرية. الأعداد الحقيقية، مع الجمع والضرب، تشكل حقلًا تبديليًا. وهذا يعني أربعة أمور. أولًا: الجمع والضرب عمليتان داخليتان، تجميعيتان وتبديليتان. ثانيًا: يوجد عنصران محايدان، الصفر للجمع، والواحد للضرب. ثالثًا: لكل عدد حقيقي x نظير، هو سالب x. ورابعًا: إذا كان x لا يساوي الصفر، فله مقلوب ضربي، هو x مرفوعًا إلى سالب واحد.", "L": [["goal", "<span dir='ltr'>(ℝ, +, ·)</span>  حقل تبديلي"], ["txt", "الجمع والضرب: داخليان، تجميعيان، تبديليان"], ["txt", "العنصران المحايدان:  <span dir='ltr'>0</span>  و  <span dir='ltr'>1</span>"], ["txt", "النظير:  لكل <span dir='ltr'>x</span> يوجد  <span dir='ltr'>−x</span>"], ["txt", "المقلوب:  إذا كان <span dir='ltr'>x ≠ 0</span>،  يوجد  <span dir='ltr'>x⁻¹</span>"]], "pin": ["<span dir='ltr'>1.</span> الحقل: <span dir='ltr'>(ℝ, +, ·)</span>"]},
+
+{"clear": 1, "say": "لكل الأعداد الحقيقية a و b و c تتحقق هذه المتطابقات. تجميعية الجمع: a زائد، b زائد c، يساوي، a زائد b، زائد c. تجميعية الضرب: a ضرب، b ضرب c، يساوي، a ضرب b، ضرب c. التوزيع: a ضرب، b زائد c، يساوي a ضرب b، زائد a ضرب c. والعنصران المحايدان: a زائد صفر يساوي a، و a ضرب واحد يساوي a. وهذه الخواص تضمن أن التحويلات الجبرية في التفاضل والتكامل متسقة.", "L": [["res", "<span dir='ltr'>a + (b + c) = (a + b) + c</span>"], ["res", "<span dir='ltr'>a (b c) = (a b) c</span>"], ["res", "<span dir='ltr'>a (b + c) = a b + a c</span>"], ["res", "<span dir='ltr'>a + 0 = a,        a · 1 = a</span>"], ["txt", "تضمن اتساق التحويلات الجبرية"]]},
+
+{"title": "2) الترتيب", "clear": 1, "say": "الفكرة الثانية: الترتيب. إضافة إلى كونها حقلًا، لمجموعة الأعداد الحقيقية علاقة ترتيب كلي، أصغر من أو يساوي، متوافقة مع العمليات. وكونه كليًا يعني أننا نستطيع المقارنة بين أي عددين حقيقيين.", "L": [["goal", "في <span dir='ltr'>ℝ</span> ترتيب كلي  <span dir='ltr'>≤</span>"], ["txt", "يمكن المقارنة بين أي عددين حقيقيين"]], "pin": ["<span dir='ltr'>2.</span> الترتيب الكلي <span dir='ltr'>≤</span>"]},
+
+{"say": "التوافق مع الجمع يقول: إذا كان a أصغر من أو يساوي b، فإن a زائد c أصغر من أو يساوي b زائد c، لكل c. والتوافق مع الضرب يقول: إذا كان c أكبر من أو يساوي الصفر، و a أصغر من أو يساوي b، فإن a ضرب c أصغر من أو يساوي b ضرب c. انتبه: يجب أن يكون c موجبًا أو صفرًا.", "L": [["res", "<span dir='ltr'>a ≤ b   ⟹   a + c ≤ b + c</span>"], ["res", "<span dir='ltr'>0 ≤ c  ∧  a ≤ b   ⟹   a c ≤ b c</span>"]]},
+
+{"say": "يسمح الترتيب الكلي بتعريف المجالات: المفتوح من a إلى b، والمغلق من a إلى b، ومن a إلى موجب ما لا نهاية، وغيرها. والمجالات أساسية لصياغة النهايات والاتصال.", "L": [["txt", "المجالات:   <span dir='ltr'>(a, b)</span>،    <span dir='ltr'>[a, b]</span>،    <span dir='ltr'>(a, +∞)</span>،   <span dir='ltr'>…</span>"], ["txt", "أساسية في النهايات وفي الاتصال"]]},
+
+{"title": "3) التمام", "clear": 1, "say": "الفكرة الثالثة، وهي الأهم: التمام. إنه الخاصية المميزة للأعداد الحقيقية. لتكن A مجموعة جزئية غير خالية من الأعداد الحقيقية، ومحدودة من الأعلى. عندئذ يوجد عدد حقيقي s له خاصيتان.", "L": [["goal", "<span dir='ltr'>A ⊆ ℝ</span>،   <span dir='ltr'>A ≠ ∅</span>،   محدودة من الأعلى"], ["txt", "عندئذ يوجد  <span dir='ltr'>s ∈ ℝ</span>  بحيث:"]], "pin": ["<span dir='ltr'>3.</span> التمام: <span dir='ltr'>sup A</span>"]},
+
+{"say": "الخاصية الأولى: لكل عنصر a من A، يكون a أصغر من أو يساوي s. أي أن s حد أعلى لـ A.", "L": [["res", "<span dir='ltr'>(1)   ∀ a ∈ A,   a ≤ s</span>"], ["txt", "<span dir='ltr'>s</span> حد أعلى لـ <span dir='ltr'>A</span>"]]},
+
+{"say": "الخاصية الثانية: لكل إبسيلون أكبر من الصفر، يوجد عنصر a من A بحيث يكون s ناقص إبسيلون أصغر من a. أي أنه لا توجد كمية أصغر من s تكون حدًا أعلى: s هو أصغر الحدود العليا.", "L": [["res", "<span dir='ltr'>(2)   ∀ ε &gt; 0,   ∃ a ∈ A :   s − ε &lt; a</span>"], ["txt", "لا شيء أصغر من <span dir='ltr'>s</span> حدٌّ أعلى: <span dir='ltr'>s</span> هو أصغر حد أعلى"]]},
+
+{"say": "يسمى هذا العدد s الحد الأعلى الأصغر لـ A، ونكتبه sup A. وبالمثل، لكل مجموعة غير خالية ومحدودة من الأدنى حد أدنى أكبر.", "L": [["res", "<span dir='ltr'>s = sup A</span>،      الحد الأعلى الأصغر لـ <span dir='ltr'>A</span>"], ["txt", "وبالمثل: إذا كانت غير خالية ومحدودة من الأدنى، يوجد  <span dir='ltr'>inf A</span>"]]},
+
+{"say": "هذه الخواص لا تُستنتج من الجبر ولا من الترتيب: إنها مسلّمات خاصة بالأعداد الحقيقية. وفي الواقع، لا تتحقق في الأعداد النسبية. وهي الأساس المنطقي للتفاضل والتكامل: فوجود نهايات المتتاليات الرتيبة المحدودة، وتقارب المتتاليات المعرفة بالتقريب، والتعريف الدقيق للنهاية، كلها تعتمد على وجود الحدود العليا الصغرى والحدود الدنيا الكبرى.", "L": [["txt", "مسلّمة خاصة بـ <span dir='ltr'>ℝ</span>؛  لا تتحقق في <span dir='ltr'>ℚ</span>"], ["txt", "وهي أساس:"], ["txt", "<span dir='ltr'>·</span> نهايات المتتاليات الرتيبة المحدودة"], ["txt", "<span dir='ltr'>·</span> تقارب المتتاليات المعرفة بالتقريب"], ["txt", "<span dir='ltr'>·</span> التعريف الدقيق:   <span dir='ltr'>lim aₙ = L   (n → ∞)</span>"]], "clear": 1},
+
+{"title": "4) خاصية أرخميدس", "clear": 1, "say": "الفكرة الرابعة: خاصية أرخميدس. تقول إنه لكل عددين a و b أكبر من الصفر، يوجد عدد طبيعي n بحيث يكون n ضرب a أكبر من b. أي أنه مهما كان a صغيرًا، فإن جمعه عددًا كافيًا من المرات يتجاوز أي b.", "L": [["goal", "خاصية أرخميدس"], ["res", "<span dir='ltr'>∀ a, b &gt; 0,   ∃ n ∈ ℕ :   n a &gt; b</span>"]], "pin": ["<span dir='ltr'>4.</span> أرخميدس"]},
+
+{"say": "وهذا يضمن أن الأعداد الطبيعية غير محدودة في الأعداد الحقيقية، ويسمح بربط الكميات الحقيقية بالتقريبات المتقطعة. وهي أداة أساسية في البراهين التي فيها تقديرات وضبط للأخطاء.", "L": [["txt", "<span dir='ltr'>ℕ</span> غير محدودة في <span dir='ltr'>ℝ</span>"], ["txt", "تربط الكميات الحقيقية بالتقريبات المتقطعة"], ["txt", "مفيدة في التقديرات وضبط الأخطاء"]]},
+
+{"title": "5) المستقيم الحقيقي الممدد", "clear": 1, "say": "الفكرة الخامسة: المستقيم الحقيقي الممدد. نحصل عليه بإضافة الرمزين سالب ما لا نهاية وموجب ما لا نهاية إلى الأعداد الحقيقية. ويسمح بوصف السلوك غير المحدود بطريقة موحدة.", "L": [["goal", "<span dir='ltr'><span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> = ℝ ∪ { −∞, +∞ }</span>"], ["txt", "يصف السلوك غير المحدود بطريقة موحدة"]], "pin": ["<span dir='ltr'>5.</span> المستقيم الممدد <span dir='ltr' style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span>"]},
+
+{"say": "يمتد ترتيب الأعداد الحقيقية: لكل x حقيقي، سالب ما لا نهاية أصغر من أو يساوي x، و x أصغر من أو يساوي موجب ما لا نهاية. ومع ذلك، فالمستقيم الممدد ليس حقلًا ولا حلقة، لأن بعض العمليات معرفة جزئيًا فقط. ولذلك يجب استعماله أداةً مساعدة فقط.", "L": [["res", "<span dir='ltr'>∀ x ∈ ℝ :   −∞ ≤ x ≤ +∞</span>"], ["warn", "<span dir='ltr' style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> ليس حقلًا ولا حلقة"], ["txt", "أداة مساعدة"]]},
+
+{"title": "6) القيمة المطلقة", "clear": 1, "say": "الفكرة السادسة: القيمة المطلقة، المرتبطة ببنية الترتيب في الأعداد الحقيقية. تُعرَّف بحسب الحالات. القيمة المطلقة لـ x هي x، إذا كان x أكبر من أو يساوي الصفر، وهي سالب x، إذا كان x أصغر من الصفر.", "L": [["goal", "القيمة المطلقة"], ["res", "<span dir='ltr'>|x| = x</span>    إذا كان  <span dir='ltr'>x ≥ 0</span>"], ["res", "<span dir='ltr'>|x| = −x</span>   إذا كان  <span dir='ltr'>x &lt; 0</span>"]], "pin": ["<span dir='ltr'>6.</span> القيمة المطلقة <span dir='ltr'>|x|</span>"]},
+
+{"say": "تسمح بالتعبير عن المسافة بين عددين حقيقيين بالقيمة المطلقة لـ x ناقص y، وبصياغة المتباينات بشكل متناظر. وبالخصوص، القيمة المطلقة لـ x ناقص a أصغر من إبسيلون، إذا وفقط إذا، كان x بين a ناقص إبسيلون و a زائد إبسيلون.", "L": [["txt", "المسافة بين <span dir='ltr'>x</span> و <span dir='ltr'>y</span> هي   <span dir='ltr'>|x − y|</span>"], ["res", "<span dir='ltr'>|x − a| &lt; ε   ⟺   a − ε &lt; x &lt; a + ε</span>"], ["txt", "الأساس التقني لتعريف النهاية والاتصال"]]},
+
+{"title": "الملخص", "clear": 1, "say": "الخلاصة. الأعداد الحقيقية تشكل حقلًا تبديليًا، مع ترتيب كلي متوافق مع العمليات. وخاصيتها المميزة هي التمام: لكل مجموعة غير خالية ومحدودة من الأعلى حد أعلى أصغر. ومنه تنتج خاصية أرخميدس. والمستقيم الممدد أداة مساعدة، والقيمة المطلقة تقيس المسافات. شكرًا على المشاهدة.", "L": [["res", "<span dir='ltr'>ℝ</span>:  حقل تبديلي  مع  ترتيب كلي متوافق"], ["res", "التمام:  كل <span dir='ltr'>A ≠ ∅</span> محدودة من الأعلى لها  <span dir='ltr'>sup A</span>"], ["res", "أرخميدس:  <span dir='ltr'>∀ a, b &gt; 0</span>،  <span dir='ltr'>∃ n ∈ ℕ :  n a &gt; b</span>"], ["res", "<span dir='ltr'>|x − a| &lt; ε  ⟺  a − ε &lt; x &lt; a + ε</span>"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' زائد ').replace(/⊙/g,' ضرب ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ إعادة'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ متابعة'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ إيقاف مؤقت';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ إيقاف مؤقت';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ إيقاف مؤقت';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ar/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/hamed|shakir|naayf|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="الأعداد الحقيقية";$('sub').textContent="ملخص: الحقل، والترتيب، والتمام، وخاصية أرخميدس، والمستقيم الممدد، والقيمة المطلقة";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

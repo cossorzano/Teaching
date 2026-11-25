@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Действительные числа</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Запомним</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Начать</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Скорость <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Режим записи (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ru-RU",
+"meta":{"nivel": 0, "titulo": "Действительные числа", "enunciado": "Итог: поле, порядок, полнота, свойство Архимеда, расширенная прямая и модуль", "datos": ["Структура поля", "Порядок", "Полнота", "Свойство Архимеда", "Расширенная числовая прямая", "Модуль"]},
+"steps":[
+{"title": "Действительные числа: итог", "sub": "Итог: поле, порядок, полнота, свойство Архимеда, расширенная прямая и модуль", "clear": 1, "say": "Здравствуйте. В этом видео мы подведём итог основным свойствам действительных чисел. На них строится весь математический анализ: пределы, непрерывность, дифференцируемость и интегрируемость. Мы рассмотрим шесть идей: структуру поля, порядок, полноту, свойство Архимеда, расширенную числовую прямую и модуль.", "L": [["txt", "Множество действительных чисел  ℝ  — основа математического анализа"], ["txt", "Предел · непрерывность · дифференцируемость · интегрируемость"], ["txt", "Они зависят от структурных свойств ℝ, а не только от вычислений"]]},
+
+{"title": "1) Структура поля", "clear": 1, "say": "Первая идея: алгебраическая структура. Действительные числа со сложением и умножением образуют коммутативное поле. Это означает четыре вещи. Первое: сложение и умножение — внутренние, ассоциативные и коммутативные операции. Второе: есть нейтральные элементы, ноль для сложения и единица для умножения. Третье: у каждого действительного числа икс есть противоположное, минус икс. И четвёртое: если икс не равен нулю, у него есть обратное число, икс в степени минус один.", "L": [["goal", "(ℝ, +, ·)  — коммутативное поле"], ["txt", "Сложение и умножение: внутренние, ассоциативные и коммутативные"], ["txt", "Нейтральные:  0  и  1"], ["txt", "Противоположный:  у каждого x есть  −x"], ["txt", "Обратный:  если x ≠ 0,  существует  x⁻¹"]], "pin": ["1. Поле: (ℝ, +, ·)"]},
+
+{"clear": 1, "say": "Для любых действительных чисел а, бэ и цэ выполняются следующие тождества. Ассоциативность сложения: а плюс сумма бэ и цэ равно сумме а и бэ, плюс цэ. Ассоциативность умножения: а умножить на произведение бэ и цэ равно произведению а и бэ, умноженному на цэ. Дистрибутивность: а умножить на сумму бэ и цэ равно а бэ плюс а цэ. И нейтральные элементы: а плюс ноль равно а, а умножить на единицу равно а. Эти свойства гарантируют, что алгебраические преобразования в анализе согласованы.", "L": [["res", "a + (b + c) = (a + b) + c"], ["res", "a (b c) = (a b) c"], ["res", "a (b + c) = a b + a c"], ["res", "a + 0 = a,        a · 1 = a"], ["txt", "Гарантируют согласованность алгебраических преобразований"]]},
+
+{"title": "2) Порядок", "clear": 1, "say": "Вторая идея: порядок. Кроме того, что это поле, на множестве действительных чисел есть отношение линейного порядка, меньше или равно, согласованное с операциями. Линейность означает, что любые два действительных числа можно сравнить.", "L": [["goal", "На ℝ есть линейный порядок  ≤"], ["txt", "Любые два действительных числа можно сравнить"]], "pin": ["2. Линейный порядок ≤"]},
+
+{"say": "Согласованность со сложением означает: если а меньше или равно бэ, то а плюс цэ меньше или равно бэ плюс цэ, для любого цэ. Согласованность с умножением означает: если цэ больше или равно нулю, и а меньше или равно бэ, то а цэ меньше или равно бэ цэ. Внимание: цэ должно быть положительным или нулём.", "L": [["res", "a ≤ b   ⟹   a + c ≤ b + c"], ["res", "0 ≤ c  и  a ≤ b   ⟹   a c ≤ b c"]]},
+
+{"say": "Линейный порядок позволяет определить промежутки: интервал от а до бэ, отрезок от а до бэ, луч от а до плюс бесконечности, и другие. Промежутки нужны, чтобы формулировать пределы и непрерывность.", "L": [["txt", "Промежутки:   (a, b),    [a, b],    (a, +∞),   …"], ["txt", "Они центральны для пределов и непрерывности"]]},
+
+{"title": "3) Полнота", "clear": 1, "say": "Третья идея, самая важная: полнота. Это отличительное свойство действительных чисел. Пусть А — непустое подмножество действительных чисел, ограниченное сверху. Тогда существует действительное число эс с двумя свойствами.", "L": [["goal", "A ⊆ ℝ,   A ≠ ∅,   ограничено сверху"], ["txt", "Тогда существует  s ∈ ℝ  такое, что:"]], "pin": ["3. Полнота: sup A"]},
+
+{"say": "Первое свойство: для любого элемента а из А, а меньше или равно эс. То есть эс — верхняя граница множества А.", "L": [["res", "(1)   ∀ a ∈ A,   a ≤ s"], ["txt", "s — верхняя граница A"]]},
+
+{"say": "Второе свойство: для любого эпсилон больше нуля найдётся элемент а из А, такой что эс минус эпсилон меньше а. То есть никакая величина, меньшая эс, не является верхней границей: эс — наименьшая из верхних границ.", "L": [["res", "(2)   ∀ ε &gt; 0,   ∃ a ∈ A :   s − ε &lt; a"], ["txt", "Ничто меньшее s не является верхней границей: s — наименьшая верхняя граница"]]},
+
+{"say": "Это число эс называется супремумом множества А и обозначается супремум А. Аналогично, у всякого непустого множества, ограниченного снизу, есть инфимум.", "L": [["res", "s = sup A      (супремум A)"], ["txt", "Аналогично: непусто и ограничено снизу  ⟹  существует  inf A"]]},
+
+{"say": "Эти свойства не выводятся ни из алгебры, ни из порядка: это аксиомы, присущие действительным числам. На самом деле, для рациональных чисел они неверны. И они — логическая основа анализа: существование пределов монотонных ограниченных последовательностей, сходимость последовательностей, заданных приближениями, и строгое определение предела опираются на существование супремумов и инфимумов.", "L": [["txt", "Аксиома, присущая ℝ.  Неверна в ℚ"], ["txt", "На ней основаны:"], ["txt", "· пределы монотонных ограниченных последовательностей"], ["txt", "· сходимость последовательностей, заданных приближениями"], ["txt", "· строгое определение:   lim aₙ = L   (n → ∞)"]], "clear": 1},
+
+{"title": "4) Свойство Архимеда", "clear": 1, "say": "Четвёртая идея: свойство Архимеда. Оно говорит, что для любых чисел а и бэ больше нуля найдётся натуральное число эн, такое что эн, умноженное на а, больше бэ. То есть, как бы мало ни было а, сложив его достаточно много раз, мы превзойдём любое бэ.", "L": [["goal", "Свойство Архимеда"], ["res", "∀ a, b &gt; 0,   ∃ n ∈ ℕ :   n a &gt; b"]], "pin": ["4. Архимед"]},
+
+{"say": "Это гарантирует, что натуральные числа не ограничены среди действительных, и позволяет связывать действительные величины с дискретными приближениями. Это важный инструмент в доказательствах с оценками и контролем погрешностей.", "L": [["txt", "ℕ не ограничено в ℝ"], ["txt", "Связывает действительные величины с дискретными приближениями"], ["txt", "Полезно в оценках и контроле погрешностей"]]},
+
+{"title": "5) Расширенная числовая прямая", "clear": 1, "say": "Пятая идея: расширенная числовая прямая. Её получают, добавляя к действительным числам два символа: минус бесконечность и плюс бесконечность. Она позволяет единообразно описывать неограниченное поведение.", "L": [["goal", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> = ℝ ∪ { −∞, +∞ }"], ["txt", "Единообразно описывает неограниченное поведение"]], "pin": ["5. Расширенная прямая <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span>"]},
+
+{"say": "Порядок действительных чисел продолжается: для любого действительного икс минус бесконечность меньше или равна икс, а икс меньше или равен плюс бесконечности. Однако расширенная прямая — не поле и не кольцо, потому что некоторые операции определены лишь частично. Её следует использовать только как вспомогательный инструмент.", "L": [["res", "∀ x ∈ ℝ :   −∞ ≤ x ≤ +∞"], ["warn", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> — не поле и не кольцо"], ["txt", "Вспомогательный инструмент"]]},
+
+{"title": "6) Модуль", "clear": 1, "say": "Шестая идея: модуль, связанный с упорядоченной структурой действительных чисел. Он определяется по случаям. Модуль икс равен икс, если икс больше или равен нулю, и равен минус икс, если икс меньше нуля.", "L": [["goal", "Модуль"], ["res", "|x| = x    если  x ≥ 0"], ["res", "|x| = −x   если  x &lt; 0"]], "pin": ["6. Модуль |x|"]},
+
+{"say": "Модуль позволяет выразить расстояние между двумя действительными числами как модуль разности икс и игрек, и записывать неравенства симметрично. В частности, модуль разности икс и а меньше эпсилон тогда и только тогда, когда икс лежит между а минус эпсилон и а плюс эпсилон.", "L": [["txt", "Расстояние между x и y:   |x − y|"], ["res", "|x − a| &lt; ε   ⟺   a − ε &lt; x &lt; a + ε"], ["txt", "Техническая основа определений предела и непрерывности"]]},
+
+{"title": "Итог", "clear": 1, "say": "Итог. Действительные числа образуют коммутативное поле с линейным порядком, согласованным с операциями. Их отличительное свойство — полнота: у всякого непустого множества, ограниченного сверху, есть супремум. Из неё следует свойство Архимеда. Расширенная прямая — вспомогательный инструмент, а модуль измеряет расстояния. Спасибо за внимание.", "L": [["res", "ℝ:  коммутативное поле  +  согласованный линейный порядок"], ["res", "Полнота:  у всякого ограниченного сверху A ≠ ∅ есть  sup A"], ["res", "Архимед:  ∀ a, b &gt; 0,  ∃ n ∈ ℕ :  n a &gt; b"], ["res", "|x − a| &lt; ε  ⟺  a − ε &lt; x &lt; a + ε"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' плюс ').replace(/⊙/g,' умножить на ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Повторить'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Продолжить'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Пауза';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Пауза';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Пауза';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ru/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/dmitry|pavel|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Действительные числа";$('sub').textContent="Итог: поле, порядок, полнота, свойство Архимеда, расширенная прямая и модуль";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

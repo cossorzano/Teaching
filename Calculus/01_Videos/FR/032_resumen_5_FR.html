@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Les nombres réels</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>À retenir</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Commencer</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Vitesse <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Mode enregistrement (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"fr-FR",
+"meta":{"nivel": 0, "titulo": "Les nombres réels", "enunciado": "Résumé : corps, ordre, complétude, propriété d'Archimède, droite achevée et valeur absolue", "datos": ["Structure de corps", "Ordre", "Complétude", "Propriété d'Archimède", "Droite réelle achevée", "Valeur absolue"]},
+"steps":[
+{"title": "Les nombres réels : résumé", "sub": "Résumé : corps, ordre, complétude, propriété d'Archimède, droite achevée et valeur absolue", "clear": 1, "say": "Bonjour. Dans cette vidéo, nous résumons les propriétés fondamentales des nombres réels, qui sont la base sur laquelle se construit toute l'analyse : limites, continuité, dérivabilité et intégrabilité. Nous verrons six idées : la structure de corps, l'ordre, la complétude, la propriété d'Archimède, la droite réelle achevée, et la valeur absolue.", "L": [["txt", "L'ensemble des nombres réels  ℝ  est le cadre de l'Analyse"], ["txt", "Limite · continuité · dérivabilité · intégrabilité"], ["txt", "Elles dépendent de propriétés structurelles de ℝ, pas seulement du calcul"]]},
+
+{"title": "1) Structure de corps", "clear": 1, "say": "Première idée : la structure algébrique. Les nombres réels, avec l'addition et la multiplication, forment un corps commutatif. Cela signifie quatre choses. Un : l'addition et la multiplication sont des opérations internes, associatives et commutatives. Deux : il existe des éléments neutres, zéro pour l'addition, et un pour la multiplication. Trois : tout nombre réel x a un opposé, moins x. Et quatre : si x est différent de zéro, il a un inverse multiplicatif, x puissance moins un.", "L": [["goal", "(ℝ, +, ·)  est un corps commutatif"], ["txt", "Somme et produit : internes, associatifs et commutatifs"], ["txt", "Neutres :  0  et  1"], ["txt", "Opposé :  tout x a  −x"], ["txt", "Inverse :  si x ≠ 0,  il existe  x⁻¹"]], "pin": ["1. Corps : (ℝ, +, ·)"]},
+
+{"clear": 1, "say": "Pour tous les nombres réels a, b et c, ces identités sont vraies. Associativité de l'addition : a plus, b plus c, est égal à, a plus b, plus c. Associativité de la multiplication : a fois, b fois c, est égal à, a fois b, fois c. Distributivité : a fois, b plus c, est égal à a fois b, plus a fois c. Et les neutres : a plus zéro vaut a, et a fois un vaut a. Ces propriétés garantissent que les manipulations algébriques de l'analyse sont cohérentes.", "L": [["res", "a + (b + c) = (a + b) + c"], ["res", "a (b c) = (a b) c"], ["res", "a (b + c) = a b + a c"], ["res", "a + 0 = a,        a · 1 = a"], ["txt", "Elles garantissent la cohérence des manipulations algébriques"]]},
+
+{"title": "2) Ordre", "clear": 1, "say": "Deuxième idée : l'ordre. En plus d'être un corps, l'ensemble des nombres réels possède une relation d'ordre total, inférieur ou égal, compatible avec les opérations. Être total signifie que l'on peut comparer deux nombres réels quelconques.", "L": [["goal", "ℝ  possède un ordre total  ≤"], ["txt", "Deux nombres réels quelconques sont comparables"]], "pin": ["2. Ordre total ≤"]},
+
+{"say": "La compatibilité avec l'addition dit que si a est inférieur ou égal à b, alors a plus c est inférieur ou égal à b plus c, pour tout c. La compatibilité avec la multiplication dit que si c est supérieur ou égal à zéro, et a est inférieur ou égal à b, alors a fois c est inférieur ou égal à b fois c. Attention : il faut que c soit positif ou nul.", "L": [["res", "a ≤ b   ⟹   a + c ≤ b + c"], ["res", "0 ≤ c  et  a ≤ b   ⟹   a c ≤ b c"]]},
+
+{"say": "L'ordre total permet de définir les intervalles : ouvert de a à b, fermé de a à b, de a à plus l'infini, et d'autres. Les intervalles sont fondamentaux pour formuler les limites et la continuité.", "L": [["txt", "Intervalles :   (a, b),    [a, b],    (a, +∞),   …"], ["txt", "Ils sont centraux pour les limites et la continuité"]]},
+
+{"title": "3) Complétude", "clear": 1, "say": "Troisième idée, la plus importante : la complétude. C'est la propriété distinctive des nombres réels. Soit A une partie non vide des nombres réels, et majorée. Alors il existe un nombre réel s ayant deux propriétés.", "L": [["goal", "A ⊆ ℝ,   A ≠ ∅,   majoré"], ["txt", "Alors il existe  s ∈ ℝ  tel que :"]], "pin": ["3. Complétude : sup A"]},
+
+{"say": "Première propriété : pour tout élément a de A, a est inférieur ou égal à s. Autrement dit, s est un majorant de A.", "L": [["res", "(1)   ∀ a ∈ A,   a ≤ s"], ["txt", "s est un majorant de A"]]},
+
+{"say": "Deuxième propriété : pour tout epsilon strictement positif, il existe un élément a de A tel que s moins epsilon est strictement inférieur à a. Autrement dit, aucune quantité plus petite que s n'est un majorant : s est le plus petit des majorants.", "L": [["res", "(2)   ∀ ε &gt; 0,   ∃ a ∈ A :   s − ε &lt; a"], ["txt", "Rien de plus petit que s n'est un majorant : s est le plus petit majorant"]]},
+
+{"say": "Ce nombre s s'appelle la borne supérieure de A, et on écrit sup de A. De même, tout ensemble non vide et minoré possède une borne inférieure.", "L": [["res", "s = sup A      (borne supérieure de A)"], ["txt", "De même : non vide et minoré  ⟹  inf A existe"]]},
+
+{"say": "Ces propriétés ne se déduisent ni de l'algèbre ni de l'ordre : ce sont des axiomes propres aux nombres réels. En fait, elles sont fausses dans les nombres rationnels. Et elles sont le fondement logique de l'analyse : l'existence des limites des suites monotones et bornées, la convergence des suites définies par approximation, et la définition rigoureuse de la limite, reposent sur l'existence des bornes supérieures et inférieures.", "L": [["txt", "Axiome propre à ℝ.  Faux dans ℚ"], ["txt", "Il fonde :"], ["txt", "· les limites des suites monotones et bornées"], ["txt", "· la convergence des suites définies par approximation"], ["txt", "· la définition rigoureuse :   lim aₙ = L   (n → ∞)"]], "clear": 1},
+
+{"title": "4) Propriété d'Archimède", "clear": 1, "say": "Quatrième idée : la propriété d'Archimède. Elle dit que, pour tous nombres a et b strictement positifs, il existe un entier naturel n tel que n fois a est strictement supérieur à b. Autrement dit, aussi petit que soit a, en l'ajoutant suffisamment de fois, on dépasse n'importe quel b.", "L": [["goal", "Propriété d'Archimède"], ["res", "∀ a, b &gt; 0,   ∃ n ∈ ℕ :   n a &gt; b"]], "pin": ["4. Archimède"]},
+
+{"say": "Cela garantit que les entiers naturels ne sont pas majorés dans les nombres réels, et permet de relier des quantités réelles à des approximations discrètes. C'est un outil essentiel dans les démonstrations avec des estimations et le contrôle des erreurs.", "L": [["txt", "ℕ n'est pas majoré dans ℝ"], ["txt", "Relie les quantités réelles aux approximations discrètes"], ["txt", "Utile pour les estimations et le contrôle des erreurs"]]},
+
+{"title": "5) Droite réelle achevée", "clear": 1, "say": "Cinquième idée : la droite réelle achevée. On l'obtient en ajoutant aux nombres réels les deux symboles moins l'infini et plus l'infini. Elle permet de décrire de façon unifiée les comportements non bornés.", "L": [["goal", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> = ℝ ∪ { −∞, +∞ }"], ["txt", "Décrit de façon unifiée les comportements non bornés"]], "pin": ["5. Droite achevée <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span>"]},
+
+{"say": "L'ordre des nombres réels se prolonge : pour tout x réel, moins l'infini est inférieur ou égal à x, et x est inférieur ou égal à plus l'infini. Cependant, la droite achevée n'est ni un corps ni un anneau, car certaines opérations ne sont définies que partiellement. Elle doit être utilisée uniquement comme outil auxiliaire.", "L": [["res", "∀ x ∈ ℝ :   −∞ ≤ x ≤ +∞"], ["warn", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> n'est ni un corps ni un anneau"], ["txt", "Outil auxiliaire"]]},
+
+{"title": "6) Valeur absolue", "clear": 1, "say": "Sixième idée : la valeur absolue, associée à la structure ordonnée des nombres réels. Elle se définit par cas. La valeur absolue de x vaut x, si x est supérieur ou égal à zéro, et vaut moins x, si x est strictement inférieur à zéro.", "L": [["goal", "Valeur absolue"], ["res", "|x| = x    si  x ≥ 0"], ["res", "|x| = −x   si  x &lt; 0"]], "pin": ["6. Valeur absolue |x|"]},
+
+{"say": "Elle permet d'exprimer la distance entre deux nombres réels par la valeur absolue de x moins y, et de formuler des inégalités de façon symétrique. En particulier, la valeur absolue de x moins a est strictement inférieure à epsilon, si et seulement si, x est compris entre a moins epsilon et a plus epsilon.", "L": [["txt", "Distance entre x et y :   |x − y|"], ["res", "|x − a| &lt; ε   ⟺   a − ε &lt; x &lt; a + ε"], ["txt", "Base technique des définitions de limite et de continuité"]]},
+
+{"title": "Résumé", "clear": 1, "say": "Résumé. Les nombres réels forment un corps commutatif, avec un ordre total compatible avec les opérations. Leur propriété distinctive est la complétude : tout ensemble non vide et majoré possède une borne supérieure. On en déduit la propriété d'Archimède. La droite achevée est un outil auxiliaire, et la valeur absolue mesure les distances. Merci d'avoir regardé la vidéo.", "L": [["res", "ℝ :  corps commutatif  +  ordre total compatible"], ["res", "Complétude :  tout A ≠ ∅ majoré admet  sup A"], ["res", "Archimède :  ∀ a, b &gt; 0,  ∃ n ∈ ℕ :  n a &gt; b"], ["res", "|x − a| &lt; ε  ⟺  a − ε &lt; x &lt; a + ε"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' plus ').replace(/⊙/g,' fois ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Rejouer'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Reprendre'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pause';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^fr/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/henri|paul|claude|remy|rémy|male|google français$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Les nombres réels";$('sub').textContent="Résumé : corps, ordre, complétude, propriété d'Archimède, droite achevée et valeur absolue";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

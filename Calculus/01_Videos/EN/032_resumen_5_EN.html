@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The real numbers</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Remember</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Start</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Speed <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Recording mode (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"en-US",
+"meta":{"nivel": 0, "titulo": "The real numbers", "enunciado": "Summary: field, order, completeness, Archimedean property, extended line and absolute value", "datos": ["Field structure", "Order", "Completeness", "Archimedean property", "Extended real line", "Absolute value"]},
+"steps":[
+{"title": "The real numbers: summary", "sub": "Summary: field, order, completeness, Archimedean property, extended line and absolute value", "clear": 1, "say": "Hello. In this video we summarize the fundamental properties of the real numbers, which are the foundation on which all of calculus is built: limits, continuity, differentiability and integrability. We will see six ideas: the field structure, the order, completeness, the Archimedean property, the extended real line, and the absolute value.", "L": [["txt", "The set of real numbers  ℝ  is the framework of Calculus"], ["txt", "Limit · continuity · differentiability · integrability"], ["txt", "They depend on structural properties of ℝ, not just on computing"]]},
+
+{"title": "1) Field structure", "clear": 1, "say": "First idea: the algebraic structure. The real numbers, with addition and multiplication, form a commutative field. This means four things. One: addition and multiplication are internal, associative and commutative operations. Two: there are identity elements, zero for addition, and one for multiplication. Three: every real number x has an opposite, minus x. And four: if x is not zero, it has a multiplicative inverse, x to the power minus one.", "L": [["goal", "(ℝ, +, ·)  is a commutative field"], ["txt", "Sum and product: internal, associative and commutative"], ["txt", "Identities:  0  and  1"], ["txt", "Opposite:  every x has  −x"], ["txt", "Inverse:  if x ≠ 0,  there is  x⁻¹"]], "pin": ["1. Field: (ℝ, +, ·)"]},
+
+{"clear": 1, "say": "For all real numbers a, b and c, these identities hold. Associativity of addition: a plus, b plus c, equals, a plus b, plus c. Associativity of multiplication: a times, b times c, equals, a times b, times c. Distributivity: a times, b plus c, equals a times b, plus a times c. And the identities: a plus zero is a, and a times one is a. These properties guarantee that the algebraic manipulations of calculus are consistent.", "L": [["res", "a + (b + c) = (a + b) + c"], ["res", "a (b c) = (a b) c"], ["res", "a (b + c) = a b + a c"], ["res", "a + 0 = a,        a · 1 = a"], ["txt", "They guarantee that algebraic manipulations are consistent"]]},
+
+{"title": "2) Order", "clear": 1, "say": "Second idea: the order. Besides being a field, the set of real numbers has a total order relation, less than or equal to, compatible with the operations. Being total means that we can compare any two real numbers.", "L": [["goal", "ℝ  has a total order  ≤"], ["txt", "Any two real numbers can be compared"]], "pin": ["2. Total order ≤"]},
+
+{"say": "Compatibility with addition says that if a is less than or equal to b, then a plus c is less than or equal to b plus c, for every c. Compatibility with multiplication says that if c is greater than or equal to zero, and a is less than or equal to b, then a times c is less than or equal to b times c. Careful: c must be positive or zero.", "L": [["res", "a ≤ b   ⟹   a + c ≤ b + c"], ["res", "0 ≤ c  and  a ≤ b   ⟹   a c ≤ b c"]]},
+
+{"say": "The total order allows us to define intervals: open from a to b, closed from a to b, from a to plus infinity, and others. Intervals are fundamental to formulate limits and continuity.", "L": [["txt", "Intervals:   (a, b),    [a, b],    (a, +∞),   …"], ["txt", "They are central in limits and continuity"]]},
+
+{"title": "3) Completeness", "clear": 1, "say": "Third idea, the most important one: completeness. It is the distinctive property of the real numbers. Let A be a non-empty subset of the real numbers, bounded above. Then there is a real number s with two properties.", "L": [["goal", "A ⊆ ℝ,   A ≠ ∅,   bounded above"], ["txt", "Then there is  s ∈ ℝ  such that:"]], "pin": ["3. Completeness: sup A"]},
+
+{"say": "First property: for every element a of A, a is less than or equal to s. That is, s is an upper bound of A.", "L": [["res", "(1)   ∀ a ∈ A,   a ≤ s"], ["txt", "s is an upper bound of A"]]},
+
+{"say": "Second property: for every epsilon greater than zero, there is an element a of A such that s minus epsilon is less than a. That is, no quantity smaller than s is an upper bound: s is the least of the upper bounds.", "L": [["res", "(2)   ∀ ε &gt; 0,   ∃ a ∈ A :   s − ε &lt; a"], ["txt", "Nothing smaller than s is an upper bound: s is the least upper bound"]]},
+
+{"say": "This number s is called the supremum of A, and we write sup of A. Similarly, every non-empty set that is bounded below has an infimum.", "L": [["res", "s = sup A      (supremum of A)"], ["txt", "Likewise: non-empty and bounded below  ⟹  inf A exists"]]},
+
+{"say": "These properties do not follow from the algebra or from the order: they are axioms specific to the real numbers. In fact, they fail in the rational numbers. And they are the logical foundation of calculus: the existence of limits of monotone bounded sequences, the convergence of sequences defined by approximation, and the rigorous definition of limit, all rely on the existence of suprema and infima.", "L": [["txt", "An axiom specific to ℝ.  It fails in ℚ"], ["txt", "It underpins:"], ["txt", "· limits of monotone bounded sequences"], ["txt", "· convergence of sequences defined by approximation"], ["txt", "· the rigorous definition:   lim aₙ = L   (n → ∞)"]], "clear": 1},
+
+{"title": "4) Archimedean property", "clear": 1, "say": "Fourth idea: the Archimedean property. It says that, for all numbers a and b greater than zero, there is a natural number n such that n times a is greater than b. That is, however small a is, adding it enough times exceeds any b.", "L": [["goal", "Archimedean property"], ["res", "∀ a, b &gt; 0,   ∃ n ∈ ℕ :   n a &gt; b"]], "pin": ["4. Archimedean"]},
+
+{"say": "This guarantees that the natural numbers are not bounded in the real numbers, and it allows us to relate real quantities with discrete approximations. It is an essential tool in proofs with estimates and error control.", "L": [["txt", "ℕ is not bounded in ℝ"], ["txt", "It links real quantities with discrete approximations"], ["txt", "Useful in estimates and error control"]]},
+
+{"title": "5) Extended real line", "clear": 1, "say": "Fifth idea: the extended real line. It is obtained by adding to the real numbers the two symbols minus infinity and plus infinity. It allows us to describe unbounded behaviour in a unified way.", "L": [["goal", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> = ℝ ∪ { −∞, +∞ }"], ["txt", "It describes unbounded behaviour in a unified way"]], "pin": ["5. Extended line <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span>"]},
+
+{"say": "The order of the real numbers extends: for every real x, minus infinity is less than or equal to x, and x is less than or equal to plus infinity. However, the extended line is neither a field nor a ring, because some operations are only partially defined. It should be used only as an auxiliary tool.", "L": [["res", "∀ x ∈ ℝ :   −∞ ≤ x ≤ +∞"], ["warn", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> is neither a field nor a ring"], ["txt", "An auxiliary tool"]]},
+
+{"title": "6) Absolute value", "clear": 1, "say": "Sixth idea: the absolute value, associated with the ordered structure of the real numbers. It is defined by cases. The absolute value of x is x, if x is greater than or equal to zero, and it is minus x, if x is less than zero.", "L": [["goal", "Absolute value"], ["res", "|x| = x    if  x ≥ 0"], ["res", "|x| = −x   if  x &lt; 0"]], "pin": ["6. Absolute value |x|"]},
+
+{"say": "It allows us to express the distance between two real numbers as the absolute value of x minus y, and to formulate inequalities symmetrically. In particular, the absolute value of x minus a is less than epsilon, if and only if, x lies between a minus epsilon and a plus epsilon.", "L": [["txt", "Distance between x and y:   |x − y|"], ["res", "|x − a| &lt; ε   ⟺   a − ε &lt; x &lt; a + ε"], ["txt", "Technical basis of the definitions of limit and continuity"]]},
+
+{"title": "Summary", "clear": 1, "say": "Summary. The real numbers form a commutative field, with a total order compatible with the operations. Their distinctive property is completeness: every non-empty set that is bounded above has a supremum. The Archimedean property follows from it. The extended line is an auxiliary tool, and the absolute value measures distances. Thanks for watching.", "L": [["res", "ℝ:  commutative field  +  compatible total order"], ["res", "Completeness:  every A ≠ ∅ bounded above has  sup A"], ["res", "Archimedean:  ∀ a, b &gt; 0,  ∃ n ∈ ℕ :  n a &gt; b"], ["res", "|x − a| &lt; ε  ⟺  a − ε &lt; x &lt; a + ε"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' plus ').replace(/⊙/g,' times ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Replay'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Resume'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pause';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/andrew|guy|brian|christopher|eric|david|mark|male|google us english$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="The real numbers";$('sub').textContent="Summary: field, order, completeness, Archimedean property, extended line and absolute value";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

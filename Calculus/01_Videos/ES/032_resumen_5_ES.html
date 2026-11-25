@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Los números reales: resumen</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Recuerda</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Empezar</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Velocidad <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Modo grabación (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"es-ES",
+"meta":{"nivel": 0, "titulo": "Los números reales", "enunciado": "Resumen: cuerpo, orden, completitud, propiedad arquimediana, recta ampliada y valor absoluto", "datos": ["Estructura de cuerpo", "Orden", "Completitud", "Propiedad arquimediana", "Recta real ampliada", "Valor absoluto"]},
+"steps":[
+{"title": "Los números reales: resumen", "sub": "Resumen teórico · Cálculo", "clear": 1, "say": "Hola. En este vídeo resumimos las propiedades fundamentales de los números reales, que son la base sobre la que se construye todo el cálculo: límites, continuidad, derivabilidad e integrabilidad. Veremos seis ideas: la estructura de cuerpo, el orden, la completitud, la propiedad arquimediana, la recta real ampliada, y el valor absoluto.", "L": [["txt", "El conjunto de los números reales  ℝ  es el marco del Cálculo"], ["txt", "Límite · continuidad · derivabilidad · integrabilidad"], ["txt", "Dependen de propiedades estructurales de ℝ, no solo de operar"]]},
+{"title": "1) Estructura de cuerpo", "clear": 1, "say": "Primera idea: la estructura algebraica. Los números reales, con la suma y el producto, forman un cuerpo conmutativo. Esto significa cuatro cosas. Uno: la suma y el producto son operaciones internas, asociativas y conmutativas. Dos: existen elementos neutros, el cero para la suma, y el uno para el producto. Tres: todo número real x tiene un opuesto, menos x. Y cuatro: si x es distinto de cero, tiene un inverso multiplicativo, x elevado a menos uno.", "L": [["goal", "(ℝ, +, ·)  es un cuerpo conmutativo"], ["txt", "Suma y producto: internas, asociativas y conmutativas"], ["txt", "Neutros:  0  y  1"], ["txt", "Opuesto:  todo x tiene  −x"], ["txt", "Inverso:  si x ≠ 0,  existe  x⁻¹"]], "pin": ["1. Cuerpo: (ℝ, +, ·)"]},
+{"clear": 1, "say": "Para todos los números reales a, b y c se cumplen estas identidades. Asociatividad de la suma: a más, b más c, es igual a, a más b, más c. Asociatividad del producto: a por, b por c, es igual a, a por b, por c. Distributividad: a por, b más c, es igual a a por b, más a por c. Y los neutros: a más cero es a, y a por uno es a. Estas propiedades garantizan que las manipulaciones algebraicas del cálculo son coherentes.", "L": [["res", "a + (b + c) = (a + b) + c"], ["res", "a (b c) = (a b) c"], ["res", "a (b + c) = a b + a c"], ["res", "a + 0 = a,        a · 1 = a"], ["txt", "Garantizan la coherencia de las manipulaciones algebraicas"]]},
+{"title": "2) Orden", "clear": 1, "say": "Segunda idea: el orden. Además de ser un cuerpo, el conjunto de los números reales tiene una relación de orden total, menor o igual, compatible con las operaciones. Que sea total significa que podemos comparar cualquier par de números reales.", "L": [["goal", "ℝ  tiene un orden total  ≤"], ["txt", "Cualquier par de números reales se puede comparar"]], "pin": ["2. Orden total ≤"]},
+{"say": "La compatibilidad con la suma dice que si a es menor o igual que b, entonces a más c es menor o igual que b más c, para todo c. La compatibilidad con el producto dice que si c es mayor o igual que cero, y a es menor o igual que b, entonces a por c es menor o igual que b por c. Atención: hace falta que c sea positivo o cero.", "L": [["res", "a ≤ b   ⟹   a + c ≤ b + c"], ["res", "0 ≤ c  y  a ≤ b   ⟹   a c ≤ b c"]]},
+{"say": "El orden total permite definir los intervalos: abierto de a a b, cerrado de a a b, de a a más infinito, y otros. Los intervalos son fundamentales para formular límites y continuidad.", "L": [["txt", "Intervalos:   (a, b),    [a, b],    (a, +∞),   …"], ["txt", "Son centrales en límites y en continuidad"]]},
+{"title": "3) Completitud", "clear": 1, "say": "Tercera idea, la más importante: la completitud. Es la propiedad distintiva de los números reales. Sea A un subconjunto no vacío de los números reales, y acotado superiormente. Entonces existe un número real s con dos propiedades.", "L": [["goal", "A ⊆ ℝ,   A ≠ ∅,   acotado superiormente"], ["txt", "Entonces existe  s ∈ ℝ  tal que:"]], "pin": ["3. Completitud: sup A"]},
+{"say": "Primera propiedad: para todo elemento a de A, a es menor o igual que s. Es decir, s es una cota superior de A.", "L": [["res", "(1)   ∀ a ∈ A,   a ≤ s"], ["txt", "s es cota superior de A"]]},
+{"say": "Segunda propiedad: para todo épsilon mayor que cero, existe un elemento a de A tal que s menos épsilon es menor que a. Es decir, ninguna cantidad menor que s es cota superior: s es la menor de las cotas superiores.", "L": [["res", "(2)   ∀ ε &gt; 0,   ∃ a ∈ A :   s − ε &lt; a"], ["txt", "Nada menor que s es cota superior: s es la menor cota"]]},
+{"say": "Este número s se llama el supremo de A, y se escribe supremo de A. De forma análoga, todo conjunto no vacío y acotado inferiormente tiene un ínfimo.", "L": [["res", "s = sup A      (supremo de A)"], ["txt", "Análogamente: no vacío y acotado inferiormente  ⟹  existe  inf A"]]},
+{"say": "Estas propiedades no se deducen del álgebra ni del orden: son axiomas propios de los números reales. De hecho, fallan en los números racionales. Y son el fundamento lógico del cálculo: la existencia de límites de sucesiones monótonas y acotadas, la convergencia de sucesiones definidas por aproximación, y la definición rigurosa de límite, se apoyan en la existencia de supremos e ínfimos.", "L": [["txt", "Axioma propio de ℝ.  Falla en ℚ"], ["txt", "Fundamenta:"], ["txt", "· límites de sucesiones monótonas y acotadas"], ["txt", "· convergencia de sucesiones definidas por aproximación"], ["txt", "· la definición rigurosa:   lím aₙ = L   (n → ∞)"]], "clear": 1},
+{"title": "4) Propiedad arquimediana", "clear": 1, "say": "Cuarta idea: la propiedad arquimediana. Dice que, para todos los números a y b mayores que cero, existe un número natural n tal que n por a es mayor que b. Es decir, por pequeño que sea a, sumándolo suficientes veces se supera cualquier b.", "L": [["goal", "Propiedad arquimediana"], ["res", "∀ a, b &gt; 0,   ∃ n ∈ ℕ :   n a &gt; b"]], "pin": ["4. Arquimediana"]},
+{"say": "Esto garantiza que los números naturales no están acotados en los números reales, y permite relacionar cantidades reales con aproximaciones discretas. Es una herramienta esencial en demostraciones con estimaciones y control de errores.", "L": [["txt", "ℕ no está acotado en ℝ"], ["txt", "Relaciona cantidades reales con aproximaciones discretas"], ["txt", "Útil en estimaciones y control de errores"]]},
+{"title": "5) Recta real ampliada", "clear": 1, "say": "Quinta idea: la recta real ampliada. Se obtiene añadiendo a los números reales los dos símbolos menos infinito y más infinito. Permite describir de forma unificada los comportamientos no acotados.", "L": [["goal", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> = ℝ ∪ { −∞, +∞ }"], ["txt", "Describe de forma unificada los comportamientos no acotados"]], "pin": ["5. Recta ampliada <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span>"]},
+{"say": "El orden de los números reales se extiende: para todo x real, menos infinito es menor o igual que x, y x es menor o igual que más infinito. Sin embargo, la recta ampliada no es un cuerpo ni un anillo, porque algunas operaciones solo se definen de forma parcial. Debe usarse únicamente como herramienta auxiliar.", "L": [["res", "∀ x ∈ ℝ :   −∞ ≤ x ≤ +∞"], ["warn", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> no es cuerpo ni anillo"], ["txt", "Herramienta auxiliar"]]},
+{"title": "6) Valor absoluto", "clear": 1, "say": "Sexta idea: el valor absoluto, asociado a la estructura ordenada de los números reales. Se define por casos. El valor absoluto de x es x, si x es mayor o igual que cero, y es menos x, si x es menor que cero.", "L": [["goal", "Valor absoluto"], ["res", "|x| = x    si  x ≥ 0"], ["res", "|x| = −x   si  x &lt; 0"]], "pin": ["6. Valor absoluto |x|"]},
+{"say": "Permite expresar la distancia entre dos números reales mediante el valor absoluto de x menos y, y formular desigualdades de forma simétrica. En particular, el valor absoluto de x menos a es menor que épsilon, si y solo si, x está entre a menos épsilon y a más épsilon.", "L": [["txt", "Distancia entre x e y:   |x − y|"], ["res", "|x − a| &lt; ε   ⟺   a − ε &lt; x &lt; a + ε"], ["txt", "Base técnica de la definición de límite y de continuidad"]]},
+{"title": "Resumen", "clear": 1, "say": "Resumen. Los números reales forman un cuerpo conmutativo, con un orden total compatible con las operaciones. Su propiedad distintiva es la completitud: todo conjunto no vacío y acotado superiormente tiene supremo. De ella se sigue la propiedad arquimediana. La recta ampliada es una herramienta auxiliar, y el valor absoluto mide distancias. Gracias por ver el vídeo.", "L": [["res", "ℝ:  cuerpo conmutativo  +  orden total compatible"], ["res", "Completitud:  todo A ≠ ∅ acotado superiormente tiene  sup A"], ["res", "Arquimediana:  ∀ a, b &gt; 0,  ∃ n ∈ ℕ :  n a &gt; b"], ["res", "|x − a| &lt; ε  ⟺  a − ε &lt; x &lt; a + ε"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' más ').replace(/⊙/g,' por ').replace(/∼/g,' complementario de ').replace(/≤/g,' menor o igual que ').replace(/[()]/g,', ').replace(/\b1\b/g,' uno ').replace(/\b0\b/g,' cero ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Repetir'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Continuar'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pausa';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^es/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/pablo|jorge|diego|enrique|miguel|alvaro|álvaro|male|google español$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent='Los números reales: resumen';$('sub').textContent='Resumen teórico · Cálculo';
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

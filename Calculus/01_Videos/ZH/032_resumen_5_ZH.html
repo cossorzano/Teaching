@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>实数</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>备忘</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ 开始</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>语速 <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">录制模式 (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"zh-CN",
+"meta":{"nivel": 0, "titulo": "实数", "enunciado": "总结：域、序、完备性、阿基米德性质、扩充实数线与绝对值", "datos": ["域结构", "序", "完备性", "阿基米德性质", "扩充实数线", "绝对值"]},
+"steps":[
+{"title": "实数：总结", "sub": "总结：域、序、完备性、阿基米德性质、扩充实数线与绝对值", "clear": 1, "say": "大家好。在这个视频中，我们总结实数的基本性质。它们是整个微积分的基础：极限、连续、可导和可积。我们将看六个要点：域结构、序、完备性、阿基米德性质、扩充实数线，以及绝对值。", "L": [["txt", "实数集  ℝ  是微积分的框架"], ["txt", "极限 · 连续 · 可导 · 可积"], ["txt", "它们依赖于 ℝ 的结构性质，而不仅仅是运算"]]},
+
+{"title": "1) 域结构", "clear": 1, "say": "第一个要点：代数结构。实数连同加法和乘法，构成一个交换域。这包含四点。第一：加法和乘法是封闭的、满足结合律和交换律的运算。第二：存在单位元，加法的单位元是零，乘法的单位元是一。第三：每个实数 x 都有相反数，负 x。第四：如果 x 不等于零，它有乘法逆元，x 的负一次方。", "L": [["goal", "(ℝ, +, ·)  是交换域"], ["txt", "加法与乘法：封闭、结合、交换"], ["txt", "单位元：  0  和  1"], ["txt", "相反数：  每个 x 都有  −x"], ["txt", "逆元：  若 x ≠ 0，  存在  x⁻¹"]], "pin": ["1. 域：(ℝ, +, ·)"]},
+
+{"clear": 1, "say": "对所有实数 a、b、c，下列恒等式成立。加法结合律：a 加上，b 加 c，等于，a 加 b，再加 c。乘法结合律：a 乘以，b 乘 c，等于，a 乘 b，再乘 c。分配律：a 乘以，b 加 c，等于 a 乘 b，加 a 乘 c。还有单位元：a 加零等于 a，a 乘一等于 a。这些性质保证了微积分中的代数运算是一致的。", "L": [["res", "a + (b + c) = (a + b) + c"], ["res", "a (b c) = (a b) c"], ["res", "a (b + c) = a b + a c"], ["res", "a + 0 = a,        a · 1 = a"], ["txt", "保证代数运算的一致性"]]},
+
+{"title": "2) 序", "clear": 1, "say": "第二个要点：序。实数集除了是域以外，还有一个全序关系，小于或等于，并且与运算相容。全序的意思是，任意两个实数都可以比较大小。", "L": [["goal", "ℝ  有全序  ≤"], ["txt", "任意两个实数都可以比较"]], "pin": ["2. 全序 ≤"]},
+
+{"say": "与加法相容是说：如果 a 小于或等于 b，那么对任意 c，a 加 c 小于或等于 b 加 c。与乘法相容是说：如果 c 大于或等于零，并且 a 小于或等于 b，那么 a 乘 c 小于或等于 b 乘 c。注意：c 必须是正数或零。", "L": [["res", "a ≤ b   ⟹   a + c ≤ b + c"], ["res", "0 ≤ c  且  a ≤ b   ⟹   a c ≤ b c"]]},
+
+{"say": "全序使我们可以定义区间：从 a 到 b 的开区间，从 a 到 b 的闭区间，从 a 到正无穷，等等。区间是表述极限和连续的基础。", "L": [["txt", "区间：   (a, b),    [a, b],    (a, +∞),   …"], ["txt", "在极限与连续中起核心作用"]]},
+
+{"title": "3) 完备性", "clear": 1, "say": "第三个要点，也是最重要的：完备性。这是实数的标志性性质。设 A 是实数集的一个非空子集，并且有上界。那么存在一个实数 s，具有两条性质。", "L": [["goal", "A ⊆ ℝ,   A ≠ ∅,   有上界"], ["txt", "则存在  s ∈ ℝ  使得："]], "pin": ["3. 完备性：sup A"]},
+
+{"say": "第一条性质：对 A 的每个元素 a，a 小于或等于 s。也就是说，s 是 A 的一个上界。", "L": [["res", "(1)   ∀ a ∈ A,   a ≤ s"], ["txt", "s 是 A 的上界"]]},
+
+{"say": "第二条性质：对任意大于零的 epsilon，存在 A 的一个元素 a，使得 s 减 epsilon 小于 a。也就是说，任何比 s 小的量都不是上界：s 是所有上界中最小的。", "L": [["res", "(2)   ∀ ε &gt; 0,   ∃ a ∈ A :   s − ε &lt; a"], ["txt", "比 s 小的数都不是上界：s 是最小上界"]]},
+
+{"say": "这个数 s 叫做 A 的上确界，记作 A 的 sup。类似地，每个非空且有下界的集合都有下确界。", "L": [["res", "s = sup A      （A 的上确界）"], ["txt", "同理：非空且有下界  ⟹  存在  inf A"]]},
+
+{"say": "这些性质不能从代数或序推出：它们是实数特有的公理。事实上，它们在有理数中不成立。它们是微积分的逻辑基础：单调有界数列极限的存在、由逼近定义的数列的收敛、以及极限的严格定义，都依赖于上确界和下确界的存在。", "L": [["txt", "ℝ 特有的公理。  在 ℚ 中不成立"], ["txt", "它是以下内容的基础："], ["txt", "· 单调有界数列的极限"], ["txt", "· 由逼近定义的数列的收敛"], ["txt", "· 严格定义：   lim aₙ = L   (n → ∞)"]], "clear": 1},
+
+{"title": "4) 阿基米德性质", "clear": 1, "say": "第四个要点：阿基米德性质。它说的是，对所有大于零的数 a 和 b，存在一个自然数 n，使得 n 乘 a 大于 b。也就是说，无论 a 多么小，把它加足够多次，就能超过任意的 b。", "L": [["goal", "阿基米德性质"], ["res", "∀ a, b &gt; 0,   ∃ n ∈ ℕ :   n a &gt; b"]], "pin": ["4. 阿基米德性质"]},
+
+{"say": "这保证了自然数在实数中没有上界，并且使我们能把实数量与离散逼近联系起来。它是涉及估计和误差控制的证明中的重要工具。", "L": [["txt", "ℕ 在 ℝ 中无界"], ["txt", "把实数量与离散逼近联系起来"], ["txt", "用于估计与误差控制"]]},
+
+{"title": "5) 扩充实数线", "clear": 1, "say": "第五个要点：扩充实数线。它是在实数集中添加负无穷和正无穷这两个符号得到的。它使我们能够统一地描述无界的行为。", "L": [["goal", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> = ℝ ∪ { −∞, +∞ }"], ["txt", "统一地描述无界行为"]], "pin": ["5. 扩充实数线 <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span>"]},
+
+{"say": "实数的序可以推广：对每个实数 x，负无穷小于或等于 x，并且 x 小于或等于正无穷。但是，扩充实数线既不是域也不是环，因为有些运算只是部分定义的。它只应作为辅助工具使用。", "L": [["res", "∀ x ∈ ℝ :   −∞ ≤ x ≤ +∞"], ["warn", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> 既不是域也不是环"], ["txt", "辅助工具"]]},
+
+{"title": "6) 绝对值", "clear": 1, "say": "第六个要点：绝对值，它与实数的有序结构相关。它是分情况定义的。当 x 大于或等于零时，x 的绝对值是 x；当 x 小于零时，x 的绝对值是负 x。", "L": [["goal", "绝对值"], ["res", "|x| = x    若  x ≥ 0"], ["res", "|x| = −x   若  x &lt; 0"]], "pin": ["6. 绝对值 |x|"]},
+
+{"say": "它使我们可以用 x 减 y 的绝对值来表示两个实数之间的距离，并以对称的形式写出不等式。特别地，x 减 a 的绝对值小于 epsilon，当且仅当，x 介于 a 减 epsilon 和 a 加 epsilon 之间。", "L": [["txt", "x 与 y 的距离：   |x − y|"], ["res", "|x − a| &lt; ε   ⟺   a − ε &lt; x &lt; a + ε"], ["txt", "极限与连续定义的技术基础"]]},
+
+{"title": "总结", "clear": 1, "say": "总结。实数构成一个交换域，并有一个与运算相容的全序。它的标志性性质是完备性：每个非空且有上界的集合都有上确界。由此可以推出阿基米德性质。扩充实数线是辅助工具，绝对值用来度量距离。感谢观看。", "L": [["res", "ℝ：  交换域  +  相容的全序"], ["res", "完备性：  每个有上界的 A ≠ ∅ 都有  sup A"], ["res", "阿基米德性质：  ∀ a, b &gt; 0,  ∃ n ∈ ℕ :  n a &gt; b"], ["res", "|x − a| &lt; ε  ⟺  a − ε &lt; x &lt; a + ε"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' 加 ').replace(/⊙/g,' 乘 ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ 重播'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ 继续'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ 暂停';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^zh/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/yunyang|yunxi|yunjian|kangkang|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="实数";$('sub').textContent="总结：域、序、完备性、阿基米德性质、扩充实数线与绝对值";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
