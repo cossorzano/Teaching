@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>العلاقات والعمليات والبنى الجبرية</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-inline-end:2px dashed #3d5a50;padding-inline-end:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-inline-start:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+span[dir='ltr']{white-space:nowrap}
+svg{direction:ltr}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>تذكّر</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ ابدأ</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>السرعة <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">وضع التسجيل (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ar-SA",
+"meta":{"nivel": 0, "titulo": "العلاقات والعمليات والبنى الجبرية", "enunciado": "ملخص: العلاقات الثنائية، والعمليات، وتسلسل البنى، من الماغما إلى الحقل", "datos": ["علاقات التكافؤ", "الترتيب الجزئي والكلي", "العمليات الثنائية", "الماغما وشبه الزمرة والمونويد", "الزمرة والزمرة الإبدالية", "الحلقات", "الحقل"]},
+"steps":[
+{"title": "العلاقات والعمليات والبنى الجبرية", "sub": "ملخص: العلاقات الثنائية، والعمليات، وتسلسل البنى، من الماغما إلى الحقل", "clear": 1, "say": "مرحبًا. في هذا الفيديو نلخص العلاقات الثنائية، والعمليات، وتسلسل البنى الجبرية: من الماغما حتى الحقل. أولًا العلاقات، ثم البنى، بإضافة الخواص واحدة تلو الأخرى.", "L": [["txt", "العلاقات الثنائية  ←  العمليات  ←  البنى الجبرية"]]},
+
+{"title": "1) العلاقة الثنائية", "clear": 1, "say": "العلاقة الثنائية على مجموعة E هي مجموعة جزئية R من الجداء الديكارتي E في E. وكتابة أن الزوج a، b ينتمي إلى R تعني أن a مرتبط بـ b.", "L": [["goal", "علاقة ثنائية:   <span dir='ltr'>R ⊆ E × E</span>"], ["txt", "<span dir='ltr'>(a, b) ∈ R</span>   تعني أن  <span dir='ltr'>a</span>  مرتبط بـ  <span dir='ltr'>b</span>"]]},
+
+{"title": "2) علاقة التكافؤ", "clear": 1, "say": "علاقة التكافؤ هي علاقة ثنائية تحقق ثلاث خواص. الانعكاسية: لكل a، الزوج a، a ينتمي إلى R. التناظرية: إذا كان الزوج a، b ينتمي إلى R، فإن الزوج b، a ينتمي إلى R. والتعدي: إذا كان الزوجان a، b و b، c ينتميان إلى R، فإن الزوج a، c ينتمي إلى R.", "L": [["goal", "علاقة التكافؤ"], ["res", "انعكاسية:   <span dir='ltr'>(a, a) ∈ R</span>"], ["res", "تناظرية:   <span dir='ltr'>(a, b) ∈ R  ⟹  (b, a) ∈ R</span>"], ["res", "متعدية:   <span dir='ltr'>(a, b), (b, c) ∈ R  ⟹  (a, c) ∈ R</span>"]]},
+
+{"say": "تُكتب بثلاث طرق بحسب السياق: الزوج a، b ينتمي إلى R، أو a يكافئ b، أو a يساوي b.", "L": [["txt", "الترميز، بحسب السياق:"], ["sub", "<span dir='ltr'>(a, b) ∈ R,       a ∼ b,       a = b</span>"]]},
+
+{"title": "3) الترتيب الجزئي", "clear": 1, "say": "علاقة الترتيب الجزئي تحقق أيضًا ثلاث خواص. الانعكاسية: الزوج a، a ينتمي إلى R. التخالف: إذا كان الزوجان a، b و b، a ينتميان إلى R، فإن a يساوي b. والتعدي، كما سبق. ونكتب: الزوج a، b ينتمي إلى R، أو a أصغر من أو يساوي b.", "L": [["goal", "علاقة ترتيب جزئي"], ["res", "انعكاسية:   <span dir='ltr'>(a, a) ∈ R</span>"], ["res", "تخالفية:   <span dir='ltr'>(a, b), (b, a) ∈ R  ⟹  a = b</span>"], ["res", "متعدية:   <span dir='ltr'>(a, b), (b, c) ∈ R  ⟹  (a, c) ∈ R</span>"], ["sub", "الترميز:   <span dir='ltr'>(a, b) ∈ R</span>،       <span dir='ltr'>a ≤ b</span>"]]},
+
+{"title": "4) الترتيب الكلي", "clear": 1, "say": "علاقة الترتيب الكلي هي ترتيب جزئي يمكن فيه المقارنة بين أي عنصرين: لكل a و b، الزوج a، b ينتمي إلى R، أو الزوج b، a ينتمي إلى R. انتبه: لا تخلط بينها وبين القول إنه إذا كان a، b في R فإن b، a ليس فيها، فهذا يناقض الانعكاسية.", "L": [["goal", "علاقة ترتيب كلي"], ["txt", "ترتيب جزئي، وكذلك:"], ["res", "لكل <span dir='ltr'>a</span> و <span dir='ltr'>b</span>،   <span dir='ltr'>(a, b) ∈ R   ∨   (b, a) ∈ R</span>"], ["warn", "ليس:  <span dir='ltr'>(a, b) ∈ R ⟹ (b, a) ∉ R</span>   لأنه يناقض الانعكاسية"]]},
+
+{"title": "5) العمليات الثنائية", "clear": 1, "say": "ننتقل إلى العمليات. العملية الثنائية الداخلية على E هي دالة f من E في E إلى E: تجمع عنصرين من E وتعطي عنصرًا آخر من E. والعملية الثنائية الخارجية هي دالة f من E في F إلى E: تجمع عنصرًا من E مع عنصر من مجموعة أخرى F، وتعطي عنصرًا من E.", "L": [["goal", "عملية ثنائية داخلية:   <span dir='ltr'>f : E × E → E</span>"], ["goal", "عملية ثنائية خارجية:   <span dir='ltr'>f : E × F → E</span>"]]},
+
+{"title": "6) الماغما", "clear": 1, "say": "والآن تسلسل البنى، بإضافة خواص في كل مستوى. الماغما مجموعة E مزودة بعملية ثنائية داخلية، نكتبها برمز الجمع داخل دائرة.", "L": [["goal", "ماغما:   <span dir='ltr'>(E, ⊕)</span>"], ["txt", "<span dir='ltr'>⊕</span>  عملية ثنائية داخلية"]], "pin": ["الماغما:  <span dir='ltr'>⊕</span> داخلية"]},
+
+{"title": "7) شبه الزمرة", "clear": 1, "say": "شبه الزمرة ماغما تكون فيها العملية تجميعية: a زائد b، زائد c، يساوي a زائد، b زائد c.", "L": [["goal", "شبه زمرة:   <span dir='ltr'>(E, ⊕)</span>   ماغما  +"], ["res", "تجميعية:   <span dir='ltr'>(a ⊕ b) ⊕ c = a ⊕ (b ⊕ c)</span>"]], "pin": ["شبه الزمرة:  + تجميعية"]},
+
+{"title": "8) المونويد", "clear": 1, "say": "المونويد شبه زمرة لها عنصر محايد: يوجد عنصر وحيد نسميه الصفر، بحيث لكل a، يكون a زائد الصفر هو a، والصفر زائد a هو a.", "L": [["goal", "مونويد:   <span dir='ltr'>(E, ⊕)</span>   شبه زمرة  +"], ["res", "عنصر محايد:   <span dir='ltr'>∃! 0</span>  بحيث  <span dir='ltr'>∀ a:   a ⊕ 0 = a</span>،    <span dir='ltr'>0 ⊕ a = a</span>"]], "pin": ["المونويد:  + عنصر محايد"]},
+
+{"title": "9) الزمرة", "clear": 1, "say": "الزمرة مونويد يكون فيه لكل عنصر نظير: لكل a، يوجد عنصر وحيد، هو نظير a، بحيث يكون a زائد نظيره، ونظيره زائد a، مساويين للعنصر المحايد الصفر.", "L": [["goal", "زمرة:   <span dir='ltr'>(E, ⊕)</span>   مونويد  +"], ["res", "عنصر نظير:   لكل <span dir='ltr'>a</span> يوجد نظير وحيد  <span dir='ltr'>∼a</span>  بحيث"], ["res", "<span dir='ltr'>a ⊕ (∼a) = (∼a) ⊕ a = 0</span>"]], "pin": ["الزمرة:  + عنصر نظير"]},
+
+{"title": "10) الزمرة الإبدالية", "clear": 1, "say": "الزمرة الإبدالية زمرة تكون فيها العملية إبدالية: a زائد b يساوي b زائد a.", "L": [["goal", "زمرة إبدالية:   <span dir='ltr'>(E, ⊕)</span>   زمرة  +"], ["res", "إبدالية:   <span dir='ltr'>a ⊕ b = b ⊕ a</span>"]], "pin": ["الزمرة الإبدالية:  + إبدالية"]},
+
+{"title": "11) الحلقة", "clear": 1, "say": "للحلقة عمليتان: الجمع، ويُكتب برمز الجمع داخل دائرة، والضرب، ويُكتب بنقطة داخل دائرة. مع الجمع، تكون E زمرة إبدالية. ومع الضرب، تكون E شبه زمرة.", "L": [["goal", "حلقة:   <span dir='ltr'>(E, ⊕, ⊙)</span>"], ["res", "<span dir='ltr'>(E, ⊕)</span>   زمرة إبدالية"], ["res", "<span dir='ltr'>(E, ⊙)</span>   شبه زمرة"]], "pin": ["الحلقة:  <span dir='ltr'>(E,⊕)</span> إبدالية، <span dir='ltr'>(E,⊙)</span> شبه زمرة"]},
+
+{"say": "وإضافة إلى ذلك، ترتبط العمليتان بقانوني توزيع. من اليسار: a ضرب، b زائد c، يساوي a ضرب b، زائد a ضرب c. ومن اليمين: b زائد c، ضرب a، يساوي b ضرب a، زائد c ضرب a.", "L": [["res", "التوزيع من اليسار:   <span dir='ltr'>a ⊙ (b ⊕ c) = (a ⊙ b) ⊕ (a ⊙ c)</span>"], ["res", "التوزيع من اليمين:   <span dir='ltr'>(b ⊕ c) ⊙ a = (b ⊙ a) ⊕ (c ⊙ a)</span>"]]},
+
+{"title": "12) الحلقة الواحدية", "clear": 1, "say": "الحلقة الواحدية حلقة يكون فيها للضرب عنصر محايد: أي أن E مع الضرب مونويد.", "L": [["goal", "حلقة واحدية:   <span dir='ltr'>(E, ⊕, ⊙)</span>   حلقة  +"], ["res", "<span dir='ltr'>(E, ⊙)</span>   مونويد"]], "pin": ["الحلقة الواحدية:  <span dir='ltr'>(E,⊙)</span> مونويد"]},
+
+{"title": "13) حلقة القسمة", "clear": 1, "say": "حلقة القسمة حلقة واحدية يكون فيها لكل عنصر غير الصفر مقلوب بالنسبة إلى الضرب: أي أن E بعد حذف المجموعة التي لا تحوي إلا الصفر، مع الضرب، زمرة.", "L": [["goal", "حلقة قسمة:   <span dir='ltr'>(E, ⊕, ⊙)</span>   حلقة واحدية  +"], ["res", "<span dir='ltr'>(E ∖ {0}, ⊙)</span>   زمرة"]], "pin": ["حلقة القسمة:  <span dir='ltr'>(E∖{0},⊙)</span> زمرة"]},
+
+{"title": "14) الحقل", "clear": 1, "say": "والحقل حلقة قسمة يكون فيها الضرب إبداليًا.", "L": [["goal", "حقل:   <span dir='ltr'>(E, ⊕, ⊙)</span>   حلقة قسمة  +"], ["res", "<span dir='ltr'>⊙</span>  إبدالية"]], "pin": ["الحقل:  <span dir='ltr'>⊙</span> إبدالية"]},
+
+{"title": "الخلاصة", "clear": 1, "say": "الخلاصة. علاقات التكافؤ انعكاسية وتناظرية ومتعدية. والترتيبات الجزئية انعكاسية وتخالفية ومتعدية، ويكون الترتيب كليًا إذا أمكنت المقارنة بين كل زوج. وفي البنى، يضيف كل مستوى خاصية واحدة: شبه الزمرة، التجميعية؛ والمونويد، العنصر المحايد؛ والزمرة، النظير؛ والزمرة الإبدالية، الإبدالية. ومع عمليتين: الحلقة، والحلقة الواحدية، وحلقة القسمة، والحقل. شكرًا على المشاهدة.", "L": [["res", "التكافؤ:  انعكاسية، تناظرية، متعدية"], ["res", "الترتيب الجزئي:  انعكاسية، تخالفية، متعدية"], ["res", "الترتيب الكلي:  لكل <span dir='ltr'>a</span> و <span dir='ltr'>b</span>،  <span dir='ltr'>(a, b) ∈ R  ∨  (b, a) ∈ R</span>"], ["res", "ماغما ← شبه زمرة ← مونويد ← زمرة ← زمرة إبدالية"], ["txt", "+ تجميعية،   + محايد،   + نظير،   + إبدالية"], ["res", "حلقة ← حلقة واحدية ← حلقة قسمة ← حقل"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' زائد ').replace(/⊙/g,' ضرب ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ إعادة'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ متابعة'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ إيقاف مؤقت';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ إيقاف مؤقت';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ إيقاف مؤقت';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ar/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/hamed|shakir|naayf|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="العلاقات والعمليات والبنى الجبرية";$('sub').textContent="ملخص: العلاقات الثنائية، والعمليات، وتسلسل البنى، من الماغما إلى الحقل";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

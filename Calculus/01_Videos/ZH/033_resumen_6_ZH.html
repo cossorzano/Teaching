@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>关系、运算与代数结构</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>备忘</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ 开始</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>语速 <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">录制模式 (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"zh-CN",
+"meta":{"nivel": 0, "titulo": "关系、运算与代数结构", "enunciado": "总结：二元关系、运算与代数结构的层次，从原群到域", "datos": ["等价关系", "偏序与全序", "二元运算", "原群、半群与幺半群", "群与阿贝尔群", "环", "域"]},
+"steps":[
+{"title": "关系、运算与代数结构", "sub": "总结：二元关系、运算与代数结构的层次，从原群到域", "clear": 1, "say": "大家好。在这个视频中，我们总结二元关系、运算，以及代数结构的层次：从原群一直到域。先讲关系，再讲结构，一次增加一条性质。", "L": [["txt", "二元关系  →  运算  →  代数结构"]]},
+
+{"title": "1) 二元关系", "clear": 1, "say": "集合 E 上的一个二元关系，是笛卡尔积 E 乘 E 的一个子集 R。写有序对 a, b 属于 R，表示 a 与 b 有关系。", "L": [["goal", "二元关系：   R ⊆ E × E"], ["txt", "(a, b) ∈ R   表示  a  与  b  有关系"]]},
+
+{"title": "2) 等价关系", "clear": 1, "say": "等价关系是满足三条性质的二元关系。自反性：对每个 a，有序对 a, a 属于 R。对称性：如果有序对 a, b 属于 R，那么有序对 b, a 也属于 R。传递性：如果有序对 a, b 和 b, c 都属于 R，那么有序对 a, c 属于 R。", "L": [["goal", "等价关系"], ["res", "自反性：   (a, a) ∈ R"], ["res", "对称性：   (a, b) ∈ R  ⟹  (b, a) ∈ R"], ["res", "传递性：   (a, b), (b, c) ∈ R  ⟹  (a, c) ∈ R"]]},
+
+{"say": "根据上下文，它有三种写法：有序对 a, b 属于 R，a 等价于 b，或者 a 等于 b。", "L": [["txt", "记法（视上下文而定）："], ["sub", "(a, b) ∈ R,       a ∼ b,       a = b"]]},
+
+{"title": "3) 偏序", "clear": 1, "say": "偏序关系也满足三条性质。自反性：有序对 a, a 属于 R。反对称性：如果有序对 a, b 和 b, a 都属于 R，那么 a 等于 b。还有传递性，和前面一样。写作有序对 a, b 属于 R，或者 a 小于或等于 b。", "L": [["goal", "偏序关系"], ["res", "自反性：   (a, a) ∈ R"], ["res", "反对称性：   (a, b), (b, a) ∈ R  ⟹  a = b"], ["res", "传递性：   (a, b), (b, c) ∈ R  ⟹  (a, c) ∈ R"], ["sub", "记法：   (a, b) ∈ R,       a ≤ b"]]},
+
+{"title": "4) 全序", "clear": 1, "say": "全序关系是一种偏序，其中任意两个元素都可以比较：对所有 a 和 b，有序对 a, b 属于 R，或者有序对 b, a 属于 R。注意：不要把它与这样的说法混淆：如果 a, b 在 R 中，那么 b, a 就不在 R 中。那与自反性矛盾。", "L": [["goal", "全序关系"], ["txt", "是偏序，并且："], ["res", "∀ a, b:   (a, b) ∈ R   或   (b, a) ∈ R"], ["warn", "不是：  (a, b) ∈ R ⟹ (b, a) ∉ R   （与自反性矛盾）"]]},
+
+{"title": "5) 二元运算", "clear": 1, "say": "接下来是运算。E 上的内部二元运算，是从 E 乘 E 到 E 的函数 f：它把 E 的两个元素结合起来，得到 E 的另一个元素。外部二元运算，是从 E 乘 F 到 E 的函数 f：它把 E 的一个元素与另一个集合 F 的一个元素结合起来，得到 E 的一个元素。", "L": [["goal", "内部二元运算：   f : E × E → E"], ["goal", "外部二元运算：   f : E × F → E"]]},
+
+{"title": "6) 原群", "clear": 1, "say": "现在来看结构的层次，每一层增加一些性质。原群是一个集合 E，带有一个内部二元运算，我们用圆圈加号来表示。", "L": [["goal", "原群：   (E, ⊕)"], ["txt", "⊕  内部二元运算"]], "pin": ["原群：  ⊕ 内部运算"]},
+
+{"title": "7) 半群", "clear": 1, "say": "半群是运算满足结合律的原群：a 加 b，再加 c，等于 a 加上，b 加 c。", "L": [["goal", "半群：   (E, ⊕)   原群  +"], ["res", "结合律：   (a ⊕ b) ⊕ c = a ⊕ (b ⊕ c)"]], "pin": ["半群：  + 结合律"]},
+
+{"title": "8) 幺半群", "clear": 1, "say": "幺半群是有单位元的半群：存在唯一的元素，我们称为零，使得对每个 a，a 加零等于 a，零加 a 也等于 a。", "L": [["goal", "幺半群：   (E, ⊕)   半群  +"], ["res", "单位元：   ∃! 0  使得  ∀ a:   a ⊕ 0 = a,    0 ⊕ a = a"]], "pin": ["幺半群：  + 单位元"]},
+
+{"title": "9) 群", "clear": 1, "say": "群是每个元素都有逆元的幺半群：对每个 a，存在唯一的元素，即 a 的逆元，使得 a 加它的逆元，以及它的逆元加 a，都等于单位元零。", "L": [["goal", "群：   (E, ⊕)   幺半群  +"], ["res", "逆元：   ∀ a,  ∃! ∼a  使得"], ["res", "a ⊕ (∼a) = (∼a) ⊕ a = 0"]], "pin": ["群：  + 逆元"]},
+
+{"title": "10) 阿贝尔群", "clear": 1, "say": "阿贝尔群是运算满足交换律的群：a 加 b 等于 b 加 a。", "L": [["goal", "阿贝尔群：   (E, ⊕)   群  +"], ["res", "交换律：   a ⊕ b = b ⊕ a"]], "pin": ["阿贝尔群：  + 交换律"]},
+
+{"title": "11) 环", "clear": 1, "say": "环有两个运算：加法，用圆圈加号表示；乘法，用圆圈点号表示。对加法，E 是阿贝尔群。对乘法，E 是半群。", "L": [["goal", "环：   (E, ⊕, ⊙)"], ["res", "(E, ⊕)   阿贝尔群"], ["res", "(E, ⊙)   半群"]], "pin": ["环：  (E,⊕) 阿贝尔群，(E,⊙) 半群"]},
+
+{"say": "此外，两个运算通过两条分配律联系起来。左分配律：a 乘以，b 加 c，等于 a 乘 b，加 a 乘 c。右分配律：b 加 c，乘以 a，等于 b 乘 a，加 c 乘 a。", "L": [["res", "左分配律：   a ⊙ (b ⊕ c) = (a ⊙ b) ⊕ (a ⊙ c)"], ["res", "右分配律：   (b ⊕ c) ⊙ a = (b ⊙ a) ⊕ (c ⊙ a)"]]},
+
+{"title": "12) 幺环", "clear": 1, "say": "幺环是乘法有单位元的环：也就是说，E 对乘法是幺半群。", "L": [["goal", "幺环：   (E, ⊕, ⊙)   环  +"], ["res", "(E, ⊙)   幺半群"]], "pin": ["幺环：  (E,⊙) 幺半群"]},
+
+{"title": "13) 除环", "clear": 1, "say": "除环是每个非零元素都有乘法逆元的幺环：也就是说，E 去掉只含零的集合以后，对乘法构成一个群。", "L": [["goal", "除环：   (E, ⊕, ⊙)   幺环  +"], ["res", "(E ∖ {0}, ⊙)   群"]], "pin": ["除环：  (E∖{0},⊙) 群"]},
+
+{"title": "14) 域", "clear": 1, "say": "而域是乘法满足交换律的除环。", "L": [["goal", "域：   (E, ⊕, ⊙)   除环  +"], ["res", "⊙  满足交换律"]], "pin": ["域：  ⊙ 交换"]},
+
+{"title": "总结", "clear": 1, "say": "总结。等价关系满足自反、对称和传递。偏序满足自反、反对称和传递；如果所有元素对都可以比较，就是全序。对于结构，每一层增加一条性质：半群增加结合律；幺半群增加单位元；群增加逆元；阿贝尔群增加交换律。有两个运算时，依次是环、幺环、除环，以及域。感谢观看。", "L": [["res", "等价：  自反、对称、传递"], ["res", "偏序：  自反、反对称、传递"], ["res", "全序：  ∀ a, b:  (a, b) ∈ R  或  (b, a) ∈ R"], ["res", "原群 → 半群 → 幺半群 → 群 → 阿贝尔群"], ["txt", "      + 结合律   + 单位元   + 逆元   + 交换律"], ["res", "环 → 幺环 → 除环 → 域"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' 加 ').replace(/⊙/g,' 乘 ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ 重播'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ 继续'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ 暂停';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^zh/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/yunyang|yunxi|yunjian|kangkang|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="关系、运算与代数结构";$('sub').textContent="总结：二元关系、运算与代数结构的层次，从原群到域";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

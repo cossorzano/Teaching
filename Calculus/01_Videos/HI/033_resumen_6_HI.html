@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>संबंध, संक्रियाएँ और बीजीय संरचनाएँ</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>याद रखें</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ शुरू करें</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>गति <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">रिकॉर्डिंग मोड (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"hi-IN",
+"meta":{"nivel": 0, "titulo": "संबंध, संक्रियाएँ और बीजीय संरचनाएँ", "enunciado": "सारांश: द्विआधारी संबंध, संक्रियाएँ और संरचनाओं का पदानुक्रम, मैग्मा से क्षेत्र तक", "datos": ["तुल्यता संबंध", "आंशिक और पूर्ण क्रम", "द्विआधारी संक्रियाएँ", "मैग्मा, अर्धसमूह और मोनॉइड", "समूह और आबेली समूह", "वलय", "क्षेत्र"]},
+"steps":[
+{"title": "संबंध, संक्रियाएँ और बीजीय संरचनाएँ", "sub": "सारांश: द्विआधारी संबंध, संक्रियाएँ और संरचनाओं का पदानुक्रम, मैग्मा से क्षेत्र तक", "clear": 1, "say": "नमस्ते। इस वीडियो में हम द्विआधारी संबंधों, संक्रियाओं, और बीजीय संरचनाओं के पदानुक्रम का सारांश देखेंगे: मैग्मा से लेकर क्षेत्र तक। पहले संबंध, और फिर संरचनाएँ, एक-एक करके गुण जोड़ते हुए।", "L": [["txt", "द्विआधारी संबंध  →  संक्रियाएँ  →  बीजीय संरचनाएँ"]]},
+
+{"title": "1) द्विआधारी संबंध", "clear": 1, "say": "किसी समुच्चय E पर एक द्विआधारी संबंध, कार्तीय गुणनफल E गुणा E का एक उपसमुच्चय R है। यह लिखना कि युग्म a, b, R में है, इसका अर्थ है कि a, b से संबंधित है।", "L": [["goal", "द्विआधारी संबंध:   R ⊆ E × E"], ["txt", "(a, b) ∈ R   का अर्थ है कि  a,  b  से संबंधित है"]]},
+
+{"title": "2) तुल्यता संबंध", "clear": 1, "say": "तुल्यता संबंध वह द्विआधारी संबंध है जो तीन गुण पूरे करता है। स्वतुल्य: हर a के लिए, युग्म a, a, R में है। सममित: यदि युग्म a, b, R में है, तो युग्म b, a, R में है। और संक्रामक: यदि युग्म a, b और b, c, R में हैं, तो युग्म a, c, R में है।", "L": [["goal", "तुल्यता संबंध"], ["res", "स्वतुल्य:   (a, a) ∈ R"], ["res", "सममित:   (a, b) ∈ R  ⟹  (b, a) ∈ R"], ["res", "संक्रामक:   (a, b), (b, c) ∈ R  ⟹  (a, c) ∈ R"]]},
+
+{"say": "संदर्भ के अनुसार इसे तीन तरह से लिखते हैं: युग्म a, b, R में है, a तुल्य है b के, या a बराबर है b के।", "L": [["txt", "संकेतन, संदर्भ के अनुसार:"], ["sub", "(a, b) ∈ R,       a ∼ b,       a = b"]]},
+
+{"title": "3) आंशिक क्रम", "clear": 1, "say": "आंशिक क्रम संबंध भी तीन गुण पूरे करता है। स्वतुल्य: युग्म a, a, R में है। प्रतिसममित: यदि युग्म a, b और b, a, R में हैं, तो a बराबर है b के। और संक्रामक, पहले की तरह। इसे लिखते हैं: युग्म a, b, R में है, या a कम या बराबर है b के।", "L": [["goal", "आंशिक क्रम संबंध"], ["res", "स्वतुल्य:   (a, a) ∈ R"], ["res", "प्रतिसममित:   (a, b), (b, a) ∈ R  ⟹  a = b"], ["res", "संक्रामक:   (a, b), (b, c) ∈ R  ⟹  (a, c) ∈ R"], ["sub", "संकेतन:   (a, b) ∈ R,       a ≤ b"]]},
+
+{"title": "4) पूर्ण क्रम", "clear": 1, "say": "पूर्ण क्रम संबंध वह आंशिक क्रम है जिसमें कोई भी दो अवयव तुलनीय हैं: सभी a और b के लिए, युग्म a, b, R में है, या युग्म b, a, R में है। ध्यान दें: इसे इस कथन से न मिलाएँ कि यदि a, b, R में है तो b, a नहीं है। वह स्वतुल्यता का खंडन करता है।", "L": [["goal", "पूर्ण क्रम संबंध"], ["txt", "आंशिक क्रम, और साथ ही:"], ["res", "∀ a, b:   (a, b) ∈ R   या   (b, a) ∈ R"], ["warn", "नहीं:  (a, b) ∈ R ⟹ (b, a) ∉ R   (स्वतुल्यता का खंडन)"]]},
+
+{"title": "5) द्विआधारी संक्रियाएँ", "clear": 1, "say": "अब संक्रियाएँ। E पर एक आंतरिक द्विआधारी संक्रिया, E गुणा E से E तक का फलन f है: यह E के दो अवयवों को जोड़कर E का एक और अवयव देता है। एक बाह्य द्विआधारी संक्रिया, E गुणा F से E तक का फलन f है: यह E के एक अवयव को किसी दूसरे समुच्चय F के अवयव से जोड़कर E का एक अवयव देता है।", "L": [["goal", "आंतरिक द्विआधारी संक्रिया:   f : E × E → E"], ["goal", "बाह्य द्विआधारी संक्रिया:   f : E × F → E"]]},
+
+{"title": "6) मैग्मा", "clear": 1, "say": "अब संरचनाओं का पदानुक्रम, हर स्तर पर गुण जोड़ते हुए। मैग्मा एक समुच्चय E है, जिस पर एक आंतरिक द्विआधारी संक्रिया है, जिसे हम वृत्त वाले धन चिह्न से लिखते हैं।", "L": [["goal", "मैग्मा:   (E, ⊕)"], ["txt", "⊕  आंतरिक द्विआधारी संक्रिया"]], "pin": ["मैग्मा:  ⊕ आंतरिक"]},
+
+{"title": "7) अर्धसमूह", "clear": 1, "say": "अर्धसमूह वह मैग्मा है जिसमें संक्रिया साहचर्य है: a धन b, धन c, बराबर है a धन, b धन c के।", "L": [["goal", "अर्धसमूह:   (E, ⊕)   मैग्मा  +"], ["res", "साहचर्य:   (a ⊕ b) ⊕ c = a ⊕ (b ⊕ c)"]], "pin": ["अर्धसमूह:  + साहचर्य"]},
+
+{"title": "8) मोनॉइड", "clear": 1, "say": "मोनॉइड वह अर्धसमूह है जिसमें तत्समक अवयव है: एक अद्वितीय अवयव है, जिसे हम शून्य कहते हैं, ऐसा कि हर a के लिए, a धन शून्य a है, और शून्य धन a भी a है।", "L": [["goal", "मोनॉइड:   (E, ⊕)   अर्धसमूह  +"], ["res", "तत्समक अवयव:   ∃! 0  ऐसा कि  ∀ a:   a ⊕ 0 = a,    0 ⊕ a = a"]], "pin": ["मोनॉइड:  + तत्समक अवयव"]},
+
+{"title": "9) समूह", "clear": 1, "say": "समूह वह मोनॉइड है जिसमें हर अवयव का प्रतिलोम है: हर a के लिए, एक अद्वितीय अवयव है, a का प्रतिलोम, ऐसा कि a धन उसका प्रतिलोम, और उसका प्रतिलोम धन a, तत्समक अवयव शून्य के बराबर हैं।", "L": [["goal", "समूह:   (E, ⊕)   मोनॉइड  +"], ["res", "प्रतिलोम अवयव:   ∀ a,  ∃! ∼a  ऐसा कि"], ["res", "a ⊕ (∼a) = (∼a) ⊕ a = 0"]], "pin": ["समूह:  + प्रतिलोम अवयव"]},
+
+{"title": "10) आबेली समूह", "clear": 1, "say": "आबेली समूह वह समूह है जिसमें संक्रिया क्रमविनिमेय है: a धन b बराबर है b धन a के।", "L": [["goal", "आबेली समूह:   (E, ⊕)   समूह  +"], ["res", "क्रमविनिमेय:   a ⊕ b = b ⊕ a"]], "pin": ["आबेली समूह:  + क्रमविनिमेय"]},
+
+{"title": "11) वलय", "clear": 1, "say": "वलय में दो संक्रियाएँ होती हैं: योग, जो वृत्त वाले धन चिह्न से लिखा जाता है, और गुणन, जो वृत्त वाले बिंदु से लिखा जाता है। योग के साथ, E एक आबेली समूह है। गुणन के साथ, E एक अर्धसमूह है।", "L": [["goal", "वलय:   (E, ⊕, ⊙)"], ["res", "(E, ⊕)   आबेली समूह"], ["res", "(E, ⊙)   अर्धसमूह"]], "pin": ["वलय:  (E,⊕) आबेली, (E,⊙) अर्धसमूह"]},
+
+{"say": "और साथ ही, दोनों संक्रियाएँ दो वितरण नियमों से जुड़ी हैं। बाईं ओर: a गुणा, b धन c, बराबर है a गुणा b, धन a गुणा c के। दाईं ओर: b धन c, गुणा a, बराबर है b गुणा a, धन c गुणा a के।", "L": [["res", "बाएँ वितरण:   a ⊙ (b ⊕ c) = (a ⊙ b) ⊕ (a ⊙ c)"], ["res", "दाएँ वितरण:   (b ⊕ c) ⊙ a = (b ⊙ a) ⊕ (c ⊙ a)"]]},
+
+{"title": "12) इकाई वलय", "clear": 1, "say": "इकाई वलय वह वलय है जिसमें गुणन का तत्समक अवयव है: अर्थात, गुणन के साथ E एक मोनॉइड है।", "L": [["goal", "इकाई वलय:   (E, ⊕, ⊙)   वलय  +"], ["res", "(E, ⊙)   मोनॉइड"]], "pin": ["इकाई वलय:  (E,⊙) मोनॉइड"]},
+
+{"title": "13) विभाजन वलय", "clear": 1, "say": "विभाजन वलय वह इकाई वलय है जिसमें शून्य से भिन्न हर अवयव का गुणन के लिए प्रतिलोम है: अर्थात, E में से केवल शून्य वाला समुच्चय हटाने पर, गुणन के साथ, एक समूह मिलता है।", "L": [["goal", "विभाजन वलय:   (E, ⊕, ⊙)   इकाई वलय  +"], ["res", "(E ∖ {0}, ⊙)   समूह"]], "pin": ["विभाजन वलय:  (E∖{0},⊙) समूह"]},
+
+{"title": "14) क्षेत्र", "clear": 1, "say": "और क्षेत्र वह विभाजन वलय है जिसमें गुणन क्रमविनिमेय है।", "L": [["goal", "क्षेत्र:   (E, ⊕, ⊙)   विभाजन वलय  +"], ["res", "⊙  क्रमविनिमेय"]], "pin": ["क्षेत्र:  ⊙ क्रमविनिमेय"]},
+
+{"title": "सारांश", "clear": 1, "say": "सारांश। तुल्यता संबंध स्वतुल्य, सममित और संक्रामक होते हैं। आंशिक क्रम स्वतुल्य, प्रतिसममित और संक्रामक होते हैं, और यदि सभी युग्म तुलनीय हों तो क्रम पूर्ण है। संरचनाओं में, हर स्तर एक गुण जोड़ता है: अर्धसमूह, साहचर्य; मोनॉइड, तत्समक अवयव; समूह, प्रतिलोम; आबेली समूह, क्रमविनिमेयता। दो संक्रियाओं के साथ, वलय, इकाई वलय, विभाजन वलय, और क्षेत्र। देखने के लिए धन्यवाद।", "L": [["res", "तुल्यता:  स्वतुल्य, सममित, संक्रामक"], ["res", "आंशिक क्रम:  स्वतुल्य, प्रतिसममित, संक्रामक"], ["res", "पूर्ण क्रम:  ∀ a, b:  (a, b) ∈ R  या  (b, a) ∈ R"], ["res", "मैग्मा → अर्धसमूह → मोनॉइड → समूह → आबेली समूह"], ["txt", "        + साहचर्य    + तत्समक    + प्रतिलोम    + क्रमविनिमेय"], ["res", "वलय → इकाई वलय → विभाजन वलय → क्षेत्र"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' प्लस ').replace(/⊙/g,' गुणा ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ फिर से चलाएँ'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ जारी रखें'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ रोकें';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^hi/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/madhur|hemant|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="संबंध, संक्रियाएँ और बीजीय संरचनाएँ";$('sub').textContent="सारांश: द्विआधारी संबंध, संक्रियाएँ और संरचनाओं का पदानुक्रम, मैग्मा से क्षेत्र तक";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>সম্পর্ক, প্রক্রিয়া ও বীজগাণিতিক গঠন</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>মনে রাখুন</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ শুরু</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>গতি <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">রেকর্ডিং মোড (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"bn-BD",
+"meta":{"nivel": 0, "titulo": "সম্পর্ক, প্রক্রিয়া ও বীজগাণিতিক গঠন", "enunciado": "সারসংক্ষেপ: দ্বিমিক সম্পর্ক, প্রক্রিয়া ও গঠনের স্তরক্রম, ম্যাগমা থেকে ক্ষেত্র পর্যন্ত", "datos": ["সমতুল্যতা সম্পর্ক", "আংশিক ও পূর্ণ ক্রম", "দ্বিমিক প্রক্রিয়া", "ম্যাগমা, অর্ধগ্রুপ ও মনয়েড", "গ্রুপ ও আবেলীয় গ্রুপ", "বলয়", "ক্ষেত্র"]},
+"steps":[
+{"title": "সম্পর্ক, প্রক্রিয়া ও বীজগাণিতিক গঠন", "sub": "সারসংক্ষেপ: দ্বিমিক সম্পর্ক, প্রক্রিয়া ও গঠনের স্তরক্রম, ম্যাগমা থেকে ক্ষেত্র পর্যন্ত", "clear": 1, "say": "নমস্কার। এই ভিডিওতে আমরা দ্বিমিক সম্পর্ক, প্রক্রিয়া, এবং বীজগাণিতিক গঠনের স্তরক্রমের সারসংক্ষেপ দেখব: ম্যাগমা থেকে ক্ষেত্র পর্যন্ত। প্রথমে সম্পর্ক, তারপর গঠন, একটি একটি করে ধর্ম যোগ করে।", "L": [["txt", "দ্বিমিক সম্পর্ক  →  প্রক্রিয়া  →  বীজগাণিতিক গঠন"]]},
+
+{"title": "1) দ্বিমিক সম্পর্ক", "clear": 1, "say": "একটি সেট E-এর উপর একটি দ্বিমিক সম্পর্ক হলো কার্তেসীয় গুণফল E গুণ E-এর একটি উপসেট R। জোড় a, b, R-এর অন্তর্গত, এ কথা লেখার অর্থ হলো a, b-এর সাথে সম্পর্কিত।", "L": [["goal", "দ্বিমিক সম্পর্ক:   R ⊆ E × E"], ["txt", "(a, b) ∈ R   মানে  a,  b-এর সাথে সম্পর্কিত"]]},
+
+{"title": "2) সমতুল্যতা সম্পর্ক", "clear": 1, "say": "সমতুল্যতা সম্পর্ক হলো এমন দ্বিমিক সম্পর্ক যা তিনটি ধর্ম মেনে চলে। স্বসম: প্রতিটি a-এর জন্য, জোড় a, a, R-এর অন্তর্গত। প্রতিসম: যদি জোড় a, b, R-এর অন্তর্গত হয়, তবে জোড় b, a, R-এর অন্তর্গত। আর সংক্রামক: যদি জোড় a, b এবং b, c, R-এর অন্তর্গত হয়, তবে জোড় a, c, R-এর অন্তর্গত।", "L": [["goal", "সমতুল্যতা সম্পর্ক"], ["res", "স্বসম:   (a, a) ∈ R"], ["res", "প্রতিসম:   (a, b) ∈ R  ⟹  (b, a) ∈ R"], ["res", "সংক্রামক:   (a, b), (b, c) ∈ R  ⟹  (a, c) ∈ R"]]},
+
+{"say": "প্রসঙ্গ অনুযায়ী এটি তিনভাবে লেখা হয়: জোড় a, b, R-এর অন্তর্গত, a সমতুল্য b-এর, অথবা a সমান b।", "L": [["txt", "প্রতীক, প্রসঙ্গ অনুযায়ী:"], ["sub", "(a, b) ∈ R,       a ∼ b,       a = b"]]},
+
+{"title": "3) আংশিক ক্রম", "clear": 1, "say": "আংশিক ক্রম সম্পর্কও তিনটি ধর্ম মেনে চলে। স্বসম: জোড় a, a, R-এর অন্তর্গত। প্রতিসমবিরোধী: যদি জোড় a, b এবং b, a, R-এর অন্তর্গত হয়, তবে a সমান b। আর সংক্রামক, আগের মতো। লেখা হয়: জোড় a, b, R-এর অন্তর্গত, অথবা a ছোট বা সমান b।", "L": [["goal", "আংশিক ক্রম সম্পর্ক"], ["res", "স্বসম:   (a, a) ∈ R"], ["res", "প্রতিসমবিরোধী:   (a, b), (b, a) ∈ R  ⟹  a = b"], ["res", "সংক্রামক:   (a, b), (b, c) ∈ R  ⟹  (a, c) ∈ R"], ["sub", "প্রতীক:   (a, b) ∈ R,       a ≤ b"]]},
+
+{"title": "4) পূর্ণ ক্রম", "clear": 1, "say": "পূর্ণ ক্রম সম্পর্ক হলো এমন আংশিক ক্রম, যেখানে যেকোনো দুটি উপাদান তুলনীয়: সব a ও b-এর জন্য, জোড় a, b, R-এর অন্তর্গত, অথবা জোড় b, a, R-এর অন্তর্গত। সাবধান: এটিকে এই কথার সাথে গুলিয়ে ফেলবেন না যে a, b যদি R-এ থাকে তবে b, a থাকে না। তা স্বসমতার বিরোধী।", "L": [["goal", "পূর্ণ ক্রম সম্পর্ক"], ["txt", "আংশিক ক্রম, এবং সাথে:"], ["res", "∀ a, b:   (a, b) ∈ R   অথবা   (b, a) ∈ R"], ["warn", "নয়:  (a, b) ∈ R ⟹ (b, a) ∉ R   (স্বসমতার বিরোধী)"]]},
+
+{"title": "5) দ্বিমিক প্রক্রিয়া", "clear": 1, "say": "এবার প্রক্রিয়া। E-এর উপর একটি অভ্যন্তরীণ দ্বিমিক প্রক্রিয়া হলো E গুণ E থেকে E-তে একটি ফাংশন f: এটি E-এর দুটি উপাদান মিলিয়ে E-এর আরেকটি উপাদান দেয়। একটি বাহ্যিক দ্বিমিক প্রক্রিয়া হলো E গুণ F থেকে E-তে একটি ফাংশন f: এটি E-এর একটি উপাদানকে অন্য সেট F-এর একটি উপাদানের সাথে মিলিয়ে E-এর একটি উপাদান দেয়।", "L": [["goal", "অভ্যন্তরীণ দ্বিমিক প্রক্রিয়া:   f : E × E → E"], ["goal", "বাহ্যিক দ্বিমিক প্রক্রিয়া:   f : E × F → E"]]},
+
+{"title": "6) ম্যাগমা", "clear": 1, "say": "এবার গঠনের স্তরক্রম, প্রতিটি স্তরে ধর্ম যোগ করে। ম্যাগমা হলো একটি সেট E, যার উপর একটি অভ্যন্তরীণ দ্বিমিক প্রক্রিয়া আছে, যা আমরা বৃত্তের ভেতরে যোগ চিহ্ন দিয়ে লিখি।", "L": [["goal", "ম্যাগমা:   (E, ⊕)"], ["txt", "⊕  অভ্যন্তরীণ দ্বিমিক প্রক্রিয়া"]], "pin": ["ম্যাগমা:  ⊕ অভ্যন্তরীণ"]},
+
+{"title": "7) অর্ধগ্রুপ", "clear": 1, "say": "অর্ধগ্রুপ হলো এমন ম্যাগমা যেখানে প্রক্রিয়াটি সহযোজ্য: a যোগ b, যোগ c, সমান a যোগ, b যোগ c।", "L": [["goal", "অর্ধগ্রুপ:   (E, ⊕)   ম্যাগমা  +"], ["res", "সহযোজ্য:   (a ⊕ b) ⊕ c = a ⊕ (b ⊕ c)"]], "pin": ["অর্ধগ্রুপ:  + সহযোজ্য"]},
+
+{"title": "8) মনয়েড", "clear": 1, "say": "মনয়েড হলো অভেদ উপাদানসহ অর্ধগ্রুপ: একটি অনন্য উপাদান আছে, যাকে আমরা শূন্য বলি, যেন প্রতিটি a-এর জন্য, a যোগ শূন্য হলো a, এবং শূন্য যোগ a হলো a।", "L": [["goal", "মনয়েড:   (E, ⊕)   অর্ধগ্রুপ  +"], ["res", "অভেদ উপাদান:   ∃! 0  যেন  ∀ a:   a ⊕ 0 = a,    0 ⊕ a = a"]], "pin": ["মনয়েড:  + অভেদ উপাদান"]},
+
+{"title": "9) গ্রুপ", "clear": 1, "say": "গ্রুপ হলো এমন মনয়েড, যেখানে প্রতিটি উপাদানের বিপরীত আছে: প্রতিটি a-এর জন্য, একটি অনন্য উপাদান আছে, a-এর বিপরীত, যেন a যোগ তার বিপরীত, এবং তার বিপরীত যোগ a, অভেদ উপাদান শূন্যের সমান।", "L": [["goal", "গ্রুপ:   (E, ⊕)   মনয়েড  +"], ["res", "বিপরীত উপাদান:   ∀ a,  ∃! ∼a  যেন"], ["res", "a ⊕ (∼a) = (∼a) ⊕ a = 0"]], "pin": ["গ্রুপ:  + বিপরীত উপাদান"]},
+
+{"title": "10) আবেলীয় গ্রুপ", "clear": 1, "say": "আবেলীয় গ্রুপ হলো এমন গ্রুপ যেখানে প্রক্রিয়াটি বিনিময়যোগ্য: a যোগ b সমান b যোগ a।", "L": [["goal", "আবেলীয় গ্রুপ:   (E, ⊕)   গ্রুপ  +"], ["res", "বিনিময়যোগ্য:   a ⊕ b = b ⊕ a"]], "pin": ["আবেলীয় গ্রুপ:  + বিনিময়যোগ্য"]},
+
+{"title": "11) বলয়", "clear": 1, "say": "বলয়ে দুটি প্রক্রিয়া থাকে: যোগ, যা বৃত্তের ভেতরে যোগ চিহ্ন দিয়ে লেখা হয়, এবং গুণ, যা বৃত্তের ভেতরে বিন্দু দিয়ে লেখা হয়। যোগের সাথে E একটি আবেলীয় গ্রুপ। গুণের সাথে E একটি অর্ধগ্রুপ।", "L": [["goal", "বলয়:   (E, ⊕, ⊙)"], ["res", "(E, ⊕)   আবেলীয় গ্রুপ"], ["res", "(E, ⊙)   অর্ধগ্রুপ"]], "pin": ["বলয়:  (E,⊕) আবেলীয়, (E,⊙) অর্ধগ্রুপ"]},
+
+{"say": "এবং সাথে, দুটি প্রক্রিয়া দুটি বণ্টন নিয়মে যুক্ত। বাম দিকে: a গুণ, b যোগ c, সমান a গুণ b, যোগ a গুণ c। ডান দিকে: b যোগ c, গুণ a, সমান b গুণ a, যোগ c গুণ a।", "L": [["res", "বাম বণ্টন:   a ⊙ (b ⊕ c) = (a ⊙ b) ⊕ (a ⊙ c)"], ["res", "ডান বণ্টন:   (b ⊕ c) ⊙ a = (b ⊙ a) ⊕ (c ⊙ a)"]]},
+
+{"title": "12) একক বলয়", "clear": 1, "say": "একক বলয় হলো এমন বলয় যেখানে গুণের অভেদ উপাদান আছে: অর্থাৎ, গুণের সাথে E একটি মনয়েড।", "L": [["goal", "একক বলয়:   (E, ⊕, ⊙)   বলয়  +"], ["res", "(E, ⊙)   মনয়েড"]], "pin": ["একক বলয়:  (E,⊙) মনয়েড"]},
+
+{"title": "13) বিভাজন বলয়", "clear": 1, "say": "বিভাজন বলয় হলো এমন একক বলয়, যেখানে শূন্য ছাড়া প্রতিটি উপাদানের গুণের জন্য বিপরীতক আছে: অর্থাৎ, E থেকে শুধু শূন্য থাকা সেটটি বাদ দিলে, গুণের সাথে, একটি গ্রুপ পাওয়া যায়।", "L": [["goal", "বিভাজন বলয়:   (E, ⊕, ⊙)   একক বলয়  +"], ["res", "(E ∖ {0}, ⊙)   গ্রুপ"]], "pin": ["বিভাজন বলয়:  (E∖{0},⊙) গ্রুপ"]},
+
+{"title": "14) ক্ষেত্র", "clear": 1, "say": "আর ক্ষেত্র হলো এমন বিভাজন বলয় যেখানে গুণ বিনিময়যোগ্য।", "L": [["goal", "ক্ষেত্র:   (E, ⊕, ⊙)   বিভাজন বলয়  +"], ["res", "⊙  বিনিময়যোগ্য"]], "pin": ["ক্ষেত্র:  ⊙ বিনিময়যোগ্য"]},
+
+{"title": "সারসংক্ষেপ", "clear": 1, "say": "সারসংক্ষেপ। সমতুল্যতা সম্পর্ক স্বসম, প্রতিসম ও সংক্রামক। আংশিক ক্রম স্বসম, প্রতিসমবিরোধী ও সংক্রামক, এবং সব জোড় তুলনীয় হলে ক্রমটি পূর্ণ। গঠনের ক্ষেত্রে, প্রতিটি স্তর একটি ধর্ম যোগ করে: অর্ধগ্রুপ, সহযোজ্যতা; মনয়েড, অভেদ উপাদান; গ্রুপ, বিপরীত; আবেলীয় গ্রুপ, বিনিময়যোগ্যতা। দুটি প্রক্রিয়ার সাথে, বলয়, একক বলয়, বিভাজন বলয়, এবং ক্ষেত্র। দেখার জন্য ধন্যবাদ।", "L": [["res", "সমতুল্যতা:  স্বসম, প্রতিসম, সংক্রামক"], ["res", "আংশিক ক্রম:  স্বসম, প্রতিসমবিরোধী, সংক্রামক"], ["res", "পূর্ণ ক্রম:  ∀ a, b:  (a, b) ∈ R  অথবা  (b, a) ∈ R"], ["res", "ম্যাগমা → অর্ধগ্রুপ → মনয়েড → গ্রুপ → আবেলীয় গ্রুপ"], ["txt", "        + সহযোজ্য    + অভেদ    + বিপরীত    + বিনিময়যোগ্য"], ["res", "বলয় → একক বলয় → বিভাজন বলয় → ক্ষেত্র"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' প্লাস ').replace(/⊙/g,' গুণ ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ আবার চালান'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ চালিয়ে যান'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ বিরতি';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^bn/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/pradeep|bashkar|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="সম্পর্ক, প্রক্রিয়া ও বীজগাণিতিক গঠন";$('sub').textContent="সারসংক্ষেপ: দ্বিমিক সম্পর্ক, প্রক্রিয়া ও গঠনের স্তরক্রম, ম্যাগমা থেকে ক্ষেত্র পর্যন্ত";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

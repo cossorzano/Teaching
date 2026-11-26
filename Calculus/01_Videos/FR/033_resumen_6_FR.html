@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Relations, opérations et structures algébriques</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>À retenir</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Commencer</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Vitesse <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Mode enregistrement (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"fr-FR",
+"meta":{"nivel": 0, "titulo": "Relations, opérations et structures algébriques", "enunciado": "Résumé : relations binaires, opérations et hiérarchie des structures, du magma au corps", "datos": ["Relations d'équivalence", "Ordres partiel et total", "Opérations binaires", "Magma, semi-groupe et monoïde", "Groupe et groupe abélien", "Anneaux", "Corps"]},
+"steps":[
+{"title": "Relations, opérations et structures algébriques", "sub": "Résumé : relations binaires, opérations et hiérarchie des structures, du magma au corps", "clear": 1, "say": "Bonjour. Dans cette vidéo, nous résumons les relations binaires, les opérations, et la hiérarchie des structures algébriques : du magma jusqu'au corps. D'abord les relations, puis les structures, en ajoutant les propriétés une à une.", "L": [["txt", "Relations binaires  →  opérations  →  structures algébriques"]]},
+
+{"title": "1) Relation binaire", "clear": 1, "say": "Une relation binaire sur un ensemble E est une partie R du produit cartésien E fois E. Écrire que le couple a, b appartient à R signifie que a est en relation avec b.", "L": [["goal", "Relation binaire :   R ⊆ E × E"], ["txt", "(a, b) ∈ R   signifie que  a  est en relation avec  b"]]},
+
+{"title": "2) Relation d'équivalence", "clear": 1, "say": "Une relation d'équivalence est une relation binaire qui vérifie trois propriétés. Réflexive : pour tout a, le couple a, a appartient à R. Symétrique : si le couple a, b appartient à R, alors le couple b, a appartient à R. Et transitive : si les couples a, b et b, c appartiennent à R, alors le couple a, c appartient à R.", "L": [["goal", "Relation d'équivalence"], ["res", "Réflexive :   (a, a) ∈ R"], ["res", "Symétrique :   (a, b) ∈ R  ⟹  (b, a) ∈ R"], ["res", "Transitive :   (a, b), (b, c) ∈ R  ⟹  (a, c) ∈ R"]]},
+
+{"say": "On l'écrit de trois façons, selon le contexte : le couple a, b appartient à R, a équivalent à b, ou a égal à b.", "L": [["txt", "Notation, selon le contexte :"], ["sub", "(a, b) ∈ R,       a ∼ b,       a = b"]]},
+
+{"title": "3) Ordre partiel", "clear": 1, "say": "Une relation d'ordre partiel vérifie aussi trois propriétés. Réflexive : le couple a, a appartient à R. Antisymétrique : si les couples a, b et b, a appartiennent à R, alors a est égal à b. Et transitive, comme avant. On écrit le couple a, b appartient à R, ou a inférieur ou égal à b.", "L": [["goal", "Relation d'ordre partiel"], ["res", "Réflexive :   (a, a) ∈ R"], ["res", "Antisymétrique :   (a, b), (b, a) ∈ R  ⟹  a = b"], ["res", "Transitive :   (a, b), (b, c) ∈ R  ⟹  (a, c) ∈ R"], ["sub", "Notation :   (a, b) ∈ R,       a ≤ b"]]},
+
+{"title": "4) Ordre total", "clear": 1, "say": "Une relation d'ordre total est un ordre partiel dans lequel deux éléments quelconques sont comparables : pour tous a et b, le couple a, b appartient à R, ou le couple b, a appartient à R. Attention : il ne faut pas la confondre avec dire que si a, b est dans R alors b, a n'y est pas, ce qui contredit la réflexivité.", "L": [["goal", "Relation d'ordre total"], ["txt", "Ordre partiel et, en plus :"], ["res", "∀ a, b :   (a, b) ∈ R   ou   (b, a) ∈ R"], ["warn", "Non :  (a, b) ∈ R ⟹ (b, a) ∉ R   (contredit la réflexivité)"]]},
+
+{"title": "5) Opérations binaires", "clear": 1, "say": "Passons aux opérations. Une opération binaire interne sur E est une fonction f de E fois E dans E : elle combine deux éléments de E et renvoie un autre élément de E. Une opération binaire externe est une fonction f de E fois F dans E : elle combine un élément de E avec un élément d'un autre ensemble F, et renvoie un élément de E.", "L": [["goal", "Opération binaire interne :   f : E × E → E"], ["goal", "Opération binaire externe :   f : E × F → E"]]},
+
+{"title": "6) Magma", "clear": 1, "say": "Voyons maintenant la hiérarchie des structures, en ajoutant des propriétés à chaque niveau. Un magma est un ensemble E muni d'une opération binaire interne, que l'on note avec le symbole plus entouré.", "L": [["goal", "Magma :   (E, ⊕)"], ["txt", "⊕  opération binaire interne"]], "pin": ["Magma :  ⊕ interne"]},
+
+{"title": "7) Semi-groupe", "clear": 1, "say": "Un semi-groupe est un magma dans lequel l'opération est associative : a plus b, plus c, est égal à a plus, b plus c.", "L": [["goal", "Semi-groupe :   (E, ⊕)   Magma  +"], ["res", "Associative :   (a ⊕ b) ⊕ c = a ⊕ (b ⊕ c)"]], "pin": ["Semi-groupe :  + associative"]},
+
+{"title": "8) Monoïde", "clear": 1, "say": "Un monoïde est un semi-groupe avec un élément neutre : il existe un unique élément, que l'on appelle zéro, tel que, pour tout a, a plus zéro vaut a, et zéro plus a vaut a.", "L": [["goal", "Monoïde :   (E, ⊕)   Semi-groupe  +"], ["res", "Élément neutre :   ∃! 0  tel que  ∀ a :   a ⊕ 0 = a,    0 ⊕ a = a"]], "pin": ["Monoïde :  + élément neutre"]},
+
+{"title": "9) Groupe", "clear": 1, "say": "Un groupe est un monoïde dans lequel tout élément a un symétrique : pour tout a, il existe un unique élément, le symétrique de a, tel que a plus son symétrique, et son symétrique plus a, sont égaux à l'élément neutre zéro.", "L": [["goal", "Groupe :   (E, ⊕)   Monoïde  +"], ["res", "Élément symétrique :   ∀ a,  ∃! ∼a  tel que"], ["res", "a ⊕ (∼a) = (∼a) ⊕ a = 0"]], "pin": ["Groupe :  + élément symétrique"]},
+
+{"title": "10) Groupe abélien", "clear": 1, "say": "Un groupe abélien est un groupe dans lequel l'opération est commutative : a plus b est égal à b plus a.", "L": [["goal", "Groupe abélien :   (E, ⊕)   Groupe  +"], ["res", "Commutative :   a ⊕ b = b ⊕ a"]], "pin": ["Groupe abélien :  + commutative"]},
+
+{"title": "11) Anneau", "clear": 1, "say": "Un anneau a deux opérations : la somme, notée avec le plus entouré, et le produit, noté avec le point entouré. Avec la somme, E est un groupe abélien. Avec le produit, E est un semi-groupe.", "L": [["goal", "Anneau :   (E, ⊕, ⊙)"], ["res", "(E, ⊕)   Groupe abélien"], ["res", "(E, ⊙)   Semi-groupe"]], "pin": ["Anneau :  (E,⊕) abélien, (E,⊙) semi-groupe"]},
+
+{"say": "Et, de plus, les deux opérations sont reliées par deux distributivités. À gauche : a fois, b plus c, est égal à a fois b, plus a fois c. À droite : b plus c, fois a, est égal à b fois a, plus c fois a.", "L": [["res", "Distributive à gauche :   a ⊙ (b ⊕ c) = (a ⊙ b) ⊕ (a ⊙ c)"], ["res", "Distributive à droite :   (b ⊕ c) ⊙ a = (b ⊙ a) ⊕ (c ⊙ a)"]]},
+
+{"title": "12) Anneau unitaire", "clear": 1, "say": "Un anneau unitaire est un anneau dans lequel le produit a un élément neutre : autrement dit, E muni du produit est un monoïde.", "L": [["goal", "Anneau unitaire :   (E, ⊕, ⊙)   Anneau  +"], ["res", "(E, ⊙)   Monoïde"]], "pin": ["Anneau unitaire :  (E,⊙) monoïde"]},
+
+{"title": "13) Anneau à division", "clear": 1, "say": "Un anneau à division est un anneau unitaire dans lequel tout élément non nul a un inverse pour le produit : autrement dit, E privé de l'ensemble qui ne contient que zéro, muni du produit, est un groupe.", "L": [["goal", "Anneau à division :   (E, ⊕, ⊙)   Anneau unitaire  +"], ["res", "(E ∖ {0}, ⊙)   Groupe"]], "pin": ["Anneau à division :  (E∖{0},⊙) groupe"]},
+
+{"title": "14) Corps", "clear": 1, "say": "Et un corps est un anneau à division dans lequel le produit est commutatif.", "L": [["goal", "Corps :   (E, ⊕, ⊙)   Anneau à division  +"], ["res", "⊙  commutative"]], "pin": ["Corps :  ⊙ commutative"]},
+
+{"title": "Résumé", "clear": 1, "say": "Résumé. Les relations d'équivalence sont réflexives, symétriques et transitives. Les ordres partiels sont réflexifs, antisymétriques et transitifs, et l'ordre est total si tous les couples sont comparables. Pour les structures, chaque niveau ajoute une propriété : le semi-groupe, l'associativité ; le monoïde, l'élément neutre ; le groupe, le symétrique ; le groupe abélien, la commutativité. Avec deux opérations, l'anneau, l'anneau unitaire, l'anneau à division, et le corps. Merci d'avoir regardé la vidéo.", "L": [["res", "Équivalence :  réflexive, symétrique, transitive"], ["res", "Ordre partiel :  réflexive, antisymétrique, transitive"], ["res", "Ordre total :  ∀ a, b :  (a, b) ∈ R  ou  (b, a) ∈ R"], ["res", "Magma → Semi-groupe → Monoïde → Groupe → Groupe abélien"], ["txt", "        + associative    + neutre    + symétrique    + commutative"], ["res", "Anneau → Anneau unitaire → Anneau à division → Corps"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' plus ').replace(/⊙/g,' fois ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Rejouer'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Reprendre'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pause';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pause';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^fr/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/henri|paul|claude|remy|rémy|male|google français$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Relations, opérations et structures algébriques";$('sub').textContent="Résumé : relations binaires, opérations et hiérarchie des structures, du magma au corps";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
