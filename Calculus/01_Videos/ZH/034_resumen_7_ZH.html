@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>实数域</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>备忘</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ 开始</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>语速 <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">录制模式 (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"zh-CN",
+"meta":{"nivel": 0, "titulo": "实数域", "enunciado": "总结：实数是完备的有序域", "datos": ["域结构", "相容的全序", "阿基米德性质", "上界与下界", "上确界与下确界", "完备性公理"]},
+"steps":[
+{"title": "实数域", "sub": "总结：实数是完备的有序域", "clear": 1, "say": "大家好。在这个视频中，我们总结实数的完整结构：一个完备的有序域。我们将逐一介绍它的组成部分：域、序、阿基米德性质，以及完备性，包括上确界和下确界。", "L": [["txt", "实数构成完备有序域"], ["sub", "(ℝ, +, ·, ≤)"]]},
+
+{"title": "完备有序域", "clear": 1, "say": "实数连同加法、乘法和序关系，构成一个完备有序域。这包含三层意思：对加法和乘法，实数构成一个域；序是全序，并且与运算相容；实数还满足完备性公理。", "L": [["goal", "(ℝ, +, ·, ≤)   完备有序域"], ["txt", "1) (ℝ, +, ·)  是域"], ["txt", "2) ≤  是全序，与 + 和 · 相容"], ["txt", "3) 完备性：  上确界公理"]]},
+
+{"title": "1) 域", "clear": 1, "say": "首先是域。对于加法，实数构成一个阿贝尔群。对于乘法，实数去掉只含零的集合后，构成一个阿贝尔群。此外，乘法对加法满足分配律：a 乘以 b 加 c 的和，等于 a 乘 b，加上 a 乘 c。", "L": [["goal", "(ℝ, +, ·)  是域"], ["res", "(ℝ, +)   阿贝尔群"], ["res", "(ℝ ∖ {0}, ·)   阿贝尔群"], ["res", "分配律：   a · (b + c) = a · b + a · c"]], "pin": ["域：(ℝ,+) 与 (ℝ∖{0},·) 为阿贝尔群"]},
+
+{"title": "2) 全序", "clear": 1, "say": "其次是序。小于或等于是实数上的全序关系：它是自反的、反对称的、传递的，并且任意两个数都可以比较。", "L": [["goal", "≤  是 ℝ 上的全序关系"], ["txt", "自反、反对称、传递，且任意两个元素可比较"]], "pin": ["全序 ≤"]},
+
+{"say": "它与加法相容：如果 a 小于或等于 b，那么 a 加 c 小于或等于 b 加 c。它也与乘法相容：如果零小于或等于 a，且零小于或等于 b，那么零小于或等于 a 乘 b。也就是说，两个非负数的乘积是非负数。", "L": [["res", "与加法相容：   a ≤ b  ⟹  a + c ≤ b + c"], ["res", "与乘法相容：   0 ≤ a,  0 ≤ b  ⟹  0 ≤ a · b"]]},
+
+{"title": "3) 阿基米德性质", "clear": 1, "say": "第三，阿基米德性质。对于任意大于零的数 a 和 b，存在自然数 n，使得 n 乘 a 大于 b。把 a 自己加足够多次，就能超过任何 b。", "L": [["goal", "阿基米德性质"], ["res", "∀ a, b &gt; 0,   ∃ n ∈ ℕ :   n · a &gt; b"]], "pin": ["阿基米德：∀a,b>0 ∃n: n·a>b"]},
+
+{"title": "4) 上界", "clear": 1, "say": "第四，我们为完备性做准备。设 A 是实数的一个非空子集。实数 M 是 A 的上界，当且仅当对 A 的每个元素 a，a 都小于或等于 M。", "L": [["goal", "A ⊆ ℝ,   A ≠ ∅"], ["res", "M ∈ ℝ  是 A 的上界   ⟺   ∀ a ∈ A,   a ≤ M"]], "pin": ["上界 M：∀a∈A, a ≤ M"]},
+
+{"title": "5) 上确界", "clear": 1, "say": "实数 s 是 A 的上确界，如果它满足两个条件。第一：s 是 A 的上界。第二：对 A 的任一上界 M，s 都小于或等于 M。也就是说，上确界是所有上界中最小的。", "L": [["goal", "s ∈ ℝ  是 A 的上确界，若："], ["res", "(i)   s  是 A 的上界"], ["res", "(ii)   对 A 的任一上界 M，   s ≤ M"], ["txt", "上确界是最小的上界"]], "pin": ["上确界 s：最小上界"]},
+
+{"title": "6) 完备性", "clear": 1, "say": "现在是完备性公理，也叫上确界公理：实数的每个非空且有上界的子集，在实数中都有上确界。这正是实数区别于其他数系的性质。", "L": [["goal", "完备性（上确界公理）"], ["res", "每个非空且有上界的  A ⊆ ℝ  在 ℝ 中都有上确界"]], "pin": ["完备性：A≠∅ 有上界 ⟹ 有 sup A"]},
+
+{"title": "7) 下界", "clear": 1, "say": "接下来是下界的类似情形。设 A 是实数的一个非空子集。实数 m 是 A 的下界，当且仅当对 A 的每个元素 a，m 都小于或等于 a。", "L": [["goal", "A ⊆ ℝ,   A ≠ ∅"], ["res", "m ∈ ℝ  是 A 的下界   ⟺   ∀ a ∈ A,   m ≤ a"]], "pin": ["下界 m：∀a∈A, m ≤ a"]},
+
+{"title": "8) 下确界", "clear": 1, "say": "实数 i 是 A 的下确界，如果它满足两个条件。第一：i 是 A 的下界。第二：对 A 的任一下界 m，m 都小于或等于 i。也就是说，下确界是所有下界中最大的。", "L": [["goal", "i ∈ ℝ  是 A 的下确界，若："], ["res", "(i)   i  是 A 的下界"], ["res", "(ii)   对 A 的任一下界 m，   m ≤ i"], ["txt", "下确界是最大的下界"]], "pin": ["下确界 i：最大下界"]},
+
+{"title": "9) 下确界的完备性", "clear": 1, "say": "还有下确界的完备性公理：实数的每个非空且有下界的子集，在实数中都有下确界。它与上确界公理等价：只需把上确界公理应用到 A 中各元素的相反数所组成的集合上。", "L": [["goal", "完备性（下确界公理）"], ["res", "每个非空且有下界的  A ⊆ ℝ  在 ℝ 中都有下确界"], ["txt", "与上确界公理等价"]], "pin": ["完备性：A≠∅ 有下界 ⟹ 有 inf A"]},
+
+{"title": "结论", "clear": 1, "say": "结论。这些性质刻画了实数：在同构意义下，实数是唯一的完备有序域。", "L": [["res", "ℝ  是唯一的  完备有序域   （在同构意义下）"]]},
+
+{"title": "总结", "clear": 1, "say": "总结。实数构成一个域，带有与加法和乘法相容的全序，并且是完备的：每个非空且有上界的集合都有上确界，每个非空且有下界的集合都有下确界。此外，实数满足阿基米德性质。感谢观看。", "L": [["res", "(ℝ, +, ·)  是域，   ≤  是相容的全序"], ["res", "完备性：  A ≠ ∅ 有上界  ⟹  有 sup A"], ["res", "A ≠ ∅ 有下界  ⟹  有 inf A"], ["res", "阿基米德：  ∀ a, b &gt; 0,  ∃ n ∈ ℕ :  n · a &gt; b"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' 加 ').replace(/⊙/g,' 乘 ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ 重播'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ 继续'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ 暂停';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^zh/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/yunyang|yunxi|yunjian|kangkang|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="实数域";$('sub').textContent="总结：实数是完备的有序域";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

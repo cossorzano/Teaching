@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Corpo dos números reais</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Lembre-se</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Começar</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Velocidade <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Modo gravação (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"pt-BR",
+"meta":{"nivel": 0, "titulo": "Corpo dos números reais", "enunciado": "Resumo: os números reais como corpo ordenado completo", "datos": ["Estrutura de corpo", "Ordem total compatível", "Propriedade arquimediana", "Cotas superiores e inferiores", "Supremo e ínfimo", "Axioma da completude"]},
+"steps":[
+{"title": "Corpo dos números reais", "sub": "Resumo: os números reais como corpo ordenado completo", "clear": 1, "say": "Olá. Neste vídeo resumimos a estrutura completa dos números reais: um corpo ordenado completo. Veremos os seus ingredientes um a um: o corpo, a ordem, a propriedade arquimediana, e a completude, com o supremo e o ínfimo.", "L": [["txt", "Corpo ordenado completo dos reais"], ["sub", "(ℝ, +, ·, ≤)"]]},
+
+{"title": "Corpo ordenado completo", "clear": 1, "say": "Os números reais, com a soma, o produto e a ordem, formam um corpo ordenado completo. Isto quer dizer três coisas: com a soma e o produto são um corpo; a ordem é total e compatível com as operações; e cumprem um axioma de completude.", "L": [["goal", "(ℝ, +, ·, ≤)   corpo ordenado completo"], ["txt", "1) (ℝ, +, ·)  é um corpo"], ["txt", "2) ≤  é uma ordem total, compatível com + e ·"], ["txt", "3) Completude:  axioma do supremo"]]},
+
+{"title": "1) Corpo", "clear": 1, "say": "Primeiro, o corpo. Com a soma, os números reais formam um grupo abeliano. Com o produto, os reais menos o conjunto que contém apenas o zero formam um grupo abeliano. E além disso, o produto é distributivo em relação à soma: a vezes, b mais c, é igual a a vezes b, mais a vezes c.", "L": [["goal", "(ℝ, +, ·)  é um corpo"], ["res", "(ℝ, +)   grupo abeliano"], ["res", "(ℝ ∖ {0}, ·)   grupo abeliano"], ["res", "Distributividade:   a · (b + c) = a · b + a · c"]], "pin": ["Corpo: (ℝ,+) e (ℝ∖{0},·) abelianos"]},
+
+{"title": "2) Ordem total", "clear": 1, "say": "Segundo, a ordem. O menor ou igual é uma relação de ordem total nos números reais: é reflexiva, antissimétrica, transitiva, e quaisquer dois números podem ser comparados.", "L": [["goal", "≤  é uma relação de ordem total em ℝ"], ["txt", "Reflexiva, antissimétrica, transitiva, e todo par comparável"]], "pin": ["Ordem total ≤"]},
+
+{"say": "É compatível com a soma: se a é menor ou igual a b, então a mais c é menor ou igual a b mais c. E é compatível com o produto: se zero é menor ou igual a a, e zero é menor ou igual a b, então zero é menor ou igual a a vezes b. Ou seja, o produto de dois números positivos ou nulos é positivo ou nulo.", "L": [["res", "Compatibilidade com a soma:   a ≤ b  ⟹  a + c ≤ b + c"], ["res", "Compatibilidade com o produto:   0 ≤ a,  0 ≤ b  ⟹  0 ≤ a · b"]]},
+
+{"title": "3) Propriedade arquimediana", "clear": 1, "say": "Terceiro, a propriedade arquimediana. Para quaisquer números a e b maiores que zero, existe um número natural n tal que n vezes a é maior que b. Somando a consigo mesmo vezes suficientes, ultrapassa-se qualquer b.", "L": [["goal", "Propriedade arquimediana"], ["res", "∀ a, b &gt; 0,   ∃ n ∈ ℕ :   n · a &gt; b"]], "pin": ["Arquimediana: ∀a,b>0 ∃n: n·a>b"]},
+
+{"title": "4) Cota superior", "clear": 1, "say": "Quarto, preparamos a completude. Seja A um subconjunto não vazio dos números reais. Um número real M é cota superior de A se e só se, para todo o elemento a de A, a é menor ou igual a M.", "L": [["goal", "A ⊆ ℝ,   A ≠ ∅"], ["res", "M ∈ ℝ  é cota superior de A   ⟺   ∀ a ∈ A,   a ≤ M"]], "pin": ["Cota superior M: ∀a∈A, a ≤ M"]},
+
+{"title": "5) Supremo", "clear": 1, "say": "Um número real s é o supremo de A se cumpre duas condições. Uma: s é cota superior de A. Duas: para toda a cota superior M de A, s é menor ou igual a M. Ou seja, o supremo é a menor das cotas superiores.", "L": [["goal", "s ∈ ℝ  é o supremo de A  se:"], ["res", "(i)   s  é cota superior de A"], ["res", "(ii)   ∀ M  cota superior de A,   s ≤ M"], ["txt", "O supremo é a menor cota superior"]], "pin": ["Supremo s: a menor cota superior"]},
+
+{"title": "6) Completude", "clear": 1, "say": "Agora o axioma da completude, também chamado axioma do supremo: todo o subconjunto não vazio dos reais e limitado superiormente tem supremo nos reais. Esta é a propriedade que distingue os números reais.", "L": [["goal", "Completude (axioma do supremo)"], ["res", "Todo  A ⊆ ℝ  não vazio e limitado superiormente  tem supremo em ℝ"]], "pin": ["Completude: todo A≠∅ limitado sup. tem sup A"]},
+
+{"title": "7) Cota inferior", "clear": 1, "say": "Agora, o análogo para as cotas inferiores. Seja A um subconjunto não vazio dos números reais. Um número real m é cota inferior de A se e só se, para todo o elemento a de A, m é menor ou igual a a.", "L": [["goal", "A ⊆ ℝ,   A ≠ ∅"], ["res", "m ∈ ℝ  é cota inferior de A   ⟺   ∀ a ∈ A,   m ≤ a"]], "pin": ["Cota inferior m: ∀a∈A, m ≤ a"]},
+
+{"title": "8) Ínfimo", "clear": 1, "say": "Um número real i é o ínfimo de A se cumpre duas condições. Uma: i é cota inferior de A. Duas: para toda a cota inferior m de A, m é menor ou igual a i. Ou seja, o ínfimo é a maior das cotas inferiores.", "L": [["goal", "i ∈ ℝ  é o ínfimo de A  se:"], ["res", "(i)   i  é cota inferior de A"], ["res", "(ii)   ∀ m  cota inferior de A,   m ≤ i"], ["txt", "O ínfimo é a maior cota inferior"]], "pin": ["Ínfimo i: a maior cota inferior"]},
+
+{"title": "9) Completude para o ínfimo", "clear": 1, "say": "E o axioma da completude para o ínfimo: todo o subconjunto não vazio dos reais e limitado inferiormente tem ínfimo nos reais. É equivalente ao axioma do supremo: basta aplicar o axioma do supremo ao conjunto dos opostos dos elementos de A.", "L": [["goal", "Completude (axioma do ínfimo)"], ["res", "Todo  A ⊆ ℝ  não vazio e limitado inferiormente  tem ínfimo em ℝ"], ["txt", "Equivale ao axioma do supremo"]], "pin": ["Completude: todo A≠∅ limitado inf. tem inf A"]},
+
+{"title": "Conclusão", "clear": 1, "say": "Conclusão. Estas propriedades caracterizam os números reais: os números reais são o único corpo ordenado completo, a menos de isomorfismo.", "L": [["res", "ℝ  é o único  corpo ordenado completo   (a menos de isomorfismo)"]]},
+
+{"title": "Resumo", "clear": 1, "say": "Resumo. Os números reais são um corpo, com uma ordem total compatível com a soma e o produto, e são completos: todo o conjunto não vazio e limitado superiormente tem supremo, e todo o conjunto não vazio e limitado inferiormente tem ínfimo. Além disso, cumprem a propriedade arquimediana. Obrigado por assistir.", "L": [["res", "(ℝ, +, ·)  corpo,   ≤  ordem total compatível"], ["res", "Completude:  todo A ≠ ∅ limitado superiormente tem  sup A"], ["res", "Todo A ≠ ∅ limitado inferiormente tem  inf A"], ["res", "Arquimediana:  ∀ a, b &gt; 0,  ∃ n ∈ ℕ :  n · a &gt; b"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' mais ').replace(/⊙/g,' vezes ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Repetir'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Continuar'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Pausa';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Pausa';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^pt/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/antonio|antônio|donato|fabio|duarte|male|google português$/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Corpo dos números reais";$('sub').textContent="Resumo: os números reais como corpo ordenado completo";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

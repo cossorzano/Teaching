@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>वास्तविक संख्याओं का क्षेत्र</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>याद रखें</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ शुरू करें</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>गति <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">रिकॉर्डिंग मोड (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"hi-IN",
+"meta":{"nivel": 0, "titulo": "वास्तविक संख्याओं का क्षेत्र", "enunciado": "सारांश: वास्तविक संख्याएँ एक पूर्ण क्रमित क्षेत्र के रूप में", "datos": ["क्षेत्र की संरचना", "संगत पूर्ण क्रम", "आर्किमिडीज़ गुण", "ऊपरी और निचली सीमाएँ", "सुप्रीमम और इन्फिमम", "पूर्णता अभिगृहीत"]},
+"steps":[
+{"title": "वास्तविक संख्याओं का क्षेत्र", "sub": "सारांश: वास्तविक संख्याएँ एक पूर्ण क्रमित क्षेत्र के रूप में", "clear": 1, "say": "नमस्ते। इस वीडियो में हम वास्तविक संख्याओं की पूरी संरचना का सारांश देखेंगे: एक पूर्ण क्रमित क्षेत्र। हम इसके घटकों को एक एक करके देखेंगे: क्षेत्र, क्रम, आर्किमिडीज़ गुण, और पूर्णता, सुप्रीमम और इन्फिमम के साथ।", "L": [["txt", "वास्तविक संख्याओं का पूर्ण क्रमित क्षेत्र"], ["sub", "(ℝ, +, ·, ≤)"]]},
+
+{"title": "पूर्ण क्रमित क्षेत्र", "clear": 1, "say": "वास्तविक संख्याएँ, योग, गुणन और क्रम के साथ, एक पूर्ण क्रमित क्षेत्र बनाती हैं। इसका अर्थ तीन बातें हैं: योग और गुणन के साथ वे एक क्षेत्र हैं; क्रम पूर्ण है और संक्रियाओं के साथ संगत है; और वे एक पूर्णता अभिगृहीत को संतुष्ट करती हैं।", "L": [["goal", "(ℝ, +, ·, ≤)   पूर्ण क्रमित क्षेत्र"], ["txt", "1) (ℝ, +, ·)  एक क्षेत्र है"], ["txt", "2) ≤  पूर्ण क्रम है, + और · के साथ संगत"], ["txt", "3) पूर्णता:  सुप्रीमम अभिगृहीत"]]},
+
+{"title": "1) क्षेत्र", "clear": 1, "say": "पहले, क्षेत्र। योग के साथ, वास्तविक संख्याएँ एक आबेली समूह बनाती हैं। गुणन के साथ, केवल शून्य वाले समुच्चय को हटाकर बची वास्तविक संख्याएँ एक आबेली समूह बनाती हैं। और साथ ही, गुणन योग पर वितरित होता है: a गुणा, b जमा c, बराबर है a गुणा b, जमा a गुणा c।", "L": [["goal", "(ℝ, +, ·)  एक क्षेत्र है"], ["res", "(ℝ, +)   आबेली समूह"], ["res", "(ℝ ∖ {0}, ·)   आबेली समूह"], ["res", "वितरण नियम:   a · (b + c) = a · b + a · c"]], "pin": ["क्षेत्र: (ℝ,+) और (ℝ∖{0},·) आबेली"]},
+
+{"title": "2) पूर्ण क्रम", "clear": 1, "say": "दूसरा, क्रम। छोटा या बराबर, वास्तविक संख्याओं पर एक पूर्ण क्रम संबंध है: यह स्वतुल्य, प्रतिसममित और संक्रामक है, और किन्हीं भी दो संख्याओं की तुलना की जा सकती है।", "L": [["goal", "≤  ℝ पर एक पूर्ण क्रम संबंध है"], ["txt", "स्वतुल्य, प्रतिसममित, संक्रामक, और हर युग्म तुलनीय"]], "pin": ["पूर्ण क्रम ≤"]},
+
+{"say": "यह योग के साथ संगत है: यदि a, b से छोटा या बराबर है, तो a जमा c, b जमा c से छोटा या बराबर है। और यह गुणन के साथ संगत है: यदि शून्य, a से छोटा या बराबर है, और शून्य, b से छोटा या बराबर है, तो शून्य, a गुणा b से छोटा या बराबर है। अर्थात, दो धनात्मक या शून्य संख्याओं का गुणनफल धनात्मक या शून्य होता है।", "L": [["res", "योग के साथ संगत:   a ≤ b  ⟹  a + c ≤ b + c"], ["res", "गुणन के साथ संगत:   0 ≤ a,  0 ≤ b  ⟹  0 ≤ a · b"]]},
+
+{"title": "3) आर्किमिडीज़ गुण", "clear": 1, "say": "तीसरा, आर्किमिडीज़ गुण। शून्य से बड़ी किन्हीं भी संख्याओं a और b के लिए, एक प्राकृत संख्या n होती है, जिससे n गुणा a, b से बड़ा हो। a को खुद में पर्याप्त बार जोड़ने पर, किसी भी b को पार किया जा सकता है।", "L": [["goal", "आर्किमिडीज़ गुण"], ["res", "∀ a, b &gt; 0,   ∃ n ∈ ℕ :   n · a &gt; b"]], "pin": ["आर्किमिडीज़: ∀a,b>0 ∃n: n·a>b"]},
+
+{"title": "4) ऊपरी सीमा", "clear": 1, "say": "चौथा, हम पूर्णता की तैयारी करते हैं। मान लीजिए A, वास्तविक संख्याओं का एक अरिक्त उपसमुच्चय है। एक वास्तविक संख्या M, A की ऊपरी सीमा है, यदि और केवल यदि, A के हर अवयव a के लिए, a, M से छोटा या बराबर है।", "L": [["goal", "A ⊆ ℝ,   A ≠ ∅"], ["res", "M ∈ ℝ  A की ऊपरी सीमा है   ⟺   ∀ a ∈ A,   a ≤ M"]], "pin": ["ऊपरी सीमा M: ∀a∈A, a ≤ M"]},
+
+{"title": "5) सुप्रीमम", "clear": 1, "say": "एक वास्तविक संख्या s, A का सुप्रीमम है, यदि वह दो शर्तें पूरी करे। पहली: s, A की ऊपरी सीमा है। दूसरी: A की हर ऊपरी सीमा M के लिए, s, M से छोटा या बराबर है। अर्थात, सुप्रीमम ऊपरी सीमाओं में सबसे छोटा है।", "L": [["goal", "s ∈ ℝ  A का सुप्रीमम है, यदि:"], ["res", "(i)   s  A की ऊपरी सीमा है"], ["res", "(ii)   A की हर ऊपरी सीमा M के लिए,   s ≤ M"], ["txt", "सुप्रीमम सबसे छोटी ऊपरी सीमा है"]], "pin": ["सुप्रीमम s: सबसे छोटी ऊपरी सीमा"]},
+
+{"title": "6) पूर्णता", "clear": 1, "say": "अब पूर्णता अभिगृहीत, जिसे सुप्रीमम अभिगृहीत भी कहते हैं: वास्तविक संख्याओं के हर अरिक्त और ऊपर से परिबद्ध उपसमुच्चय का, वास्तविक संख्याओं में सुप्रीमम होता है। यही गुण वास्तविक संख्याओं को अलग पहचान देता है।", "L": [["goal", "पूर्णता (सुप्रीमम अभिगृहीत)"], ["res", "हर अरिक्त, ऊपर से परिबद्ध  A ⊆ ℝ  का ℝ में सुप्रीमम होता है"]], "pin": ["पूर्णता: A≠∅ ऊपर से परिबद्ध ⟹ sup A है"]},
+
+{"title": "7) निचली सीमा", "clear": 1, "say": "अब, निचली सीमाओं के लिए यही बात। मान लीजिए A, वास्तविक संख्याओं का एक अरिक्त उपसमुच्चय है। एक वास्तविक संख्या m, A की निचली सीमा है, यदि और केवल यदि, A के हर अवयव a के लिए, m, a से छोटा या बराबर है।", "L": [["goal", "A ⊆ ℝ,   A ≠ ∅"], ["res", "m ∈ ℝ  A की निचली सीमा है   ⟺   ∀ a ∈ A,   m ≤ a"]], "pin": ["निचली सीमा m: ∀a∈A, m ≤ a"]},
+
+{"title": "8) इन्फिमम", "clear": 1, "say": "एक वास्तविक संख्या i, A का इन्फिमम है, यदि वह दो शर्तें पूरी करे। पहली: i, A की निचली सीमा है। दूसरी: A की हर निचली सीमा m के लिए, m, i से छोटा या बराबर है। अर्थात, इन्फिमम निचली सीमाओं में सबसे बड़ा है।", "L": [["goal", "i ∈ ℝ  A का इन्फिमम है, यदि:"], ["res", "(i)   i  A की निचली सीमा है"], ["res", "(ii)   A की हर निचली सीमा m के लिए,   m ≤ i"], ["txt", "इन्फिमम सबसे बड़ी निचली सीमा है"]], "pin": ["इन्फिमम i: सबसे बड़ी निचली सीमा"]},
+
+{"title": "9) इन्फिमम के लिए पूर्णता", "clear": 1, "say": "और इन्फिमम के लिए पूर्णता अभिगृहीत: वास्तविक संख्याओं के हर अरिक्त और नीचे से परिबद्ध उपसमुच्चय का, वास्तविक संख्याओं में इन्फिमम होता है। यह सुप्रीमम अभिगृहीत के तुल्य है: बस A के अवयवों के ऋणात्मकों के समुच्चय पर सुप्रीमम अभिगृहीत लागू करना होता है।", "L": [["goal", "पूर्णता (इन्फिमम अभिगृहीत)"], ["res", "हर अरिक्त, नीचे से परिबद्ध  A ⊆ ℝ  का ℝ में इन्फिमम होता है"], ["txt", "सुप्रीमम अभिगृहीत के तुल्य"]], "pin": ["पूर्णता: A≠∅ नीचे से परिबद्ध ⟹ inf A है"]},
+
+{"title": "निष्कर्ष", "clear": 1, "say": "निष्कर्ष। ये गुण वास्तविक संख्याओं की पहचान कराते हैं: तुल्याकारिता तक, वास्तविक संख्याएँ एकमात्र पूर्ण क्रमित क्षेत्र हैं।", "L": [["res", "ℝ  एकमात्र  पूर्ण क्रमित क्षेत्र है   (तुल्याकारिता तक)"]]},
+
+{"title": "सारांश", "clear": 1, "say": "सारांश। वास्तविक संख्याएँ एक क्षेत्र हैं, जिन पर योग और गुणन के साथ संगत एक पूर्ण क्रम है, और वे पूर्ण हैं: हर अरिक्त और ऊपर से परिबद्ध समुच्चय का सुप्रीमम होता है, और हर अरिक्त और नीचे से परिबद्ध समुच्चय का इन्फिमम होता है। साथ ही, वे आर्किमिडीज़ गुण को संतुष्ट करती हैं। देखने के लिए धन्यवाद।", "L": [["res", "(ℝ, +, ·)  क्षेत्र,   ≤  संगत पूर्ण क्रम"], ["res", "पूर्णता:  हर A ≠ ∅ ऊपर से परिबद्ध का  sup A  है"], ["res", "हर A ≠ ∅ नीचे से परिबद्ध का  inf A  है"], ["res", "आर्किमिडीज़:  ∀ a, b &gt; 0,  ∃ n ∈ ℕ :  n · a &gt; b"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' प्लस ').replace(/⊙/g,' गुणा ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ फिर से चलाएँ'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ जारी रखें'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ रोकें';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^hi/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/madhur|hemant|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="वास्तविक संख्याओं का क्षेत्र";$('sub').textContent="सारांश: वास्तविक संख्याएँ एक पूर्ण क्रमित क्षेत्र के रूप में";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>

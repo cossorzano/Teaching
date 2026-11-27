@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Поле действительных чисел</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Запомним</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Начать</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Скорость <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Режим записи (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ru-RU",
+"meta":{"nivel": 0, "titulo": "Поле действительных чисел", "enunciado": "Итог: действительные числа как полное упорядоченное поле", "datos": ["Структура поля", "Согласованный линейный порядок", "Аксиома Архимеда", "Верхние и нижние границы", "Точная верхняя и нижняя грани", "Аксиома полноты"]},
+"steps":[
+{"title": "Поле действительных чисел", "sub": "Итог: действительные числа как полное упорядоченное поле", "clear": 1, "say": "Здравствуйте. В этом видео мы подведём итог по полной структуре действительных чисел: это полное упорядоченное поле. Разберём его составные части по очереди: поле, порядок, аксиому Архимеда и полноту, с точной верхней и точной нижней гранями.", "L": [["txt", "Полное упорядоченное поле действительных чисел"], ["sub", "(ℝ, +, ·, ≤)"]]},
+
+{"title": "Полное упорядоченное поле", "clear": 1, "say": "Действительные числа со сложением, умножением и порядком образуют полное упорядоченное поле. Это означает три вещи: со сложением и умножением они образуют поле; порядок линейный и согласован с операциями; и выполняется аксиома полноты.", "L": [["goal", "(ℝ, +, ·, ≤)   полное упорядоченное поле"], ["txt", "1) (ℝ, +, ·)  — поле"], ["txt", "2) ≤  — линейный порядок, согласованный с + и ·"], ["txt", "3) Полнота:  аксиома о верхней грани"]]},
+
+{"title": "1) Поле", "clear": 1, "say": "Сначала поле. Относительно сложения действительные числа образуют абелеву группу. Относительно умножения действительные числа без множества, содержащего только ноль, образуют абелеву группу. Кроме того, умножение дистрибутивно относительно сложения: а, умноженное на сумму бэ и цэ, равно а бэ плюс а цэ.", "L": [["goal", "(ℝ, +, ·)  — поле"], ["res", "(ℝ, +)   абелева группа"], ["res", "(ℝ ∖ {0}, ·)   абелева группа"], ["res", "Дистрибутивность:   a · (b + c) = a · b + a · c"]], "pin": ["Поле: (ℝ,+) и (ℝ∖{0},·) абелевы"]},
+
+{"title": "2) Линейный порядок", "clear": 1, "say": "Затем порядок. Меньше или равно — это отношение линейного порядка на действительных числах: оно рефлексивно, антисимметрично, транзитивно, и любые два числа можно сравнить.", "L": [["goal", "≤  — отношение линейного порядка на ℝ"], ["txt", "Рефлексивно, антисимметрично, транзитивно, любые два сравнимы"]], "pin": ["Линейный порядок ≤"]},
+
+{"say": "Оно согласовано со сложением: если а меньше или равно бэ, то а плюс цэ меньше или равно бэ плюс цэ. И согласовано с умножением: если ноль меньше или равен а, и ноль меньше или равен бэ, то ноль меньше или равен произведению а на бэ. То есть произведение двух неотрицательных чисел неотрицательно.", "L": [["res", "Согласованность со сложением:   a ≤ b  ⟹  a + c ≤ b + c"], ["res", "Согласованность с умножением:   0 ≤ a,  0 ≤ b  ⟹  0 ≤ a · b"]]},
+
+{"title": "3) Аксиома Архимеда", "clear": 1, "say": "В-третьих, аксиома Архимеда. Для любых чисел а и бэ больше нуля существует натуральное число эн, такое что эн, умноженное на а, больше бэ. Складывая а само с собой достаточно много раз, можно превзойти любое бэ.", "L": [["goal", "Аксиома Архимеда"], ["res", "∀ a, b &gt; 0,   ∃ n ∈ ℕ :   n · a &gt; b"]], "pin": ["Архимед: ∀a,b>0 ∃n: n·a>b"]},
+
+{"title": "4) Верхняя граница", "clear": 1, "say": "В-четвёртых, подготовим полноту. Пусть А — непустое подмножество действительных чисел. Действительное число эм большое является верхней границей А тогда и только тогда, когда для любого элемента а из А, а меньше или равно эм большому.", "L": [["goal", "A ⊆ ℝ,   A ≠ ∅"], ["res", "M ∈ ℝ  — верхняя граница A   ⟺   ∀ a ∈ A,   a ≤ M"]], "pin": ["Верхняя граница M: ∀a∈A, a ≤ M"]},
+
+{"title": "5) Точная верхняя грань", "clear": 1, "say": "Действительное число эс является точной верхней гранью А, если выполнены два условия. Первое: эс — верхняя граница А. Второе: для любой верхней границы эм большое множества А, эс меньше или равно эм большому. То есть точная верхняя грань — это наименьшая из верхних границ.", "L": [["goal", "s ∈ ℝ  — точная верхняя грань A, если:"], ["res", "(i)   s  — верхняя граница A"], ["res", "(ii)   ∀ M  верхней границы A:   s ≤ M"], ["txt", "Точная верхняя грань — наименьшая верхняя граница"]], "pin": ["sup A = s: наименьшая верхняя граница"]},
+
+{"title": "6) Полнота", "clear": 1, "say": "Теперь аксиома полноты, которую также называют аксиомой о верхней грани: всякое непустое ограниченное сверху подмножество действительных чисел имеет точную верхнюю грань среди действительных чисел. Именно это свойство отличает действительные числа.", "L": [["goal", "Полнота (аксиома о верхней грани)"], ["res", "Всякое непустое ограниченное сверху  A ⊆ ℝ  имеет точную верхнюю грань в ℝ"]], "pin": ["Полнота: A≠∅ огранич. сверху ⟹ есть sup A"]},
+
+{"title": "7) Нижняя граница", "clear": 1, "say": "Теперь то же самое для нижних границ. Пусть А — непустое подмножество действительных чисел. Действительное число эм малое является нижней границей А тогда и только тогда, когда для любого элемента а из А, эм малое меньше или равно а.", "L": [["goal", "A ⊆ ℝ,   A ≠ ∅"], ["res", "m ∈ ℝ  — нижняя граница A   ⟺   ∀ a ∈ A,   m ≤ a"]], "pin": ["Нижняя граница m: ∀a∈A, m ≤ a"]},
+
+{"title": "8) Точная нижняя грань", "clear": 1, "say": "Действительное число и является точной нижней гранью А, если выполнены два условия. Первое: и — нижняя граница А. Второе: для любой нижней границы эм малое множества А, эм малое меньше или равно и. То есть точная нижняя грань — это наибольшая из нижних границ.", "L": [["goal", "i ∈ ℝ  — точная нижняя грань A, если:"], ["res", "(i)   i  — нижняя граница A"], ["res", "(ii)   ∀ m  нижней границы A:   m ≤ i"], ["txt", "Точная нижняя грань — наибольшая нижняя граница"]], "pin": ["inf A = i: наибольшая нижняя граница"]},
+
+{"title": "9) Полнота для нижней грани", "clear": 1, "say": "И аксиома полноты для нижней грани: всякое непустое ограниченное снизу подмножество действительных чисел имеет точную нижнюю грань среди действительных чисел. Она равносильна аксиоме о верхней грани: достаточно применить аксиому о верхней грани к множеству чисел, противоположных элементам А.", "L": [["goal", "Полнота (аксиома о нижней грани)"], ["res", "Всякое непустое ограниченное снизу  A ⊆ ℝ  имеет точную нижнюю грань в ℝ"], ["txt", "Равносильна аксиоме о верхней грани"]], "pin": ["Полнота: A≠∅ огранич. снизу ⟹ есть inf A"]},
+
+{"title": "Вывод", "clear": 1, "say": "Вывод. Эти свойства характеризуют действительные числа: с точностью до изоморфизма действительные числа — единственное полное упорядоченное поле.", "L": [["res", "ℝ  — единственное  полное упорядоченное поле   (с точностью до изоморфизма)"]]},
+
+{"title": "Итог", "clear": 1, "say": "Итог. Действительные числа образуют поле с линейным порядком, согласованным со сложением и умножением, и они полны: всякое непустое ограниченное сверху множество имеет точную верхнюю грань, а всякое непустое ограниченное снизу множество имеет точную нижнюю грань. Кроме того, выполняется аксиома Архимеда. Спасибо за внимание.", "L": [["res", "(ℝ, +, ·)  поле,   ≤  согласованный линейный порядок"], ["res", "Полнота:  всякое A ≠ ∅, ограниченное сверху, имеет  sup A"], ["res", "Всякое A ≠ ∅, ограниченное снизу, имеет  inf A"], ["res", "Архимед:  ∀ a, b &gt; 0,  ∃ n ∈ ℕ :  n · a &gt; b"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' плюс ').replace(/⊙/g,' умножить на ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Повторить'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Продолжить'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Пауза';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Пауза';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Пауза';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ru/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/dmitry|pavel|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Поле действительных чисел";$('sub').textContent="Итог: действительные числа как полное упорядоченное поле";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
