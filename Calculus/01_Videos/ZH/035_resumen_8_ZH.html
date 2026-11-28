@@ -1,0 +1,105 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>扩充实数线</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>备忘</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ 开始</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>语速 <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">录制模式 (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"zh-CN",
+"meta":{"nivel": 0, "titulo": "扩充实数线", "enunciado": "总结：扩充实数线的定义、序、上确界与下确界，以及运算", "datos": ["定义", "序", "上确界与下确界", "有定义的运算", "无定义的运算", "不是域"]},
+"steps":[
+{"title": "扩充实数线", "sub": "总结：扩充实数线的定义、序、上确界与下确界，以及运算", "clear": 1, "say": "大家好。在这个视频中，我们总结扩充实数线：它如何定义，如何排序，上确界和下确界会怎样，以及可以对正无穷和负无穷做哪些运算。", "L": [["txt", "扩充实数线  <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span>"]]},
+
+{"title": "1) 定义", "clear": 1, "say": "扩充实数线是在实数中添加负无穷和正无穷这两个符号而得到的。它的记号是在表示实数的空心字母 R 上方加一条横线。", "L": [["goal", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> = ℝ ∪ { −∞, +∞ }"]], "pin": ["定义：<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> = ℝ ∪ {−∞, +∞}"]},
+
+{"title": "2) 序", "clear": 1, "say": "首先是序。扩充实数线上的序延拓了实数上的序。对每个实数 x，负无穷小于或等于 x，x 小于或等于正无穷。并且负无穷严格小于正无穷。", "L": [["goal", "≤  延拓了 ℝ 上的序"], ["res", "∀ x ∈ ℝ :   −∞ ≤ x ≤ +∞"], ["res", "−∞ &lt; +∞"]], "pin": ["序：−∞ ≤ x ≤ +∞"]},
+
+{"title": "3) 界", "clear": 1, "say": "其次是界。与实数不同，在扩充实数线中，每个子集 A 都有上确界和下确界，不需要有界。例如空集：每个元素都是空集的上界，其中最小的是负无穷。所以空集的上确界是负无穷，空集的下确界是正无穷。", "L": [["goal", "每个  A ⊆ <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span>  在 <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> 中都有上确界和下确界"], ["txt", "例如，对  A = ∅："], ["sub", "sup ∅ = −∞,        inf ∅ = +∞"]], "pin": ["每个 A ⊆ <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> 都有 sup A 与 inf A"]},
+
+{"title": "4) 上确界", "clear": 1, "say": "第三，上确界什么时候是正无穷或负无穷。如果 A 是实数的子集，那么 A 的上确界是正无穷，当且仅当 A 在实数中没有上界。而 A 的上确界是负无穷，当且仅当 A 是空集，或者 A 是只含负无穷的集合。", "L": [["goal", "上确界"], ["res", "A ⊆ ℝ：   sup A = +∞   ⟺   A 在 ℝ 中无上界"], ["res", "sup A = −∞   ⟺   A = ∅   或   A = { −∞ }"]], "pin": ["上确界：无上界时为 +∞；A=∅ 或 {−∞} 时为 −∞"]},
+
+{"say": "一般地，对扩充实数线的任意子集 A，上确界是正无穷，当且仅当正无穷属于 A，或者 A 的实数部分没有上界。", "L": [["txt", "一般地，对  A ⊆ <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> ："], ["sub", "sup A = +∞   ⟺   +∞ ∈ A   或   A ∩ ℝ 在 ℝ 中无上界"]]},
+
+{"title": "5) 下确界", "clear": 1, "say": "第四，下确界，情况是对称的。如果 A 是实数的子集，那么 A 的下确界是负无穷，当且仅当 A 在实数中没有下界。而 A 的下确界是正无穷，当且仅当 A 是空集，或者 A 是只含正无穷的集合。", "L": [["goal", "下确界"], ["res", "A ⊆ ℝ：   inf A = −∞   ⟺   A 在 ℝ 中无下界"], ["res", "inf A = +∞   ⟺   A = ∅   或   A = { +∞ }"]], "pin": ["下确界：无下界时为 −∞；A=∅ 或 {+∞} 时为 +∞"]},
+
+{"title": "6) 运算", "clear": 1, "say": "第五，运算，它们只有部分有定义。加法：对每个实数 x，x 加正无穷等于正无穷，x 加负无穷等于负无穷。乘法：如果 a 大于零，a 乘正无穷等于正无穷，a 乘负无穷等于负无穷。如果 a 小于零，符号相反：a 乘正无穷等于负无穷，a 乘负无穷等于正无穷。", "L": [["goal", "有定义的运算"], ["res", "x + (±∞) = ±∞        ∀ x ∈ ℝ"], ["res", "a · (±∞) = ±∞        若  a &gt; 0"], ["res", "a · (±∞) = ∓∞        若  a &lt; 0"]], "pin": ["运算：x+(±∞)=±∞，a·(±∞)=±∞ (a>0)"]},
+
+{"say": "还有除法：对每个实数 a，a 除以正无穷或负无穷等于零。另外，正无穷加正无穷有定义，等于正无穷；负无穷加负无穷也有定义，等于负无穷。", "L": [["res", "a / (±∞) = 0        ∀ a ∈ ℝ"], ["res", "(+∞) + (+∞) = +∞,        (−∞) + (−∞) = −∞"]]},
+
+{"title": "7) 无定义的运算", "clear": 1, "say": "但是，有些运算没有定义，因为无法给它们赋予合理的值。正无穷减正无穷，也就是正无穷加负无穷，没有定义。零乘正无穷或负无穷，也没有定义。", "L": [["goal", "无定义"], ["warn", "(+∞) + (−∞)    即    ∞ − ∞"], ["warn", "0 · (±∞)"]]},
+
+{"title": "8) 注意", "clear": 1, "say": "最后注意。扩充实数线既不是域，也不是环。例如，正无穷没有相反元：不存在任何元素，加上正无穷后得到零。它只应作为描述无界行为的辅助工具。", "L": [["warn", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> 既不是域也不是环"], ["txt", "例如，+∞  没有相反元"], ["txt", "描述无界行为的辅助工具"]]},
+
+{"title": "总结", "clear": 1, "say": "总结。扩充实数线就是实数再加上负无穷和正无穷。它的序延拓了实数的序，每个子集都有上确界和下确界。运算只有部分有定义，而且它既不是域也不是环。感谢观看。", "L": [["res", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> = ℝ ∪ { −∞, +∞ },    −∞ ≤ x ≤ +∞"], ["res", "每个 A ⊆ <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> 都有  sup A  与  inf A"], ["res", "∞ − ∞   与   0 · (±∞)   无定义"], ["res", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> 既不是域也不是环"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' 加 ').replace(/⊙/g,' 乘 ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ 重播'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ 继续'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ 暂停';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ 暂停';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^zh/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/yunyang|yunxi|yunjian|kangkang|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="扩充实数线";$('sub').textContent="总结：扩充实数线的定义、序、上确界与下确界，以及运算";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
+
+</body></html>

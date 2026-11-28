@@ -1,0 +1,105 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>विस्तारित वास्तविक रेखा</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>याद रखें</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ शुरू करें</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>गति <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">रिकॉर्डिंग मोड (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"hi-IN",
+"meta":{"nivel": 0, "titulo": "विस्तारित वास्तविक रेखा", "enunciado": "सारांश: विस्तारित वास्तविक रेखा की परिभाषा, क्रम, सुप्रीमम और इन्फिमम, और संक्रियाएँ", "datos": ["परिभाषा", "क्रम", "सुप्रीमम और इन्फिमम", "परिभाषित संक्रियाएँ", "अपरिभाषित संक्रियाएँ", "यह क्षेत्र नहीं है"]},
+"steps":[
+{"title": "विस्तारित वास्तविक रेखा", "sub": "सारांश: विस्तारित वास्तविक रेखा की परिभाषा, क्रम, सुप्रीमम और इन्फिमम, और संक्रियाएँ", "clear": 1, "say": "नमस्ते। इस वीडियो में हम विस्तारित वास्तविक रेखा का सारांश देखेंगे: इसे कैसे परिभाषित करते हैं, इसका क्रम कैसा है, सुप्रीमम और इन्फिमम का क्या होता है, और धन अनंत और ऋण अनंत के साथ कौन सी संक्रियाएँ की जा सकती हैं।", "L": [["txt", "विस्तारित वास्तविक रेखा  <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span>"]]},
+
+{"title": "1) परिभाषा", "clear": 1, "say": "विस्तारित वास्तविक रेखा, वास्तविक संख्याओं में ऋण अनंत और धन अनंत, ये दो प्रतीक जोड़कर प्राप्त होती है। इसे वास्तविक संख्याओं के दोहरी रेखा वाले R के ऊपर एक रेखा लगाकर लिखते हैं।", "L": [["goal", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> = ℝ ∪ { −∞, +∞ }"]], "pin": ["परिभाषा: <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> = ℝ ∪ {−∞, +∞}"]},
+
+{"title": "2) क्रम", "clear": 1, "say": "पहले, क्रम। विस्तारित वास्तविक रेखा का क्रम, वास्तविक संख्याओं के क्रम का विस्तार करता है। हर वास्तविक x के लिए, ऋण अनंत, x से छोटा या बराबर है, और x, धन अनंत से छोटा या बराबर है। और ऋण अनंत, धन अनंत से निश्चित रूप से छोटा है।", "L": [["goal", "≤  ℝ के क्रम का विस्तार करता है"], ["res", "∀ x ∈ ℝ :   −∞ ≤ x ≤ +∞"], ["res", "−∞ &lt; +∞"]], "pin": ["क्रम: −∞ ≤ x ≤ +∞"]},
+
+{"title": "3) सीमाएँ", "clear": 1, "say": "दूसरा, सीमाएँ। वास्तविक संख्याओं के विपरीत, विस्तारित रेखा में हर उपसमुच्चय A का सुप्रीमम और इन्फिमम होता है, उसके परिबद्ध होने की आवश्यकता नहीं। उदाहरण के लिए, रिक्त समुच्चय: हर अवयव रिक्त समुच्चय की ऊपरी सीमा है, और उनमें सबसे छोटा ऋण अनंत है। इसलिए, रिक्त समुच्चय का सुप्रीमम ऋण अनंत है, और उसका इन्फिमम धन अनंत है।", "L": [["goal", "हर  A ⊆ <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span>  का <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> में सुप्रीमम और इन्फिमम होता है"], ["txt", "उदाहरण के लिए,  A = ∅  के लिए:"], ["sub", "sup ∅ = −∞,        inf ∅ = +∞"]], "pin": ["हर A ⊆ <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> का sup A और inf A है"]},
+
+{"title": "4) सुप्रीमम", "clear": 1, "say": "तीसरा, सुप्रीमम कब धन या ऋण अनंत होता है। यदि A वास्तविक संख्याओं का उपसमुच्चय है, तो A का सुप्रीमम धन अनंत है, यदि और केवल यदि A वास्तविक संख्याओं में ऊपर से परिबद्ध नहीं है। और A का सुप्रीमम ऋण अनंत है, यदि और केवल यदि A रिक्त समुच्चय है, या A वह समुच्चय है जिसमें केवल ऋण अनंत है।", "L": [["goal", "सुप्रीमम"], ["res", "A ⊆ ℝ:   sup A = +∞   ⟺   A, ℝ में ऊपर से परिबद्ध नहीं"], ["res", "sup A = −∞   ⟺   A = ∅   या   A = { −∞ }"]], "pin": ["सुप्रीमम: अपरिबद्ध हो तो +∞; A=∅ या {−∞} हो तो −∞"]},
+
+{"say": "सामान्य रूप से, विस्तारित वास्तविक रेखा के किसी भी उपसमुच्चय A के लिए, सुप्रीमम धन अनंत है, यदि और केवल यदि धन अनंत A में है, या A का वास्तविक भाग ऊपर से परिबद्ध नहीं है।", "L": [["txt", "सामान्य रूप से,  A ⊆ <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span>  के लिए:"], ["sub", "sup A = +∞   ⟺   +∞ ∈ A   या   A ∩ ℝ, ℝ में ऊपर से परिबद्ध नहीं"]]},
+
+{"title": "5) इन्फिमम", "clear": 1, "say": "चौथा, इन्फिमम, जो सममित है। यदि A वास्तविक संख्याओं का उपसमुच्चय है, तो A का इन्फिमम ऋण अनंत है, यदि और केवल यदि A वास्तविक संख्याओं में नीचे से परिबद्ध नहीं है। और A का इन्फिमम धन अनंत है, यदि और केवल यदि A रिक्त समुच्चय है, या A वह समुच्चय है जिसमें केवल धन अनंत है।", "L": [["goal", "इन्फिमम"], ["res", "A ⊆ ℝ:   inf A = −∞   ⟺   A, ℝ में नीचे से परिबद्ध नहीं"], ["res", "inf A = +∞   ⟺   A = ∅   या   A = { +∞ }"]], "pin": ["इन्फिमम: अपरिबद्ध हो तो −∞; A=∅ या {+∞} हो तो +∞"]},
+
+{"title": "6) संक्रियाएँ", "clear": 1, "say": "पाँचवाँ, संक्रियाएँ, जो केवल आंशिक रूप से परिभाषित हैं। योग: हर वास्तविक x के लिए, x जमा धन अनंत, धन अनंत है, और x जमा ऋण अनंत, ऋण अनंत है। गुणन: यदि a शून्य से बड़ा है, तो a गुणा धन अनंत, धन अनंत है, और a गुणा ऋण अनंत, ऋण अनंत है। यदि a शून्य से छोटा है, तो चिह्न उलट जाता है: a गुणा धन अनंत, ऋण अनंत है, और a गुणा ऋण अनंत, धन अनंत है।", "L": [["goal", "परिभाषित संक्रियाएँ"], ["res", "x + (±∞) = ±∞        ∀ x ∈ ℝ"], ["res", "a · (±∞) = ±∞        यदि  a &gt; 0"], ["res", "a · (±∞) = ∓∞        यदि  a &lt; 0"]], "pin": ["संक्रियाएँ: x+(±∞)=±∞, a·(±∞)=±∞ (a>0)"]},
+
+{"say": "और भाग: हर वास्तविक a के लिए, a को धन या ऋण अनंत से भाग देने पर शून्य मिलता है। धन अनंत जमा धन अनंत भी परिभाषित है, जो धन अनंत है, और ऋण अनंत जमा ऋण अनंत, जो ऋण अनंत है।", "L": [["res", "a / (±∞) = 0        ∀ a ∈ ℝ"], ["res", "(+∞) + (+∞) = +∞,        (−∞) + (−∞) = −∞"]]},
+
+{"title": "7) अपरिभाषित संक्रियाएँ", "clear": 1, "say": "फिर भी, कुछ संक्रियाएँ परिभाषित नहीं हैं, क्योंकि उन्हें कोई उचित मान नहीं दिया जा सकता। धन अनंत घटा धन अनंत, अर्थात धन अनंत और ऋण अनंत का योग, परिभाषित नहीं है। और शून्य गुणा धन या ऋण अनंत भी परिभाषित नहीं है।", "L": [["goal", "परिभाषित नहीं"], ["warn", "(+∞) + (−∞)    अर्थात    ∞ − ∞"], ["warn", "0 · (±∞)"]]},
+
+{"title": "8) टिप्पणी", "clear": 1, "say": "अंतिम टिप्पणी। विस्तारित वास्तविक रेखा न क्षेत्र है, न वलय। उदाहरण के लिए, धन अनंत का कोई विपरीत नहीं है: ऐसा कोई अवयव नहीं जिसे धन अनंत में जोड़ने पर शून्य मिले। इसका उपयोग केवल अपरिबद्ध व्यवहार का वर्णन करने के सहायक उपकरण के रूप में करना चाहिए।", "L": [["warn", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> न क्षेत्र है, न वलय"], ["txt", "उदाहरण के लिए,  +∞  का कोई विपरीत नहीं"], ["txt", "अपरिबद्ध व्यवहार के लिए सहायक उपकरण"]]},
+
+{"title": "सारांश", "clear": 1, "say": "सारांश। विस्तारित वास्तविक रेखा, वास्तविक संख्याएँ और साथ में ऋण अनंत और धन अनंत है। इसका क्रम वास्तविक संख्याओं के क्रम का विस्तार है, और हर उपसमुच्चय का सुप्रीमम और इन्फिमम होता है। संक्रियाएँ आंशिक रूप से परिभाषित हैं, और यह न क्षेत्र है, न वलय। देखने के लिए धन्यवाद।", "L": [["res", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> = ℝ ∪ { −∞, +∞ },    −∞ ≤ x ≤ +∞"], ["res", "हर A ⊆ <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> का  sup A  और  inf A  है"], ["res", "∞ − ∞   और   0 · (±∞)   अपरिभाषित"], ["res", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> न क्षेत्र है, न वलय"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' प्लस ').replace(/⊙/g,' गुणा ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ फिर से चलाएँ'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ जारी रखें'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ रोकें';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ रोकें';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^hi/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/madhur|hemant|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="विस्तारित वास्तविक रेखा";$('sub').textContent="सारांश: विस्तारित वास्तविक रेखा की परिभाषा, क्रम, सुप्रीमम और इन्फिमम, और संक्रियाएँ";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
+
+</body></html>

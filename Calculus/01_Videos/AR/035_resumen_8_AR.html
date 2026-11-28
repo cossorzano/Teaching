@@ -1,0 +1,107 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>المستقيم الحقيقي الممدد</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-inline-end:2px dashed #3d5a50;padding-inline-end:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-inline-start:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+span[dir='ltr']{white-space:nowrap}
+svg{direction:ltr}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>تذكّر</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ ابدأ</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>السرعة <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">وضع التسجيل (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ar-SA",
+"meta":{"nivel": 0, "titulo": "المستقيم الحقيقي الممدد", "enunciado": "ملخص: التعريف، والترتيب، والحد الأعلى الأصغر والحد الأدنى الأكبر، والعمليات على المستقيم الحقيقي الممدد", "datos": ["التعريف", "الترتيب", "الحد الأعلى الأصغر والحد الأدنى الأكبر", "العمليات المعرفة", "العمليات غير المعرفة", "ليس حقلًا"]},
+"steps":[
+{"title": "المستقيم الحقيقي الممدد", "sub": "ملخص: التعريف، والترتيب، والحد الأعلى الأصغر والحد الأدنى الأكبر، والعمليات على المستقيم الحقيقي الممدد", "clear": 1, "say": "مرحبًا. في هذا الفيديو نلخص المستقيم الحقيقي الممدد: كيف يُعرَّف، وكيف يُرتَّب، وماذا يحدث للحد الأعلى الأصغر والحد الأدنى الأكبر، وما العمليات الممكنة مع موجب اللانهاية وسالب اللانهاية.", "L": [["txt", "المستقيم الحقيقي الممدد  <span dir='ltr'><span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span></span>"]]},
+
+{"title": "1) التعريف", "clear": 1, "say": "نحصل على المستقيم الحقيقي الممدد بإضافة رمزين إلى الأعداد الحقيقية: سالب اللانهاية وموجب اللانهاية. ويُكتب بشرطة فوق حرف R المزدوج الذي يرمز إلى الأعداد الحقيقية.", "L": [["goal", "<span dir='ltr'><span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> = ℝ ∪ { −∞, +∞ }</span>"]], "pin": ["التعريف: <span dir='ltr'><span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> = ℝ ∪ {−∞, +∞}</span>"]},
+
+{"title": "2) الترتيب", "clear": 1, "say": "أولًا، الترتيب. ترتيب المستقيم الحقيقي الممدد يمدد ترتيب الأعداد الحقيقية. لكل عدد حقيقي x، سالب اللانهاية أصغر من أو يساوي x، و x أصغر من أو يساوي موجب اللانهاية. وسالب اللانهاية أصغر تمامًا من موجب اللانهاية.", "L": [["goal", "<span dir='ltr'>≤</span>  يمدد ترتيب <span dir='ltr'>ℝ</span>"], ["res", "<span dir='ltr'>∀ x ∈ ℝ :   −∞ ≤ x ≤ +∞</span>"], ["res", "<span dir='ltr'>−∞ &lt; +∞</span>"]], "pin": ["الترتيب: <span dir='ltr'>−∞ ≤ x ≤ +∞</span>"]},
+
+{"title": "3) الحدود", "clear": 1, "say": "ثانيًا، الحدود. بخلاف الأعداد الحقيقية، في المستقيم الممدد لكل مجموعة جزئية A حد أعلى أصغر وحد أدنى أكبر، دون حاجة إلى أن تكون محدودة. مثلًا، المجموعة الخالية: كل عنصر حد أعلى للمجموعة الخالية، وأصغرها سالب اللانهاية. وهكذا فالحد الأعلى الأصغر للمجموعة الخالية هو سالب اللانهاية، وحدها الأدنى الأكبر هو موجب اللانهاية.", "L": [["goal", "لكل  <span dir='ltr'>A ⊆ <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span></span>  حد أعلى أصغر وحد أدنى أكبر في <span dir='ltr'><span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span></span>"], ["txt", "مثلًا، إذا كانت  <span dir='ltr'>A = ∅</span>:"], ["sub", "<span dir='ltr'>sup ∅ = −∞,        inf ∅ = +∞</span>"]], "pin": ["لكل <span dir='ltr'>A ⊆ <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span></span> يوجد <span dir='ltr'>sup A</span> و <span dir='ltr'>inf A</span>"]},
+
+{"title": "4) الحد الأعلى الأصغر", "clear": 1, "say": "ثالثًا، متى يكون الحد الأعلى الأصغر موجب اللانهاية أو سالبها. إذا كانت A مجموعة جزئية من الأعداد الحقيقية، فإن حدها الأعلى الأصغر هو موجب اللانهاية إذا وفقط إذا كانت A غير محدودة من الأعلى في الأعداد الحقيقية. ويكون سالب اللانهاية إذا وفقط إذا كانت A هي المجموعة الخالية، أو المجموعة التي لا تحوي إلا سالب اللانهاية.", "L": [["goal", "الحد الأعلى الأصغر"], ["res", "إذا كانت  <span dir='ltr'>A ⊆ ℝ</span>،   <span dir='ltr'>sup A = +∞   ⟺   A</span> غير محدودة من الأعلى في <span dir='ltr'>ℝ</span>"], ["res", "<span dir='ltr'>sup A = −∞   ⟺   A = ∅</span>   أو   <span dir='ltr'>A = { −∞ }</span>"]], "pin": ["<span dir='ltr'>sup A</span>: <span dir='ltr'>+∞</span> إذا لم تكن محدودة، و <span dir='ltr'>−∞</span> إذا كانت <span dir='ltr'>A=∅</span> أو <span dir='ltr'>{−∞}</span>"]},
+
+{"say": "وعمومًا، لأي مجموعة جزئية A من المستقيم الحقيقي الممدد، يكون الحد الأعلى الأصغر موجب اللانهاية إذا وفقط إذا كان موجب اللانهاية ينتمي إلى A، أو كان الجزء الحقيقي من A غير محدود من الأعلى.", "L": [["txt", "عمومًا، إذا كانت  <span dir='ltr'>A ⊆ <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span></span>:"], ["sub", "<span dir='ltr'>sup A = +∞   ⟺   +∞ ∈ A</span>   أو   <span dir='ltr'>A ∩ ℝ</span> غير محدودة من الأعلى في <span dir='ltr'>ℝ</span>"]]},
+
+{"title": "5) الحد الأدنى الأكبر", "clear": 1, "say": "رابعًا، الحد الأدنى الأكبر، وهو الحالة المتناظرة. إذا كانت A مجموعة جزئية من الأعداد الحقيقية، فإن حدها الأدنى الأكبر هو سالب اللانهاية إذا وفقط إذا كانت A غير محدودة من الأدنى في الأعداد الحقيقية. ويكون موجب اللانهاية إذا وفقط إذا كانت A هي المجموعة الخالية، أو المجموعة التي لا تحوي إلا موجب اللانهاية.", "L": [["goal", "الحد الأدنى الأكبر"], ["res", "إذا كانت  <span dir='ltr'>A ⊆ ℝ</span>،   <span dir='ltr'>inf A = −∞   ⟺   A</span> غير محدودة من الأدنى في <span dir='ltr'>ℝ</span>"], ["res", "<span dir='ltr'>inf A = +∞   ⟺   A = ∅</span>   أو   <span dir='ltr'>A = { +∞ }</span>"]], "pin": ["<span dir='ltr'>inf A</span>: <span dir='ltr'>−∞</span> إذا لم تكن محدودة، و <span dir='ltr'>+∞</span> إذا كانت <span dir='ltr'>A=∅</span> أو <span dir='ltr'>{+∞}</span>"]},
+
+{"title": "6) العمليات", "clear": 1, "say": "خامسًا، العمليات، وهي معرفة جزئيًا فقط. الجمع: لكل عدد حقيقي x، x زائد موجب اللانهاية يساوي موجب اللانهاية، و x زائد سالب اللانهاية يساوي سالب اللانهاية. الضرب: إذا كان a أكبر من الصفر، فإن a ضرب موجب اللانهاية يساوي موجب اللانهاية، و a ضرب سالب اللانهاية يساوي سالب اللانهاية. وإذا كان a أصغر من الصفر، تنعكس الإشارة: a ضرب موجب اللانهاية يساوي سالب اللانهاية، و a ضرب سالب اللانهاية يساوي موجب اللانهاية.", "L": [["goal", "العمليات المعرفة"], ["res", "<span dir='ltr'>x + (±∞) = ±∞        ∀ x ∈ ℝ</span>"], ["res", "<span dir='ltr'>a · (±∞) = ±∞</span>        إذا كان  <span dir='ltr'>a &gt; 0</span>"], ["res", "<span dir='ltr'>a · (±∞) = ∓∞</span>        إذا كان  <span dir='ltr'>a &lt; 0</span>"]], "pin": ["العمليات: <span dir='ltr'>x+(±∞)=±∞</span>، <span dir='ltr'>a·(±∞)=±∞ (a>0)</span>"]},
+
+{"say": "والقسمة: لكل عدد حقيقي a، قسمة a على موجب اللانهاية أو سالبها تساوي الصفر. ومعرف أيضًا موجب اللانهاية زائد موجب اللانهاية، ويساوي موجب اللانهاية، وسالب اللانهاية زائد سالب اللانهاية، ويساوي سالب اللانهاية.", "L": [["res", "<span dir='ltr'>a / (±∞) = 0        ∀ a ∈ ℝ</span>"], ["res", "<span dir='ltr'>(+∞) + (+∞) = +∞,        (−∞) + (−∞) = −∞</span>"]]},
+
+{"title": "7) عمليات غير معرفة", "clear": 1, "say": "لكن توجد عمليات غير معرفة، لأنه لا يمكن إعطاؤها قيمة معقولة. موجب اللانهاية ناقص موجب اللانهاية، أي جمع موجب اللانهاية مع سالب اللانهاية، غير معرف. وكذلك الصفر ضرب موجب اللانهاية أو سالبها.", "L": [["goal", "غير معرفة"], ["warn", "<span dir='ltr'>(+∞) + (−∞)</span>    أي    <span dir='ltr'>∞ − ∞</span>"], ["warn", "<span dir='ltr'>0 · (±∞)</span>"]]},
+
+{"title": "8) ملاحظة", "clear": 1, "say": "ملاحظة أخيرة. المستقيم الحقيقي الممدد ليس حقلًا ولا حلقة. مثلًا، موجب اللانهاية ليس له نظير: لا يوجد عنصر إذا أضيف إلى موجب اللانهاية أعطى الصفر. ويجب استعماله فقط أداةً مساعدة لوصف السلوك غير المحدود.", "L": [["warn", "<span dir='ltr'><span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span></span> ليس حقلًا ولا حلقة"], ["txt", "مثلًا،  <span dir='ltr'>+∞</span>  ليس له نظير"], ["txt", "أداة مساعدة لوصف السلوك غير المحدود"]]},
+
+{"title": "الخلاصة", "clear": 1, "say": "الخلاصة. المستقيم الحقيقي الممدد هو الأعداد الحقيقية مع سالب اللانهاية وموجب اللانهاية. ترتيبه يمدد ترتيب الأعداد الحقيقية، ولكل مجموعة جزئية حد أعلى أصغر وحد أدنى أكبر. والعمليات معرفة جزئيًا، وهو ليس حقلًا ولا حلقة. شكرًا على المشاهدة.", "L": [["res", "<span dir='ltr'><span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> = ℝ ∪ { −∞, +∞ },    −∞ ≤ x ≤ +∞</span>"], ["res", "لكل <span dir='ltr'>A ⊆ <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span></span> يوجد  <span dir='ltr'>sup A</span>  و  <span dir='ltr'>inf A</span>"], ["res", "<span dir='ltr'>∞ − ∞</span>   و   <span dir='ltr'>0 · (±∞)</span>   غير معرفتين"], ["res", "<span dir='ltr'><span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span></span> ليس حقلًا ولا حلقة"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' زائد ').replace(/⊙/g,' ضرب ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ إعادة'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ متابعة'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ إيقاف مؤقت';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ إيقاف مؤقت';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ إيقاف مؤقت';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ar/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/hamed|shakir|naayf|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="المستقيم الحقيقي الممدد";$('sub').textContent="ملخص: التعريف، والترتيب، والحد الأعلى الأصغر والحد الأدنى الأكبر، والعمليات على المستقيم الحقيقي الممدد";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
+
+</body></html>

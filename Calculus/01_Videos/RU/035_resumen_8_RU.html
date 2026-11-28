@@ -1,0 +1,105 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Расширенная числовая прямая</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>Запомним</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ Начать</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>Скорость <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">Режим записи (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"ru-RU",
+"meta":{"nivel": 0, "titulo": "Расширенная числовая прямая", "enunciado": "Итог: определение, порядок, точные грани и операции на расширенной числовой прямой", "datos": ["Определение", "Порядок", "Точная верхняя и нижняя грани", "Определённые операции", "Неопределённые операции", "Это не поле"]},
+"steps":[
+{"title": "Расширенная числовая прямая", "sub": "Итог: определение, порядок, точные грани и операции на расширенной числовой прямой", "clear": 1, "say": "Здравствуйте. В этом видео мы подведём итог по расширенной числовой прямой: как она определяется, как упорядочена, что происходит с точными гранями, и какие операции можно выполнять с плюс и минус бесконечностью.", "L": [["txt", "Расширенная числовая прямая  <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span>"]]},
+
+{"title": "1) Определение", "clear": 1, "say": "Расширенная числовая прямая получается, если добавить к действительным числам два символа: минус бесконечность и плюс бесконечность. Её обозначают чертой над буквой эр с двойной линией, которой обозначают действительные числа.", "L": [["goal", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> = ℝ ∪ { −∞, +∞ }"]], "pin": ["Определение: <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> = ℝ ∪ {−∞, +∞}"]},
+
+{"title": "2) Порядок", "clear": 1, "say": "Сначала порядок. Порядок на расширенной прямой продолжает порядок действительных чисел. Для любого действительного икс минус бесконечность меньше или равна икс, а икс меньше или равен плюс бесконечности. И минус бесконечность строго меньше плюс бесконечности.", "L": [["goal", "≤  продолжает порядок на ℝ"], ["res", "∀ x ∈ ℝ :   −∞ ≤ x ≤ +∞"], ["res", "−∞ &lt; +∞"]], "pin": ["Порядок: −∞ ≤ x ≤ +∞"]},
+
+{"title": "3) Границы", "clear": 1, "say": "Затем границы. В отличие от действительных чисел, на расширенной прямой всякое подмножество А имеет точную верхнюю и точную нижнюю грани, даже если оно не ограничено. Например, пустое множество: любой элемент является его верхней границей, и наименьшая из них — минус бесконечность. Поэтому точная верхняя грань пустого множества равна минус бесконечности, а точная нижняя грань равна плюс бесконечности.", "L": [["goal", "Всякое  A ⊆ <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span>  имеет точные верхнюю и нижнюю грани в <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span>"], ["txt", "Например, для  A = ∅:"], ["sub", "sup ∅ = −∞,        inf ∅ = +∞"]], "pin": ["Всякое A ⊆ <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> имеет sup A и inf A"]},
+
+{"title": "4) Точная верхняя грань", "clear": 1, "say": "В-третьих, когда точная верхняя грань равна плюс или минус бесконечности. Если А — подмножество действительных чисел, то его точная верхняя грань равна плюс бесконечности тогда и только тогда, когда А не ограничено сверху среди действительных чисел. И она равна минус бесконечности тогда и только тогда, когда А пусто, или А — множество, содержащее только минус бесконечность.", "L": [["goal", "Точная верхняя грань"], ["res", "A ⊆ ℝ:   sup A = +∞   ⟺   A не ограничено сверху в ℝ"], ["res", "sup A = −∞   ⟺   A = ∅   или   A = { −∞ }"]], "pin": ["sup: +∞, если не огранич.; −∞, если A=∅ или {−∞}"]},
+
+{"say": "В общем случае, для любого подмножества А расширенной прямой точная верхняя грань равна плюс бесконечности тогда и только тогда, когда плюс бесконечность принадлежит А, или действительная часть А не ограничена сверху.", "L": [["txt", "В общем случае, для  A ⊆ <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> :"], ["sub", "sup A = +∞   ⟺   +∞ ∈ A   или   A ∩ ℝ не ограничено сверху в ℝ"]]},
+
+{"title": "5) Точная нижняя грань", "clear": 1, "say": "В-четвёртых, точная нижняя грань, где всё симметрично. Если А — подмножество действительных чисел, то его точная нижняя грань равна минус бесконечности тогда и только тогда, когда А не ограничено снизу среди действительных чисел. И она равна плюс бесконечности тогда и только тогда, когда А пусто, или А — множество, содержащее только плюс бесконечность.", "L": [["goal", "Точная нижняя грань"], ["res", "A ⊆ ℝ:   inf A = −∞   ⟺   A не ограничено снизу в ℝ"], ["res", "inf A = +∞   ⟺   A = ∅   или   A = { +∞ }"]], "pin": ["inf: −∞, если не огранич.; +∞, если A=∅ или {+∞}"]},
+
+{"title": "6) Операции", "clear": 1, "say": "В-пятых, операции, которые определены лишь частично. Сложение: для любого действительного икс сумма икс и плюс бесконечности равна плюс бесконечности, а сумма икс и минус бесконечности равна минус бесконечности. Умножение: если а больше нуля, то а, умноженное на плюс бесконечность, равно плюс бесконечности, а умноженное на минус бесконечность, равно минус бесконечности. Если а меньше нуля, знак меняется: а, умноженное на плюс бесконечность, равно минус бесконечности, а умноженное на минус бесконечность, равно плюс бесконечности.", "L": [["goal", "Определённые операции"], ["res", "x + (±∞) = ±∞        ∀ x ∈ ℝ"], ["res", "a · (±∞) = ±∞        если  a &gt; 0"], ["res", "a · (±∞) = ∓∞        если  a &lt; 0"]], "pin": ["Операции: x+(±∞)=±∞, a·(±∞)=±∞ (a>0)"]},
+
+{"say": "И деление: для любого действительного а частное от деления а на плюс или минус бесконечность равно нулю. Также определены сумма двух плюс бесконечностей, равная плюс бесконечности, и сумма двух минус бесконечностей, равная минус бесконечности.", "L": [["res", "a / (±∞) = 0        ∀ a ∈ ℝ"], ["res", "(+∞) + (+∞) = +∞,        (−∞) + (−∞) = −∞"]]},
+
+{"title": "7) Неопределённые операции", "clear": 1, "say": "Однако некоторые операции не определены, потому что им нельзя приписать разумное значение. Плюс бесконечность минус плюс бесконечность, то есть сумма плюс бесконечности и минус бесконечности, не определена. И произведение нуля на плюс или минус бесконечность тоже.", "L": [["goal", "Не определены"], ["warn", "(+∞) + (−∞)    то есть    ∞ − ∞"], ["warn", "0 · (±∞)"]]},
+
+{"title": "8) Замечание", "clear": 1, "say": "Последнее замечание. Расширенная числовая прямая не является ни полем, ни кольцом. Например, у плюс бесконечности нет противоположного элемента: нет такого элемента, который в сумме с плюс бесконечностью дал бы ноль. Её следует использовать лишь как вспомогательный инструмент для описания неограниченного поведения.", "L": [["warn", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> — не поле и не кольцо"], ["txt", "Например, у  +∞  нет противоположного"], ["txt", "Вспомогательный инструмент для неограниченного поведения"]]},
+
+{"title": "Итог", "clear": 1, "say": "Итог. Расширенная числовая прямая — это действительные числа вместе с минус бесконечностью и плюс бесконечностью. Её порядок продолжает порядок действительных чисел, и всякое подмножество имеет точные верхнюю и нижнюю грани. Операции определены частично, и это не поле и не кольцо. Спасибо за внимание.", "L": [["res", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> = ℝ ∪ { −∞, +∞ },    −∞ ≤ x ≤ +∞"], ["res", "Всякое A ⊆ <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> имеет  sup A  и  inf A"], ["res", "∞ − ∞   и   0 · (±∞)   не определены"], ["res", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> — не поле и не кольцо"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' плюс ').replace(/⊙/g,' умножить на ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ Повторить'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ Продолжить'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ Пауза';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Пауза';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ Пауза';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^ru/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/dmitry|pavel|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="Расширенная числовая прямая";$('sub').textContent="Итог: определение, порядок, точные грани и операции на расширенной числовой прямой";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
+
+</body></html>

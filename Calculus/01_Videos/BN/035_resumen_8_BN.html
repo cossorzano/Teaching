@@ -1,0 +1,105 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>বর্ধিত বাস্তব রেখা</title>
+<style>
+:root{--bg:#16231f;--fg:#f1efe4;--hyp:#7cc4ff;--sub:#ffd166;--res:#7be0a0;--goal:#ff9f80;--warn:#ff6b6b;--mut:#9fb3aa}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif}
+#app{display:flex;flex-direction:column;height:100%;padding:16px 24px}
+h1{margin:0 0 4px;font-size:clamp(20px,3vw,34px);font-weight:600}
+#sub{color:var(--mut);margin-bottom:12px;font-size:clamp(14px,1.8vw,20px)}
+#main{flex:1;display:flex;gap:24px;min-height:0}
+#pin{width:32%;border-right:2px dashed #3d5a50;padding-right:16px;overflow:auto}
+#pin h2{font-size:18px;color:var(--mut);margin:0 0 8px;font-weight:400}
+#board{flex:1;overflow:auto}
+.l{font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:clamp(20px,3vw,38px);margin:10px 0;padding:6px 12px;border-left:6px solid;animation:in .6s ease both;line-height:1.35}
+.pin .l{font-size:clamp(13px,1.5vw,20px);margin:6px 0;padding:4px 10px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hyp{color:var(--hyp);border-color:var(--hyp)}.sub{color:var(--sub);border-color:var(--sub)}
+.res{color:var(--res);border-color:var(--res);background:#1f3a30}.goal{color:var(--goal);border-color:var(--goal)}
+.warn{color:var(--warn);border-color:var(--warn)}
+.txt{color:var(--fg);border-color:transparent;font-family:Georgia,serif;font-size:clamp(16px,2.2vw,26px)}
+.tag{font:13px sans-serif;color:var(--mut);display:block}
+mark{background:#6b5a14;color:inherit;padding:0 4px;border-radius:4px}
+#bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:10px;font:14px sans-serif}
+button,select{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #4b6b5f;background:#22362f;color:var(--fg);cursor:pointer}
+#cap{color:var(--mut);margin-left:auto}
+.rec #bar,.rec #cap{display:none}
+</style></head><body><div id="app">
+<h1 id="t"></h1><div id="sub"></div>
+<div id="main"><div id="pin" class="pin"><h2>মনে রাখুন</h2><div id="pins"></div></div><div id="board"></div></div>
+<div id="bar">
+<button id="prev">◀</button><button id="play">▶ শুরু</button><button id="next">▶|</button>
+<select id="voice"></select>
+<label>গতি <input id="rate" type="range" min="0.6" max="1.2" step="0.05" value="0.9"></label>
+<button id="rec">রেকর্ডিং মোড (H)</button><span id="cap"></span></div></div>
+<script type="application/json" id="data">
+{"lang":"bn-BD",
+"meta":{"nivel": 0, "titulo": "বর্ধিত বাস্তব রেখা", "enunciado": "সারসংক্ষেপ: বর্ধিত বাস্তব রেখার সংজ্ঞা, ক্রম, সুপ্রিমাম ও ইনফিমাম, এবং প্রক্রিয়া", "datos": ["সংজ্ঞা", "ক্রম", "সুপ্রিমাম ও ইনফিমাম", "সংজ্ঞায়িত প্রক্রিয়া", "অসংজ্ঞায়িত প্রক্রিয়া", "এটি ক্ষেত্র নয়"]},
+"steps":[
+{"title": "বর্ধিত বাস্তব রেখা", "sub": "সারসংক্ষেপ: বর্ধিত বাস্তব রেখার সংজ্ঞা, ক্রম, সুপ্রিমাম ও ইনফিমাম, এবং প্রক্রিয়া", "clear": 1, "say": "নমস্কার। এই ভিডিওতে আমরা বর্ধিত বাস্তব রেখার সারসংক্ষেপ দেখব: এটি কীভাবে সংজ্ঞায়িত হয়, এর ক্রম কেমন, সুপ্রিমাম ও ইনফিমামের কী হয়, এবং ধনাত্মক ও ঋণাত্মক অসীম নিয়ে কোন প্রক্রিয়াগুলো করা যায়।", "L": [["txt", "বর্ধিত বাস্তব রেখা  <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span>"]]},
+
+{"title": "1) সংজ্ঞা", "clear": 1, "say": "বাস্তব সংখ্যার সাথে ঋণাত্মক অসীম ও ধনাত্মক অসীম, এই দুটি প্রতীক যোগ করে বর্ধিত বাস্তব রেখা পাওয়া যায়। এটি বাস্তব সংখ্যার দ্বিরেখ R-এর উপরে একটি রেখা দিয়ে লেখা হয়।", "L": [["goal", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> = ℝ ∪ { −∞, +∞ }"]], "pin": ["সংজ্ঞা: <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> = ℝ ∪ {−∞, +∞}"]},
+
+{"title": "2) ক্রম", "clear": 1, "say": "প্রথমে, ক্রম। বর্ধিত বাস্তব রেখার ক্রম বাস্তব সংখ্যার ক্রমকে বর্ধিত করে। প্রতিটি বাস্তব x-এর জন্য, ঋণাত্মক অসীম x-এর চেয়ে ছোট বা সমান, এবং x ধনাত্মক অসীমের চেয়ে ছোট বা সমান। আর ঋণাত্মক অসীম ধনাত্মক অসীমের চেয়ে কঠোরভাবে ছোট।", "L": [["goal", "≤  ℝ-এর ক্রমকে বর্ধিত করে"], ["res", "∀ x ∈ ℝ :   −∞ ≤ x ≤ +∞"], ["res", "−∞ &lt; +∞"]], "pin": ["ক্রম: −∞ ≤ x ≤ +∞"]},
+
+{"title": "3) সীমা", "clear": 1, "say": "দ্বিতীয়, সীমা। বাস্তব সংখ্যার বিপরীতে, বর্ধিত রেখায় প্রতিটি উপসেট A-এর সুপ্রিমাম ও ইনফিমাম আছে, সীমাবদ্ধ হওয়ার প্রয়োজন নেই। উদাহরণস্বরূপ, ফাঁকা সেট: প্রতিটি উপাদানই ফাঁকা সেটের ঊর্ধ্ব সীমা, এবং এদের মধ্যে ক্ষুদ্রতম হলো ঋণাত্মক অসীম। তাই ফাঁকা সেটের সুপ্রিমাম ঋণাত্মক অসীম, এবং এর ইনফিমাম ধনাত্মক অসীম।", "L": [["goal", "প্রতিটি  A ⊆ <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span>  এর <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span>-এ সুপ্রিমাম ও ইনফিমাম আছে"], ["txt", "উদাহরণস্বরূপ,  A = ∅  হলে:"], ["sub", "sup ∅ = −∞,        inf ∅ = +∞"]], "pin": ["প্রতিটি A ⊆ <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> এর sup A ও inf A আছে"]},
+
+{"title": "4) সুপ্রিমাম", "clear": 1, "say": "তৃতীয়, সুপ্রিমাম কখন ধনাত্মক বা ঋণাত্মক অসীম হয়। যদি A বাস্তব সংখ্যার একটি উপসেট হয়, তাহলে A-এর সুপ্রিমাম ধনাত্মক অসীম, যদি এবং কেবল যদি A বাস্তব সংখ্যায় উপরে সীমাবদ্ধ না হয়। আর A-এর সুপ্রিমাম ঋণাত্মক অসীম, যদি এবং কেবল যদি A ফাঁকা সেট হয়, অথবা A এমন সেট যাতে শুধু ঋণাত্মক অসীম আছে।", "L": [["goal", "সুপ্রিমাম"], ["res", "A ⊆ ℝ:   sup A = +∞   ⟺   A, ℝ-এ উপরে সীমাবদ্ধ নয়"], ["res", "sup A = −∞   ⟺   A = ∅   অথবা   A = { −∞ }"]], "pin": ["সুপ্রিমাম: অসীমাবদ্ধ হলে +∞; A=∅ বা {−∞} হলে −∞"]},
+
+{"say": "সাধারণভাবে, বর্ধিত বাস্তব রেখার যেকোনো উপসেট A-এর জন্য, সুপ্রিমাম ধনাত্মক অসীম, যদি এবং কেবল যদি ধনাত্মক অসীম A-এর অন্তর্গত হয়, অথবা A-এর বাস্তব অংশ উপরে সীমাবদ্ধ না হয়।", "L": [["txt", "সাধারণভাবে,  A ⊆ <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span>  হলে:"], ["sub", "sup A = +∞   ⟺   +∞ ∈ A   অথবা   A ∩ ℝ, ℝ-এ উপরে সীমাবদ্ধ নয়"]]},
+
+{"title": "5) ইনফিমাম", "clear": 1, "say": "চতুর্থ, ইনফিমাম, যা প্রতিসম। যদি A বাস্তব সংখ্যার একটি উপসেট হয়, তাহলে A-এর ইনফিমাম ঋণাত্মক অসীম, যদি এবং কেবল যদি A বাস্তব সংখ্যায় নিচে সীমাবদ্ধ না হয়। আর A-এর ইনফিমাম ধনাত্মক অসীম, যদি এবং কেবল যদি A ফাঁকা সেট হয়, অথবা A এমন সেট যাতে শুধু ধনাত্মক অসীম আছে।", "L": [["goal", "ইনফিমাম"], ["res", "A ⊆ ℝ:   inf A = −∞   ⟺   A, ℝ-এ নিচে সীমাবদ্ধ নয়"], ["res", "inf A = +∞   ⟺   A = ∅   অথবা   A = { +∞ }"]], "pin": ["ইনফিমাম: অসীমাবদ্ধ হলে −∞; A=∅ বা {+∞} হলে +∞"]},
+
+{"title": "6) প্রক্রিয়া", "clear": 1, "say": "পঞ্চম, প্রক্রিয়া, যেগুলো কেবল আংশিকভাবে সংজ্ঞায়িত। যোগ: প্রতিটি বাস্তব x-এর জন্য, x যোগ ধনাত্মক অসীম হলো ধনাত্মক অসীম, এবং x যোগ ঋণাত্মক অসীম হলো ঋণাত্মক অসীম। গুণ: যদি a শূন্যের চেয়ে বড় হয়, তাহলে a গুণ ধনাত্মক অসীম হলো ধনাত্মক অসীম, এবং a গুণ ঋণাত্মক অসীম হলো ঋণাত্মক অসীম। যদি a শূন্যের চেয়ে ছোট হয়, চিহ্ন উল্টে যায়: a গুণ ধনাত্মক অসীম হলো ঋণাত্মক অসীম, এবং a গুণ ঋণাত্মক অসীম হলো ধনাত্মক অসীম।", "L": [["goal", "সংজ্ঞায়িত প্রক্রিয়া"], ["res", "x + (±∞) = ±∞        ∀ x ∈ ℝ"], ["res", "a · (±∞) = ±∞        যদি  a &gt; 0"], ["res", "a · (±∞) = ∓∞        যদি  a &lt; 0"]], "pin": ["প্রক্রিয়া: x+(±∞)=±∞, a·(±∞)=±∞ (a>0)"]},
+
+{"say": "আর ভাগ: প্রতিটি বাস্তব a-এর জন্য, a-কে ধনাত্মক বা ঋণাত্মক অসীম দিয়ে ভাগ করলে শূন্য হয়। ধনাত্মক অসীম যোগ ধনাত্মক অসীমও সংজ্ঞায়িত, যা ধনাত্মক অসীম, এবং ঋণাত্মক অসীম যোগ ঋণাত্মক অসীম, যা ঋণাত্মক অসীম।", "L": [["res", "a / (±∞) = 0        ∀ a ∈ ℝ"], ["res", "(+∞) + (+∞) = +∞,        (−∞) + (−∞) = −∞"]]},
+
+{"title": "7) অসংজ্ঞায়িত প্রক্রিয়া", "clear": 1, "say": "তবে, কিছু প্রক্রিয়া সংজ্ঞায়িত নয়, কারণ এদের কোনো যুক্তিসঙ্গত মান দেওয়া যায় না। ধনাত্মক অসীম বিয়োগ ধনাত্মক অসীম, অর্থাৎ ধনাত্মক অসীম ও ঋণাত্মক অসীমের যোগ, সংজ্ঞায়িত নয়। আর শূন্য গুণ ধনাত্মক বা ঋণাত্মক অসীমও সংজ্ঞায়িত নয়।", "L": [["goal", "সংজ্ঞায়িত নয়"], ["warn", "(+∞) + (−∞)    অর্থাৎ    ∞ − ∞"], ["warn", "0 · (±∞)"]]},
+
+{"title": "8) মন্তব্য", "clear": 1, "say": "শেষ মন্তব্য। বর্ধিত বাস্তব রেখা ক্ষেত্রও নয়, বলয়ও নয়। উদাহরণস্বরূপ, ধনাত্মক অসীমের কোনো বিপরীত নেই: এমন কোনো উপাদান নেই যা ধনাত্মক অসীমের সাথে যোগ করলে শূন্য হয়। এটি কেবল অসীমাবদ্ধ আচরণ বর্ণনার সহায়ক হাতিয়ার হিসেবে ব্যবহার করা উচিত।", "L": [["warn", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> ক্ষেত্রও নয়, বলয়ও নয়"], ["txt", "উদাহরণস্বরূপ,  +∞  এর কোনো বিপরীত নেই"], ["txt", "অসীমাবদ্ধ আচরণের জন্য সহায়ক হাতিয়ার"]]},
+
+{"title": "সারসংক্ষেপ", "clear": 1, "say": "সারসংক্ষেপ। বর্ধিত বাস্তব রেখা হলো বাস্তব সংখ্যা, সাথে ঋণাত্মক অসীম ও ধনাত্মক অসীম। এর ক্রম বাস্তব সংখ্যার ক্রমকে বর্ধিত করে, এবং প্রতিটি উপসেটের সুপ্রিমাম ও ইনফিমাম আছে। প্রক্রিয়াগুলো আংশিকভাবে সংজ্ঞায়িত, এবং এটি ক্ষেত্রও নয়, বলয়ও নয়। দেখার জন্য ধন্যবাদ।", "L": [["res", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> = ℝ ∪ { −∞, +∞ },    −∞ ≤ x ≤ +∞"], ["res", "প্রতিটি A ⊆ <span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> এর  sup A  ও  inf A  আছে"], ["res", "∞ − ∞   ও   0 · (±∞)   অসংজ্ঞায়িত"], ["res", "<span style='text-decoration:overline;text-decoration-thickness:0.07em'>ℝ</span> ক্ষেত্রও নয়, বলয়ও নয়"]]}
+]}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent),steps=D.steps;
+let i=-1,tok=0,playing=false,timer;
+const $=id=>document.getElementById(id),board=$('board'),pins=$('pins');
+function render(n){board.innerHTML='';pins.innerHTML='';
+ for(let k=0;k<=n;k++){const s=steps[k];
+  if(s.clear)board.innerHTML='';
+  if(s.title)$('t').textContent=s.title; if(s.sub)$('sub').textContent=s.sub;
+  (s.L||[]).forEach(l=>{const d=document.createElement('div');d.className='l '+l[0];d.innerHTML=l[1];if(k<n)d.style.animation='none';board.appendChild(d)});
+  if(s.pin){s.pin.forEach(t=>{const d=document.createElement('div');d.className='l hyp';d.innerHTML=t;if(k<n)d.style.animation='none';else d.style.background='#2a4a6b';pins.appendChild(d)})}}
+ board.scrollTop=board.scrollHeight;if(steps[n]&&steps[n].pin)$('pin').scrollTop=$('pin').scrollHeight;$('cap').textContent=(n+1)+' / '+steps.length}
+function speak(txt,done){speechSynthesis.cancel();
+ txt=txt.replace(/⊕/g,' প্লাস ').replace(/⊙/g,' গুণ ').replace(/[()]/g,', ').replace(/\s+/g,' ');
+ const u=new SpeechSynthesisUtterance(txt);
+ const v=voices()[$('voice').value];if(v){u.voice=v;u.lang=v.lang}else u.lang=D.lang;
+ u.rate=+$('rate').value;let fin=0;const f=()=>{if(!fin){fin=1;done()}};
+ u.onend=f;u.onerror=f;speechSynthesis.speak(u)}
+function go(n){clearTimeout(timer);const my=++tok;i=Math.max(0,Math.min(steps.length-1,n));render(i);
+ if(!playing)return;speak(steps[i].say,()=>{if(my!==tok)return;
+  timer=setTimeout(()=>{if(my!==tok)return;if(i<steps.length-1)go(i+1);else{playing=false;$('play').textContent='↺ আবার চালান'}},1500)})}
+function stop(){playing=false;tok++;clearTimeout(timer);speechSynthesis.cancel();$('play').textContent='▶ চালিয়ে যান'}
+$('play').onclick=()=>{if(playing){stop();return}
+ if(i>=steps.length-1&&$('play').textContent.startsWith('↺'))i=-1;
+ playing=true;$('play').textContent='⏸ বিরতি';go(Math.max(i,0))};
+$('next').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i+1)};
+$('prev').onclick=()=>{const p=playing;stop();playing=p;if(p)$('play').textContent='⏸ বিরতি';go(i-1)};
+function voices(){return speechSynthesis.getVoices().filter(v=>/^bn/i.test(v.lang))}
+function loadV(){const vs=voices(),s=$('voice');s.innerHTML='';
+ vs.forEach((v,k)=>{const o=document.createElement('option');o.value=k;o.textContent=v.name+' ('+v.lang+')';s.appendChild(o)});
+ const m=vs.findIndex(v=>/pradeep|bashkar|male/i.test(v.name));if(m>=0)s.value=m}
+try{speechSynthesis.onvoiceschanged=loadV;loadV()}catch(e){}
+$('rec').onclick=()=>document.body.classList.toggle('rec');
+document.onkeydown=e=>{if(e.key==='h'||e.key==='H')document.body.classList.toggle('rec');
+ if(e.key===' '){e.preventDefault();$('play').click()}if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()};
+$('t').textContent="বর্ধিত বাস্তব রেখা";$('sub').textContent="সারসংক্ষেপ: বর্ধিত বাস্তব রেখার সংজ্ঞা, ক্রম, সুপ্রিমাম ও ইনফিমাম, এবং প্রক্রিয়া";
+$('cap').textContent='0 / '+steps.length;
+</script></body></html>
+
+</body></html>
